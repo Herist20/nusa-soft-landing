@@ -1,77 +1,118 @@
 <template>
-  <section id="hero" class="min-h-screen flex items-center pt-16 bg-gradient-to-br from-blue-50 via-white to-green-50">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+  <section id="hero" class="relative min-h-screen flex items-center pt-16 overflow-hidden">
+    <!-- Animated Background -->
+    <div class="absolute inset-0 bg-gradient-to-br from-blue-600 via-purple-600 to-green-500 opacity-90">
+      <div class="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent"></div>
+      <div class="hero-shapes">
+        <div class="shape shape-1"></div>
+        <div class="shape shape-2"></div>
+        <div class="shape shape-3"></div>
+      </div>
+    </div>
+
+    <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 z-10">
       <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-        <div class="animate-slide-up">
-          <h1 class="font-display text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 mb-6">
-            Transform Your Ideas Into
-            <span class="bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent"> Digital Reality</span>
+        <div class="text-white hero-content">
+          <div class="mb-4 opacity-0 animate-fade-in-up" style="animation-delay: 0.2s">
+            <span class="inline-flex items-center px-4 py-2 rounded-full bg-white/20 backdrop-blur-sm text-sm font-medium">
+              ⚡ Fast • 🛡️ Reliable • 📈 Scalable Solutions
+            </span>
+          </div>
+
+          <h1 class="font-display text-4xl md:text-5xl lg:text-6xl font-bold mb-6 opacity-0 animate-fade-in-up" style="animation-delay: 0.4s">
+            Transforming Ideas into
+            <span class="bg-gradient-to-r from-yellow-300 to-orange-300 bg-clip-text text-transparent"> Digital Reality</span>
           </h1>
-          <p class="text-lg md:text-xl text-gray-600 mb-8">
-            Professional web and mobile app development services. We build scalable, user-friendly solutions that drive your business forward.
+
+          <p class="text-xl md:text-2xl mb-2 opacity-90 opacity-0 animate-fade-in-up" style="animation-delay: 0.6s">
+            Expert Web & Mobile App Development Services
           </p>
-          <div class="flex flex-col sm:flex-row gap-4">
-            <button @click="$emit('openContact')" class="bg-primary text-white px-8 py-3 rounded-lg font-semibold hover:bg-blue-600 transform hover:scale-105 transition-all duration-200 shadow-lg">
-              Start Your Project
-            </button>
-            <a href="#portfolio" class="border-2 border-primary text-primary px-8 py-3 rounded-lg font-semibold hover:bg-primary hover:text-white transition-all duration-200 text-center">
-              View Portfolio
+
+          <p class="text-lg text-blue-100 mb-8 opacity-0 animate-fade-in-up" style="animation-delay: 0.8s">
+            We transform your vision into powerful digital solutions that drive business growth and user engagement.
+          </p>
+
+          <div class="flex flex-col sm:flex-row gap-4 mb-12 opacity-0 animate-fade-in-up" style="animation-delay: 1s">
+            <a
+              href="https://wa.me/6281234567890?text=Hi%2C%20I%27d%20like%20a%20free%20consultation%20for%20my%20project"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="bg-green-500 hover:bg-green-600 text-white px-8 py-4 rounded-xl font-semibold transform hover:scale-105 transition-all duration-200 shadow-lg flex items-center justify-center gap-2"
+            >
+              <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.890-5.335 11.893-11.893A11.821 11.821 0 0020.885 3.488"/>
+              </svg>
+              Get Free Consultation
+            </a>
+            <a
+              href="#portfolio"
+              @click="scrollToSection($event, '#portfolio')"
+              class="border-2 border-white/50 text-white px-8 py-4 rounded-xl font-semibold hover:bg-white hover:text-blue-600 transition-all duration-200 text-center backdrop-blur-sm"
+            >
+              View Our Work
             </a>
           </div>
-          <div class="mt-8 flex items-center gap-8">
-            <div>
-              <p class="text-3xl font-bold text-primary">50+</p>
-              <p class="text-gray-600">Projects Completed</p>
+
+          <!-- Statistics Counter -->
+          <div class="grid grid-cols-3 gap-8 opacity-0 animate-fade-in-up" style="animation-delay: 1.2s">
+            <div class="text-center">
+              <div class="text-4xl font-bold text-yellow-300 mb-1 counter" :data-target="projectsCount">{{ currentProjects }}</div>
+              <p class="text-blue-100 text-sm">Projects Completed</p>
             </div>
-            <div>
-              <p class="text-3xl font-bold text-secondary">98%</p>
-              <p class="text-gray-600">Client Satisfaction</p>
+            <div class="text-center">
+              <div class="text-4xl font-bold text-green-300 mb-1 counter" :data-target="yearsCount">{{ currentYears }}</div>
+              <p class="text-blue-100 text-sm">Years Experience</p>
             </div>
-            <div>
-              <p class="text-3xl font-bold text-accent">24/7</p>
-              <p class="text-gray-600">Support</p>
+            <div class="text-center">
+              <div class="text-4xl font-bold text-orange-300 mb-1 counter" :data-target="clientsCount">{{ currentClients }}</div>
+              <p class="text-blue-100 text-sm">Happy Clients</p>
             </div>
           </div>
         </div>
-        <div class="relative animate-fade-in">
-          <div class="absolute inset-0 bg-gradient-to-r from-primary to-secondary rounded-3xl transform rotate-6 opacity-20"></div>
-          <div class="relative bg-white rounded-3xl shadow-2xl p-8">
-            <div class="space-y-4">
-              <div class="flex items-center gap-4">
-                <div class="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center">
-                  <svg class="w-6 h-6 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" />
-                  </svg>
+        <!-- Hero Illustration/Mockup -->
+        <div class="relative opacity-0 animate-fade-in-right" style="animation-delay: 1.4s">
+          <div class="relative z-10">
+            <!-- Device Mockup Stack -->
+            <div class="relative">
+              <!-- Desktop Browser -->
+              <div class="bg-white/10 backdrop-blur-lg rounded-2xl p-6 shadow-2xl border border-white/20">
+                <div class="flex items-center gap-2 mb-4">
+                  <div class="w-3 h-3 bg-red-400 rounded-full"></div>
+                  <div class="w-3 h-3 bg-yellow-400 rounded-full"></div>
+                  <div class="w-3 h-3 bg-green-400 rounded-full"></div>
+                  <div class="flex-1 bg-white/20 rounded-md h-6 ml-4"></div>
                 </div>
-                <div>
-                  <h3 class="font-semibold">Clean Code</h3>
-                  <p class="text-sm text-gray-600">Maintainable and scalable solutions</p>
-                </div>
-              </div>
-              <div class="flex items-center gap-4">
-                <div class="w-12 h-12 bg-secondary/10 rounded-lg flex items-center justify-center">
-                  <svg class="w-6 h-6 text-secondary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z" />
-                  </svg>
-                </div>
-                <div>
-                  <h3 class="font-semibold">Mobile Responsive</h3>
-                  <p class="text-sm text-gray-600">Perfect on all devices</p>
+                <div class="space-y-3">
+                  <div class="bg-gradient-to-r from-white/20 to-white/10 h-4 rounded"></div>
+                  <div class="grid grid-cols-2 gap-3">
+                    <div class="bg-white/15 h-20 rounded-lg"></div>
+                    <div class="bg-white/15 h-20 rounded-lg"></div>
+                  </div>
+                  <div class="bg-gradient-to-r from-white/15 to-white/5 h-3 rounded"></div>
+                  <div class="bg-gradient-to-r from-white/15 to-white/5 h-3 rounded w-3/4"></div>
                 </div>
               </div>
-              <div class="flex items-center gap-4">
-                <div class="w-12 h-12 bg-accent/10 rounded-lg flex items-center justify-center">
-                  <svg class="w-6 h-6 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
-                  </svg>
-                </div>
-                <div>
-                  <h3 class="font-semibold">Fast Performance</h3>
-                  <p class="text-sm text-gray-600">Optimized for speed</p>
+
+              <!-- Mobile Phone -->
+              <div class="absolute -bottom-6 -right-6 bg-white/10 backdrop-blur-lg rounded-2xl p-4 shadow-2xl border border-white/20 transform rotate-12">
+                <div class="w-4 h-1 bg-white/30 rounded-full mx-auto mb-3"></div>
+                <div class="space-y-2">
+                  <div class="bg-white/20 h-8 rounded"></div>
+                  <div class="grid grid-cols-2 gap-2">
+                    <div class="bg-white/15 h-12 rounded"></div>
+                    <div class="bg-white/15 h-12 rounded"></div>
+                  </div>
+                  <div class="bg-white/10 h-2 rounded"></div>
+                  <div class="bg-white/10 h-2 rounded w-2/3"></div>
                 </div>
               </div>
             </div>
           </div>
+
+          <!-- Floating Elements -->
+          <div class="absolute -top-4 -left-4 w-8 h-8 bg-yellow-300/80 rounded-full animate-bounce" style="animation-delay: 2s"></div>
+          <div class="absolute -bottom-8 -left-8 w-6 h-6 bg-green-300/80 rounded-full animate-bounce" style="animation-delay: 2.5s"></div>
+          <div class="absolute -top-8 -right-2 w-4 h-4 bg-blue-300/80 rounded-full animate-bounce" style="animation-delay: 3s"></div>
         </div>
       </div>
     </div>
@@ -79,5 +120,137 @@
 </template>
 
 <script setup>
+import { ref, onMounted } from 'vue'
+
 defineEmits(['openContact'])
+
+const currentProjects = ref(0)
+const currentYears = ref(0)
+const currentClients = ref(0)
+
+const projectsCount = 150
+const yearsCount = 5
+const clientsCount = 120
+
+const scrollToSection = (event, href) => {
+  event.preventDefault()
+  const element = document.querySelector(href)
+  if (element) {
+    const offsetTop = element.offsetTop - 80
+    window.scrollTo({
+      top: offsetTop,
+      behavior: 'smooth'
+    })
+  }
+}
+
+const animateCounter = (current, target, duration = 2000) => {
+  const start = performance.now()
+  const animate = (timestamp) => {
+    const elapsed = timestamp - start
+    const progress = Math.min(elapsed / duration, 1)
+    const easeOut = 1 - Math.pow(1 - progress, 3)
+    current.value = Math.floor(easeOut * target)
+
+    if (progress < 1) {
+      requestAnimationFrame(animate)
+    }
+  }
+  requestAnimationFrame(animate)
+}
+
+onMounted(() => {
+  setTimeout(() => {
+    animateCounter(currentProjects, projectsCount, 2000)
+  }, 1200)
+
+  setTimeout(() => {
+    animateCounter(currentYears, yearsCount, 1500)
+  }, 1400)
+
+  setTimeout(() => {
+    animateCounter(currentClients, clientsCount, 2500)
+  }, 1600)
+})
 </script>
+
+<style scoped>
+@keyframes fade-in-up {
+  0% {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fade-in-right {
+  0% {
+    opacity: 0;
+    transform: translateX(30px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.animate-fade-in-up {
+  animation: fade-in-up 0.8s ease-out forwards;
+}
+
+.animate-fade-in-right {
+  animation: fade-in-right 1s ease-out forwards;
+}
+
+.hero-shapes {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.shape {
+  position: absolute;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.1);
+  animation: float 6s ease-in-out infinite;
+}
+
+.shape-1 {
+  width: 120px;
+  height: 120px;
+  top: 20%;
+  left: 10%;
+  animation-delay: 0s;
+}
+
+.shape-2 {
+  width: 80px;
+  height: 80px;
+  top: 70%;
+  right: 15%;
+  animation-delay: 2s;
+}
+
+.shape-3 {
+  width: 60px;
+  height: 60px;
+  top: 40%;
+  right: 40%;
+  animation-delay: 4s;
+}
+
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0) scale(1);
+    opacity: 0.7;
+  }
+  50% {
+    transform: translateY(-20px) scale(1.1);
+    opacity: 1;
+  }
+}
+</style>
