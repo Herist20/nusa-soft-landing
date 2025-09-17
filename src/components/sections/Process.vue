@@ -1,12 +1,14 @@
 <template>
   <section id="process" class="py-20 bg-white">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="text-center mb-12">
-        <h2 class="font-display text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-          Our Development Process
+      <div class="text-center mb-16">
+        <span class="text-primary font-semibold tracking-wide uppercase text-sm">How We Work</span>
+        <h2 class="font-display text-4xl md:text-5xl font-bold text-gray-900 mt-2 mb-4">
+          Our 6-Step Development Process
         </h2>
-        <p class="text-lg text-gray-600 max-w-2xl mx-auto">
-          A streamlined approach to deliver exceptional results
+        <p class="text-lg text-gray-600 max-w-3xl mx-auto">
+          A proven methodology that ensures your project is delivered on time, within budget, and exceeds expectations.
+          Every step is designed to maximize value and minimize risk.
         </p>
       </div>
       
@@ -22,20 +24,33 @@
                ]">
             <div class="flex-1 text-center md:text-left" :class="index % 2 === 0 ? 'md:text-right' : ''">
               <div class="inline-block">
-                <div class="bg-white rounded-xl shadow-lg p-6 relative">
-                  <div class="absolute -top-3 -right-3 w-8 h-8 bg-primary text-white rounded-full flex items-center justify-center font-bold text-sm">
+                <div class="bg-white rounded-xl shadow-lg hover:shadow-2xl p-8 relative transform transition-all duration-500 hover:-translate-y-2 group">
+                  <div class="absolute -top-4 -right-4 w-12 h-12 bg-gradient-to-r from-primary to-secondary text-white rounded-full flex items-center justify-center font-bold text-lg shadow-lg">
                     {{ index + 1 }}
                   </div>
-                  <h3 class="font-display text-xl font-semibold mb-3">{{ step.title }}</h3>
-                  <p class="text-gray-600 mb-4">{{ step.description }}</p>
-                  <ul class="space-y-2">
-                    <li v-for="item in step.items" :key="item" class="flex items-center" :class="index % 2 === 0 ? 'md:justify-end' : ''">
-                      <svg class="w-5 h-5 text-green-500 mr-2 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
-                      </svg>
-                      <span class="text-sm text-gray-600">{{ item }}</span>
-                    </li>
-                  </ul>
+
+                  <!-- Trust indicator -->
+                  <div class="absolute top-4 left-4 flex items-center space-x-1 opacity-75 group-hover:opacity-100 transition-opacity">
+                    <svg class="w-4 h-4 text-green-500" fill="currentColor" viewBox="0 0 20 20">
+                      <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                    </svg>
+                    <span class="text-xs text-green-600 font-medium">Proven Process</span>
+                  </div>
+
+                  <div class="mt-6">
+                    <h3 class="font-display text-2xl font-bold mb-4 text-gray-900">{{ step.title }}</h3>
+                    <p class="text-gray-600 mb-6 leading-relaxed">{{ step.description }}</p>
+                    <ul class="space-y-3">
+                      <li v-for="item in step.items" :key="item"
+                          class="flex items-center group-hover:translate-x-1 transition-transform duration-200"
+                          :class="index % 2 === 0 ? 'md:justify-end' : ''">
+                        <svg class="w-5 h-5 text-primary mr-3 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        </svg>
+                        <span class="text-gray-700 font-medium">{{ item }}</span>
+                      </li>
+                    </ul>
+                  </div>
                 </div>
               </div>
             </div>
@@ -52,17 +67,54 @@
         </div>
       </div>
       
+      <!-- Trust Building Section -->
+      <div class="mt-20 grid grid-cols-1 md:grid-cols-3 gap-8 mb-16">
+        <div class="text-center p-6 bg-gray-50 rounded-xl">
+          <div class="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
+            <svg class="w-8 h-8 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+          </div>
+          <h4 class="font-semibold text-lg mb-2">100% Transparency</h4>
+          <p class="text-gray-600 text-sm">Regular updates and clear communication throughout the entire process</p>
+        </div>
+        <div class="text-center p-6 bg-gray-50 rounded-xl">
+          <div class="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
+            <svg class="w-8 h-8 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+          </div>
+          <h4 class="font-semibold text-lg mb-2">On-Time Delivery</h4>
+          <p class="text-gray-600 text-sm">We meet deadlines and deliver projects exactly when promised</p>
+        </div>
+        <div class="text-center p-6 bg-gray-50 rounded-xl">
+          <div class="w-16 h-16 bg-purple-100 rounded-full flex items-center justify-center mx-auto mb-4">
+            <svg class="w-8 h-8 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+            </svg>
+          </div>
+          <h4 class="font-semibold text-lg mb-2">Client Satisfaction</h4>
+          <p class="text-gray-600 text-sm">95% of our clients recommend us and return for additional projects</p>
+        </div>
+      </div>
+
       <!-- CTA Section -->
-      <div class="mt-16 text-center bg-gradient-to-r from-primary to-secondary rounded-2xl p-8 text-white">
-        <h3 class="font-display text-2xl font-bold mb-4">
-          Ready to Start Your Project?
+      <div class="mt-16 text-center bg-gradient-to-r from-primary to-secondary rounded-2xl p-12 text-white">
+        <h3 class="font-display text-3xl font-bold mb-4">
+          Ready to Experience Our Process?
         </h3>
-        <p class="mb-6 max-w-2xl mx-auto">
-          Let's discuss your ideas and turn them into reality. Our team is ready to help you achieve your goals.
+        <p class="text-lg mb-8 max-w-2xl mx-auto opacity-90">
+          Join 100+ satisfied clients who trust our proven development process.
+          Let's discuss your project and show you how we can bring your vision to life.
         </p>
-        <button @click="$emit('openContact')" class="bg-white text-primary px-8 py-3 rounded-lg font-semibold hover:shadow-lg transform hover:scale-105 transition-all duration-200">
-          Get Started Today
-        </button>
+        <div class="flex flex-col sm:flex-row gap-4 justify-center">
+          <button @click="$emit('openContact')" class="bg-white text-primary px-8 py-4 rounded-lg font-semibold hover:shadow-lg transform hover:scale-105 transition-all duration-200">
+            Start Your Project
+          </button>
+          <button class="border border-white/50 text-white px-8 py-4 rounded-lg font-semibold hover:bg-white hover:text-primary transition-all duration-200">
+            View Case Studies
+          </button>
+        </div>
       </div>
     </div>
   </section>
@@ -125,67 +177,67 @@ const processSteps = [
   {
     icon: DiscoveryIcon,
     title: 'Discovery & Planning',
-    description: 'We start by understanding your business goals and requirements',
+    description: 'We start by understanding your business goals, requirements, and market position to create a solid foundation for success.',
     items: [
-      'Requirements gathering',
+      'Requirements analysis',
       'Market research',
       'Project roadmap',
-      'Budget planning'
+      'Technology stack selection'
     ]
   },
   {
     icon: DesignIcon,
     title: 'Design & Prototyping',
-    description: 'Creating intuitive and beautiful user interfaces',
+    description: 'Creating intuitive and beautiful user experiences through careful design and interactive prototyping.',
     items: [
-      'Wireframe creation',
       'UI/UX design',
+      'Wireframing',
       'Interactive prototypes',
-      'Design review'
+      'User journey mapping'
     ]
   },
   {
     icon: DevelopmentIcon,
     title: 'Development',
-    description: 'Building your solution with clean, maintainable code',
+    description: 'Building your solution with clean, scalable code using agile methodology and regular progress updates.',
     items: [
-      'Frontend development',
-      'Backend development',
-      'API integration',
-      'Database setup'
+      'Agile development',
+      'Regular updates',
+      'Quality assurance',
+      'Code review process'
     ]
   },
   {
     icon: TestingIcon,
-    title: 'Testing & QA',
-    description: 'Ensuring everything works perfectly before launch',
+    title: 'Testing & Optimization',
+    description: 'Comprehensive testing to ensure your application performs flawlessly across all platforms and scenarios.',
     items: [
-      'Unit testing',
-      'Integration testing',
-      'Performance testing',
-      'Bug fixing'
+      'Cross-browser testing',
+      'Performance optimization',
+      'Security audit',
+      'Load testing'
     ]
   },
   {
     icon: LaunchIcon,
-    title: 'Launch & Deployment',
-    description: 'Going live with your new digital solution',
+    title: 'Deployment & Launch',
+    description: 'Seamless deployment to production with complete go-live support and comprehensive documentation.',
     items: [
-      'Server setup',
-      'Deployment',
-      'DNS configuration',
-      'SSL certificate'
+      'Production deployment',
+      'Go-live support',
+      'Training & documentation',
+      'Performance monitoring'
     ]
   },
   {
     icon: SupportIcon,
-    title: 'Support & Maintenance',
-    description: 'Ongoing support to keep your application running smoothly',
+    title: 'Maintenance & Support',
+    description: 'Ongoing support and maintenance to ensure your application continues to perform optimally and stays secure.',
     items: [
-      '24/7 monitoring',
-      'Regular updates',
-      'Performance optimization',
-      'Technical support'
+      'Ongoing support',
+      'Regular maintenance',
+      'Security updates',
+      'Feature enhancements'
     ]
   }
 ]

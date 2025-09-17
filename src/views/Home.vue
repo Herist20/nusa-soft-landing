@@ -7,6 +7,7 @@
       <Services />
       <Portfolio @open-project="openProjectModal" />
       <About />
+      <Team />
       <Process @open-contact="scrollToContact" />
       <Contact />
     </main>
@@ -46,6 +47,7 @@ import Hero from '../components/sections/Hero.vue'
 import Services from '../components/sections/Services.vue'
 import Portfolio from '../components/sections/Portfolio.vue'
 import About from '../components/sections/About.vue'
+import Team from '../components/sections/Team.vue'
 import Process from '../components/sections/Process.vue'
 import Contact from '../components/sections/Contact.vue'
 import Modal from '../components/ui/Modal.vue'
