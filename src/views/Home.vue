@@ -13,7 +13,10 @@
     </main>
     
     <Footer />
-    
+
+    <!-- WhatsApp Floating Button -->
+    <WhatsAppFloat />
+
     <!-- Project Modal -->
     <Modal v-model="projectModalOpen" size="lg" :title="selectedProject?.title">
       <div v-if="selectedProject" class="space-y-4">
@@ -52,6 +55,7 @@ import Process from '../components/sections/Process.vue'
 import Contact from '../components/sections/Contact.vue'
 import Modal from '../components/ui/Modal.vue'
 import Button from '../components/ui/Button.vue'
+import WhatsAppFloat from '../components/ui/WhatsAppFloat.vue'
 
 const projectModalOpen = ref(false)
 const selectedProject = ref(null)

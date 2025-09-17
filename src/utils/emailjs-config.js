@@ -16,10 +16,42 @@ export const EMAILJS_CONFIG = {
 // 1. Go to https://www.emailjs.com/ and create an account
 // 2. Add your email service (Gmail, Outlook, etc.)
 // 3. Create an email template with these variables:
+//    - to_email
 //    - from_name
 //    - from_email
-//    - subject
-//    - service
-//    - message
+//    - phone
+//    - company
+//    - project_type
+//    - budget
+//    - contact_method
+//    - timeline
+//    - description
+//    - submission_date
 // 4. Get your Service ID, Template ID, and Public Key from the dashboard
 // 5. Replace the values above with your actual IDs
+
+// Example Email Template:
+// Subject: New Project Inquiry from {{from_name}}
+//
+// Hello Nusa Software Team,
+//
+// You have received a new project inquiry through your website.
+//
+// Contact Information:
+// - Name: {{from_name}}
+// - Email: {{from_email}}
+// - Phone: {{phone}}
+// - Company: {{company}}
+//
+// Project Details:
+// - Type: {{project_type}}
+// - Budget: {{budget}}
+// - Timeline: {{timeline}}
+// - Preferred Contact: {{contact_method}}
+//
+// Description:
+// {{description}}
+//
+// Submitted on: {{submission_date}}
+//
+// Please respond within 24 hours as promised.
