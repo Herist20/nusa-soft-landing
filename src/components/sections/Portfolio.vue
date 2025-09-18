@@ -1,15 +1,15 @@
 <template>
-  <section id="portfolio" class="py-16 md:py-20 lg:py-24 bg-gradient-to-br from-white via-gray-50 to-blue-50">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+  <section id="portfolio" class="py-16 lg:py-24 bg-white">
+    <div class="max-w-7xl mx-auto px-4">
       <div class="text-center mb-16">
-        <div class="inline-flex items-center px-4 py-2 bg-secondary/10 rounded-full mb-4">
+        <div class="inline-flex items-center px-4 py-2 bg-blue-50 border border-blue-100 rounded-lg mb-4">
           <span class="text-secondary font-semibold text-sm">Our Work</span>
         </div>
-        <h2 class="font-display text-4xl md:text-5xl font-bold text-gray-900 mb-6">
-          Portfolio Showcase
+        <h2 class="font-sans text-4xl lg:text-5xl font-bold text-gray-900 mb-6">
+          Recent Projects
         </h2>
-        <p class="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
-          Discover our latest projects and success stories that showcase our expertise in creating exceptional digital experiences
+        <p class="text-xl text-gray-600 max-w-2xl mx-auto leading-relaxed">
+          See how we've helped businesses build amazing digital products that drive growth.
         </p>
       </div>
 
@@ -20,10 +20,10 @@
           :key="category"
           @click="setActiveCategory(category)"
           :class="[
-            'px-6 py-3 rounded-full font-semibold transition-all duration-300 border-2',
+            'px-6 py-3 rounded-lg font-medium transition-all duration-200 border',
             activeCategory === category
-              ? 'bg-gradient-to-r from-primary to-secondary text-white border-transparent shadow-lg scale-105'
-              : 'bg-white text-gray-600 border-gray-200 hover:border-primary hover:text-primary hover:shadow-md hover:scale-105'
+              ? 'bg-blue-600 text-white border-blue-600'
+              : 'bg-white text-gray-700 border-gray-300 hover:bg-gray-50 hover:border-gray-400'
           ]"
         >
           {{ category }}
@@ -35,39 +35,38 @@
         <div
           v-for="(project, index) in displayedProjects"
           :key="project.id"
-          class="group relative bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-500 overflow-hidden border border-gray-100 hover:border-primary/20 hover:-translate-y-3 cursor-pointer"
-          :style="`opacity: 0; animation: fadeInStagger 0.8s ease-out forwards; animation-delay: ${index * 0.15}s;`"
+          class="group bg-white rounded-xl shadow-sm hover:shadow-md transition-all duration-200 overflow-hidden border border-gray-200 hover:border-blue-200 cursor-pointer"
+          :style="`opacity: 0; animation: fadeInStagger 0.6s ease-out forwards; animation-delay: ${index * 0.1}s;`"
           @click="openProject(project)"
         >
           <!-- Project Image -->
-          <div class="relative h-48 lg:h-56 overflow-hidden">
+          <div class="relative h-48 overflow-hidden rounded-t-xl">
             <img
               :src="project.image"
               :alt="project.title"
-              class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+              class="w-full h-full object-cover group-hover:scale-[1.02] transition-transform duration-200"
             />
-            <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
 
             <!-- Category Badge -->
-            <div class="absolute top-4 left-4">
-              <span class="px-3 py-1 bg-white/90 backdrop-blur-sm text-primary text-xs font-semibold rounded-full">
+            <div class="absolute top-3 left-3">
+              <span class="px-3 py-1 bg-white text-secondary text-xs font-medium rounded-lg shadow-sm">
                 {{ project.category }}
               </span>
             </div>
 
-            <!-- Action Buttons (appear on hover) -->
-            <div class="absolute top-4 right-4 opacity-0 group-hover:opacity-100 transition-all duration-300 transform translate-x-4 group-hover:translate-x-0">
+            <!-- Action Buttons -->
+            <div class="absolute top-3 right-3 opacity-0 group-hover:opacity-100 transition-opacity duration-200">
               <div class="flex space-x-2">
                 <a
                   v-if="project.liveDemo"
                   :href="project.liveDemo"
                   target="_blank"
                   rel="noopener noreferrer"
-                  class="w-10 h-10 bg-white/90 backdrop-blur-sm rounded-full flex items-center justify-center text-primary hover:bg-white hover:scale-110 transition-all duration-200"
+                  class="w-8 h-8 bg-white rounded-lg flex items-center justify-center text-secondary hover:bg-blue-50 transition-colors duration-200 shadow-sm"
                   title="Live Demo"
                   @click.stop
                 >
-                  <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
                   </svg>
                 </a>
@@ -76,11 +75,11 @@
                   :href="project.github"
                   target="_blank"
                   rel="noopener noreferrer"
-                  class="w-10 h-10 bg-white/90 backdrop-blur-sm rounded-full flex items-center justify-center text-primary hover:bg-white hover:scale-110 transition-all duration-200"
+                  class="w-8 h-8 bg-white rounded-lg flex items-center justify-center text-gray-600 hover:text-gray-900 hover:bg-gray-50 transition-colors duration-200 shadow-sm"
                   title="GitHub"
                   @click.stop
                 >
-                  <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                  <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
                     <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
                   </svg>
                 </a>
@@ -89,38 +88,38 @@
           </div>
 
           <!-- Project Content -->
-          <div class="p-6 lg:p-8">
-            <h3 class="font-display text-xl font-bold text-gray-900 mb-3 group-hover:text-primary transition-colors">
+          <div class="p-6">
+            <h3 class="text-xl font-semibold text-gray-900 mb-2">
               {{ project.title }}
             </h3>
-            <p class="text-gray-600 mb-4 overflow-hidden" style="display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical;">
+            <p class="text-gray-600 mb-4 text-sm overflow-hidden" style="display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical;">
               {{ project.description }}
             </p>
 
             <!-- Technologies -->
             <div class="flex flex-wrap gap-2 mb-4">
               <span
-                v-for="tech in project.technologies.slice(0, 4)"
+                v-for="tech in project.technologies.slice(0, 3)"
                 :key="tech"
-                class="px-3 py-1 bg-gray-100 text-gray-700 text-xs font-medium rounded-full"
+                class="px-3 py-1 bg-gray-100 text-gray-700 text-sm font-medium rounded-full"
               >
                 {{ tech }}
               </span>
               <span
-                v-if="project.technologies.length > 4"
-                class="px-3 py-1 bg-primary/10 text-primary text-xs font-medium rounded-full"
+                v-if="project.technologies.length > 3"
+                class="px-3 py-1 bg-blue-50 text-secondary text-sm font-medium rounded-full"
               >
-                +{{ project.technologies.length - 4 }}
+                +{{ project.technologies.length - 3 }}
               </span>
             </div>
 
-            <!-- Case Study Button -->
+            <!-- Case Study Link -->
             <button
-              class="w-full bg-gradient-to-r from-gray-50 to-gray-100 text-gray-700 px-4 py-3 rounded-xl font-semibold transition-all duration-300 hover:from-primary hover:to-secondary hover:text-white hover:shadow-lg group-hover:from-primary group-hover:to-secondary group-hover:text-white flex items-center justify-center space-x-2"
+              class="inline-flex items-center text-secondary hover:text-blue-600 font-medium text-sm transition-colors duration-200"
               @click.stop="openCaseStudy(project)"
             >
-              <span>View Case Study</span>
-              <svg class="w-4 h-4 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <span>View details</span>
+              <svg class="w-4 h-4 ml-1 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
               </svg>
             </button>
@@ -132,7 +131,7 @@
       <div v-if="hasMoreProjects" class="text-center mt-12">
         <button
           @click="loadMore"
-          class="bg-white border-2 border-primary text-primary px-8 py-4 rounded-xl font-semibold hover:bg-primary hover:text-white transition-all duration-300 hover:shadow-lg hover:scale-105 flex items-center space-x-2 mx-auto"
+          class="bg-white border border-gray-300 text-gray-700 px-8 py-4 rounded-lg font-medium hover:bg-gray-50 hover:border-gray-400 transition-all duration-200 flex items-center space-x-2 mx-auto"
         >
           <span>Load More Projects</span>
           <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -158,10 +157,9 @@
           <!-- Modal Header -->
           <div class="relative">
             <img :src="selectedProject.image" :alt="selectedProject.title" class="w-full h-64 lg:h-80 object-cover" />
-            <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
             <button
               @click="closeCaseStudy"
-              class="absolute top-4 right-4 w-10 h-10 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center text-white hover:bg-white/30 transition-colors"
+              class="absolute top-4 right-4 w-10 h-10 bg-white rounded-full flex items-center justify-center text-gray-600 hover:bg-gray-100 transition-colors shadow-md"
             >
               <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />

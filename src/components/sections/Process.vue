@@ -25,7 +25,7 @@
             <div class="flex-1 text-center md:text-left" :class="index % 2 === 0 ? 'md:text-right' : ''">
               <div class="inline-block">
                 <div class="bg-white rounded-xl shadow-lg hover:shadow-2xl p-8 relative transform transition-all duration-500 hover:-translate-y-2 group">
-                  <div class="absolute -top-4 -right-4 w-12 h-12 bg-gradient-to-r from-primary to-secondary text-white rounded-full flex items-center justify-center font-bold text-lg shadow-lg">
+                  <div class="absolute -top-4 -right-4 w-12 h-12 bg-blue-600 text-white rounded-full flex items-center justify-center font-bold text-lg shadow-md">
                     {{ index + 1 }}
                   </div>
 
@@ -57,7 +57,7 @@
             
             <!-- Center icon -->
             <div class="relative z-10">
-              <div class="w-16 h-16 bg-gradient-to-r from-primary to-secondary rounded-full flex items-center justify-center shadow-lg">
+              <div class="w-16 h-16 bg-blue-600 rounded-full flex items-center justify-center shadow-md">
                 <component :is="step.icon" class="w-8 h-8 text-white" />
               </div>
             </div>
@@ -99,7 +99,7 @@
       </div>
 
       <!-- CTA Section -->
-      <div class="mt-16 text-center bg-gradient-to-r from-primary to-secondary rounded-2xl p-12 text-white">
+      <div class="mt-16 text-center bg-blue-600 rounded-2xl p-12 text-white">
         <h3 class="font-display text-3xl font-bold mb-4">
           Ready to Experience Our Process?
         </h3>
@@ -108,10 +108,10 @@
           Let's discuss your project and show you how we can bring your vision to life.
         </p>
         <div class="flex flex-col sm:flex-row gap-4 justify-center">
-          <button @click="$emit('openContact')" class="bg-white text-primary px-8 py-4 rounded-lg font-semibold hover:shadow-lg transform hover:scale-105 transition-all duration-200">
+          <button @click="$emit('openContact')" class="bg-white text-blue-600 px-8 py-3 rounded-lg font-semibold hover:bg-gray-50 shadow-sm hover:shadow-md transition-all duration-200">
             Start Your Project
           </button>
-          <button class="border border-white/50 text-white px-8 py-4 rounded-lg font-semibold hover:bg-white hover:text-primary transition-all duration-200">
+          <button class="border-2 border-white text-white px-8 py-3 rounded-lg font-semibold hover:bg-white hover:text-blue-600 transition-all duration-200">
             View Case Studies
           </button>
         </div>

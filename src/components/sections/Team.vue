@@ -1,5 +1,5 @@
 <template>
-  <section id="team" class="py-20 bg-gradient-to-br from-gray-50 to-white">
+  <section id="team" class="py-20 bg-gray-50">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <!-- Section Header -->
       <div class="text-center mb-16">
@@ -43,8 +43,7 @@
              :style="{ animationDelay: `${index * 100}ms` }">
           <div class="bg-white rounded-xl shadow-lg overflow-hidden transform transition-all duration-500 hover:shadow-2xl hover:-translate-y-2">
             <!-- Member Photo -->
-            <div class="relative h-64 bg-gradient-to-br from-primary/10 to-secondary/10 overflow-hidden">
-              <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+            <div class="relative h-64 bg-gray-100 overflow-hidden">
               <img v-if="member.image"
                    :src="member.image"
                    :alt="member.name"
@@ -105,7 +104,7 @@
 
       <!-- CTA Section -->
       <div class="text-center">
-        <div class="bg-gradient-to-r from-primary to-secondary rounded-2xl p-12 text-white">
+        <div class="bg-blue-600 rounded-2xl p-12 text-white">
           <h3 class="font-display text-3xl font-bold mb-4">
             Join Our Growing Team
           </h3>
@@ -114,7 +113,7 @@
             If you think you'd be a great fit, we'd love to hear from you!
           </p>
           <a href="mailto:careers@nusasoftware.com"
-             class="inline-flex items-center bg-white text-primary px-8 py-3 rounded-lg font-semibold hover:shadow-lg transform hover:scale-105 transition-all duration-200">
+             class="inline-flex items-center bg-white text-blue-600 px-8 py-3 rounded-lg font-semibold hover:bg-gray-50 shadow-sm hover:shadow-md transition-all duration-200">
             View Open Positions
             <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />

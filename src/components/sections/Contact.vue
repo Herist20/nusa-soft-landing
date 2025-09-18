@@ -1,5 +1,5 @@
 <template>
-  <section id="contact" class="py-20 bg-gradient-to-br from-gray-50 to-white">
+  <section id="contact" class="py-20 bg-white">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <!-- Header -->
       <div class="text-center mb-16">
@@ -16,15 +16,12 @@
       <div class="grid grid-cols-1 lg:grid-cols-3 gap-12">
         <!-- Contact Form -->
         <div class="lg:col-span-2">
-          <div class="bg-white rounded-2xl shadow-xl p-8 lg:p-12 relative overflow-hidden">
-            <!-- Background decoration -->
-            <div class="absolute top-0 right-0 w-40 h-40 bg-gradient-to-br from-primary/10 to-secondary/10 rounded-full -translate-y-20 translate-x-20"></div>
-            <div class="absolute bottom-0 left-0 w-32 h-32 bg-gradient-to-br from-secondary/10 to-primary/10 rounded-full translate-y-16 -translate-x-16"></div>
+          <div class="bg-white rounded-2xl shadow-sm p-8 lg:p-12 relative border border-gray-200">
 
             <div class="relative z-10">
               <div class="flex items-center gap-3 mb-8">
-                <div class="w-12 h-12 bg-gradient-to-r from-primary to-secondary rounded-xl flex items-center justify-center">
-                  <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <div class="w-12 h-12 bg-blue-100 rounded-xl flex items-center justify-center">
+                  <svg class="w-6 h-6 text-secondary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
                   </svg>
                 </div>
@@ -64,7 +61,7 @@
                 <!-- Personal Information -->
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div>
-                    <label for="fullName" class="block text-sm font-semibold text-gray-700 mb-2">
+                    <label for="fullName" class="block font-medium text-gray-700 mb-2">
                       Full Name *
                     </label>
                     <input
@@ -72,7 +69,7 @@
                       id="fullName"
                       v-model="form.fullName"
                       required
-                      class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-primary focus:border-transparent transition-all duration-200"
+                      class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all duration-200 placeholder-gray-400"
                       :class="{ 'border-red-500': errors.fullName }"
                       placeholder="Enter your full name"
                     />
@@ -80,7 +77,7 @@
                   </div>
 
                   <div>
-                    <label for="email" class="block text-sm font-semibold text-gray-700 mb-2">
+                    <label for="email" class="block font-medium text-gray-700 mb-2">
                       Email Address *
                     </label>
                     <input
@@ -88,7 +85,7 @@
                       id="email"
                       v-model="form.email"
                       required
-                      class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-primary focus:border-transparent transition-all duration-200"
+                      class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all duration-200 placeholder-gray-400"
                       :class="{ 'border-red-500': errors.email }"
                       placeholder="your@email.com"
                     />
@@ -98,27 +95,27 @@
 
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div>
-                    <label for="phone" class="block text-sm font-semibold text-gray-700 mb-2">
+                    <label for="phone" class="block font-medium text-gray-700 mb-2">
                       Phone Number
                     </label>
                     <input
                       type="tel"
                       id="phone"
                       v-model="form.phone"
-                      class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-primary focus:border-transparent transition-all duration-200"
+                      class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all duration-200 placeholder-gray-400"
                       placeholder="+62 812-3456-7890"
                     />
                   </div>
 
                   <div>
-                    <label for="company" class="block text-sm font-semibold text-gray-700 mb-2">
+                    <label for="company" class="block font-medium text-gray-700 mb-2">
                       Company/Organization
                     </label>
                     <input
                       type="text"
                       id="company"
                       v-model="form.company"
-                      class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-primary focus:border-transparent transition-all duration-200"
+                      class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all duration-200 placeholder-gray-400"
                       placeholder="Your company name"
                     />
                   </div>
@@ -127,14 +124,14 @@
                 <!-- Project Details -->
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div>
-                    <label for="projectType" class="block text-sm font-semibold text-gray-700 mb-2">
+                    <label for="projectType" class="block font-medium text-gray-700 mb-2">
                       Project Type *
                     </label>
                     <select
                       id="projectType"
                       v-model="form.projectType"
                       required
-                      class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-primary focus:border-transparent transition-all duration-200"
+                      class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all duration-200 placeholder-gray-400"
                       :class="{ 'border-red-500': errors.projectType }"
                     >
                       <option value="">Select project type</option>
@@ -147,14 +144,14 @@
                   </div>
 
                   <div>
-                    <label for="budget" class="block text-sm font-semibold text-gray-700 mb-2">
+                    <label for="budget" class="block font-medium text-gray-700 mb-2">
                       Budget Range *
                     </label>
                     <select
                       id="budget"
                       v-model="form.budget"
                       required
-                      class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-primary focus:border-transparent transition-all duration-200"
+                      class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all duration-200 placeholder-gray-400"
                       :class="{ 'border-red-500': errors.budget }"
                     >
                       <option value="">Select budget range</option>
@@ -170,13 +167,13 @@
 
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div>
-                    <label for="contactMethod" class="block text-sm font-semibold text-gray-700 mb-2">
+                    <label for="contactMethod" class="block font-medium text-gray-700 mb-2">
                       Preferred Contact Method
                     </label>
                     <select
                       id="contactMethod"
                       v-model="form.contactMethod"
-                      class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-primary focus:border-transparent transition-all duration-200"
+                      class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all duration-200 placeholder-gray-400"
                     >
                       <option value="email">Email</option>
                       <option value="whatsapp">WhatsApp</option>
@@ -185,13 +182,13 @@
                   </div>
 
                   <div>
-                    <label for="timeline" class="block text-sm font-semibold text-gray-700 mb-2">
+                    <label for="timeline" class="block font-medium text-gray-700 mb-2">
                       Project Timeline
                     </label>
                     <select
                       id="timeline"
                       v-model="form.timeline"
-                      class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-primary focus:border-transparent transition-all duration-200"
+                      class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all duration-200 placeholder-gray-400"
                     >
                       <option value="asap">ASAP</option>
                       <option value="1-3-months">1-3 months</option>
@@ -203,7 +200,7 @@
 
                 <!-- Project Description -->
                 <div>
-                  <label for="description" class="block text-sm font-semibold text-gray-700 mb-2">
+                  <label for="description" class="block font-medium text-gray-700 mb-2">
                     Project Description *
                   </label>
                   <textarea
@@ -224,7 +221,7 @@
                   <button
                     type="submit"
                     :disabled="loading"
-                    class="flex-1 bg-gradient-to-r from-primary to-secondary text-white px-8 py-4 rounded-xl font-semibold hover:shadow-lg transform hover:scale-[1.02] transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none"
+                    class="flex-1 bg-blue-600 hover:bg-blue-700 text-white font-semibold px-8 py-3 rounded-lg shadow-sm hover:shadow-md transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
                   >
                     <span v-if="!loading" class="flex items-center justify-center">
                       <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -246,7 +243,7 @@
                     :href="whatsappUrl"
                     target="_blank"
                     rel="noopener noreferrer"
-                    class="flex items-center justify-center px-8 py-4 border border-green-500 text-green-600 rounded-xl font-semibold hover:bg-green-50 transition-all duration-200"
+                    class="flex items-center justify-center px-8 py-3 bg-green-500 hover:bg-green-600 text-white font-semibold rounded-lg shadow-sm hover:shadow-md transition-all duration-200"
                   >
                     <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 24 24">
                       <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.890-5.335 11.893-11.893A11.821 11.821 0 0020.885 3.488"/>
@@ -272,10 +269,10 @@
         <!-- Contact Info & Trust Signals -->
         <div class="space-y-6">
           <!-- Contact Information -->
-          <div class="bg-white rounded-2xl shadow-lg p-8">
+          <div class="bg-white rounded-2xl shadow-sm p-8 border border-gray-200">
             <div class="flex items-center gap-3 mb-6">
-              <div class="w-10 h-10 bg-gradient-to-r from-primary to-secondary rounded-lg flex items-center justify-center">
-                <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <div class="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center">
+                <svg class="w-5 h-5 text-secondary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
                 </svg>
               </div>
@@ -316,7 +313,7 @@
           </div>
 
           <!-- Response Time Promise -->
-          <div class="bg-gradient-to-r from-green-500 to-emerald-600 rounded-2xl shadow-lg p-8 text-white">
+          <div class="bg-accent rounded-2xl shadow-sm p-8 text-white border border-emerald-600">
             <div class="flex items-center gap-3 mb-4">
               <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
@@ -340,7 +337,7 @@
           </div>
 
           <!-- Trust Badges -->
-          <div class="bg-white rounded-2xl shadow-lg p-8">
+          <div class="bg-white rounded-2xl shadow-sm p-8 border border-gray-200">
             <h3 class="font-display text-lg font-bold text-gray-900 mb-4">Why Choose Us?</h3>
             <div class="space-y-3">
               <div class="flex items-center text-sm">

@@ -4,7 +4,7 @@
       <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
         <!-- Company Info -->
         <div class="col-span-1 md:col-span-2">
-          <h3 class="font-display font-bold text-2xl bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent mb-4">
+          <h3 class="font-display font-bold text-2xl text-white mb-4">
             Nusa Software
           </h3>
           <p class="text-gray-400 mb-4">

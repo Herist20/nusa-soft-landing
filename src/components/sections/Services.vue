@@ -76,7 +76,7 @@
             href="https://wa.me/6281234567890?text=Hi%2C%20I%27d%20like%20to%20discuss%20my%20project%20requirements"
             target="_blank"
             rel="noopener noreferrer"
-            class="inline-flex items-center bg-secondary text-white px-6 py-3 rounded-lg font-semibold hover:bg-blue-600 transition-colors duration-200"
+            class="inline-flex items-center bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 rounded-lg font-semibold shadow-sm hover:shadow-md transition-all duration-200"
           >
             Start a Project
             <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">

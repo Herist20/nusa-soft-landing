@@ -31,7 +31,7 @@
               href="https://wa.me/6281234567890?text=Hi%2C%20I%27d%20like%20a%20free%20consultation%20for%20my%20project"
               target="_blank"
               rel="noopener noreferrer"
-              class="bg-secondary text-white px-8 py-4 rounded-lg font-semibold transition-all duration-200 shadow-sm hover:shadow-md hover:-translate-y-1 inline-flex items-center justify-center gap-3"
+              class="bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 rounded-lg font-semibold transition-all duration-200 shadow-sm hover:shadow-md inline-flex items-center justify-center gap-3"
             >
               Start Your Project
               <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -41,7 +41,7 @@
             <a
               href="#portfolio"
               @click="scrollToSection($event, '#portfolio')"
-              class="bg-white border-2 border-secondary text-secondary px-8 py-4 rounded-lg font-semibold hover:bg-blue-50 transition-all duration-200 text-center"
+              class="bg-white border-2 border-blue-600 text-blue-600 px-8 py-3 rounded-lg font-semibold hover:bg-blue-50 transition-all duration-200 text-center"
             >
               View Portfolio
             </a>
