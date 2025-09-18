@@ -1,118 +1,156 @@
 <template>
-  <section id="hero" class="relative min-h-screen flex items-center pt-16 overflow-hidden bg-white">
-    <!-- Clean Background Pattern -->
+  <section id="hero" class="relative min-h-screen flex items-center pt-20 overflow-hidden bg-white">
+    <!-- Subtle Grid Pattern -->
     <div class="absolute inset-0">
-      <div class="absolute inset-0 bg-surface opacity-50"></div>
-      <div class="hero-pattern">
-        <div class="pattern-dot pattern-dot-1"></div>
-        <div class="pattern-dot pattern-dot-2"></div>
-        <div class="pattern-dot pattern-dot-3"></div>
-      </div>
+      <div class="absolute inset-0 grid-pattern"></div>
+      <div class="absolute top-0 right-0 w-1/3 h-1/3 bg-blue-50/30 rounded-full blur-3xl"></div>
+      <div class="absolute bottom-0 left-0 w-1/3 h-1/3 bg-emerald-50/30 rounded-full blur-3xl"></div>
     </div>
 
-    <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 z-10">
-      <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-        <div class="text-primary hero-content">
-          <div class="mb-4 opacity-0 animate-fade-in-up" style="animation-delay: 0.2s">
-            <span class="inline-flex items-center px-4 py-2 rounded-full bg-surface border border-border text-sm font-semibold text-secondary">
-              Fast • Reliable • Scalable Solutions
+    <div class="relative max-w-7xl mx-auto px-8 lg:px-16 py-12 z-10">
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+        <div class="hero-content">
+          <div class="mb-6 opacity-0 animate-fade-in-up" style="animation-delay: 0.2s">
+            <span class="inline-flex items-center px-4 py-2 rounded-lg bg-blue-50 text-sm font-semibold text-secondary border border-blue-100">
+              ✓ Trusted by 120+ Companies
             </span>
           </div>
 
-          <h1 class="font-sans text-4xl md:text-5xl lg:text-6xl font-extrabold mb-6 opacity-0 animate-fade-in-up text-primary leading-tight" style="animation-delay: 0.4s">
-            Transforming Ideas into
-            <span class="text-secondary"> Digital Reality</span>
+          <h1 class="font-sans text-5xl md:text-6xl lg:text-7xl font-bold mb-6 opacity-0 animate-fade-in-up text-gray-900 leading-[1.1] tracking-tight" style="animation-delay: 0.4s">
+            Build Your Next
+            <span class="block text-secondary">Digital Product</span>
+            <span class="block text-3xl md:text-4xl lg:text-5xl text-gray-600 font-normal mt-2">With Confidence</span>
           </h1>
 
-          <p class="text-xl md:text-2xl mb-2 font-semibold text-primary opacity-0 animate-fade-in-up" style="animation-delay: 0.6s">
-            Expert Web & Mobile App Development Services
+          <p class="text-xl text-gray-600 font-normal mb-8 opacity-0 animate-fade-in-up leading-relaxed max-w-lg" style="animation-delay: 0.6s">
+            We help businesses transform their ideas into scalable digital products. From concept to launch, we're your technical partner.
           </p>
 
-          <p class="text-lg text-text-secondary mb-8 opacity-0 animate-fade-in-up" style="animation-delay: 0.8s">
-            We transform your vision into powerful digital solutions that drive business growth and user engagement.
-          </p>
-
-          <div class="flex flex-col sm:flex-row gap-4 mb-12 opacity-0 animate-fade-in-up" style="animation-delay: 1s">
+          <div class="flex flex-col sm:flex-row gap-4 mb-16 opacity-0 animate-fade-in-up" style="animation-delay: 0.8s">
             <a
               href="https://wa.me/6281234567890?text=Hi%2C%20I%27d%20like%20a%20free%20consultation%20for%20my%20project"
               target="_blank"
               rel="noopener noreferrer"
-              class="bg-secondary hover:bg-blue-600 text-white px-8 py-4 rounded-lg font-semibold transition-all duration-200 shadow-md hover:shadow-lg hover:-translate-y-0.5 flex items-center justify-center gap-2"
+              class="bg-secondary text-white px-8 py-4 rounded-lg font-semibold transition-all duration-200 shadow-sm hover:shadow-md hover:-translate-y-1 inline-flex items-center justify-center gap-3"
             >
-              <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-                <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.890-5.335 11.893-11.893A11.821 11.821 0 0020.885 3.488"/>
+              Start Your Project
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
               </svg>
-              Get Free Consultation
             </a>
             <a
               href="#portfolio"
               @click="scrollToSection($event, '#portfolio')"
-              class="border-2 border-border text-primary px-8 py-4 rounded-lg font-semibold hover:bg-surface hover:border-secondary transition-all duration-200 text-center"
+              class="bg-white border-2 border-secondary text-secondary px-8 py-4 rounded-lg font-semibold hover:bg-blue-50 transition-all duration-200 text-center"
             >
-              View Our Work
+              View Portfolio
             </a>
           </div>
 
           <!-- Statistics Counter -->
-          <div class="grid grid-cols-3 gap-8 opacity-0 animate-fade-in-up" style="animation-delay: 1.2s">
-            <div class="text-center">
-              <div class="text-4xl font-bold text-secondary mb-1 counter" :data-target="projectsCount">{{ currentProjects }}</div>
-              <p class="text-text-muted text-sm font-medium">Projects Completed</p>
+          <div class="flex flex-wrap gap-8 opacity-0 animate-fade-in-up" style="animation-delay: 1s">
+            <div class="flex items-center gap-3">
+              <div class="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center">
+                <svg class="w-6 h-6 text-secondary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                </svg>
+              </div>
+              <div>
+                <div class="text-2xl font-bold text-gray-900">{{ currentProjects }}+</div>
+                <p class="text-gray-600 text-sm">Projects</p>
+              </div>
             </div>
-            <div class="text-center">
-              <div class="text-4xl font-bold text-accent mb-1 counter" :data-target="yearsCount">{{ currentYears }}</div>
-              <p class="text-text-muted text-sm font-medium">Years Experience</p>
+            <div class="flex items-center gap-3">
+              <div class="w-12 h-12 bg-emerald-100 rounded-lg flex items-center justify-center">
+                <svg class="w-6 h-6 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                </svg>
+              </div>
+              <div>
+                <div class="text-2xl font-bold text-gray-900">{{ currentYears }}+</div>
+                <p class="text-gray-600 text-sm">Years</p>
+              </div>
             </div>
-            <div class="text-center">
-              <div class="text-4xl font-bold text-secondary mb-1 counter" :data-target="clientsCount">{{ currentClients }}</div>
-              <p class="text-text-muted text-sm font-medium">Happy Clients</p>
+            <div class="flex items-center gap-3">
+              <div class="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center">
+                <svg class="w-6 h-6 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path>
+                </svg>
+              </div>
+              <div>
+                <div class="text-2xl font-bold text-gray-900">{{ currentClients }}+</div>
+                <p class="text-gray-600 text-sm">Clients</p>
+              </div>
             </div>
           </div>
         </div>
-        <!-- Hero Illustration/Mockup -->
-        <div class="relative opacity-0 animate-fade-in-right" style="animation-delay: 1.4s">
-          <div class="relative z-10">
-            <!-- Device Mockup Stack -->
-            <div class="relative">
-              <!-- Desktop Browser -->
-              <div class="bg-white rounded-2xl p-6 shadow-xl border border-border">
-                <div class="flex items-center gap-2 mb-4">
-                  <div class="w-3 h-3 bg-red-400 rounded-full"></div>
-                  <div class="w-3 h-3 bg-yellow-400 rounded-full"></div>
-                  <div class="w-3 h-3 bg-green-400 rounded-full"></div>
-                  <div class="flex-1 bg-surface rounded-md h-6 ml-4"></div>
-                </div>
-                <div class="space-y-3">
-                  <div class="bg-surface h-4 rounded"></div>
-                  <div class="grid grid-cols-2 gap-3">
-                    <div class="bg-surface h-20 rounded-lg"></div>
-                    <div class="bg-surface h-20 rounded-lg"></div>
-                  </div>
-                  <div class="bg-surface h-3 rounded"></div>
-                  <div class="bg-surface h-3 rounded w-3/4"></div>
-                </div>
+        <!-- Hero Visual -->
+        <div class="relative opacity-0 animate-fade-in-right" style="animation-delay: 1.2s">
+          <!-- Main Card -->
+          <div class="bg-white rounded-2xl p-8 shadow-lg border border-gray-100">
+            <!-- Header -->
+            <div class="flex items-center gap-3 mb-6">
+              <div class="w-10 h-10 bg-secondary rounded-lg flex items-center justify-center">
+                <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"></path>
+                </svg>
               </div>
+              <div>
+                <h3 class="font-semibold text-gray-900">Modern Development</h3>
+                <p class="text-sm text-gray-500">Clean, Scalable Code</p>
+              </div>
+            </div>
 
-              <!-- Mobile Phone -->
-              <div class="absolute -bottom-6 -right-6 bg-white rounded-2xl p-4 shadow-xl border border-border transform rotate-12">
-                <div class="w-4 h-1 bg-border rounded-full mx-auto mb-3"></div>
-                <div class="space-y-2">
-                  <div class="bg-surface h-8 rounded"></div>
-                  <div class="grid grid-cols-2 gap-2">
-                    <div class="bg-surface h-12 rounded"></div>
-                    <div class="bg-surface h-12 rounded"></div>
-                  </div>
-                  <div class="bg-surface h-2 rounded"></div>
-                  <div class="bg-surface h-2 rounded w-2/3"></div>
+            <!-- Code Preview -->
+            <div class="bg-gray-50 rounded-lg p-4 mb-6">
+              <div class="space-y-2 text-sm font-mono">
+                <div class="text-blue-600">const app = createApp({</div>
+                <div class="text-gray-600 ml-4">components: { Header, Main },</div>
+                <div class="text-gray-600 ml-4">data() { return { ... } }</div>
+                <div class="text-blue-600">})</div>
+              </div>
+            </div>
+
+            <!-- Features -->
+            <div class="space-y-3">
+              <div class="flex items-center gap-3">
+                <div class="w-6 h-6 bg-emerald-100 rounded-full flex items-center justify-center">
+                  <svg class="w-3 h-3 text-emerald-600" fill="currentColor" viewBox="0 0 20 20">
+                    <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+                  </svg>
                 </div>
+                <span class="text-gray-700">TypeScript Ready</span>
+              </div>
+              <div class="flex items-center gap-3">
+                <div class="w-6 h-6 bg-blue-100 rounded-full flex items-center justify-center">
+                  <svg class="w-3 h-3 text-blue-600" fill="currentColor" viewBox="0 0 20 20">
+                    <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+                  </svg>
+                </div>
+                <span class="text-gray-700">Responsive Design</span>
+              </div>
+              <div class="flex items-center gap-3">
+                <div class="w-6 h-6 bg-purple-100 rounded-full flex items-center justify-center">
+                  <svg class="w-3 h-3 text-purple-600" fill="currentColor" viewBox="0 0 20 20">
+                    <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+                  </svg>
+                </div>
+                <span class="text-gray-700">SEO Optimized</span>
               </div>
             </div>
           </div>
 
           <!-- Floating Elements -->
-          <div class="absolute -top-4 -left-4 w-8 h-8 bg-secondary/20 rounded-full animate-pulse" style="animation-delay: 2s"></div>
-          <div class="absolute -bottom-8 -left-8 w-6 h-6 bg-accent/20 rounded-full animate-pulse" style="animation-delay: 2.5s"></div>
-          <div class="absolute -top-8 -right-2 w-4 h-4 bg-secondary/20 rounded-full animate-pulse" style="animation-delay: 3s"></div>
+          <div class="absolute -top-4 -right-4 w-8 h-8 bg-blue-100 rounded-lg flex items-center justify-center">
+            <svg class="w-4 h-4 text-secondary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+            </svg>
+          </div>
+          <div class="absolute -bottom-4 -left-4 w-6 h-6 bg-emerald-100 rounded-lg flex items-center justify-center">
+            <svg class="w-3 h-3 text-emerald-600" fill="currentColor" viewBox="0 0 20 20">
+              <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+            </svg>
+          </div>
         </div>
       </div>
     </div>
@@ -205,45 +243,11 @@ onMounted(() => {
   animation: fade-in-right 1s ease-out forwards;
 }
 
-.hero-pattern {
-  position: absolute;
-  inset: 0;
-  overflow: hidden;
-  pointer-events: none;
-}
-
-.pattern-dot {
-  position: absolute;
-  width: 4px;
-  height: 4px;
-  background: var(--color-border);
-  border-radius: 50%;
-}
-
-.pattern-dot-1 {
-  width: 80px;
-  height: 80px;
-  top: 20%;
-  left: 10%;
-  background: linear-gradient(135deg, var(--color-secondary) 0%, transparent 50%);
-  opacity: 0.1;
-}
-
-.pattern-dot-2 {
-  width: 60px;
-  height: 60px;
-  top: 70%;
-  right: 15%;
-  background: linear-gradient(135deg, var(--color-accent) 0%, transparent 50%);
-  opacity: 0.1;
-}
-
-.pattern-dot-3 {
-  width: 40px;
-  height: 40px;
-  top: 40%;
-  right: 40%;
-  background: linear-gradient(135deg, var(--color-secondary) 0%, transparent 50%);
-  opacity: 0.1;
+.grid-pattern {
+  background-image:
+    linear-gradient(rgba(59, 130, 246, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(59, 130, 246, 0.03) 1px, transparent 1px);
+  background-size: 50px 50px;
+  background-position: 0 0, 0 0;
 }
 </style>
