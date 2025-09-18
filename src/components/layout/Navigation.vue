@@ -3,8 +3,8 @@
     class="fixed top-0 left-0 w-full z-50 transition-all duration-300"
     :class="[
       scrolled
-        ? 'bg-white/95 backdrop-blur-md shadow-lg border-b border-gray-200/20'
-        : 'bg-transparent'
+        ? 'bg-white/95 backdrop-blur-md shadow-lg border-b border-border'
+        : 'bg-white/80 backdrop-blur-sm border-b border-border/50'
     ]"
     role="navigation"
     aria-label="Main navigation"
@@ -15,14 +15,16 @@
           <a
             href="#hero"
             @click="scrollToSection($event, '#hero')"
-            class="font-display font-bold text-2xl transition-all duration-200"
+            class="font-sans font-extrabold text-2xl transition-all duration-200 flex items-center gap-2 no-underline"
             :class="scrolled
-              ? 'bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent'
-              : 'text-white drop-shadow-lg'
+              ? 'text-primary'
+              : 'text-primary'
             "
             aria-label="Nusa Software - Go to top"
+            style="text-decoration: none;"
           >
-            🚀 Nusa Software
+            <span class="text-secondary text-3xl">•</span>
+            <span>Nusa<span class="text-secondary">Soft</span></span>
           </a>
         </div>
 
@@ -38,20 +40,20 @@
               :class="[
                 activeSection === item.href
                   ? scrolled
-                    ? 'text-primary font-semibold'
-                    : 'text-yellow-300 font-semibold drop-shadow-lg'
+                    ? 'text-secondary font-semibold'
+                    : 'text-secondary font-semibold'
                   : scrolled
-                    ? 'text-gray-600 hover:text-primary'
-                    : 'text-white/90 hover:text-white drop-shadow-md'
+                    ? 'text-text-secondary hover:text-primary'
+                    : 'text-text-secondary hover:text-primary'
               ]"
               :aria-current="activeSection === item.href ? 'page' : undefined"
             >
               {{ item.name }}
               <span
-                class="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-0 h-0.5 transition-all duration-200 group-hover:w-full"
+                class="absolute bottom-0 left-1/2 transform -translate-x-1/2 h-0.5 transition-all duration-200"
                 :class="activeSection === item.href
-                  ? scrolled ? 'bg-primary w-full' : 'bg-yellow-300 w-full'
-                  : scrolled ? 'bg-primary' : 'bg-white'
+                  ? 'bg-secondary w-full'
+                  : 'bg-secondary w-0 group-hover:w-full'
                 "
               ></span>
             </a>
@@ -59,7 +61,7 @@
               href="https://wa.me/6281234567890?text=Hi%2C%20I%27d%20like%20to%20start%20a%20project%20with%20you"
               target="_blank"
               rel="noopener noreferrer"
-              class="bg-gradient-to-r from-primary to-secondary text-white px-6 py-2 rounded-full font-semibold hover:shadow-lg transform hover:scale-105 transition-all duration-200 flex items-center gap-2"
+              class="bg-secondary hover:bg-blue-600 text-white px-6 py-2 rounded-lg font-semibold hover:shadow-md transition-all duration-200 flex items-center gap-2 hover:-translate-y-0.5"
               aria-label="Start project via WhatsApp"
             >
               <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
@@ -75,7 +77,7 @@
           <button
             @click="toggleMobileMenu"
             class="p-2 rounded-md transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-primary/50"
-            :class="scrolled ? 'text-gray-600 hover:text-primary' : 'text-white hover:text-yellow-300'"
+            :class="scrolled ? 'text-text-secondary hover:text-primary' : 'text-primary hover:text-secondary'"
             aria-label="Toggle mobile menu"
             :aria-expanded="mobileMenuOpen"
           >
@@ -110,7 +112,7 @@
     >
       <div
         v-if="mobileMenuOpen"
-        class="md:hidden bg-white/95 backdrop-blur-md border-t border-gray-200/20 shadow-lg"
+        class="md:hidden bg-white/95 backdrop-blur-md border-t border-border shadow-lg"
       >
         <div class="px-4 pt-4 pb-6 space-y-3">
           <a
@@ -121,20 +123,20 @@
             class="block px-4 py-3 text-base font-medium rounded-lg transition-all duration-200"
             :class="[
               activeSection === item.href
-                ? 'text-primary bg-blue-50 font-semibold border-l-4 border-primary'
-                : 'text-gray-600 hover:text-primary hover:bg-gray-50'
+                ? 'text-secondary bg-surface font-semibold border-l-4 border-secondary'
+                : 'text-text-secondary hover:text-primary hover:bg-surface'
             ]"
             :aria-current="activeSection === item.href ? 'page' : undefined"
           >
             {{ item.name }}
           </a>
-          <div class="pt-2 border-t border-gray-200">
+          <div class="pt-2 border-t border-border">
             <a
               href="https://wa.me/6281234567890?text=Hi%2C%20I%27d%20like%20to%20start%20a%20project%20with%20you"
               target="_blank"
               rel="noopener noreferrer"
               @click="mobileMenuOpen = false"
-              class="w-full bg-gradient-to-r from-primary to-secondary text-white px-4 py-3 rounded-lg font-semibold transition-all duration-200 flex items-center justify-center gap-2 hover:shadow-lg"
+              class="w-full bg-secondary hover:bg-blue-600 text-white px-4 py-3 rounded-lg font-semibold transition-all duration-200 flex items-center justify-center gap-2 hover:shadow-md"
               aria-label="Start project via WhatsApp"
             >
               <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">

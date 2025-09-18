@@ -12,14 +12,19 @@ export function addSkipToContent() {
   const styles = `
     .skip-to-content {
       position: absolute;
-      top: -40px;
-      left: 0;
-      background: #000;
+      top: -100px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #3B82F6;
       color: white;
-      padding: 8px;
+      padding: 12px 24px;
       text-decoration: none;
       z-index: 100000;
-      border-radius: 0 0 4px 0;
+      border-radius: 0 0 8px 8px;
+      font-weight: 600;
+      font-size: 14px;
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+      transition: all 0.3s ease;
     }
 
     .skip-to-content:focus {
