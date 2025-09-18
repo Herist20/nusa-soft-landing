@@ -44,6 +44,7 @@
             <img
               :src="project.image"
               :alt="project.title"
+              loading="lazy"
               class="w-full h-full object-cover group-hover:scale-[1.02] transition-transform duration-200"
             />
 
@@ -156,7 +157,7 @@
         >
           <!-- Modal Header -->
           <div class="relative">
-            <img :src="selectedProject.image" :alt="selectedProject.title" class="w-full h-64 lg:h-80 object-cover" />
+            <img :src="selectedProject.image" :alt="selectedProject.title" loading="lazy" class="w-full h-64 lg:h-80 object-cover" />
             <button
               @click="closeCaseStudy"
               class="absolute top-4 right-4 w-10 h-10 bg-white rounded-full flex items-center justify-center text-gray-600 hover:bg-gray-100 transition-colors shadow-md"

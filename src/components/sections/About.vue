@@ -79,7 +79,7 @@
         <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-6">
           <div v-for="member in team" :key="member.name" class="bg-white rounded-xl shadow-sm p-6 text-center transition-shadow duration-200 hover:shadow-md">
             <div class="mb-4">
-              <img :src="member.image" :alt="member.name" class="w-20 h-20 rounded-lg mx-auto object-cover">
+              <img :src="member.image" :alt="member.name" loading="lazy" class="w-20 h-20 rounded-lg mx-auto object-cover">
             </div>
             <h4 class="text-lg font-semibold text-gray-900 mb-1">{{ member.name }}</h4>
             <p class="text-blue-600 font-medium text-sm mb-3">{{ member.role }}</p>

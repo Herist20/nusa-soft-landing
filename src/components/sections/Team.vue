@@ -47,6 +47,7 @@
               <img v-if="member.image"
                    :src="member.image"
                    :alt="member.name"
+                   loading="lazy"
                    class="w-full h-full object-cover">
               <div v-else class="w-full h-full flex items-center justify-center">
                 <svg class="w-32 h-32 text-gray-400" fill="currentColor" viewBox="0 0 24 24">
