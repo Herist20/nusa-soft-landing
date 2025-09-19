@@ -30,7 +30,7 @@
 
         <!-- Desktop Navigation -->
         <div class="hidden md:block">
-          <div class="ml-10 flex items-baseline space-x-8">
+          <div class="ml-10 flex items-center space-x-8">
             <a
               v-for="item in navItems"
               :key="item.name"
@@ -57,6 +57,10 @@
                 "
               ></span>
             </a>
+
+            <!-- Language Toggle sejajar dengan menu -->
+            <LanguageToggle />
+
             <a
               href="https://wa.me/6281234567890?text=Hi%2C%20I%27d%20like%20to%20start%20a%20project%20with%20you"
               target="_blank"
@@ -70,13 +74,14 @@
               {{ t('navigation.startProject') }}
             </a>
           </div>
-          <div class="ml-3">
-            <LanguageToggle variant="compact" />
-          </div>
         </div>
 
-        <!-- Mobile menu button -->
-        <div class="md:hidden">
+        <!-- Mobile menu button & language toggle -->
+        <div class="md:hidden flex items-center gap-3">
+          <!-- Mobile Language Toggle -->
+          <LanguageToggle />
+
+          <!-- Mobile Menu Button -->
           <button
             @click="toggleMobileMenu"
             class="p-2 rounded-md transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-primary/50"
@@ -131,7 +136,7 @@
             ]"
             :aria-current="activeSection === item.href ? 'page' : undefined"
           >
-            {{ item.name }}
+            {{ typeof item.name === 'function' ? item.name() : item.name }}
           </a>
           <div class="pt-2 border-t border-border">
             <a
@@ -147,9 +152,6 @@
               </svg>
               {{ t('navigation.startProject') }}
             </a>
-          </div>
-          <div class="pt-2 border-t border-border">
-            <LanguageToggle variant="compact" />
           </div>
         </div>
       </div>

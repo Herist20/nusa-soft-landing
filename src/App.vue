@@ -1,19 +1,11 @@
 <template>
   <div id="app">
     <RouterView />
-
-    <!-- Global Mobile Language Switcher -->
-    <LanguageToggle
-      variant="floating"
-      position="floating"
-      :show-mobile="true"
-    />
   </div>
 </template>
 
 <script setup>
 import { RouterView } from 'vue-router'
-import LanguageToggle from './components/LanguageToggle.vue'
 </script>
 
 <style>
