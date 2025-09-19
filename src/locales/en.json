@@ -1,0 +1,186 @@
+{
+  "meta": {
+    "title": "Nusa Software - Professional Software Solutions Indonesia",
+    "description": "Custom software development, web applications, mobile apps, and enterprise systems for Indonesian businesses. Free consultation!",
+    "keywords": "software house indonesia, application development, custom software development, web development indonesia"
+  },
+  "navigation": {
+    "home": "Home",
+    "services": "Services",
+    "portfolio": "Portfolio",
+    "about": "About",
+    "team": "Team",
+    "process": "Process",
+    "contact": "Contact",
+    "blog": "Blog",
+    "products": "Products",
+    "getConsultation": "Free Consultation",
+    "getQuote": "Get a Quote",
+    "startProject": "Start Project"
+  },
+  "nav": {
+    "home": "Home",
+    "services": "Services",
+    "products": "Products",
+    "portfolio": "Portfolio",
+    "about": "About Us",
+    "contact": "Contact",
+    "blog": "Blog",
+    "getQuote": "Get a Quote"
+  },
+  "hero": {
+    "title": "Transform Your Business Digitally",
+    "subtitle": "Your trusted technology partner for innovative and high-quality software solutions",
+    "description": "We deliver custom software development services tailored to your unique business needs. From concept to implementation, we're ready to be your digital partner.",
+    "cta": {
+      "primary": "Start Free Consultation",
+      "secondary": "View Our Portfolio"
+    },
+    "stats": {
+      "projects": "Projects Completed",
+      "clients": "Happy Clients",
+      "experience": "Years of Experience",
+      "team": "Professional Team"
+    }
+  },
+  "services": {
+    "title": "Our Services",
+    "subtitle": "Comprehensive technology solutions for every business need",
+    "viewDetails": "View Details",
+    "learnMore": "Learn More",
+    "list": {
+      "webDev": {
+        "title": "Web Development",
+        "description": "Modern, responsive, and scalable web applications with cutting-edge technology",
+        "features": [
+          "Progressive Web Apps",
+          "E-Commerce Platform",
+          "Web Portal & Dashboard",
+          "API Development"
+        ]
+      },
+      "mobileDev": {
+        "title": "Mobile Applications",
+        "description": "High-quality native iOS and Android or cross-platform applications",
+        "features": [
+          "Native iOS & Android",
+          "Cross-Platform Apps",
+          "Mobile UI/UX Design",
+          "App Maintenance"
+        ]
+      },
+      "enterprise": {
+        "title": "Enterprise Solutions",
+        "description": "Integrated systems to enhance your business operational efficiency",
+        "features": [
+          "ERP Systems",
+          "CRM Solutions",
+          "Business Intelligence",
+          "System Integration"
+        ]
+      },
+      "consulting": {
+        "title": "IT Consulting",
+        "description": "Technology strategy and digital transformation for business growth",
+        "features": [
+          "Digital Strategy",
+          "Technology Audit",
+          "Process Optimization",
+          "IT Infrastructure"
+        ]
+      },
+      "cloud": {
+        "title": "Cloud Solutions",
+        "description": "Cloud migration, deployment, and infrastructure management",
+        "features": [
+          "Cloud Migration",
+          "DevOps Services",
+          "Cloud Architecture",
+          "Monitoring & Security"
+        ]
+      },
+      "ai": {
+        "title": "AI & Machine Learning",
+        "description": "Artificial intelligence solutions for automation and data analysis",
+        "features": [
+          "Predictive Analytics",
+          "Natural Language Processing",
+          "Computer Vision",
+          "Chatbot Development"
+        ]
+      }
+    }
+  },
+  "contact": {
+    "title": "Contact Us",
+    "subtitle": "Let's discuss how we can help with your project",
+    "form": {
+      "name": "Full Name",
+      "email": "Email",
+      "phone": "Phone Number",
+      "company": "Company",
+      "subject": "Subject",
+      "message": "Message",
+      "budget": "Project Budget",
+      "timeline": "Project Timeline",
+      "submit": "Send Message",
+      "submitting": "Sending...",
+      "success": "Message sent successfully! We'll contact you soon.",
+      "error": "An error occurred. Please try again."
+    },
+    "validation": {
+      "nameRequired": "Name is required",
+      "emailRequired": "Email is required",
+      "emailInvalid": "Invalid email format",
+      "phoneInvalid": "Invalid phone number format",
+      "messageRequired": "Message is required",
+      "messageMin": "Message must be at least 10 characters"
+    },
+    "info": {
+      "address": "Address",
+      "phone": "Phone",
+      "email": "Email",
+      "hours": "Working Hours",
+      "hoursDetail": "Monday - Friday: 09:00 - 18:00"
+    }
+  },
+  "footer": {
+    "description": "Your trusted technology partner for innovative software solutions and digital business transformation.",
+    "quickLinks": "Quick Links",
+    "services": "Services",
+    "company": "Company",
+    "followUs": "Follow Us",
+    "newsletter": {
+      "title": "Subscribe to Newsletter",
+      "description": "Get the latest updates on technology and business tips",
+      "placeholder": "Enter your email",
+      "button": "Subscribe"
+    },
+    "copyright": "© 2024 Nusa Software. All Rights Reserved.",
+    "privacy": "Privacy Policy",
+    "terms": "Terms & Conditions"
+  },
+  "common": {
+    "loading": "Loading...",
+    "error": "An Error Occurred",
+    "retry": "Try Again",
+    "back": "Back",
+    "next": "Next",
+    "previous": "Previous",
+    "close": "Close",
+    "open": "Open",
+    "yes": "Yes",
+    "no": "No",
+    "confirm": "Confirm",
+    "cancel": "Cancel",
+    "save": "Save",
+    "delete": "Delete",
+    "edit": "Edit",
+    "search": "Search",
+    "filter": "Filter",
+    "sort": "Sort",
+    "viewAll": "View All",
+    "readMore": "Read More",
+    "showLess": "Show Less"
+  }
+}

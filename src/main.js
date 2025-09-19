@@ -2,6 +2,7 @@ import { createApp } from 'vue'
 import './style.css'
 import App from './App.vue'
 import router from './router'
+import i18n from './locales'
 
 // Import optimization utilities
 import lazyLoad from './directives/lazyLoad'
@@ -14,8 +15,12 @@ const app = createApp(App)
 // Register global directives
 app.directive('lazy', lazyLoad)
 
-// Use router
+// Use plugins
 app.use(router)
+app.use(i18n)
+
+// Make i18n globally available for router
+window.i18n = i18n
 
 // Initialize optimizations
 app.mixin({

@@ -1,0 +1,186 @@
+{
+  "meta": {
+    "title": "Nusa Software - Solusi Software Profesional Indonesia",
+    "description": "Jasa pengembangan software custom, aplikasi web, mobile, dan sistem enterprise untuk bisnis Indonesia. Konsultasi gratis!",
+    "keywords": "software house indonesia, jasa pembuatan aplikasi, pengembangan software custom, web development indonesia"
+  },
+  "navigation": {
+    "home": "Beranda",
+    "services": "Layanan",
+    "portfolio": "Portofolio",
+    "about": "Tentang",
+    "team": "Tim",
+    "process": "Proses",
+    "contact": "Kontak",
+    "blog": "Blog",
+    "products": "Produk",
+    "getConsultation": "Konsultasi Gratis",
+    "getQuote": "Dapatkan Penawaran",
+    "startProject": "Mulai Proyek"
+  },
+  "nav": {
+    "home": "Beranda",
+    "services": "Layanan",
+    "products": "Produk",
+    "portfolio": "Portofolio",
+    "about": "Tentang Kami",
+    "contact": "Kontak",
+    "blog": "Blog",
+    "getQuote": "Dapatkan Penawaran"
+  },
+  "hero": {
+    "title": "Wujudkan Transformasi Digital Bisnis Anda",
+    "subtitle": "Partner teknologi terpercaya untuk solusi software inovatif dan berkualitas tinggi",
+    "description": "Kami menghadirkan layanan pengembangan software custom yang disesuaikan dengan kebutuhan unik bisnis Anda. Dari konsep hingga implementasi, kami siap menjadi mitra digital Anda.",
+    "cta": {
+      "primary": "Mulai Konsultasi Gratis",
+      "secondary": "Lihat Portfolio Kami"
+    },
+    "stats": {
+      "projects": "Proyek Selesai",
+      "clients": "Klien Puas",
+      "experience": "Tahun Pengalaman",
+      "team": "Tim Profesional"
+    }
+  },
+  "services": {
+    "title": "Layanan Kami",
+    "subtitle": "Solusi teknologi komprehensif untuk setiap kebutuhan bisnis",
+    "viewDetails": "Lihat Detail",
+    "learnMore": "Pelajari Lebih Lanjut",
+    "list": {
+      "webDev": {
+        "title": "Pengembangan Web",
+        "description": "Aplikasi web modern, responsif, dan scalable dengan teknologi terkini",
+        "features": [
+          "Progressive Web Apps",
+          "E-Commerce Platform",
+          "Web Portal & Dashboard",
+          "API Development"
+        ]
+      },
+      "mobileDev": {
+        "title": "Aplikasi Mobile",
+        "description": "Aplikasi iOS dan Android native atau cross-platform berkualitas tinggi",
+        "features": [
+          "Native iOS & Android",
+          "Cross-Platform Apps",
+          "Mobile UI/UX Design",
+          "App Maintenance"
+        ]
+      },
+      "enterprise": {
+        "title": "Solusi Enterprise",
+        "description": "Sistem terintegrasi untuk meningkatkan efisiensi operasional bisnis",
+        "features": [
+          "ERP Systems",
+          "CRM Solutions",
+          "Business Intelligence",
+          "System Integration"
+        ]
+      },
+      "consulting": {
+        "title": "Konsultasi IT",
+        "description": "Strategi teknologi dan transformasi digital untuk pertumbuhan bisnis",
+        "features": [
+          "Digital Strategy",
+          "Technology Audit",
+          "Process Optimization",
+          "IT Infrastructure"
+        ]
+      },
+      "cloud": {
+        "title": "Cloud Solutions",
+        "description": "Migrasi, deployment, dan manajemen infrastruktur cloud",
+        "features": [
+          "Cloud Migration",
+          "DevOps Services",
+          "Cloud Architecture",
+          "Monitoring & Security"
+        ]
+      },
+      "ai": {
+        "title": "AI & Machine Learning",
+        "description": "Solusi kecerdasan buatan untuk otomasi dan analisis data",
+        "features": [
+          "Predictive Analytics",
+          "Natural Language Processing",
+          "Computer Vision",
+          "Chatbot Development"
+        ]
+      }
+    }
+  },
+  "contact": {
+    "title": "Hubungi Kami",
+    "subtitle": "Mari diskusikan bagaimana kami dapat membantu proyek Anda",
+    "form": {
+      "name": "Nama Lengkap",
+      "email": "Email",
+      "phone": "Nomor Telepon",
+      "company": "Perusahaan",
+      "subject": "Subjek",
+      "message": "Pesan",
+      "budget": "Anggaran Proyek",
+      "timeline": "Timeline Proyek",
+      "submit": "Kirim Pesan",
+      "submitting": "Mengirim...",
+      "success": "Pesan berhasil dikirim! Kami akan segera menghubungi Anda.",
+      "error": "Terjadi kesalahan. Silakan coba lagi."
+    },
+    "validation": {
+      "nameRequired": "Nama harus diisi",
+      "emailRequired": "Email harus diisi",
+      "emailInvalid": "Format email tidak valid",
+      "phoneInvalid": "Format nomor telepon tidak valid",
+      "messageRequired": "Pesan harus diisi",
+      "messageMin": "Pesan minimal 10 karakter"
+    },
+    "info": {
+      "address": "Alamat",
+      "phone": "Telepon",
+      "email": "Email",
+      "hours": "Jam Kerja",
+      "hoursDetail": "Senin - Jumat: 09:00 - 18:00"
+    }
+  },
+  "footer": {
+    "description": "Partner teknologi terpercaya untuk solusi software inovatif dan transformasi digital bisnis Anda.",
+    "quickLinks": "Tautan Cepat",
+    "services": "Layanan",
+    "company": "Perusahaan",
+    "followUs": "Ikuti Kami",
+    "newsletter": {
+      "title": "Berlangganan Newsletter",
+      "description": "Dapatkan update terbaru tentang teknologi dan tips bisnis",
+      "placeholder": "Masukkan email Anda",
+      "button": "Berlangganan"
+    },
+    "copyright": "© 2024 Nusa Software. Hak Cipta Dilindungi.",
+    "privacy": "Kebijakan Privasi",
+    "terms": "Syarat & Ketentuan"
+  },
+  "common": {
+    "loading": "Memuat...",
+    "error": "Terjadi Kesalahan",
+    "retry": "Coba Lagi",
+    "back": "Kembali",
+    "next": "Selanjutnya",
+    "previous": "Sebelumnya",
+    "close": "Tutup",
+    "open": "Buka",
+    "yes": "Ya",
+    "no": "Tidak",
+    "confirm": "Konfirmasi",
+    "cancel": "Batal",
+    "save": "Simpan",
+    "delete": "Hapus",
+    "edit": "Edit",
+    "search": "Cari",
+    "filter": "Filter",
+    "sort": "Urutkan",
+    "viewAll": "Lihat Semua",
+    "readMore": "Baca Selengkapnya",
+    "showLess": "Tampilkan Lebih Sedikit"
+  }
+}

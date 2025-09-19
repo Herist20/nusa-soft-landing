@@ -12,18 +12,16 @@
         <div class="hero-content">
           <div class="mb-6 opacity-0 animate-fade-in-up" style="animation-delay: 0.2s">
             <span class="inline-flex items-center px-4 py-2 rounded-lg bg-blue-50 text-sm font-semibold text-secondary border border-blue-100">
-              ✓ Trusted by 120+ Companies
+              ✓ {{ t('hero.subtitle') }}
             </span>
           </div>
 
           <h1 class="font-sans text-5xl md:text-6xl lg:text-7xl font-bold mb-6 opacity-0 animate-fade-in-up text-gray-900 leading-[1.1] tracking-tight" style="animation-delay: 0.4s">
-            Build Your Next
-            <span class="block text-secondary">Digital Product</span>
-            <span class="block text-3xl md:text-4xl lg:text-5xl text-gray-600 font-normal mt-2">With Confidence</span>
+            {{ t('hero.title') }}
           </h1>
 
           <p class="text-xl text-gray-600 font-normal mb-8 opacity-0 animate-fade-in-up leading-relaxed max-w-lg" style="animation-delay: 0.6s">
-            We help businesses transform their ideas into scalable digital products. From concept to launch, we're your technical partner.
+            {{ t('hero.description') }}
           </p>
 
           <div class="flex flex-col sm:flex-row gap-4 mb-16 opacity-0 animate-fade-in-up" style="animation-delay: 0.8s">
@@ -33,7 +31,7 @@
               rel="noopener noreferrer"
               class="bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 rounded-lg font-semibold transition-all duration-200 shadow-sm hover:shadow-md inline-flex items-center justify-center gap-3"
             >
-              Start Your Project
+              {{ t('hero.cta.primary') }}
               <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
               </svg>
@@ -43,7 +41,7 @@
               @click="scrollToSection($event, '#portfolio')"
               class="bg-white border-2 border-blue-600 text-blue-600 px-8 py-3 rounded-lg font-semibold hover:bg-blue-50 transition-all duration-200 text-center"
             >
-              View Portfolio
+              {{ t('hero.cta.secondary') }}
             </a>
           </div>
 
@@ -57,7 +55,7 @@
               </div>
               <div>
                 <div class="text-2xl font-bold text-gray-900">{{ currentProjects }}+</div>
-                <p class="text-gray-600 text-sm">Projects</p>
+                <p class="text-gray-600 text-sm">{{ t('hero.stats.projects') }}</p>
               </div>
             </div>
             <div class="flex items-center gap-3">
@@ -68,7 +66,7 @@
               </div>
               <div>
                 <div class="text-2xl font-bold text-gray-900">{{ currentYears }}+</div>
-                <p class="text-gray-600 text-sm">Years</p>
+                <p class="text-gray-600 text-sm">{{ t('hero.stats.experience') }}</p>
               </div>
             </div>
             <div class="flex items-center gap-3">
@@ -79,7 +77,7 @@
               </div>
               <div>
                 <div class="text-2xl font-bold text-gray-900">{{ currentClients }}+</div>
-                <p class="text-gray-600 text-sm">Clients</p>
+                <p class="text-gray-600 text-sm">{{ t('hero.stats.clients') }}</p>
               </div>
             </div>
           </div>
@@ -159,6 +157,9 @@
 
 <script setup>
 import { ref, onMounted } from 'vue'
+import { useI18n } from 'vue-i18n'
+
+const { t } = useI18n()
 
 defineEmits(['openContact'])
 
