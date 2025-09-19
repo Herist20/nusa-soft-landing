@@ -3,13 +3,12 @@
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <!-- Section Header -->
       <div class="text-center mb-16">
-        <span class="text-primary font-semibold tracking-wide uppercase text-sm">Our People</span>
+        <span class="text-primary font-semibold tracking-wide uppercase text-sm">{{ t('team.title') }}</span>
         <h2 class="font-display text-4xl md:text-5xl font-bold text-gray-900 mt-2 mb-4">
-          Meet the Expert Team
+          {{ t('team.title') }}
         </h2>
         <p class="text-lg text-gray-600 max-w-3xl mx-auto">
-          We are a diverse group of talented individuals passionate about creating exceptional digital experiences.
-          Our team combines years of expertise with innovative thinking to deliver outstanding results.
+          {{ t('team.subtitle') }}
         </p>
       </div>
 
@@ -28,10 +27,7 @@
       <!-- Team Introduction -->
       <div class="text-center mb-12 max-w-4xl mx-auto">
         <p class="text-lg text-gray-700 leading-relaxed">
-          At Nusa Software, we believe that great technology is built by great people. Our team consists of
-          seasoned professionals who bring together decades of combined experience in software development,
-          design, and digital innovation. We're not just developers and designers – we're problem solvers,
-          creative thinkers, and technology enthusiasts committed to your success.
+          {{ t('about.description') }}
         </p>
       </div>
 
@@ -96,7 +92,7 @@
                 <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
                 </svg>
-                <span>{{ member.experience }} years experience</span>
+                <span>{{ member.experience }} {{ t('hero.stats.experience') }}</span>
               </div>
             </div>
           </div>
@@ -107,15 +103,14 @@
       <div class="text-center">
         <div class="bg-blue-600 rounded-2xl p-12 text-white">
           <h3 class="font-display text-3xl font-bold mb-4">
-            Join Our Growing Team
+            {{ t('team.cta.title') || 'Join Our Growing Team' }}
           </h3>
           <p class="text-lg mb-8 max-w-2xl mx-auto opacity-90">
-            We're always looking for talented individuals who share our passion for technology and innovation.
-            If you think you'd be a great fit, we'd love to hear from you!
+            {{ t('team.cta.description') || "We're always looking for talented individuals who share our passion for technology and innovation." }}
           </p>
           <a href="mailto:careers@nusasoftware.com"
              class="inline-flex items-center bg-white text-blue-600 px-8 py-3 rounded-lg font-semibold hover:bg-gray-50 shadow-sm hover:shadow-md transition-all duration-200">
-            View Open Positions
+            {{ t('team.cta.button') || 'View Open Positions' }}
             <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
             </svg>
@@ -128,6 +123,9 @@
 
 <script setup>
 import { ref, onMounted, h } from 'vue'
+import { useI18n } from 'vue-i18n'
+
+const { t } = useI18n()
 
 const isVisible = ref(false)
 
@@ -179,10 +177,10 @@ const TechIcon = {
 }
 
 const companyStats = [
-  { icon: YearsIcon, value: '5+', label: 'Years in Business' },
-  { icon: ProjectsIcon, value: '100+', label: 'Projects Completed' },
-  { icon: ClientsIcon, value: '80+', label: 'Happy Clients' },
-  { icon: TeamIcon, value: '8', label: 'Team Members' },
+  { icon: YearsIcon, value: t('about.stats.experience'), label: t('hero.stats.experience') },
+  { icon: ProjectsIcon, value: t('about.stats.projects'), label: t('hero.stats.projects') },
+  { icon: ClientsIcon, value: t('about.stats.clients'), label: t('hero.stats.clients') },
+  { icon: TeamIcon, value: '8', label: t('hero.stats.team') },
   { icon: TechIcon, value: '25+', label: 'Technologies' }
 ]
 

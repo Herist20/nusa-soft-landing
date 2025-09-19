@@ -1,8 +1,8 @@
 {
   "meta": {
-    "title": "Nusa Software - Professional Software Solutions Indonesia",
-    "description": "Custom software development, web applications, mobile apps, and enterprise systems for Indonesian businesses. Free consultation!",
-    "keywords": "software house indonesia, application development, custom software development, web development indonesia"
+    "title": "Nusa Software - Digital Solutions for Global Businesses",
+    "description": "Professional web development, mobile applications, and enterprise software solutions. Transforming businesses with cutting-edge technology. Free consultation!",
+    "keywords": "web development services, mobile app development, enterprise software solutions, digital transformation, custom software development"
   },
   "navigation": {
     "home": "Home",
@@ -29,119 +29,217 @@
     "getQuote": "Get a Quote"
   },
   "hero": {
-    "title": "Transform Your Business Digitally",
-    "subtitle": "Your trusted technology partner for innovative and high-quality software solutions",
-    "description": "We deliver custom software development services tailored to your unique business needs. From concept to implementation, we're ready to be your digital partner.",
+    "headline": "Transforming Ideas into Digital Solutions",
+    "title": "Digital Transformation That Drives Business Growth",
+    "subheading": "Professional Web & Mobile App Development Services",
+    "subtitle": "Your trusted technology partner for scalable and innovative solutions",
+    "valueProposition": "Fast • Reliable • International Quality Standards",
+    "description": "We deliver enterprise-grade web applications and mobile solutions that scale with your business. From startups to Fortune 500 companies, we're your digital transformation partner.",
     "cta": {
-      "primary": "Start Free Consultation",
-      "secondary": "View Our Portfolio"
+      "primary": "Get Free Consultation",
+      "primaryCTA": "Start Your Project Today",
+      "secondary": "View Our Work",
+      "secondaryCTA": "Explore Our Portfolio"
     },
+    "whatsappMessage": "Hi! I'm interested in your web/app development services. Can we discuss my project requirements?",
     "stats": {
-      "projects": "Projects Completed",
-      "clients": "Happy Clients",
+      "projects": "Projects Delivered",
+      "clients": "Satisfied Clients",
       "experience": "Years of Experience",
-      "team": "Professional Team"
+      "team": "Expert Team"
     }
   },
   "services": {
-    "title": "Our Services",
-    "subtitle": "Comprehensive technology solutions for every business need",
+    "title": "Our Core Services",
+    "subtitle": "End-to-end digital solutions that drive measurable business results",
     "viewDetails": "View Details",
     "learnMore": "Learn More",
+    "getQuote": "Get Quote",
     "list": {
       "webDev": {
-        "title": "Web Development",
-        "description": "Modern, responsive, and scalable web applications with cutting-edge technology",
+        "title": "Enterprise Web Development",
+        "shortTitle": "Web Development",
+        "description": "Scalable, secure, and high-performance web applications built with modern frameworks and best practices",
         "features": [
-          "Progressive Web Apps",
-          "E-Commerce Platform",
-          "Web Portal & Dashboard",
-          "API Development"
+          "Progressive Web Applications",
+          "E-Commerce & Marketplace Platforms",
+          "Enterprise Dashboards & Portals",
+          "RESTful API Development"
+        ],
+        "benefits": [
+          "Improved user engagement",
+          "Cross-platform compatibility",
+          "SEO-optimized architecture",
+          "Real-time analytics integration"
         ]
       },
       "mobileDev": {
-        "title": "Mobile Applications",
-        "description": "High-quality native iOS and Android or cross-platform applications",
+        "title": "Native & Cross-Platform Mobile Apps",
+        "shortTitle": "Mobile Development",
+        "description": "Performance-optimized mobile applications for iOS and Android with exceptional user experience",
         "features": [
-          "Native iOS & Android",
-          "Cross-Platform Apps",
-          "Mobile UI/UX Design",
-          "App Maintenance"
+          "Native iOS & Android Development",
+          "React Native & Flutter Apps",
+          "Mobile-First UI/UX Design",
+          "App Store Optimization"
+        ],
+        "benefits": [
+          "Enhanced customer engagement",
+          "Offline functionality",
+          "Push notification campaigns",
+          "App store visibility"
+        ]
+      },
+      "uiux": {
+        "title": "User Experience & Interface Design",
+        "shortTitle": "UI/UX Design",
+        "description": "User-centered design that converts visitors into customers through intuitive and engaging interfaces",
+        "features": [
+          "User Research & Journey Mapping",
+          "Wireframing & Prototyping",
+          "Conversion-Optimized Design",
+          "Accessibility Compliance"
+        ],
+        "benefits": [
+          "Higher conversion rates",
+          "Improved user satisfaction",
+          "Brand differentiation",
+          "Reduced development costs"
         ]
       },
       "enterprise": {
-        "title": "Enterprise Solutions",
-        "description": "Integrated systems to enhance your business operational efficiency",
+        "title": "Enterprise Software Solutions",
+        "shortTitle": "Enterprise Systems",
+        "description": "Custom enterprise applications that streamline operations and provide competitive advantages",
         "features": [
-          "ERP Systems",
-          "CRM Solutions",
-          "Business Intelligence",
-          "System Integration"
+          "Custom ERP Development",
+          "Customer Relationship Management",
+          "Business Intelligence Platforms",
+          "Third-party System Integration"
+        ],
+        "benefits": [
+          "Operational efficiency",
+          "Data-driven decisions",
+          "Automated workflows",
+          "Scalable architecture"
         ]
       },
       "consulting": {
-        "title": "IT Consulting",
-        "description": "Technology strategy and digital transformation for business growth",
+        "title": "Digital Strategy Consulting",
+        "shortTitle": "IT Consulting",
+        "description": "Strategic technology roadmaps and digital transformation guidance for sustainable growth",
         "features": [
-          "Digital Strategy",
-          "Technology Audit",
-          "Process Optimization",
-          "IT Infrastructure"
+          "Technology Assessment & Audit",
+          "Digital Transformation Strategy",
+          "Architecture & Technology Stack Planning",
+          "Team Training & Knowledge Transfer"
+        ],
+        "benefits": [
+          "Technology ROI optimization",
+          "Risk mitigation strategies",
+          "Competitive market positioning",
+          "Future-proof technology stack"
         ]
       },
-      "cloud": {
-        "title": "Cloud Solutions",
-        "description": "Cloud migration, deployment, and infrastructure management",
+      "maintenance": {
+        "title": "Application Support & Maintenance",
+        "shortTitle": "Support & Maintenance",
+        "description": "Comprehensive support services to ensure optimal performance and security of your digital assets",
         "features": [
-          "Cloud Migration",
-          "DevOps Services",
-          "Cloud Architecture",
-          "Monitoring & Security"
-        ]
-      },
-      "ai": {
-        "title": "AI & Machine Learning",
-        "description": "Artificial intelligence solutions for automation and data analysis",
-        "features": [
-          "Predictive Analytics",
-          "Natural Language Processing",
-          "Computer Vision",
-          "Chatbot Development"
+          "24/7 Monitoring & Support",
+          "Security Updates & Patches",
+          "Performance Optimization",
+          "Disaster Recovery & Backup"
+        ],
+        "benefits": [
+          "99.9% uptime guarantee",
+          "Enhanced security posture",
+          "Proactive issue resolution",
+          "Business continuity assurance"
         ]
       }
     }
   },
   "contact": {
-    "title": "Contact Us",
-    "subtitle": "Let's discuss how we can help with your project",
+    "title": "Let's Discuss Your Project",
+    "subtitle": "Get a free consultation to determine the best digital solution for your business",
     "form": {
+      "title": "Free Consultation Form",
       "name": "Full Name",
-      "email": "Email",
+      "email": "Business Email",
       "phone": "Phone Number",
-      "company": "Company",
-      "subject": "Subject",
-      "message": "Message",
-      "budget": "Project Budget",
-      "timeline": "Project Timeline",
+      "company": "Company/Organization",
+      "subject": "Service Needed",
+      "projectType": {
+        "label": "Project Type",
+        "options": {
+          "website": "Website/Landing Page",
+          "ecommerce": "E-Commerce Platform",
+          "mobile": "Mobile Application",
+          "system": "Enterprise System",
+          "uiux": "UI/UX Design",
+          "consultation": "Digital Consultation",
+          "other": "Other"
+        }
+      },
+      "message": "Tell us about your project",
+      "budget": {
+        "label": "Project Budget (USD)",
+        "options": {
+          "under10k": "Under $10,000",
+          "10to25k": "$10,000 - $25,000",
+          "25to50k": "$25,000 - $50,000",
+          "50to100k": "$50,000 - $100,000",
+          "above100k": "Above $100,000",
+          "discuss": "Let's discuss"
+        }
+      },
+      "timeline": {
+        "label": "When would you like to start?",
+        "options": {
+          "asap": "As soon as possible",
+          "1month": "Within 1 month",
+          "3months": "Within 3 months",
+          "6months": "Within 6 months",
+          "flexible": "Flexible timeline"
+        }
+      },
       "submit": "Send Message",
       "submitting": "Sending...",
-      "success": "Message sent successfully! We'll contact you soon.",
-      "error": "An error occurred. Please try again."
+      "success": "Thank you! Our team will contact you within 24 hours.",
+      "error": "Sorry, an error occurred. Please try again or contact us directly.",
+      "placeholder": {
+        "name": "e.g., John Smith",
+        "email": "e.g., john@company.com",
+        "phone": "e.g., +1-234-567-8900",
+        "company": "e.g., ABC Corporation or John's Store",
+        "message": "Describe your project requirements, desired features, or any questions you have..."
+      }
     },
     "validation": {
-      "nameRequired": "Name is required",
-      "emailRequired": "Email is required",
-      "emailInvalid": "Invalid email format",
-      "phoneInvalid": "Invalid phone number format",
-      "messageRequired": "Message is required",
-      "messageMin": "Message must be at least 10 characters"
+      "nameRequired": "Please enter your full name",
+      "emailRequired": "Email is required for communication",
+      "emailInvalid": "Please enter a valid email format (e.g., name@domain.com)",
+      "phoneRequired": "Phone number is required",
+      "phoneInvalid": "Please enter a valid phone number",
+      "messageRequired": "Please tell us about your project",
+      "messageMin": "Please provide more details (minimum 20 characters)"
     },
     "info": {
-      "address": "Address",
+      "address": "Office Address",
+      "addressDetail": "Jakarta, Indonesia",
       "phone": "Phone",
+      "phoneDetail": "+62 812-3456-7890",
       "email": "Email",
-      "hours": "Working Hours",
-      "hoursDetail": "Monday - Friday: 09:00 - 18:00"
+      "emailDetail": "hello@nusasoft.com",
+      "hours": "Business Hours",
+      "hoursDetail": "Monday - Friday: 09:00 - 17:00 GMT+7",
+      "response": "Response within 24 hours"
+    },
+    "cta": {
+      "whatsapp": "Chat on WhatsApp",
+      "call": "Schedule a Call",
+      "email": "Send Email"
     }
   },
   "footer": {
@@ -159,6 +257,167 @@
     "copyright": "© 2024 Nusa Software. All Rights Reserved.",
     "privacy": "Privacy Policy",
     "terms": "Terms & Conditions"
+  },
+  "portfolio": {
+    "title": "Our Portfolio Excellence",
+    "subtitle": "Innovative digital solutions that transformed our clients' business operations",
+    "viewProject": "View Project",
+    "liveDemo": "Live Demo",
+    "categories": {
+      "all": "All Categories",
+      "website": "Web Applications",
+      "mobile": "Mobile Apps",
+      "ecommerce": "E-Commerce",
+      "enterprise": "Enterprise Systems"
+    },
+    "projects": {
+      "globalTrade": {
+        "title": "Global Trade Platform",
+        "category": "Enterprise System",
+        "description": "Comprehensive B2B trading platform with multi-currency support and advanced analytics",
+        "results": "450% increase in transaction volume",
+        "technologies": ["React", "Node.js", "MongoDB", "AWS"]
+      },
+      "smartRetail": {
+        "title": "Smart Retail Management",
+        "category": "E-Commerce",
+        "description": "Omnichannel retail solution with inventory optimization and predictive analytics",
+        "results": "65% operational efficiency improvement",
+        "technologies": ["Vue.js", "Laravel", "PostgreSQL", "Docker"]
+      }
+    }
+  },
+  "testimonials": {
+    "title": "Client Success Stories",
+    "subtitle": "Trusted by leading organizations worldwide for digital transformation",
+    "readMore": "Read Full Story",
+    "list": [
+      {
+        "name": "Michael Chen",
+        "position": "CTO, TechCorp International",
+        "company": "TechCorp International",
+        "avatar": "/testimonials/michael.jpg",
+        "rating": 5,
+        "text": "Nusa Software delivered an exceptional enterprise solution that exceeded our expectations. Their technical expertise and project management were outstanding, resulting in a 40% increase in operational efficiency.",
+        "project": "Enterprise Resource Planning",
+        "result": "40% efficiency gain"
+      },
+      {
+        "name": "Sarah Johnson",
+        "position": "Founder & CEO, Digital Ventures",
+        "company": "Digital Ventures",
+        "avatar": "/testimonials/sarah.jpg",
+        "rating": 5,
+        "text": "The team's ability to understand complex business requirements and translate them into scalable solutions is remarkable. Our platform now serves 50,000+ users globally with 99.9% uptime.",
+        "project": "SaaS Platform Development",
+        "result": "50,000+ users"
+      },
+      {
+        "name": "Dr. Robert Williams",
+        "position": "Director of Innovation, MedTech Solutions",
+        "company": "MedTech Solutions",
+        "avatar": "/testimonials/robert.jpg",
+        "rating": 5,
+        "text": "Their healthcare technology expertise helped us revolutionize patient care delivery. The solution reduced administrative overhead by 60% while improving patient satisfaction scores significantly.",
+        "project": "Healthcare Management System",
+        "result": "60% cost reduction"
+      }
+    ]
+  },
+  "process": {
+    "title": "Our Proven Development Process",
+    "subtitle": "Agile methodology ensuring quality delivery and transparent communication",
+    "steps": [
+      {
+        "number": "01",
+        "title": "Discovery & Strategy",
+        "description": "Comprehensive business analysis and strategic planning to align technology with business objectives",
+        "duration": "1-2 weeks",
+        "deliverables": ["Requirements analysis", "Technical architecture", "Project roadmap"]
+      },
+      {
+        "number": "02",
+        "title": "Design & Prototyping",
+        "description": "User-centered design approach with interactive prototypes for validation and refinement",
+        "duration": "2-3 weeks",
+        "deliverables": ["UI/UX Design system", "Interactive prototypes", "Technical specifications"]
+      },
+      {
+        "number": "03",
+        "title": "Development & Integration",
+        "description": "Agile development with continuous integration, automated testing, and regular stakeholder reviews",
+        "duration": "4-12 weeks",
+        "deliverables": ["Production-ready application", "API documentation", "Quality assurance reports"]
+      },
+      {
+        "number": "04",
+        "title": "Deployment & Optimization",
+        "description": "Seamless production deployment with performance monitoring and ongoing optimization",
+        "duration": "Ongoing",
+        "deliverables": ["Live application", "Performance metrics", "Maintenance & support"]
+      }
+    ]
+  },
+  "about": {
+    "title": "About Nusa Software",
+    "subtitle": "Your strategic technology partner for digital innovation and business transformation",
+    "description": "Since 2020, we have been at the forefront of digital transformation, delivering cutting-edge software solutions that drive measurable business results for organizations worldwide.",
+    "mission": "To empower businesses through innovative technology solutions that create sustainable competitive advantages and drive growth",
+    "vision": "To be the leading technology partner for organizations seeking digital excellence and innovation",
+    "values": {
+      "excellence": {
+        "title": "Excellence in Delivery",
+        "description": "Committed to delivering solutions that exceed expectations through rigorous quality standards"
+      },
+      "innovation": {
+        "title": "Continuous Innovation",
+        "description": "Leveraging cutting-edge technologies to create competitive advantages for our clients"
+      },
+      "partnership": {
+        "title": "Strategic Partnership",
+        "description": "Building long-term relationships based on trust, transparency, and mutual success"
+      },
+      "scalability": {
+        "title": "Scalable Solutions",
+        "description": "Architecting solutions that grow with your business and adapt to changing requirements"
+      }
+    },
+    "stats": {
+      "projects": "500+",
+      "clients": "200+",
+      "experience": "4+",
+      "satisfaction": "99%"
+    }
+  },
+  "team": {
+    "title": "Our Expert Team",
+    "subtitle": "World-class professionals with proven expertise in enterprise technology solutions",
+    "members": [
+      {
+        "name": "Alex Thompson",
+        "position": "Technical Lead",
+        "specialization": "Enterprise Architecture",
+        "experience": "12 years",
+        "avatar": "/team/alex.jpg",
+        "skills": ["Microservices", "Cloud Architecture", "DevOps", "Kubernetes"]
+      },
+      {
+        "name": "Emma Rodriguez",
+        "position": "Senior UX Designer",
+        "specialization": "User Experience Strategy",
+        "experience": "10 years",
+        "avatar": "/team/emma.jpg",
+        "skills": ["Design Systems", "User Research", "Accessibility", "Design Thinking"]
+      },
+      {
+        "name": "David Kim",
+        "position": "Senior Full-Stack Developer",
+        "specialization": "Modern Web Technologies",
+        "experience": "9 years",
+        "avatar": "/team/david.jpg",
+        "skills": ["React", "Node.js", "TypeScript", "GraphQL"]
+      }
+    ]
   },
   "common": {
     "loading": "Loading...",

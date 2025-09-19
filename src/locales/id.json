@@ -1,8 +1,8 @@
 {
   "meta": {
-    "title": "Nusa Software - Solusi Software Profesional Indonesia",
-    "description": "Jasa pengembangan software custom, aplikasi web, mobile, dan sistem enterprise untuk bisnis Indonesia. Konsultasi gratis!",
-    "keywords": "software house indonesia, jasa pembuatan aplikasi, pengembangan software custom, web development indonesia"
+    "title": "Nusa Software - Partner Digital Bisnis Indonesia Terpercaya",
+    "description": "Jasa pembuatan website, aplikasi mobile, dan sistem digital untuk UMKM hingga perusahaan besar. Konsultasi gratis, hasil berkualitas internasional!",
+    "keywords": "jasa pembuatan website indonesia, software house terpercaya, aplikasi mobile murah, web development jakarta, sistem informasi bisnis"
   },
   "navigation": {
     "home": "Beranda",
@@ -29,119 +29,217 @@
     "getQuote": "Dapatkan Penawaran"
   },
   "hero": {
-    "title": "Wujudkan Transformasi Digital Bisnis Anda",
-    "subtitle": "Partner teknologi terpercaya untuk solusi software inovatif dan berkualitas tinggi",
-    "description": "Kami menghadirkan layanan pengembangan software custom yang disesuaikan dengan kebutuhan unik bisnis Anda. Dari konsep hingga implementasi, kami siap menjadi mitra digital Anda.",
+    "headline": "Mewujudkan Ide Menjadi Solusi Digital",
+    "title": "Transformasi Digital yang Menguntungkan Bisnis Anda",
+    "subheading": "Layanan Profesional Pengembangan Web & Aplikasi Mobile",
+    "subtitle": "Partner teknologi terpercaya untuk solusi digital yang meningkatkan omzet",
+    "valueProposition": "Cepat • Terpercaya • Hasil Berkualitas Internasional",
+    "description": "Kami menyediakan layanan pembuatan website dan aplikasi mobile yang disesuaikan dengan kebutuhan bisnis Indonesia. Dari UMKM hingga korporasi, kami siap menjadi mitra digital Anda.",
     "cta": {
-      "primary": "Mulai Konsultasi Gratis",
-      "secondary": "Lihat Portfolio Kami"
+      "primary": "Konsultasi Gratis",
+      "primaryCTA": "Konsultasi Gratis Sekarang",
+      "secondary": "Lihat Portfolio",
+      "secondaryCTA": "Lihat Karya Kami"
     },
+    "whatsappMessage": "Halo! Saya tertarik dengan layanan pengembangan web/aplikasi Anda. Bisakah kita diskusi proyek saya?",
     "stats": {
       "projects": "Proyek Selesai",
       "clients": "Klien Puas",
       "experience": "Tahun Pengalaman",
-      "team": "Tim Profesional"
+      "team": "Tim Ahli"
     }
   },
   "services": {
-    "title": "Layanan Kami",
-    "subtitle": "Solusi teknologi komprehensif untuk setiap kebutuhan bisnis",
+    "title": "Layanan Unggulan Kami",
+    "subtitle": "Solusi digital lengkap untuk mengembangkan bisnis Indonesia",
     "viewDetails": "Lihat Detail",
     "learnMore": "Pelajari Lebih Lanjut",
+    "getQuote": "Minta Penawaran",
     "list": {
       "webDev": {
-        "title": "Pengembangan Web",
-        "description": "Aplikasi web modern, responsif, dan scalable dengan teknologi terkini",
+        "title": "Pembuatan Website Profesional",
+        "shortTitle": "Website",
+        "description": "Website modern, responsif, dan SEO-friendly yang meningkatkan kredibilitas dan penjualan bisnis Anda",
         "features": [
-          "Progressive Web Apps",
-          "E-Commerce Platform",
-          "Web Portal & Dashboard",
-          "API Development"
+          "Website Company Profile",
+          "Toko Online (E-Commerce)",
+          "Portal Berita & Blog",
+          "Sistem Manajemen Konten"
+        ],
+        "benefits": [
+          "Tampil profesional online",
+          "Menjangkau pasar lebih luas",
+          "Otomasi proses bisnis",
+          "Laporan penjualan real-time"
         ]
       },
       "mobileDev": {
-        "title": "Aplikasi Mobile",
-        "description": "Aplikasi iOS dan Android native atau cross-platform berkualitas tinggi",
+        "title": "Aplikasi Mobile iOS & Android",
+        "shortTitle": "Aplikasi Mobile",
+        "description": "Aplikasi mobile yang user-friendly untuk meningkatkan engagement pelanggan dan efisiensi operasional",
         "features": [
-          "Native iOS & Android",
-          "Cross-Platform Apps",
-          "Mobile UI/UX Design",
-          "App Maintenance"
+          "Aplikasi Native iOS/Android",
+          "Aplikasi Hybrid Cross-Platform",
+          "Desain UI/UX Menarik",
+          "Push Notification"
+        ],
+        "benefits": [
+          "Akses mudah bagi pelanggan",
+          "Notifikasi langsung",
+          "Offline capability",
+          "Branding yang kuat"
+        ]
+      },
+      "uiux": {
+        "title": "Desain UI/UX yang Menarik",
+        "shortTitle": "UI/UX Design",
+        "description": "Desain antarmuka yang ramah pengguna dan conversion-optimized untuk meningkatkan kepuasan pelanggan",
+        "features": [
+          "User Research & Analysis",
+          "Wireframe & Prototype",
+          "Visual Design Modern",
+          "Usability Testing"
+        ],
+        "benefits": [
+          "Pengalaman pengguna optimal",
+          "Tingkat konversi tinggi",
+          "Brand identity yang kuat",
+          "Mudah digunakan semua kalangan"
         ]
       },
       "enterprise": {
-        "title": "Solusi Enterprise",
-        "description": "Sistem terintegrasi untuk meningkatkan efisiensi operasional bisnis",
+        "title": "Sistem Informasi Bisnis",
+        "shortTitle": "Sistem Enterprise",
+        "description": "Sistem terintegrasi untuk mengotomatisasi dan mengoptimalkan operasional bisnis Anda",
         "features": [
-          "ERP Systems",
-          "CRM Solutions",
-          "Business Intelligence",
-          "System Integration"
+          "Sistem ERP Custom",
+          "Customer Relationship Management",
+          "Human Resource Information System",
+          "Business Intelligence Dashboard"
+        ],
+        "benefits": [
+          "Efisiensi operasional",
+          "Data terintegrasi",
+          "Pengambilan keputusan cepat",
+          "ROI yang terukur"
         ]
       },
       "consulting": {
-        "title": "Konsultasi IT",
-        "description": "Strategi teknologi dan transformasi digital untuk pertumbuhan bisnis",
+        "title": "Konsultasi Digital Strategy",
+        "shortTitle": "Konsultasi IT",
+        "description": "Panduan strategis untuk transformasi digital yang menguntungkan bisnis Anda",
         "features": [
-          "Digital Strategy",
-          "Technology Audit",
-          "Process Optimization",
-          "IT Infrastructure"
+          "Audit Teknologi Existing",
+          "Roadmap Digital Transformation",
+          "Technology Stack Planning",
+          "Training & Knowledge Transfer"
+        ],
+        "benefits": [
+          "Strategi teknologi tepat sasaran",
+          "Investasi IT yang efektif",
+          "Competitive advantage",
+          "Tim internal yang capable"
         ]
       },
-      "cloud": {
-        "title": "Cloud Solutions",
-        "description": "Migrasi, deployment, dan manajemen infrastruktur cloud",
+      "maintenance": {
+        "title": "Support & Maintenance",
+        "shortTitle": "Maintenance",
+        "description": "Layanan pemeliharaan dan dukungan teknis untuk menjaga performa optimal sistem Anda",
         "features": [
-          "Cloud Migration",
-          "DevOps Services",
-          "Cloud Architecture",
-          "Monitoring & Security"
-        ]
-      },
-      "ai": {
-        "title": "AI & Machine Learning",
-        "description": "Solusi kecerdasan buatan untuk otomasi dan analisis data",
-        "features": [
-          "Predictive Analytics",
-          "Natural Language Processing",
-          "Computer Vision",
-          "Chatbot Development"
+          "24/7 Technical Support",
+          "Regular Security Updates",
+          "Performance Monitoring",
+          "Backup & Recovery"
+        ],
+        "benefits": [
+          "Sistem selalu optimal",
+          "Keamanan data terjamin",
+          "Downtime minimal",
+          "Peace of mind"
         ]
       }
     }
   },
   "contact": {
-    "title": "Hubungi Kami",
-    "subtitle": "Mari diskusikan bagaimana kami dapat membantu proyek Anda",
+    "title": "Mari Diskusikan Proyek Anda",
+    "subtitle": "Konsultasi gratis untuk menentukan solusi digital terbaik bagi bisnis Anda",
     "form": {
+      "title": "Form Konsultasi Gratis",
       "name": "Nama Lengkap",
-      "email": "Email",
-      "phone": "Nomor Telepon",
-      "company": "Perusahaan",
-      "subject": "Subjek",
-      "message": "Pesan",
-      "budget": "Anggaran Proyek",
-      "timeline": "Timeline Proyek",
+      "email": "Email Aktif",
+      "phone": "Nomor WhatsApp",
+      "company": "Nama Perusahaan/Bisnis",
+      "subject": "Layanan yang Dibutuhkan",
+      "projectType": {
+        "label": "Jenis Proyek",
+        "options": {
+          "website": "Website/Landing Page",
+          "ecommerce": "Toko Online (E-Commerce)",
+          "mobile": "Aplikasi Mobile",
+          "system": "Sistem Informasi",
+          "uiux": "UI/UX Design",
+          "consultation": "Konsultasi Digital",
+          "other": "Lainnya"
+        }
+      },
+      "message": "Ceritakan tentang proyek Anda",
+      "budget": {
+        "label": "Estimasi Anggaran",
+        "options": {
+          "under10k": "Di bawah 10 juta",
+          "10to25k": "10 - 25 juta",
+          "25to50k": "25 - 50 juta",
+          "50to100k": "50 - 100 juta",
+          "above100k": "Di atas 100 juta",
+          "discuss": "Mari diskusikan"
+        }
+      },
+      "timeline": {
+        "label": "Kapan Ingin Dimulai?",
+        "options": {
+          "asap": "Sesegera mungkin",
+          "1month": "1 bulan ke depan",
+          "3months": "3 bulan ke depan",
+          "6months": "6 bulan ke depan",
+          "flexible": "Fleksibel"
+        }
+      },
       "submit": "Kirim Pesan",
       "submitting": "Mengirim...",
-      "success": "Pesan berhasil dikirim! Kami akan segera menghubungi Anda.",
-      "error": "Terjadi kesalahan. Silakan coba lagi."
+      "success": "Terima kasih! Tim kami akan menghubungi Anda dalam 1x24 jam.",
+      "error": "Maaf, terjadi kesalahan. Silakan coba lagi atau hubungi WhatsApp kami.",
+      "placeholder": {
+        "name": "Contoh: Budi Santoso",
+        "email": "Contoh: budi@perusahaan.com",
+        "phone": "Contoh: 081234567890",
+        "company": "Contoh: PT Maju Bersama atau Toko Budi",
+        "message": "Jelaskan kebutuhan proyek Anda, fitur yang diinginkan, atau pertanyaan lainnya..."
+      }
     },
     "validation": {
-      "nameRequired": "Nama harus diisi",
-      "emailRequired": "Email harus diisi",
-      "emailInvalid": "Format email tidak valid",
-      "phoneInvalid": "Format nomor telepon tidak valid",
-      "messageRequired": "Pesan harus diisi",
-      "messageMin": "Pesan minimal 10 karakter"
+      "nameRequired": "Mohon isi nama lengkap Anda",
+      "emailRequired": "Email diperlukan untuk komunikasi",
+      "emailInvalid": "Format email tidak valid (contoh: nama@domain.com)",
+      "phoneRequired": "Nomor WhatsApp diperlukan",
+      "phoneInvalid": "Format nomor tidak valid (contoh: 081234567890)",
+      "messageRequired": "Mohon ceritakan tentang proyek Anda",
+      "messageMin": "Mohon jelaskan lebih detail (minimal 20 karakter)"
     },
     "info": {
-      "address": "Alamat",
-      "phone": "Telepon",
+      "address": "Alamat Kantor",
+      "addressDetail": "Jakarta, Indonesia",
+      "phone": "WhatsApp",
+      "phoneDetail": "+62 812-3456-7890",
       "email": "Email",
+      "emailDetail": "hello@nusasoft.id",
       "hours": "Jam Kerja",
-      "hoursDetail": "Senin - Jumat: 09:00 - 18:00"
+      "hoursDetail": "Senin - Jumat: 09:00 - 17:00 WIB",
+      "response": "Respon dalam 1x24 jam"
+    },
+    "cta": {
+      "whatsapp": "Chat via WhatsApp",
+      "call": "Telepon Langsung",
+      "email": "Kirim Email"
     }
   },
   "footer": {
@@ -159,6 +257,167 @@
     "copyright": "© 2024 Nusa Software. Hak Cipta Dilindungi.",
     "privacy": "Kebijakan Privasi",
     "terms": "Syarat & Ketentuan"
+  },
+  "portfolio": {
+    "title": "Portfolio Terbaik Kami",
+    "subtitle": "Karya-karya digital yang telah mengubah bisnis klien kami",
+    "viewProject": "Lihat Proyek",
+    "liveDemo": "Demo Langsung",
+    "categories": {
+      "all": "Semua Kategori",
+      "website": "Website",
+      "mobile": "Mobile App",
+      "ecommerce": "E-Commerce",
+      "enterprise": "Enterprise System"
+    },
+    "projects": {
+      "globalTrade": {
+        "title": "Platform Trading Global",
+        "category": "Enterprise System",
+        "description": "Platform B2B trading komprehensif dengan dukungan multi-mata uang dan analytics canggih",
+        "results": "Peningkatan volume transaksi 450%",
+        "technologies": ["React", "Node.js", "MongoDB", "AWS"]
+      },
+      "smartRetail": {
+        "title": "Smart Retail Management",
+        "category": "E-Commerce",
+        "description": "Solusi retail omnichannel dengan optimisasi inventory dan predictive analytics",
+        "results": "Peningkatan efisiensi operasional 65%",
+        "technologies": ["Vue.js", "Laravel", "PostgreSQL", "Docker"]
+      }
+    }
+  },
+  "testimonials": {
+    "title": "Apa Kata Klien Kami",
+    "subtitle": "Kepercayaan dan kepuasan klien adalah prioritas utama kami",
+    "readMore": "Baca Selengkapnya",
+    "list": [
+      {
+        "name": "Budi Santoso",
+        "position": "CEO, PT Maju Bersama",
+        "company": "PT Maju Bersama",
+        "avatar": "/testimonials/budi.jpg",
+        "rating": 5,
+        "text": "Tim Nusa Software benar-benar profesional! Website e-commerce yang mereka buat meningkatkan penjualan kami hingga 250% dalam 3 bulan. Pelayanan after-sales juga sangat memuaskan.",
+        "project": "E-Commerce Platform",
+        "result": "Penjualan naik 250%"
+      },
+      {
+        "name": "Siti Rahayu",
+        "position": "Founder, Warung Digital",
+        "company": "Warung Digital",
+        "avatar": "/testimonials/siti.jpg",
+        "rating": 5,
+        "text": "Aplikasi mobile yang dibuat sangat user-friendly dan sesuai dengan kebutuhan bisnis UMKM seperti kami. Customer support 24/7 sangat membantu operasional harian.",
+        "project": "Mobile Application",
+        "result": "Efisiensi 90%"
+      },
+      {
+        "name": "Dr. Ahmad Wijaya",
+        "position": "Direktur, Klinik Sehat Sentosa",
+        "company": "Klinik Sehat Sentosa",
+        "avatar": "/testimonials/ahmad.jpg",
+        "rating": 5,
+        "text": "Sistem informasi klinik yang dikembangkan sangat membantu digitalisasi rekam medis dan antrian pasien. Tim development sangat responsif terhadap perubahan kebutuhan.",
+        "project": "Hospital Management System",
+        "result": "Digitalisasi 100%"
+      }
+    ]
+  },
+  "process": {
+    "title": "Proses Kerja Yang Terpercaya",
+    "subtitle": "Metodologi development yang terbukti menghasilkan solusi berkualitas tinggi",
+    "steps": [
+      {
+        "number": "01",
+        "title": "Konsultasi & Analisis",
+        "description": "Diskusi mendalam untuk memahami kebutuhan bisnis dan goals yang ingin dicapai",
+        "duration": "1-2 hari",
+        "deliverables": ["Requirement analysis", "Project scope", "Timeline & budget"]
+      },
+      {
+        "number": "02",
+        "title": "Design & Prototyping",
+        "description": "Pembuatan wireframe, mockup, dan prototype untuk validasi konsep sebelum development",
+        "duration": "3-5 hari",
+        "deliverables": ["UI/UX Design", "Interactive prototype", "Technical architecture"]
+      },
+      {
+        "number": "03",
+        "title": "Development & Testing",
+        "description": "Proses coding dengan metodologi agile dan testing berkelanjutan untuk kualitas optimal",
+        "duration": "2-8 minggu",
+        "deliverables": ["Working application", "Test documentation", "Code review"]
+      },
+      {
+        "number": "04",
+        "title": "Deployment & Support",
+        "description": "Go-live ke production dengan monitoring dan support berkelanjutan",
+        "duration": "Ongoing",
+        "deliverables": ["Live application", "Documentation", "Training & support"]
+      }
+    ]
+  },
+  "about": {
+    "title": "Tentang Nusa Software",
+    "subtitle": "Partner digital terpercaya untuk transformasi bisnis Indonesia",
+    "description": "Sejak 2020, kami telah membantu ratusan bisnis Indonesia bertransformasi digital dengan solusi teknologi yang tepat sasaran dan sesuai budget.",
+    "mission": "Memberdayakan UMKM dan perusahaan Indonesia dengan teknologi digital yang mudah diakses dan terjangkau",
+    "vision": "Menjadi software house terdepan dalam mendukung digitalisasi bisnis Indonesia",
+    "values": {
+      "excellence": {
+        "title": "Keunggulan dalam Pengiriman",
+        "description": "Berkomitmen memberikan solusi yang melampaui ekspektasi melalui standar kualitas yang ketat"
+      },
+      "innovation": {
+        "title": "Inovasi Berkelanjutan",
+        "description": "Selalu menggunakan teknologi terbaru untuk memberikan competitive advantage"
+      },
+      "partnership": {
+        "title": "Partnership Strategis",
+        "description": "Membangun hubungan jangka panjang berdasarkan kepercayaan, transparansi, dan kesuksesan bersama"
+      },
+      "scalability": {
+        "title": "Solusi Scalable",
+        "description": "Merancang arsitektur solusi yang tumbuh bersama bisnis dan beradaptasi dengan kebutuhan yang berubah"
+      }
+    },
+    "stats": {
+      "projects": "200+",
+      "clients": "150+",
+      "experience": "4+",
+      "satisfaction": "98%"
+    }
+  },
+  "team": {
+    "title": "Tim Ahli Kami",
+    "subtitle": "Para profesional berpengalaman dengan track record terbukti",
+    "members": [
+      {
+        "name": "Andi Pratama",
+        "position": "Lead Developer",
+        "specialization": "Full-stack Development",
+        "experience": "8 tahun",
+        "avatar": "/team/andi.jpg",
+        "skills": ["Vue.js", "Laravel", "Node.js", "AWS"]
+      },
+      {
+        "name": "Maya Sari",
+        "position": "UI/UX Designer",
+        "specialization": "User Experience Design",
+        "experience": "6 tahun",
+        "avatar": "/team/maya.jpg",
+        "skills": ["Figma", "Adobe XD", "User Research", "Prototyping"]
+      },
+      {
+        "name": "Rudi Hermawan",
+        "position": "Mobile Developer",
+        "specialization": "iOS & Android Development",
+        "experience": "7 tahun",
+        "avatar": "/team/rudi.jpg",
+        "skills": ["React Native", "Flutter", "Swift", "Kotlin"]
+      }
+    ]
   },
   "common": {
     "loading": "Memuat...",

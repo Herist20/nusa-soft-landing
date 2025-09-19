@@ -23,7 +23,7 @@
         <img :src="selectedProject.image" :alt="selectedProject.title" class="w-full h-64 object-cover rounded-lg">
         <p class="text-gray-600">{{ selectedProject.description }}</p>
         <div>
-          <h4 class="font-semibold mb-2">Technologies Used:</h4>
+          <h4 class="font-semibold mb-2">{{ t('portfolio.technologies') || 'Technologies Used:' }}</h4>
           <div class="flex flex-wrap gap-2">
             <span v-for="tech in selectedProject.technologies" :key="tech"
                   class="px-3 py-1 bg-gray-100 text-gray-700 rounded-full text-sm">
@@ -34,8 +34,8 @@
       </div>
       <template #footer>
         <div class="flex justify-end gap-4">
-          <Button variant="outline" @click="projectModalOpen = false">Close</Button>
-          <Button variant="primary">View Live Demo</Button>
+          <Button variant="outline" @click="projectModalOpen = false">{{ t('common.close') }}</Button>
+          <Button variant="primary">{{ t('portfolio.liveDemo') }}</Button>
         </div>
       </template>
     </Modal>
@@ -44,6 +44,9 @@
 
 <script setup>
 import { ref } from 'vue'
+import { useI18n } from 'vue-i18n'
+
+const { t } = useI18n()
 import Header from '../components/layout/Header.vue'
 import Footer from '../components/layout/Footer.vue'
 import Hero from '../components/sections/Hero.vue'

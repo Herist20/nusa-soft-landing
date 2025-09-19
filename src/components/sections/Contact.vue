@@ -3,13 +3,12 @@
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <!-- Header -->
       <div class="text-center mb-16">
-        <span class="text-primary font-semibold tracking-wide uppercase text-sm">Let's Connect</span>
+        <span class="text-primary font-semibold tracking-wide uppercase text-sm">{{ t('contact.title') }}</span>
         <h2 class="font-display text-4xl md:text-5xl font-bold text-gray-900 mt-2 mb-4">
-          Start Your Project Today
+          {{ t('contact.title') }}
         </h2>
         <p class="text-lg text-gray-600 max-w-3xl mx-auto">
-          Ready to transform your ideas into reality? Fill out the form below and we'll get back to you within 24 hours.
-          Or reach us instantly via WhatsApp for immediate assistance.
+          {{ t('contact.subtitle') }}
         </p>
       </div>
 
@@ -26,8 +25,8 @@
                   </svg>
                 </div>
                 <div>
-                  <h3 class="font-display text-2xl font-bold text-gray-900">Tell Us About Your Project</h3>
-                  <p class="text-gray-600">All fields marked with * are required</p>
+                  <h3 class="font-display text-2xl font-bold text-gray-900">{{ t('contact.form.title') }}</h3>
+                  <p class="text-gray-600">{{ t('contact.form.required') || 'All fields marked with * are required' }}</p>
                 </div>
               </div>
 
@@ -38,7 +37,7 @@
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
                   </svg>
                   <div>
-                    <h4 class="font-semibold text-green-800 mb-2">Message Sent Successfully!</h4>
+                    <h4 class="font-semibold text-green-800 mb-2">{{ t('contact.form.success') }}</h4>
                     <p class="text-green-700 mb-3">{{ successMessage }}</p>
                     <div class="text-sm text-green-600">
                       <strong>Next Steps:</strong>
@@ -62,7 +61,7 @@
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div>
                     <label for="fullName" class="block font-medium text-gray-700 mb-2">
-                      Full Name *
+                      {{ t('contact.form.name') }} *
                     </label>
                     <input
                       type="text"
@@ -71,14 +70,14 @@
                       required
                       class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all duration-200 placeholder-gray-400"
                       :class="{ 'border-red-500': errors.fullName }"
-                      placeholder="Enter your full name"
+                      :placeholder="t('contact.form.placeholder.name')"
                     />
                     <p v-if="errors.fullName" class="mt-1 text-sm text-red-500">{{ errors.fullName }}</p>
                   </div>
 
                   <div>
                     <label for="email" class="block font-medium text-gray-700 mb-2">
-                      Email Address *
+                      {{ t('contact.form.email') }} *
                     </label>
                     <input
                       type="email"
@@ -87,7 +86,7 @@
                       required
                       class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all duration-200 placeholder-gray-400"
                       :class="{ 'border-red-500': errors.email }"
-                      placeholder="your@email.com"
+                      :placeholder="t('contact.form.placeholder.email')"
                     />
                     <p v-if="errors.email" class="mt-1 text-sm text-red-500">{{ errors.email }}</p>
                   </div>
@@ -96,27 +95,27 @@
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div>
                     <label for="phone" class="block font-medium text-gray-700 mb-2">
-                      Phone Number
+                      {{ t('contact.form.phone') }}
                     </label>
                     <input
                       type="tel"
                       id="phone"
                       v-model="form.phone"
                       class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all duration-200 placeholder-gray-400"
-                      placeholder="+62 812-3456-7890"
+                      :placeholder="t('contact.form.placeholder.phone')"
                     />
                   </div>
 
                   <div>
                     <label for="company" class="block font-medium text-gray-700 mb-2">
-                      Company/Organization
+                      {{ t('contact.form.company') }}
                     </label>
                     <input
                       type="text"
                       id="company"
                       v-model="form.company"
                       class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all duration-200 placeholder-gray-400"
-                      placeholder="Your company name"
+                      :placeholder="t('contact.form.placeholder.company')"
                     />
                   </div>
                 </div>
@@ -125,7 +124,7 @@
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div>
                     <label for="projectType" class="block font-medium text-gray-700 mb-2">
-                      Project Type *
+                      {{ t('contact.form.projectType.label') }} *
                     </label>
                     <select
                       id="projectType"
@@ -134,18 +133,21 @@
                       class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all duration-200 placeholder-gray-400"
                       :class="{ 'border-red-500': errors.projectType }"
                     >
-                      <option value="">Select project type</option>
-                      <option value="web-development">Web Development</option>
-                      <option value="mobile-app">Mobile App Development</option>
-                      <option value="ui-ux-design">UI/UX Design</option>
-                      <option value="consultation">Technical Consultation</option>
+                      <option value="">{{ t('contact.form.projectType.placeholder') || 'Select project type' }}</option>
+                      <option value="website">{{ t('contact.form.projectType.options.website') }}</option>
+                      <option value="ecommerce">{{ t('contact.form.projectType.options.ecommerce') }}</option>
+                      <option value="mobile">{{ t('contact.form.projectType.options.mobile') }}</option>
+                      <option value="system">{{ t('contact.form.projectType.options.system') }}</option>
+                      <option value="uiux">{{ t('contact.form.projectType.options.uiux') }}</option>
+                      <option value="consultation">{{ t('contact.form.projectType.options.consultation') }}</option>
+                      <option value="other">{{ t('contact.form.projectType.options.other') }}</option>
                     </select>
                     <p v-if="errors.projectType" class="mt-1 text-sm text-red-500">{{ errors.projectType }}</p>
                   </div>
 
                   <div>
                     <label for="budget" class="block font-medium text-gray-700 mb-2">
-                      Budget Range *
+                      {{ t('contact.form.budget.label') }} *
                     </label>
                     <select
                       id="budget"
@@ -154,12 +156,13 @@
                       class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all duration-200 placeholder-gray-400"
                       :class="{ 'border-red-500': errors.budget }"
                     >
-                      <option value="">Select budget range</option>
-                      <option value="under-5k">Under $5,000</option>
-                      <option value="5k-15k">$5,000 - $15,000</option>
-                      <option value="15k-30k">$15,000 - $30,000</option>
-                      <option value="30k-plus">$30,000+</option>
-                      <option value="discuss">Let's Discuss</option>
+                      <option value="">{{ t('contact.form.budget.placeholder') || 'Select budget range' }}</option>
+                      <option value="under10k">{{ t('contact.form.budget.options.under10k') }}</option>
+                      <option value="10to25k">{{ t('contact.form.budget.options.10to25k') }}</option>
+                      <option value="25to50k">{{ t('contact.form.budget.options.25to50k') }}</option>
+                      <option value="50to100k">{{ t('contact.form.budget.options.50to100k') }}</option>
+                      <option value="above100k">{{ t('contact.form.budget.options.above100k') }}</option>
+                      <option value="discuss">{{ t('contact.form.budget.options.discuss') }}</option>
                     </select>
                     <p v-if="errors.budget" class="mt-1 text-sm text-red-500">{{ errors.budget }}</p>
                   </div>
@@ -168,7 +171,7 @@
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div>
                     <label for="contactMethod" class="block font-medium text-gray-700 mb-2">
-                      Preferred Contact Method
+                      {{ t('contact.form.contactMethod') || 'Preferred Contact Method' }}
                     </label>
                     <select
                       id="contactMethod"
@@ -177,23 +180,24 @@
                     >
                       <option value="email">Email</option>
                       <option value="whatsapp">WhatsApp</option>
-                      <option value="phone">Phone Call</option>
+                      <option value="phone">{{ t('contact.cta.call') || 'Phone Call' }}</option>
                     </select>
                   </div>
 
                   <div>
                     <label for="timeline" class="block font-medium text-gray-700 mb-2">
-                      Project Timeline
+                      {{ t('contact.form.timeline.label') }}
                     </label>
                     <select
                       id="timeline"
                       v-model="form.timeline"
                       class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all duration-200 placeholder-gray-400"
                     >
-                      <option value="asap">ASAP</option>
-                      <option value="1-3-months">1-3 months</option>
-                      <option value="3-6-months">3-6 months</option>
-                      <option value="6-plus-months">6+ months</option>
+                      <option value="asap">{{ t('contact.form.timeline.options.asap') }}</option>
+                      <option value="1month">{{ t('contact.form.timeline.options.1month') }}</option>
+                      <option value="3months">{{ t('contact.form.timeline.options.3months') }}</option>
+                      <option value="6months">{{ t('contact.form.timeline.options.6months') }}</option>
+                      <option value="flexible">{{ t('contact.form.timeline.options.flexible') }}</option>
                     </select>
                   </div>
                 </div>
@@ -201,7 +205,7 @@
                 <!-- Project Description -->
                 <div>
                   <label for="description" class="block font-medium text-gray-700 mb-2">
-                    Project Description *
+                    {{ t('contact.form.message') }} *
                   </label>
                   <textarea
                     id="description"
@@ -210,7 +214,7 @@
                     rows="5"
                     class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-primary focus:border-transparent transition-all duration-200 resize-none"
                     :class="{ 'border-red-500': errors.description }"
-                    placeholder="Please describe your project in detail. Include your goals, requirements, and any specific features you need..."
+                    :placeholder="t('contact.form.placeholder.message')"
                   ></textarea>
                   <p v-if="errors.description" class="mt-1 text-sm text-red-500">{{ errors.description }}</p>
                   <p class="mt-1 text-sm text-gray-500">{{ form.description.length }}/500 characters</p>
@@ -227,14 +231,14 @@
                       <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
                       </svg>
-                      Send Project Details
+                      {{ t('contact.form.submit') }}
                     </span>
                     <span v-else class="flex items-center justify-center">
                       <svg class="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
                         <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
                         <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
                       </svg>
-                      Sending Message...
+                      {{ t('contact.form.submitting') }}
                     </span>
                   </button>
 
@@ -248,7 +252,7 @@
                     <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 24 24">
                       <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.890-5.335 11.893-11.893A11.821 11.821 0 0020.885 3.488"/>
                     </svg>
-                    Quick WhatsApp
+                    {{ t('contact.cta.whatsapp') }}
                   </a>
                 </div>
 
@@ -276,7 +280,7 @@
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
                 </svg>
               </div>
-              <h3 class="font-display text-xl font-bold text-gray-900">Get In Touch</h3>
+              <h3 class="font-display text-xl font-bold text-gray-900">{{ t('contact.info.title') || 'Get In Touch' }}</h3>
             </div>
 
             <div class="space-y-4">
@@ -285,8 +289,8 @@
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
                 </svg>
                 <div>
-                  <p class="font-semibold text-gray-900">Office</p>
-                  <p class="text-gray-600 text-sm">Jakarta, Indonesia</p>
+                  <p class="font-semibold text-gray-900">{{ t('contact.info.address') }}</p>
+                  <p class="text-gray-600 text-sm">{{ t('contact.info.addressDetail') }}</p>
                 </div>
               </div>
 
@@ -295,8 +299,8 @@
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
                 </svg>
                 <div>
-                  <p class="font-semibold text-gray-900">Email</p>
-                  <a href="mailto:hello@nusasoftware.com" class="text-primary text-sm hover:underline">hello@nusasoftware.com</a>
+                  <p class="font-semibold text-gray-900">{{ t('contact.info.email') }}</p>
+                  <a href="mailto:hello@nusasoftware.com" class="text-primary text-sm hover:underline">{{ t('contact.info.emailDetail') }}</a>
                 </div>
               </div>
 
@@ -305,8 +309,8 @@
                   <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.890-5.335 11.893-11.893A11.821 11.821 0 0020.885 3.488"/>
                 </svg>
                 <div>
-                  <p class="font-semibold text-gray-900">WhatsApp</p>
-                  <a href="https://wa.me/6281234567890" class="text-primary text-sm hover:underline">+62 812-3456-7890</a>
+                  <p class="font-semibold text-gray-900">{{ t('contact.info.phone') }}</p>
+                  <a href="https://wa.me/6281234567890" class="text-primary text-sm hover:underline">{{ t('contact.info.phoneDetail') }}</a>
                 </div>
               </div>
             </div>
@@ -318,27 +322,27 @@
               <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
               </svg>
-              <h3 class="font-display text-xl font-bold">Response Guarantee</h3>
+              <h3 class="font-display text-xl font-bold">{{ t('contact.info.response') }}</h3>
             </div>
             <div class="space-y-3 text-sm">
               <div class="flex items-center">
                 <span class="font-semibold mr-2">⚡</span>
-                <span>Response within 2-4 hours</span>
+                <span>{{ t('contact.info.hoursDetail') }}</span>
               </div>
               <div class="flex items-center">
                 <span class="font-semibold mr-2">📋</span>
-                <span>Detailed proposal within 24 hours</span>
+                <span>{{ t('contact.info.response') }}</span>
               </div>
               <div class="flex items-center">
                 <span class="font-semibold mr-2">🤝</span>
-                <span>Free consultation call included</span>
+                <span>{{ t('navigation.getConsultation') }}</span>
               </div>
             </div>
           </div>
 
           <!-- Trust Badges -->
           <div class="bg-white rounded-2xl shadow-sm p-8 border border-gray-200">
-            <h3 class="font-display text-lg font-bold text-gray-900 mb-4">Why Choose Us?</h3>
+            <h3 class="font-display text-lg font-bold text-gray-900 mb-4">{{ t('about.title') || 'Why Choose Us?' }}</h3>
             <div class="space-y-3">
               <div class="flex items-center text-sm">
                 <svg class="w-5 h-5 text-green-500 mr-2" fill="currentColor" viewBox="0 0 20 20">
@@ -374,8 +378,11 @@
 
 <script setup>
 import { ref, computed } from 'vue'
+import { useI18n } from 'vue-i18n'
 import emailjs from '@emailjs/browser'
 import { EMAILJS_CONFIG } from '../../utils/emailjs-config'
+
+const { t } = useI18n()
 
 // Form data
 const form = ref({

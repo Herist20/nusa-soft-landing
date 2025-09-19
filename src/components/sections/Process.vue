@@ -2,13 +2,12 @@
   <section id="process" class="py-20 bg-white">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="text-center mb-16">
-        <span class="text-primary font-semibold tracking-wide uppercase text-sm">How We Work</span>
+        <span class="text-primary font-semibold tracking-wide uppercase text-sm">{{ t('navigation.process') }}</span>
         <h2 class="font-display text-4xl md:text-5xl font-bold text-gray-900 mt-2 mb-4">
-          Our 6-Step Development Process
+          {{ t('process.title') }}
         </h2>
         <p class="text-lg text-gray-600 max-w-3xl mx-auto">
-          A proven methodology that ensures your project is delivered on time, within budget, and exceeds expectations.
-          Every step is designed to maximize value and minimize risk.
+          {{ t('process.subtitle') }}
         </p>
       </div>
       
@@ -38,10 +37,10 @@
                   </div>
 
                   <div class="mt-6">
-                    <h3 class="font-display text-2xl font-bold mb-4 text-gray-900">{{ step.title }}</h3>
-                    <p class="text-gray-600 mb-6 leading-relaxed">{{ step.description }}</p>
+                    <h3 class="font-display text-2xl font-bold mb-4 text-gray-900">{{ t(`process.steps[${index}].title`) }}</h3>
+                    <p class="text-gray-600 mb-6 leading-relaxed">{{ t(`process.steps[${index}].description`) }}</p>
                     <ul class="space-y-3">
-                      <li v-for="item in step.items" :key="item"
+                      <li v-for="(item, idx) in t(`process.steps[${index}].deliverables`)" :key="idx"
                           class="flex items-center group-hover:translate-x-1 transition-transform duration-200"
                           :class="index % 2 === 0 ? 'md:justify-end' : ''">
                         <svg class="w-5 h-5 text-primary mr-3 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -109,10 +108,10 @@
         </p>
         <div class="flex flex-col sm:flex-row gap-4 justify-center">
           <button @click="$emit('openContact')" class="bg-white text-blue-600 px-8 py-3 rounded-lg font-semibold hover:bg-gray-50 shadow-sm hover:shadow-md transition-all duration-200">
-            Start Your Project
+            {{ t('navigation.startProject') }}
           </button>
           <button class="border-2 border-white text-white px-8 py-3 rounded-lg font-semibold hover:bg-white hover:text-blue-600 transition-all duration-200">
-            View Case Studies
+            {{ t('portfolio.viewProject') }}
           </button>
         </div>
       </div>
@@ -122,7 +121,9 @@
 
 <script setup>
 import { h } from 'vue'
+import { useI18n } from 'vue-i18n'
 
+const { t } = useI18n()
 defineEmits(['openContact'])
 
 const DiscoveryIcon = {
