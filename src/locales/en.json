@@ -14,15 +14,22 @@
     "home": "Home",
     "services": "Services",
     "portfolio": "Portfolio",
-    "about": "About",
-    "team": "Team",
-    "process": "Process",
+    "about": "About Us",
+    "team": "Our Team",
+    "process": "Our Process",
     "contact": "Contact",
     "blog": "Blog",
     "products": "Products",
     "getConsultation": "Free Consultation",
     "getQuote": "Get a Quote",
-    "startProject": "Start Project"
+    "startProject": "Start Project",
+    "submenu": {
+      "about": {
+        "overview": "About Us",
+        "team": "Our Team",
+        "process": "Our Process"
+      }
+    }
   },
   "nav": {
     "home": "Home",
@@ -384,6 +391,10 @@
     "description": "Since 2020, we have been at the forefront of digital transformation, delivering cutting-edge software solutions that drive measurable business results for organizations worldwide.",
     "mission": "To empower businesses through innovative technology solutions that create sustainable competitive advantages and drive growth",
     "vision": "To be the leading technology partner for organizations seeking digital excellence and innovation",
+    "story": {
+      "title": "Our Story",
+      "description": "Founded with a vision to become a trusted digital partner for businesses worldwide, we continuously innovate to deliver cutting-edge technology solutions that not only meet current needs but also prepare your business for the future."
+    },
     "values": {
       "excellence": {
         "title": "Excellence in Delivery",
@@ -391,7 +402,11 @@
       },
       "innovation": {
         "title": "Continuous Innovation",
-        "description": "Leveraging cutting-edge technologies to create competitive advantages for our clients"
+        "description": "Always using cutting-edge technology to deliver the best solutions"
+      },
+      "quality": {
+        "title": "Quality Assurance",
+        "description": "Commitment to international standards and optimal user experience"
       },
       "partnership": {
         "title": "Strategic Partnership",
@@ -402,11 +417,21 @@
         "description": "Architecting solutions that grow with your business and adapt to changing requirements"
       }
     },
+    "features": {
+      "experience": "5+ Years Experience",
+      "clients": "100+ Happy Clients",
+      "support": "24/7 Support"
+    },
     "stats": {
       "projects": "500+",
       "clients": "200+",
-      "experience": "4+",
-      "satisfaction": "99%"
+      "experience": "5+",
+      "satisfaction": "99%",
+      "satisfactionLabel": "Satisfaction Rate"
+    },
+    "cta": {
+      "text": "Ready to be part of this success?",
+      "button": "Free Consultation"
     }
   },
   "team": {

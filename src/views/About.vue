@@ -5,6 +5,7 @@
     <main class="pt-16">
       <About />
       <Team />
+      <Process @open-contact="scrollToContact" />
     </main>
 
     <Footer />
@@ -16,6 +17,7 @@ import Header from '../components/layout/Header.vue'
 import Footer from '../components/layout/Footer.vue'
 import About from '../components/sections/About.vue'
 import Team from '../components/sections/Team.vue'
+import Process from '../components/sections/Process.vue'
 
 const scrollToContact = () => {
   const contactSection = document.getElementById('contact')

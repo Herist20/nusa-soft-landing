@@ -14,15 +14,22 @@
     "home": "Beranda",
     "services": "Layanan",
     "portfolio": "Portofolio",
-    "about": "Tentang",
-    "team": "Tim",
-    "process": "Proses",
+    "about": "Tentang Kami",
+    "team": "Tim Kami",
+    "process": "Proses Kerja",
     "contact": "Kontak",
     "blog": "Blog",
     "products": "Produk",
     "getConsultation": "Konsultasi Gratis",
     "getQuote": "Dapatkan Penawaran",
-    "startProject": "Mulai Proyek"
+    "startProject": "Mulai Proyek",
+    "submenu": {
+      "about": {
+        "overview": "Tentang Kami",
+        "team": "Tim Kami",
+        "process": "Proses Kerja"
+      }
+    }
   },
   "nav": {
     "home": "Beranda",
@@ -384,6 +391,10 @@
     "description": "Sejak 2020, kami telah membantu ratusan bisnis Indonesia bertransformasi digital dengan solusi teknologi yang tepat sasaran dan sesuai budget.",
     "mission": "Memberdayakan UMKM dan perusahaan Indonesia dengan teknologi digital yang mudah diakses dan terjangkau",
     "vision": "Menjadi software house terdepan dalam mendukung digitalisasi bisnis Indonesia",
+    "story": {
+      "title": "Cerita Kami",
+      "description": "Didirikan dengan visi untuk menjadi mitra digital terpercaya bagi bisnis Indonesia, kami terus berinovasi menghadirkan solusi teknologi terdepan yang tidak hanya memenuhi kebutuhan saat ini, tetapi juga mempersiapkan bisnis Anda untuk masa depan."
+    },
     "values": {
       "excellence": {
         "title": "Keunggulan dalam Pengiriman",
@@ -391,7 +402,11 @@
       },
       "innovation": {
         "title": "Inovasi Berkelanjutan",
-        "description": "Selalu menggunakan teknologi terbaru untuk memberikan competitive advantage"
+        "description": "Selalu menggunakan teknologi terdepan untuk memberikan solusi terbaik"
+      },
+      "quality": {
+        "title": "Kualitas Terjamin",
+        "description": "Komitmen pada standar internasional dan pengalaman pengguna terbaik"
       },
       "partnership": {
         "title": "Partnership Strategis",
@@ -402,11 +417,21 @@
         "description": "Merancang arsitektur solusi yang tumbuh bersama bisnis dan beradaptasi dengan kebutuhan yang berubah"
       }
     },
+    "features": {
+      "experience": "Pengalaman 5+ Tahun",
+      "clients": "100+ Klien Puas",
+      "support": "Support 24/7"
+    },
     "stats": {
       "projects": "200+",
       "clients": "150+",
-      "experience": "4+",
-      "satisfaction": "98%"
+      "experience": "5+",
+      "satisfaction": "98%",
+      "satisfactionLabel": "Tingkat Kepuasan"
+    },
+    "cta": {
+      "text": "Siap menjadi bagian dari kesuksesan ini?",
+      "button": "Konsultasi Gratis"
     }
   },
   "team": {

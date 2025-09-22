@@ -67,7 +67,9 @@ const localizedRoutes = {
       component: () => import('../views/About.vue'),
       meta: {
         title: 'about',
-        locale: 'id'
+        locale: 'id',
+        hasSubmenu: true,
+        submenuSections: ['about', 'team', 'process']
       }
     },
     {
@@ -114,7 +116,9 @@ const localizedRoutes = {
       component: () => import('../views/About.vue'),
       meta: {
         title: 'about',
-        locale: 'en'
+        locale: 'en',
+        hasSubmenu: true,
+        submenuSections: ['about', 'team', 'process']
       }
     },
     {
