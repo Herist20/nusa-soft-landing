@@ -129,6 +129,212 @@ export class AnalyticsManager {
 
     console.log('📊 Language switch tracked:', { fromLang, toLang, url })
   }
+
+  /**
+   * Track language preference detection
+   */
+  trackLanguagePreferenceDetected(detectedLang, browserLang, savedLang) {
+    if (window.gtag) {
+      window.gtag('event', 'language_preference_detected', {
+        event_category: 'user_behavior',
+        detected_language: detectedLang,
+        browser_language: browserLang,
+        saved_language: savedLang || 'none'
+      })
+    }
+
+    console.log('📊 Language preference detected:', { detectedLang, browserLang, savedLang })
+  }
+
+  /**
+   * Track CTA clicks by language
+   */
+  trackCTAClickByLanguage(ctaName, language, section) {
+    if (window.gtag) {
+      window.gtag('event', 'cta_click', {
+        event_category: 'conversion',
+        cta_name: ctaName,
+        language: language,
+        section: section
+      })
+    }
+
+    if (window.fbq) {
+      window.fbq('track', 'Lead', {
+        content_name: ctaName,
+        language: language
+      })
+    }
+
+    console.log('📊 CTA click tracked:', { ctaName, language, section })
+  }
+
+  /**
+   * Track form submissions by language
+   */
+  trackFormSubmissionByLanguage(formType, language, success = true) {
+    if (window.gtag) {
+      window.gtag('event', 'form_submission', {
+        event_category: 'conversion',
+        form_type: formType,
+        language: language,
+        success: success
+      })
+    }
+
+    if (window.fbq) {
+      window.fbq('track', 'Contact', {
+        content_name: formType,
+        language: language
+      })
+    }
+
+    console.log('📊 Form submission tracked:', { formType, language, success })
+  }
+
+  /**
+   * Track WhatsApp clicks by language
+   */
+  trackWhatsAppClickByLanguage(language, source) {
+    if (window.gtag) {
+      window.gtag('event', 'whatsapp_click', {
+        event_category: 'engagement',
+        language: language,
+        source: source
+      })
+    }
+
+    if (window.fbq) {
+      window.fbq('trackCustom', 'WhatsAppClick', {
+        language: language,
+        source: source
+      })
+    }
+
+    console.log('📊 WhatsApp click tracked:', { language, source })
+  }
+
+  /**
+   * Track engagement by language
+   */
+  trackEngagementByLanguage(eventType, language, value) {
+    if (window.gtag) {
+      window.gtag('event', 'engagement', {
+        event_category: 'user_behavior',
+        event_type: eventType,
+        language: language,
+        value: value
+      })
+    }
+
+    console.log('📊 Engagement tracked:', { eventType, language, value })
+  }
+
+  /**
+   * Track scroll depth by language
+   */
+  trackScrollDepthByLanguage(depth, language, page) {
+    if (window.gtag) {
+      window.gtag('event', 'scroll_depth', {
+        event_category: 'engagement',
+        scroll_depth: depth,
+        language: language,
+        page: page
+      })
+    }
+
+    console.log('📊 Scroll depth tracked:', { depth, language, page })
+  }
+
+  /**
+   * Track bounce rate by language
+   */
+  trackBounceRateByLanguage(timeOnPage, language) {
+    const isBounce = timeOnPage < 10000 // Less than 10 seconds
+
+    if (window.gtag) {
+      window.gtag('event', 'bounce_rate', {
+        event_category: 'user_behavior',
+        time_on_page: timeOnPage,
+        language: language,
+        is_bounce: isBounce
+      })
+    }
+
+    console.log('📊 Bounce rate tracked:', { timeOnPage, language, isBounce })
+  }
+
+  /**
+   * Track translation errors
+   */
+  trackTranslationError(key, language, fallbackUsed) {
+    if (window.gtag) {
+      window.gtag('event', 'translation_error', {
+        event_category: 'error',
+        translation_key: key,
+        language: language,
+        fallback_used: fallbackUsed
+      })
+    }
+
+    console.error('📊 Translation error tracked:', { key, language, fallbackUsed })
+  }
+
+  /**
+   * Track conversion rates by language
+   */
+  trackConversionByLanguage(conversionType, language, value = null) {
+    if (window.gtag) {
+      window.gtag('event', 'conversion', {
+        event_category: 'conversion',
+        conversion_type: conversionType,
+        language: language,
+        value: value
+      })
+    }
+
+    if (window.fbq) {
+      window.fbq('track', 'Purchase', {
+        content_name: conversionType,
+        language: language,
+        value: value
+      })
+    }
+
+    console.log('📊 Conversion tracked:', { conversionType, language, value })
+  }
+
+  /**
+   * Setup automated tracking for common events
+   */
+  setupAutomatedTracking() {
+    // Track page load time by language
+    window.addEventListener('load', () => {
+      const loadTime = performance.timing.loadEventEnd - performance.timing.navigationStart
+      this.trackEngagementByLanguage('page_load', this.currentLanguage, loadTime)
+    })
+
+    // Track time on page
+    let startTime = Date.now()
+    window.addEventListener('beforeunload', () => {
+      const timeOnPage = Date.now() - startTime
+      this.trackBounceRateByLanguage(timeOnPage, this.currentLanguage)
+    })
+
+    // Track scroll depth
+    let maxScrollDepth = 0
+    window.addEventListener('scroll', () => {
+      const scrollDepth = Math.round((window.scrollY / (document.body.scrollHeight - window.innerHeight)) * 100)
+      if (scrollDepth > maxScrollDepth) {
+        maxScrollDepth = scrollDepth
+        if (scrollDepth % 25 === 0 && scrollDepth > 0) { // Track at 25%, 50%, 75%, 100%
+          this.trackScrollDepthByLanguage(scrollDepth, this.currentLanguage, window.location.pathname)
+        }
+      }
+    })
+
+    console.log('✅ Automated tracking setup complete')
+  }
 }
 
 export const analytics = new AnalyticsManager()

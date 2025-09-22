@@ -12,6 +12,8 @@ import { updateMetaTags, injectStructuredData, preloadResources } from './utils/
 import { initializeAccessibility } from './utils/accessibility'
 import { multilingualSEO } from './utils/seoMultilingual'
 import { analytics } from './utils/analytics'
+import { performanceMonitor } from './utils/performanceMonitor'
+import { errorMonitor } from './utils/errorHandling'
 
 const app = createApp(App)
 
@@ -41,7 +43,14 @@ app.mixin({
       // Initialize Analytics
       if (import.meta.env.PROD) {
         analytics.initialize(currentLocale)
+        analytics.setupAutomatedTracking()
       }
+
+      // Initialize Performance Monitoring
+      performanceMonitor.init()
+
+      // Initialize Error Monitoring
+      errorMonitor.init()
 
       // Initialize Accessibility
       initializeAccessibility()
