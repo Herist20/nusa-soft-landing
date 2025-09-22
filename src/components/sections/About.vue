@@ -70,23 +70,6 @@
           </div>
         </div>
       </div>
-      
-      <!-- Team Section -->
-      <div class="mt-20">
-        <h3 class="font-sans text-2xl lg:text-3xl font-bold text-center text-gray-900 mb-12">
-          {{ t('team.title') }}
-        </h3>
-        <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-6">
-          <div v-for="member in team" :key="member.name" class="bg-white rounded-xl shadow-sm p-6 text-center transition-shadow duration-200 hover:shadow-md">
-            <div class="mb-4">
-              <img :src="member.image" :alt="member.name" loading="lazy" class="w-20 h-20 rounded-lg mx-auto object-cover">
-            </div>
-            <h4 class="text-lg font-semibold text-gray-900 mb-1">{{ member.name }}</h4>
-            <p class="text-blue-600 font-medium text-sm mb-3">{{ member.role }}</p>
-            <p class="text-gray-600 text-sm">{{ member.description || t('team.subtitle') }}</p>
-          </div>
-        </div>
-      </div>
     </div>
   </section>
 </template>
