@@ -9,8 +9,9 @@ import i18n from './locales'
 // Import optimization utilities
 import lazyLoad from './directives/lazyLoad'
 import { updateMetaTags, injectStructuredData, preloadResources } from './utils/seo'
-import { initializeTracking } from './utils/analytics'
 import { initializeAccessibility } from './utils/accessibility'
+import { multilingualSEO } from './utils/seoMultilingual'
+import { analytics } from './utils/analytics'
 
 const app = createApp(App)
 
@@ -33,9 +34,13 @@ app.mixin({
       injectStructuredData('Organization')
       preloadResources()
 
+      // Initialize Multilingual SEO
+      const currentLocale = i18n.global.locale.value
+      multilingualSEO.initializeSEO(window.location, currentLocale)
+
       // Initialize Analytics
       if (import.meta.env.PROD) {
-        initializeTracking()
+        analytics.initialize(currentLocale)
       }
 
       // Initialize Accessibility

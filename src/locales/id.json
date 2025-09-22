@@ -2,7 +2,13 @@
   "meta": {
     "title": "Nusa Software - Partner Digital Bisnis Indonesia Terpercaya",
     "description": "Jasa pembuatan website, aplikasi mobile, dan sistem digital untuk UMKM hingga perusahaan besar. Konsultasi gratis, hasil berkualitas internasional!",
-    "keywords": "jasa pembuatan website indonesia, software house terpercaya, aplikasi mobile murah, web development jakarta, sistem informasi bisnis"
+    "keywords": "jasa pembuatan website indonesia, software house terpercaya, aplikasi mobile murah, web development jakarta, sistem informasi bisnis",
+    "ogTitle": "Nusa Software - Transformasi Digital Bisnis Indonesia",
+    "ogDescription": "Partner teknologi terpercaya untuk solusi website dan aplikasi mobile yang meningkatkan omzet bisnis Anda. Konsultasi gratis!",
+    "ogImage": "https://nusasoft.id/images/og-image-id.jpg",
+    "twitterTitle": "Nusa Software - Jasa Website & Aplikasi Mobile Terpercaya",
+    "twitterDescription": "Solusi digital lengkap untuk UMKM dan perusahaan besar. Website profesional, aplikasi mobile, sistem informasi. Konsultasi gratis!",
+    "twitterImage": "https://nusasoft.id/images/twitter-card-id.jpg"
   },
   "navigation": {
     "home": "Beranda",

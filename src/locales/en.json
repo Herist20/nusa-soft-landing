@@ -2,7 +2,13 @@
   "meta": {
     "title": "Nusa Software - Digital Solutions for Global Businesses",
     "description": "Professional web development, mobile applications, and enterprise software solutions. Transforming businesses with cutting-edge technology. Free consultation!",
-    "keywords": "web development services, mobile app development, enterprise software solutions, digital transformation, custom software development"
+    "keywords": "web development services, mobile app development, enterprise software solutions, digital transformation, custom software development",
+    "ogTitle": "Nusa Software - Leading Digital Transformation Partner",
+    "ogDescription": "Transform your business with professional web and mobile solutions. Trusted by 100+ companies worldwide. Get your free consultation today!",
+    "ogImage": "https://nusasoft.id/images/og-image-en.jpg",
+    "twitterTitle": "Nusa Software - Professional Web & Mobile Development",
+    "twitterDescription": "Enterprise-grade web applications and mobile solutions that scale with your business. From startups to Fortune 500 companies.",
+    "twitterImage": "https://nusasoft.id/images/twitter-card-en.jpg"
   },
   "navigation": {
     "home": "Home",

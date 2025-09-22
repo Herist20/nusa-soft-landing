@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import Home from '../views/Home.vue'
 import { supportedLocales } from '@/locales'
+import { useMultilingualSEO } from '@/utils/seoMultilingual'
 
 const getDefaultLocale = () => {
   const savedLocale = localStorage.getItem('userLocale')
@@ -30,78 +31,128 @@ const createLocaleRoute = (route, locale) => {
   }
 }
 
-const baseRoutes = [
-  {
-    path: '/',
-    name: 'Home',
-    component: Home,
-    meta: {
-      title: 'home'
+// SEO-friendly localized routes
+const localizedRoutes = {
+  'id': [
+    {
+      path: '/',
+      name: 'Home',
+      component: Home,
+      meta: {
+        title: 'home',
+        locale: 'id'
+      }
+    },
+    {
+      path: '/layanan',
+      name: 'Services',
+      component: () => import('../views/Services.vue'),
+      meta: {
+        title: 'services',
+        locale: 'id'
+      }
+    },
+    {
+      path: '/portofolio',
+      name: 'Portfolio',
+      component: () => import('../views/Portfolio.vue'),
+      meta: {
+        title: 'portfolio',
+        locale: 'id'
+      }
+    },
+    {
+      path: '/tentang',
+      name: 'About',
+      component: () => import('../views/About.vue'),
+      meta: {
+        title: 'about',
+        locale: 'id'
+      }
+    },
+    {
+      path: '/kontak',
+      name: 'Contact',
+      component: () => import('../views/Contact.vue'),
+      meta: {
+        title: 'contact',
+        locale: 'id'
+      }
     }
-  },
-  {
-    path: '/services',
-    name: 'Services',
-    component: () => import('../views/Services.vue'),
-    meta: {
-      title: 'services'
+  ],
+  'en': [
+    {
+      path: '/en',
+      name: 'Home-en',
+      component: Home,
+      meta: {
+        title: 'home',
+        locale: 'en'
+      }
+    },
+    {
+      path: '/en/services',
+      name: 'Services-en',
+      component: () => import('../views/Services.vue'),
+      meta: {
+        title: 'services',
+        locale: 'en'
+      }
+    },
+    {
+      path: '/en/portfolio',
+      name: 'Portfolio-en',
+      component: () => import('../views/Portfolio.vue'),
+      meta: {
+        title: 'portfolio',
+        locale: 'en'
+      }
+    },
+    {
+      path: '/en/about',
+      name: 'About-en',
+      component: () => import('../views/About.vue'),
+      meta: {
+        title: 'about',
+        locale: 'en'
+      }
+    },
+    {
+      path: '/en/contact',
+      name: 'Contact-en',
+      component: () => import('../views/Contact.vue'),
+      meta: {
+        title: 'contact',
+        locale: 'en'
+      }
     }
-  },
-  {
-    path: '/products',
-    name: 'Products',
-    component: () => import('../views/Products.vue'),
-    meta: {
-      title: 'products'
-    }
-  },
-  {
-    path: '/portfolio',
-    name: 'Portfolio',
-    component: () => import('../views/Portfolio.vue'),
-    meta: {
-      title: 'portfolio'
-    }
-  },
-  {
-    path: '/about',
-    name: 'About',
-    component: () => import('../views/About.vue'),
-    meta: {
-      title: 'about'
-    }
-  },
-  {
-    path: '/contact',
-    name: 'Contact',
-    component: () => import('../views/Contact.vue'),
-    meta: {
-      title: 'contact'
-    }
-  }
+  ]
+}
+
+// Legacy redirects for SEO
+const legacyRedirects = [
+  { path: '/services', redirect: '/layanan' },
+  { path: '/portfolio', redirect: '/portofolio' },
+  { path: '/about', redirect: '/tentang' },
+  { path: '/contact', redirect: '/kontak' }
 ]
 
-const localizedRoutes = []
-supportedLocales.forEach(locale => {
-  baseRoutes.forEach(route => {
-    localizedRoutes.push(createLocaleRoute(route, locale.code))
-  })
-})
+// Flatten all localized routes
+const allRoutes = [...localizedRoutes.id, ...localizedRoutes.en]
 
 const routes = [
-  {
-    path: '/',
-    redirect: () => {
-      const locale = getDefaultLocale()
-      return `/${locale}`
-    }
-  },
-  ...localizedRoutes,
+  // Main routes
+  ...allRoutes,
+
+  // Legacy redirects
+  ...legacyRedirects,
+
+  // 404 fallback
   {
     path: '/:pathMatch(.*)*',
     redirect: () => {
       const locale = getDefaultLocale()
-      return `/${locale}`
+      return locale === 'id' ? '/' : '/en'
     }
   }
 ]
@@ -124,7 +175,7 @@ const router = createRouter({
 })
 
 router.beforeEach((to, from, next) => {
-  const locale = to.meta.locale || to.params.locale
+  const locale = to.meta.locale || (to.path.startsWith('/en') ? 'en' : 'id')
 
   if (locale && supportedLocales.find(l => l.code === locale)) {
     document.documentElement.lang = locale
@@ -135,6 +186,18 @@ router.beforeEach((to, from, next) => {
   }
 
   next()
+})
+
+// SEO optimization after each route
+router.afterEach((to, from) => {
+  if (typeof window !== 'undefined') {
+    const { initializeSEO } = useMultilingualSEO()
+
+    // Small delay to ensure DOM is ready
+    setTimeout(() => {
+      initializeSEO()
+    }, 100)
+  }
 })
 
 export default router

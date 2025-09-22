@@ -1,58 +1,94 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
-        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9
-        http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
-
-  <!-- Homepage -->
+        xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
-    <loc>https://nusasoftware.com/</loc>
-    <lastmod>2025-01-17</lastmod>
+    <loc>https://nusasoft.id/</loc>
+    <lastmod>2025-09-22</lastmod>
     <changefreq>weekly</changefreq>
-    <priority>1.0</priority>
+    <priority>1</priority>
+    <xhtml:link rel="alternate" hreflang="id" href="https://nusasoft.id/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://nusasoft.id/en" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://nusasoft.id/" />
   </url>
-
-  <!-- Main Sections (using hash navigation) -->
   <url>
-    <loc>https://nusasoftware.com/#services</loc>
-    <lastmod>2025-01-17</lastmod>
+    <loc>https://nusasoft.id/en</loc>
+    <lastmod>2025-09-22</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>1</priority>
+    <xhtml:link rel="alternate" hreflang="id" href="https://nusasoft.id/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://nusasoft.id/en" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://nusasoft.id/" />
+  </url>
+  <url>
+    <loc>https://nusasoft.id/layanan</loc>
+    <lastmod>2025-09-22</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.9</priority>
-  </url>
-
-  <url>
-    <loc>https://nusasoftware.com/#portfolio</loc>
-    <lastmod>2025-01-17</lastmod>
-    <changefreq>weekly</changefreq>
     <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="id" href="https://nusasoft.id/layanan" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://nusasoft.id/en/services" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://nusasoft.id/layanan" />
   </url>
-
   <url>
-    <loc>https://nusasoftware.com/#about</loc>
-    <lastmod>2025-01-17</lastmod>
+    <loc>https://nusasoft.id/en/services</loc>
+    <lastmod>2025-09-22</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="id" href="https://nusasoft.id/layanan" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://nusasoft.id/en/services" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://nusasoft.id/layanan" />
+  </url>
+  <url>
+    <loc>https://nusasoft.id/portofolio</loc>
+    <lastmod>2025-09-22</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="id" href="https://nusasoft.id/portofolio" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://nusasoft.id/en/portfolio" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://nusasoft.id/portofolio" />
+  </url>
+  <url>
+    <loc>https://nusasoft.id/en/portfolio</loc>
+    <lastmod>2025-09-22</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="id" href="https://nusasoft.id/portofolio" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://nusasoft.id/en/portfolio" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://nusasoft.id/portofolio" />
+  </url>
+  <url>
+    <loc>https://nusasoft.id/tentang</loc>
+    <lastmod>2025-09-22</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+    <xhtml:link rel="alternate" hreflang="id" href="https://nusasoft.id/tentang" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://nusasoft.id/en/about" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://nusasoft.id/tentang" />
+  </url>
+  <url>
+    <loc>https://nusasoft.id/en/about</loc>
+    <lastmod>2025-09-22</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+    <xhtml:link rel="alternate" hreflang="id" href="https://nusasoft.id/tentang" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://nusasoft.id/en/about" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://nusasoft.id/tentang" />
+  </url>
+  <url>
+    <loc>https://nusasoft.id/kontak</loc>
+    <lastmod>2025-09-22</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="id" href="https://nusasoft.id/kontak" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://nusasoft.id/en/contact" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://nusasoft.id/kontak" />
   </url>
-
   <url>
-    <loc>https://nusasoftware.com/#team</loc>
-    <lastmod>2025-01-17</lastmod>
+    <loc>https://nusasoft.id/en/contact</loc>
+    <lastmod>2025-09-22</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="id" href="https://nusasoft.id/kontak" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://nusasoft.id/en/contact" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://nusasoft.id/kontak" />
   </url>
-
-  <url>
-    <loc>https://nusasoftware.com/#process</loc>
-    <lastmod>2025-01-17</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-
-  <url>
-    <loc>https://nusasoftware.com/#contact</loc>
-    <lastmod>2025-01-17</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.9</priority>
-  </url>
-
 </urlset>

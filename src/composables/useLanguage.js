@@ -2,6 +2,7 @@ import { computed, watch, nextTick } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { useRouter, useRoute } from 'vue-router'
 import { setI18nLanguage, supportedLocales } from '@/locales'
+import { multilingualSEO } from '@/utils/seoMultilingual'
 
 export function useLanguage() {
   const { locale, t, n, d } = useI18n()
@@ -66,6 +67,9 @@ export function useLanguage() {
 
       restoreFormData(formData)
       updateMetaTags()
+
+      // Initialize comprehensive SEO
+      multilingualSEO.initializeSEO(route, newLocale)
 
       // Track language change
       trackLanguageChange(locale.value, newLocale)
@@ -232,25 +236,8 @@ export function useLanguage() {
 
   // Analytics tracking
   const trackLanguageChange = (fromLang, toLang) => {
-    // Google Analytics 4
-    if (typeof window !== 'undefined' && window.gtag) {
-      window.gtag('event', 'language_change', {
-        custom_parameter_1: fromLang,
-        custom_parameter_2: toLang,
-        page_location: window.location.href,
-        page_title: document.title
-      })
-    }
-
-    // Custom analytics
-    if (typeof window !== 'undefined' && window.analytics) {
-      window.analytics.track('Language Changed', {
-        from: fromLang,
-        to: toLang,
-        page: window.location.pathname,
-        timestamp: new Date().toISOString()
-      })
-    }
+    // Use centralized SEO tracking
+    multilingualSEO.trackLanguageSwitch(fromLang, toLang, window.location.href)
   }
 
   watch(locale, () => {
