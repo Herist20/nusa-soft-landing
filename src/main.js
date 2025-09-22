@@ -1,5 +1,7 @@
 import { createApp } from 'vue'
 import './style.css'
+import './styles/mobile-language.css'
+import './styles/simple-fixes.css'
 import App from './App.vue'
 import router from './router'
 import i18n from './locales'

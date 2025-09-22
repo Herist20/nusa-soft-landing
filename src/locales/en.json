@@ -351,10 +351,24 @@
       },
       {
         "number": "04",
-        "title": "Deployment & Optimization",
-        "description": "Seamless production deployment with performance monitoring and ongoing optimization",
+        "title": "Testing & Optimization",
+        "description": "Comprehensive testing to ensure your application performs flawlessly across all platforms and scenarios",
+        "duration": "1-2 weeks",
+        "deliverables": ["Cross-browser testing", "Performance optimization", "Security audit", "Load testing"]
+      },
+      {
+        "number": "05",
+        "title": "Deployment & Launch",
+        "description": "Seamless deployment to production with complete go-live support and comprehensive documentation",
+        "duration": "3-5 days",
+        "deliverables": ["Production deployment", "Go-live support", "Training & documentation", "Performance monitoring"]
+      },
+      {
+        "number": "06",
+        "title": "Maintenance & Support",
+        "description": "Ongoing support and maintenance to ensure your application continues to perform optimally and stays secure",
         "duration": "Ongoing",
-        "deliverables": ["Live application", "Performance metrics", "Maintenance & support"]
+        "deliverables": ["Ongoing support", "Regular maintenance", "Security updates", "Feature enhancements"]
       }
     ]
   },
@@ -417,7 +431,18 @@
         "avatar": "/team/david.jpg",
         "skills": ["React", "Node.js", "TypeScript", "GraphQL"]
       }
-    ]
+    ],
+    "cta": {
+      "title": "Ready to Work with Our Expert Team?",
+      "description": "Join 150+ clients who trust us with their digital solutions",
+      "button": "Start Your Project"
+    }
+  },
+  "language": {
+    "selectLanguage": "Select Language",
+    "changing": "Changing language...",
+    "indonesia": "Bahasa Indonesia",
+    "english": "English"
   },
   "common": {
     "loading": "Loading...",

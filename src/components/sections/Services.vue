@@ -13,9 +13,10 @@
         </p>
       </div>
 
-      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 services-grid">
         <div v-for="(service, index) in servicesList" :key="service.key"
              class="bg-white rounded-xl shadow-sm hover:shadow-md transition-all duration-200 p-8 group cursor-pointer border border-gray-200 hover:border-blue-200 flex flex-col h-full"
+             :class="{ 'service-card-id': locale === 'id', 'service-card-en': locale === 'en' }"
              :style="`opacity: 0; animation: fadeInStagger 0.6s ease-out forwards; animation-delay: ${index * 0.1}s;`">
 
           <!-- Service Icon -->
@@ -38,14 +39,17 @@
           <!-- Service Features -->
           <div class="mb-6">
             <div class="space-y-3">
-              <div v-for="(feature, idx) in t(`services.list.${service.key}.features`)" :key="idx"
-                   class="flex items-start space-x-3">
+              <div v-for="(feature, idx) in getServiceFeatures(service.key)" :key="idx"
+                   class="flex items-start space-x-3 service-feature-item">
                 <div class="w-5 h-5 bg-emerald-100 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
                   <svg class="w-3 h-3 text-emerald-600" fill="currentColor" viewBox="0 0 20 20">
                     <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
                   </svg>
                 </div>
-                <span class="text-gray-600 text-sm">{{ feature }}</span>
+                <span
+                  class="text-gray-600 text-sm"
+                  :class="{ 'feature-text-id': locale === 'id', 'feature-text-en': locale === 'en' }"
+                >{{ feature }}</span>
               </div>
             </div>
           </div>
@@ -97,7 +101,40 @@
 import { h, computed } from 'vue'
 import { useI18n } from 'vue-i18n'
 
-const { t } = useI18n()
+const { t, locale } = useI18n()
+
+// Debug: let's see what locale value we're getting
+console.log('Current locale:', locale.value)
+
+// Helper function to get service features
+const getServiceFeatures = (serviceKey) => {
+  try {
+    // Get the raw message object and access the nested property
+    const messages = t('services.list')
+    console.log('Raw services messages:', messages)
+
+    if (messages && messages[serviceKey] && messages[serviceKey].features) {
+      const features = messages[serviceKey].features
+      console.log(`Features for ${serviceKey}:`, features)
+      return Array.isArray(features) ? features : []
+    }
+
+    // Fallback: try direct translation
+    const features = t(`services.list.${serviceKey}.features`)
+    console.log(`Fallback features for ${serviceKey}:`, features, typeof features)
+
+    if (Array.isArray(features)) {
+      return features
+    }
+
+    // If translation fails, it returns the key string
+    console.log(`Translation failed for ${serviceKey}, returning empty array`)
+    return []
+  } catch (error) {
+    console.error(`Error getting features for ${serviceKey}:`, error)
+    return []
+  }
+}
 
 const WebIcon = {
   render() {
@@ -155,6 +192,7 @@ const servicesList = [
   { key: 'consulting', icon: ConsultingIcon },
   { key: 'maintenance', icon: EcommerceIcon }
 ]
+
 
 const getWhatsAppUrl = (serviceKey) => {
   const message = serviceKey === 'general' ?

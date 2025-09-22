@@ -1,0 +1,215 @@
+/* Language-Specific Visual Adjustments */
+
+/* Global Indonesian text adjustments */
+[lang="id"] {
+  word-spacing: -0.05em;
+}
+
+/* Services Section - Features List */
+[lang="id"] .service-feature-text {
+  font-size: 0.75rem !important; /* 12px */
+  line-height: 1.45 !important;
+  display: block;
+  hyphens: auto;
+  word-break: break-word;
+}
+
+[lang="en"] .service-feature-text {
+  font-size: 0.875rem; /* 14px */
+  line-height: 1.5;
+}
+
+/* Service Cards Indonesian */
+[lang="id"] .service-card {
+  padding: 1.5rem !important;
+}
+
+@media (min-width: 768px) {
+  [lang="id"] .service-card {
+    padding: 1.75rem !important;
+  }
+}
+
+/* Mobile view for service features */
+@media (max-width: 768px) {
+  [lang="id"] .service-feature-text {
+    font-size: 0.688rem !important; /* 11px */
+  }
+
+  [lang="id"] .service-card {
+    padding: 1.25rem !important;
+  }
+}
+
+/* Process Section - Deliverables */
+[lang="id"] .process-deliverables span {
+  font-size: 0.75rem !important; /* 12px */
+  line-height: 1.4 !important;
+  hyphens: auto;
+  word-break: break-word;
+}
+
+[lang="en"] .process-deliverables span {
+  font-size: 0.938rem; /* 15px */
+  line-height: 1.5;
+}
+
+/* Process cards Indonesian optimization */
+[lang="id"] .process-card {
+  padding: 1.5rem !important;
+}
+
+@media (min-width: 768px) {
+  [lang="id"] .process-card {
+    padding: 1.75rem !important;
+  }
+}
+
+@media (min-width: 1024px) {
+  [lang="id"] .process-card {
+    padding: 2rem !important;
+  }
+}
+
+/* Process items spacing */
+[lang="id"] .process-item {
+  margin-bottom: 0.5rem;
+}
+
+@media (max-width: 768px) {
+  [lang="id"] .process-deliverables span {
+    font-size: 0.688rem !important; /* 11px */
+    line-height: 1.35 !important;
+  }
+}
+
+/* Team Section CTA */
+[lang="id"] #team .bg-blue-600 {
+  padding: 2.5rem 1.5rem;
+}
+
+[lang="id"] #team .bg-blue-600 h3 {
+  font-size: 1.5rem;
+  line-height: 1.4;
+}
+
+[lang="id"] #team .bg-blue-600 p {
+  font-size: 1rem;
+  line-height: 1.6;
+}
+
+@media (min-width: 768px) {
+  [lang="id"] #team .bg-blue-600 {
+    padding: 3rem;
+  }
+
+  [lang="id"] #team .bg-blue-600 h3 {
+    font-size: 1.875rem;
+  }
+
+  [lang="id"] #team .bg-blue-600 p {
+    font-size: 1.125rem;
+  }
+}
+
+/* Button adjustments for Indonesian */
+[lang="id"] button,
+[lang="id"] .button,
+[lang="id"] a[class*="btn"] {
+  letter-spacing: -0.01em;
+}
+
+/* Prevent text overflow in cards */
+[lang="id"] .rounded-xl,
+[lang="id"] .rounded-lg {
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+}
+
+/* Optimize line heights for readability */
+[lang="id"] p {
+  line-height: 1.65;
+}
+
+[lang="id"] li {
+  line-height: 1.6;
+}
+
+/* Navigation items - prevent overlap */
+[lang="id"] nav a {
+  white-space: nowrap;
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
+}
+
+@media (min-width: 768px) {
+  [lang="id"] nav a {
+    padding-left: 0.75rem;
+    padding-right: 0.75rem;
+  }
+}
+
+/* Contact form labels */
+[lang="id"] label {
+  font-size: 0.875rem;
+  line-height: 1.5;
+}
+
+/* Hero section stats */
+[lang="id"] #hero .text-gray-600.text-sm {
+  font-size: 0.75rem;
+  line-height: 1.4;
+}
+
+/* Portfolio cards */
+[lang="id"] #portfolio h3 {
+  font-size: 1.125rem;
+  line-height: 1.4;
+}
+
+[lang="id"] #portfolio p {
+  font-size: 0.875rem;
+  line-height: 1.6;
+}
+
+/* About section values */
+[lang="id"] #about h4 {
+  font-size: 1.125rem;
+  line-height: 1.4;
+}
+
+[lang="id"] #about p {
+  font-size: 0.875rem;
+  line-height: 1.65;
+}
+
+/* Footer adjustments */
+[lang="id"] footer {
+  font-size: 0.875rem;
+}
+
+[lang="id"] footer h4 {
+  font-size: 1rem;
+}
+
+/* Utility classes for Indonesian */
+.text-balance-id {
+  text-wrap: balance;
+  hyphens: auto;
+}
+
+/* Smooth transitions when switching languages */
+* {
+  transition: font-size 0.2s ease, line-height 0.2s ease;
+}
+
+/* Prevent FOUC (Flash of Unstyled Content) */
+[lang]:not([lang=""]) {
+  opacity: 1;
+}
+
+/* Loading state during language switch */
+.language-transitioning [lang="id"] *,
+.language-transitioning [lang="en"] * {
+  transition: all 0.3s ease;
+}

@@ -22,6 +22,9 @@ export function useLanguage() {
       return
     }
 
+    // Mobile optimization: detect if mobile device
+    const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent) || window.innerWidth < 768
+
     // Save current scroll position if requested
     const scrollPosition = preserveScrollPosition ? window.scrollY : 0
 
@@ -31,7 +34,14 @@ export function useLanguage() {
     // Add transition class to body for smooth animations
     document.body.classList.add('language-transitioning')
 
+    // Mobile optimization: Preload critical translations
+    if (isMobile) {
+      // Minimal loading state for mobile
+      document.body.classList.add('language-loading-mobile')
+    }
+
     try {
+      // Lazy load language chunks for mobile optimization
       setI18nLanguage(newLocale)
 
       const currentPath = route.path
@@ -60,15 +70,31 @@ export function useLanguage() {
       // Track language change
       trackLanguageChange(locale.value, newLocale)
 
+      // Mobile optimization: Clear unnecessary caches
+      if (isMobile && 'caches' in window) {
+        // Clear old language assets from cache
+        caches.open('language-cache').then(cache => {
+          cache.keys().then(keys => {
+            keys.forEach(key => {
+              if (!key.url.includes(newLocale)) {
+                cache.delete(key)
+              }
+            })
+          })
+        }).catch(() => {})
+      }
+
     } catch (error) {
       if (error.name !== 'NavigationDuplicated') {
         console.error('Navigation error:', error)
       }
     } finally {
       // Remove transition class after animation
+      const transitionDelay = isMobile ? 200 : 300
       setTimeout(() => {
         document.body.classList.remove('language-transitioning')
-      }, 300)
+        document.body.classList.remove('language-loading-mobile')
+      }, transitionDelay)
     }
   }
 

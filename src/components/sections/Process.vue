@@ -23,7 +23,10 @@
                ]">
             <div class="flex-1 text-center md:text-left" :class="index % 2 === 0 ? 'md:text-right' : ''">
               <div class="inline-block">
-                <div class="bg-white rounded-xl shadow-lg hover:shadow-2xl p-8 relative transform transition-all duration-500 hover:-translate-y-2 group">
+                <div
+                  class="bg-white rounded-xl shadow-lg hover:shadow-2xl p-8 relative transform transition-all duration-500 hover:-translate-y-2 group"
+                  :class="{ 'process-card-id': locale === 'id', 'process-card-en': locale === 'en' }"
+                >
                   <div class="absolute -top-4 -right-4 w-12 h-12 bg-blue-600 text-white rounded-full flex items-center justify-center font-bold text-lg shadow-md">
                     {{ index + 1 }}
                   </div>
@@ -39,14 +42,17 @@
                   <div class="mt-6">
                     <h3 class="font-display text-2xl font-bold mb-4 text-gray-900">{{ t(`process.steps[${index}].title`) }}</h3>
                     <p class="text-gray-600 mb-6 leading-relaxed">{{ t(`process.steps[${index}].description`) }}</p>
-                    <ul class="space-y-3">
-                      <li v-for="(item, idx) in t(`process.steps[${index}].deliverables`)" :key="idx"
-                          class="flex items-center group-hover:translate-x-1 transition-transform duration-200"
+                    <ul class="space-y-3 process-deliverables">
+                      <li v-for="(item, idx) in getProcessDeliverables(index)" :key="idx"
+                          class="flex items-center group-hover:translate-x-1 transition-transform duration-200 process-item"
                           :class="index % 2 === 0 ? 'md:justify-end' : ''">
                         <svg class="w-5 h-5 text-primary mr-3 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
                         </svg>
-                        <span class="text-gray-700 font-medium">{{ item }}</span>
+                        <span
+                          class="text-gray-700 font-medium"
+                          :class="{ 'deliverable-text-id': locale === 'id', 'deliverable-text-en': locale === 'en' }"
+                        >{{ item }}</span>
                       </li>
                     </ul>
                   </div>
@@ -123,8 +129,42 @@
 import { h } from 'vue'
 import { useI18n } from 'vue-i18n'
 
-const { t } = useI18n()
+const { t, locale } = useI18n()
 defineEmits(['openContact'])
+
+// Debug: let's see what locale value we're getting
+console.log('Process locale:', locale.value)
+
+// Helper function to get process deliverables
+const getProcessDeliverables = (stepIndex) => {
+  try {
+    // Get the raw process object and access the nested property
+    const processData = t('process')
+    console.log('Raw process data:', processData)
+
+    if (processData && processData.steps && processData.steps[stepIndex] && processData.steps[stepIndex].deliverables) {
+      const deliverables = processData.steps[stepIndex].deliverables
+      console.log(`Deliverables for step ${stepIndex}:`, deliverables)
+      return Array.isArray(deliverables) ? deliverables : []
+    }
+
+    // Fallback: try direct translation
+    const deliverables = t(`process.steps.${stepIndex}.deliverables`)
+    console.log(`Fallback deliverables for step ${stepIndex}:`, deliverables, typeof deliverables)
+
+    if (Array.isArray(deliverables)) {
+      return deliverables
+    }
+
+    // If translation fails, it returns the key string
+    console.log(`Translation failed for step ${stepIndex}, returning empty array`)
+    return []
+  } catch (error) {
+    console.error(`Error getting deliverables for step ${stepIndex}:`, error)
+    return []
+  }
+}
+
 
 const DiscoveryIcon = {
   render() {

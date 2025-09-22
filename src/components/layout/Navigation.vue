@@ -77,9 +77,9 @@
         </div>
 
         <!-- Mobile menu button & language toggle -->
-        <div class="md:hidden flex items-center gap-3">
-          <!-- Mobile Language Toggle -->
-          <LanguageToggle />
+        <div class="md:hidden flex items-center gap-2">
+          <!-- Mobile Language Switcher -->
+          <MobileLanguageSwitcher />
 
           <!-- Mobile Menu Button -->
           <button
@@ -163,6 +163,7 @@
 import { ref, onMounted, onUnmounted, nextTick } from 'vue'
 import { useI18n } from 'vue-i18n'
 import LanguageToggle from '../LanguageToggle.vue'
+import MobileLanguageSwitcher from '../MobileLanguageSwitcher.vue'
 
 const { t } = useI18n()
 const emit = defineEmits(['openContact'])

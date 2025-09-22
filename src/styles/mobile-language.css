@@ -1,0 +1,243 @@
+/* Mobile Language Switching Optimizations */
+
+/* Smooth language transitions */
+body.language-transitioning {
+  position: relative;
+}
+
+body.language-transitioning::after {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(255, 255, 255, 0.3);
+  z-index: 9998;
+  pointer-events: none;
+  animation: fadeIn 0.2s ease-out;
+}
+
+/* Mobile-specific loading state */
+body.language-loading-mobile::after {
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(2px);
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* Prevent layout shift during language change */
+.language-transitioning * {
+  transition: none !important;
+}
+
+/* Mobile touch feedback */
+@media (max-width: 768px) {
+  /* Touch ripple effect for language buttons */
+  .language-option,
+  .language-toggle-btn {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .language-option::before,
+  .language-toggle-btn::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    border-radius: 50%;
+    background: rgba(0, 0, 0, 0.1);
+    transform: translate(-50%, -50%);
+    transition: width 0.3s, height 0.3s;
+  }
+
+  .language-option:active::before,
+  .language-toggle-btn:active::before {
+    width: 100%;
+    height: 100%;
+  }
+}
+
+/* Optimized animations for mobile */
+@media (max-width: 768px) and (prefers-reduced-motion: no-preference) {
+  .mobile-menu-container {
+    transform: translateY(100%);
+    animation: slideUpMobile 0.25s ease-out forwards;
+  }
+
+  @keyframes slideUpMobile {
+    to {
+      transform: translateY(0);
+    }
+  }
+}
+
+/* Reduce animations for low-end devices */
+@media (max-width: 768px) and (prefers-reduced-motion: reduce) {
+  .mobile-menu-container,
+  .language-transitioning::after {
+    animation: none !important;
+    transition: opacity 0.15s ease !important;
+  }
+}
+
+/* Hardware acceleration for smooth transitions */
+.mobile-language-switcher,
+.mobile-menu-container {
+  will-change: transform;
+  transform: translateZ(0);
+  backface-visibility: hidden;
+}
+
+/* Prevent text selection during swipe */
+.mobile-menu-container {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  -webkit-touch-callout: none;
+}
+
+/* iOS-specific optimizations */
+@supports (-webkit-touch-callout: none) {
+  .mobile-menu-container {
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .language-option {
+    -webkit-tap-highlight-color: transparent;
+  }
+}
+
+/* Android-specific optimizations */
+@media (max-width: 768px) {
+  .mobile-language-switcher button {
+    touch-action: manipulation;
+  }
+}
+
+/* Landscape mode optimizations */
+@media (max-width: 768px) and (orientation: landscape) {
+  .mobile-menu-container {
+    max-height: 80vh;
+  }
+
+  .language-option {
+    padding: 0.75rem 1rem;
+    min-height: 48px;
+  }
+}
+
+/* Dark mode support for language switcher */
+@media (prefers-color-scheme: dark) {
+  .mobile-menu-container {
+    background: #1a1a1a;
+    color: white;
+  }
+
+  .language-option {
+    color: #e5e5e5;
+  }
+
+  .language-option.active {
+    background: #2563eb20;
+    border-color: #3b82f6;
+  }
+
+  .close-btn:hover {
+    background: #333;
+  }
+}
+
+/* Accessibility improvements */
+.language-option:focus-visible,
+.language-toggle-btn:focus-visible {
+  outline: 2px solid #3b82f6;
+  outline-offset: 2px;
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  .language-option.active {
+    border-width: 2px;
+    font-weight: bold;
+  }
+
+  .mobile-menu-container {
+    border-top: 2px solid currentColor;
+  }
+}
+
+/* Performance: Reduce paint areas */
+.language-toggle-btn,
+.language-option {
+  contain: layout style paint;
+}
+
+/* Optimize font loading for language switch */
+body.language-transitioning {
+  font-display: optional;
+}
+
+/* Skeleton loading for content during switch */
+.language-transitioning .responsive-text {
+  position: relative;
+  color: transparent !important;
+}
+
+.language-transitioning .responsive-text::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(
+    90deg,
+    #f0f0f0 25%,
+    #e0e0e0 50%,
+    #f0f0f0 75%
+  );
+  animation: shimmer 1.5s infinite;
+  border-radius: 4px;
+}
+
+@keyframes shimmer {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+/* Mobile-first responsive utilities */
+.mobile-only {
+  display: block;
+}
+
+@media (min-width: 768px) {
+  .mobile-only {
+    display: none;
+  }
+}
+
+.desktop-only {
+  display: none;
+}
+
+@media (min-width: 768px) {
+  .desktop-only {
+    display: block;
+  }
+}

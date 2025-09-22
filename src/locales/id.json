@@ -351,10 +351,24 @@
       },
       {
         "number": "04",
-        "title": "Deployment & Support",
-        "description": "Go-live ke production dengan monitoring dan support berkelanjutan",
+        "title": "Testing & Optimization",
+        "description": "Testing komprehensif untuk memastikan aplikasi berjalan sempurna di semua platform dan skenario",
+        "duration": "1-2 minggu",
+        "deliverables": ["Cross-browser testing", "Performance optimization", "Security audit", "Load testing"]
+      },
+      {
+        "number": "05",
+        "title": "Deployment & Launch",
+        "description": "Deployment yang mulus ke production dengan dukungan go-live lengkap dan dokumentasi komprehensif",
+        "duration": "3-5 hari",
+        "deliverables": ["Production deployment", "Go-live support", "Training & documentation", "Performance monitoring"]
+      },
+      {
+        "number": "06",
+        "title": "Maintenance & Support",
+        "description": "Dukungan dan pemeliharaan berkelanjutan untuk memastikan aplikasi tetap optimal dan aman",
         "duration": "Ongoing",
-        "deliverables": ["Live application", "Documentation", "Training & support"]
+        "deliverables": ["Ongoing support", "Regular maintenance", "Security updates", "Feature enhancements"]
       }
     ]
   },
@@ -417,7 +431,18 @@
         "avatar": "/team/rudi.jpg",
         "skills": ["React Native", "Flutter", "Swift", "Kotlin"]
       }
-    ]
+    ],
+    "cta": {
+      "title": "Siap Bekerja dengan Tim Profesional?",
+      "description": "Bergabunglah dengan 150+ klien yang telah mempercayai kami untuk solusi digital mereka",
+      "button": "Mulai Proyek Anda"
+    }
+  },
+  "language": {
+    "selectLanguage": "Pilih Bahasa",
+    "changing": "Mengubah bahasa...",
+    "indonesia": "Bahasa Indonesia",
+    "english": "English"
   },
   "common": {
     "loading": "Memuat...",
