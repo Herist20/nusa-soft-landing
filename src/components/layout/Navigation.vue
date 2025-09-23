@@ -39,11 +39,13 @@
               @mouseleave="activeDropdown = null"
             >
               <!-- Main menu item -->
-              <a
-                :href="item.href"
-                @click="scrollToSection($event, item.href)"
+              <component
+                :is="item.hasDropdown ? 'div' : 'a'"
+                :href="item.hasDropdown ? undefined : item.href"
+                @click="item.hasDropdown ? null : scrollToSection($event, item.href)"
                 class="px-3 py-2 text-sm font-medium transition-all duration-200 relative group flex items-center gap-1"
                 :class="[
+                  item.hasDropdown ? 'cursor-default' : 'cursor-pointer',
                   activeSection === item.href || (item.submenu && item.submenu.some(sub => activeSection === sub.href))
                     ? scrolled
                       ? 'text-secondary font-semibold'
@@ -70,13 +72,14 @@
                 </svg>
 
                 <span
+                  v-if="!item.hasDropdown"
                   class="absolute bottom-0 left-1/2 transform -translate-x-1/2 h-0.5 transition-all duration-200"
-                  :class="activeSection === item.href || (item.submenu && item.submenu.some(sub => activeSection === sub.href))
+                  :class="activeSection === item.href
                     ? 'bg-secondary w-full'
                     : 'bg-secondary w-0 group-hover:w-full'
                   "
                 ></span>
-              </a>
+              </component>
 
               <!-- Dropdown menu -->
               <transition
@@ -97,11 +100,11 @@
                     :key="subItem.name"
                     :href="subItem.href"
                     @click="scrollToSection($event, subItem.href)"
-                    class="block px-4 py-2 text-sm transition-all duration-200 hover:bg-surface"
+                    class="block px-4 py-2 text-sm transition-all duration-200 relative"
                     :class="[
                       activeSection === subItem.href
-                        ? 'text-secondary font-semibold bg-surface border-l-4 border-secondary'
-                        : 'text-text-secondary hover:text-primary'
+                        ? 'text-secondary font-semibold bg-blue-50 border-l-4 border-secondary pl-3'
+                        : 'text-text-secondary hover:text-primary hover:bg-gray-50 hover:pl-5'
                     ]"
                     :data-testid="`dropdown-${subItem.href.replace('#', '')}`"
                   >
@@ -178,16 +181,20 @@
         <div class="px-4 pt-4 pb-6 space-y-3">
           <div v-for="item in navItems" :key="item.name" class="space-y-2">
             <!-- Main menu item -->
-            <a
-              :href="item.href"
+            <component
+              :is="item.hasDropdown ? 'div' : 'a'"
+              :href="item.hasDropdown ? undefined : item.href"
               @click="item.hasDropdown ? toggleMobileSubmenu(item.name()) : handleMobileNavClick($event, item.href)"
               class="flex items-center justify-between px-4 py-3 text-base font-medium rounded-lg transition-all duration-200"
               :class="[
-                activeSection === item.href || (item.submenu && item.submenu.some(sub => activeSection === sub.href))
+                item.hasDropdown ? 'cursor-pointer' : '',
+                !item.hasDropdown && activeSection === item.href
                   ? 'text-secondary bg-surface font-semibold border-l-4 border-secondary'
-                  : 'text-text-secondary hover:text-primary hover:bg-surface'
+                  : item.submenu && item.submenu.some(sub => activeSection === sub.href)
+                    ? 'text-secondary font-semibold'
+                    : 'text-text-secondary hover:text-primary hover:bg-surface'
               ]"
-              :aria-current="activeSection === item.href ? 'page' : undefined"
+              :aria-current="!item.hasDropdown && activeSection === item.href ? 'page' : undefined"
             >
               <span>{{ typeof item.name === 'function' ? item.name() : item.name }}</span>
 
@@ -202,7 +209,7 @@
               >
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
               </svg>
-            </a>
+            </component>
 
             <!-- Mobile submenu -->
             <transition
@@ -225,8 +232,8 @@
                   class="block px-4 py-2 text-sm rounded-lg transition-all duration-200"
                   :class="[
                     activeSection === subItem.href
-                      ? 'text-secondary bg-surface font-semibold border-l-4 border-secondary'
-                      : 'text-text-secondary hover:text-primary hover:bg-surface'
+                      ? 'text-secondary bg-blue-50 font-semibold border-l-4 border-secondary pl-3'
+                      : 'text-text-secondary hover:text-primary hover:bg-gray-50 hover:pl-5'
                   ]"
                 >
                   {{ typeof subItem.name === 'function' ? subItem.name() : subItem.name }}
@@ -337,11 +344,21 @@ const setupIntersectionObserver = () => {
     })
   }, observerOptions)
 
-  // Observe all sections
+  // Observe all sections including submenu items
   navItems.value.forEach((item) => {
-    const element = document.querySelector(item.href)
-    if (element) {
-      observer.observe(element)
+    if (!item.hasDropdown) {
+      const element = document.querySelector(item.href)
+      if (element) {
+        observer.observe(element)
+      }
+    } else if (item.submenu) {
+      // Also observe submenu items
+      item.submenu.forEach((subItem) => {
+        const element = document.querySelector(subItem.href)
+        if (element) {
+          observer.observe(element)
+        }
+      })
     }
   })
 }
