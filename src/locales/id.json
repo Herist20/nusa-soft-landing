@@ -178,6 +178,7 @@
     "subtitle": "Konsultasi gratis untuk menentukan solusi digital terbaik bagi bisnis Anda",
     "form": {
       "title": "Form Konsultasi Gratis",
+      "required": "Semua field yang bertanda * wajib diisi",
       "name": "Nama Lengkap",
       "email": "Email Aktif",
       "phone": "Nomor WhatsApp",
@@ -185,6 +186,7 @@
       "subject": "Layanan yang Dibutuhkan",
       "projectType": {
         "label": "Jenis Proyek",
+        "placeholder": "Pilih jenis proyek",
         "options": {
           "website": "Website/Landing Page",
           "ecommerce": "Toko Online (E-Commerce)",
@@ -198,6 +200,7 @@
       "message": "Ceritakan tentang proyek Anda",
       "budget": {
         "label": "Estimasi Anggaran",
+        "placeholder": "Pilih rentang anggaran",
         "options": {
           "under10k": "Di bawah 10 juta",
           "10to25k": "10 - 25 juta",
@@ -227,7 +230,8 @@
         "phone": "Contoh: 081234567890",
         "company": "Contoh: PT Maju Bersama atau Toko Budi",
         "message": "Jelaskan kebutuhan proyek Anda, fitur yang diinginkan, atau pertanyaan lainnya..."
-      }
+      },
+      "contactMethod": "Metode Kontak Pilihan"
     },
     "validation": {
       "nameRequired": "Mohon isi nama lengkap Anda",
@@ -239,6 +243,7 @@
       "messageMin": "Mohon jelaskan lebih detail (minimal 20 karakter)"
     },
     "info": {
+      "title": "Hubungi Kami",
       "address": "Alamat Kantor",
       "addressDetail": "Jakarta, Indonesia",
       "phone": "WhatsApp",
