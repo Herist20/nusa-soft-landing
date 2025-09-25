@@ -7,7 +7,7 @@ import router from './router'
 import i18n from './locales'
 
 // Import optimization utilities
-import lazyLoad from './directives/lazyLoad'
+import lazyLoad from './directives/lazyload.js'
 import { updateMetaTags, injectStructuredData, preloadResources } from './utils/seo'
 import { initializeAccessibility } from './utils/accessibility'
 import { multilingualSEO } from './utils/seoMultilingual'

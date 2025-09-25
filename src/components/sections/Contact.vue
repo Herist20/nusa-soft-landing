@@ -1,13 +1,43 @@
 <template>
-  <section id="contact" class="py-20 bg-white">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+  <section id="contact" class="relative py-20 overflow-hidden">
+    <!-- Background futuristik -->
+    <div class="absolute inset-0 bg-gradient-to-br from-gray-900 via-blue-900 to-indigo-900 z-0"></div>
+    
+    <!-- Grid pattern futuristik -->
+    <div class="absolute inset-0 bg-grid-pattern opacity-10 z-0"></div>
+    
+    <!-- Elemen geometris dengan animasi -->
+    <div class="absolute top-1/4 left-10 w-32 h-32 border-2 border-cyan-400 rounded-full opacity-20 animate-pulse-slow"></div>
+    <div class="absolute bottom-1/4 right-10 w-40 h-40 border-2 border-indigo-400 rotate-45 opacity-20 animate-pulse-slow"></div>
+    
+    <!-- Glow effect dengan animasi -->
+    <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-cyan-500 rounded-full filter blur-3xl opacity-20 animate-pulse-glow"></div>
+    
+    <!-- Partikel animasi -->
+    <div class="absolute inset-0 overflow-hidden">
+      <div v-for="i in 20" :key="i" 
+           class="absolute rounded-full bg-cyan-400 opacity-20"
+           :style="{
+             width: `${Math.random() * 10 + 2}px`,
+             height: `${Math.random() * 10 + 2}px`,
+             top: `${Math.random() * 100}%`,
+             left: `${Math.random() * 100}%`,
+             animation: `float ${Math.random() * 20 + 10}s linear infinite`,
+             animationDelay: `${Math.random() * 5}s`
+           }">
+      </div>
+    </div>
+
+    <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 z-10">
       <!-- Header -->
       <div class="text-center mb-16">
-        <span class="text-primary font-semibold tracking-wide uppercase text-sm">{{ t('contact.title') }}</span>
-        <h2 class="font-display text-4xl md:text-5xl font-bold text-gray-900 mt-2 mb-4">
+        <span class="inline-flex items-center px-4 py-2 rounded-full bg-cyan-900/30 backdrop-blur-sm text-sm font-semibold text-cyan-300 border border-cyan-700/50">
+          {{ t('contact.title') }}
+        </span>
+        <h2 class="font-sans text-4xl md:text-5xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-300 via-cyan-300 to-indigo-300 mt-6 mb-4 leading-tight">
           {{ t('contact.title') }}
         </h2>
-        <p class="text-lg text-gray-600 max-w-3xl mx-auto">
+        <p class="text-xl text-cyan-100/80 max-w-3xl mx-auto">
           {{ t('contact.subtitle') }}
         </p>
       </div>
@@ -15,31 +45,33 @@
       <div class="grid grid-cols-1 lg:grid-cols-3 gap-12">
         <!-- Contact Form -->
         <div class="lg:col-span-2">
-          <div class="bg-white rounded-2xl shadow-sm p-8 lg:p-12 relative border border-gray-200">
-
+          <div class="bg-gray-800/30 backdrop-blur-xl rounded-2xl shadow-xl p-8 lg:p-12 relative border border-cyan-500/20">
+            <!-- Glow effect untuk form -->
+            <div class="absolute inset-0 bg-gradient-to-r from-cyan-500/10 to-blue-500/10 rounded-2xl blur-lg -z-10"></div>
+            
             <div class="relative z-10">
               <div class="flex items-center gap-3 mb-8">
-                <div class="w-12 h-12 bg-blue-100 rounded-xl flex items-center justify-center">
-                  <svg class="w-6 h-6 text-secondary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <div class="w-12 h-12 bg-cyan-900/30 backdrop-blur-sm rounded-xl flex items-center justify-center border border-cyan-500/30">
+                  <svg class="w-6 h-6 text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
                   </svg>
                 </div>
                 <div>
-                  <h3 class="font-display text-2xl font-bold text-gray-900">{{ t('contact.form.title') }}</h3>
-                  <p class="text-gray-600">{{ t('contact.form.required') || 'All fields marked with * are required' }}</p>
+                  <h3 class="font-sans text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-cyan-300 to-blue-300">{{ t('contact.form.title') }}</h3>
+                  <p class="text-cyan-200/70">{{ t('contact.form.required') || 'All fields marked with * are required' }}</p>
                 </div>
               </div>
 
               <!-- Success Message -->
-              <div v-if="showSuccess" class="mb-8 bg-green-50 border border-green-200 rounded-xl p-6">
+              <div v-if="showSuccess" class="mb-8 bg-green-900/30 backdrop-blur-sm border border-green-500/30 rounded-xl p-6">
                 <div class="flex items-start">
-                  <svg class="w-6 h-6 text-green-500 mr-3 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <svg class="w-6 h-6 text-green-400 mr-3 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
                   </svg>
                   <div>
-                    <h4 class="font-semibold text-green-800 mb-2">{{ t('contact.form.success') }}</h4>
-                    <p class="text-green-700 mb-3">{{ successMessage }}</p>
-                    <div class="text-sm text-green-600">
+                    <h4 class="font-semibold text-green-300 mb-2">{{ t('contact.form.success') }}</h4>
+                    <p class="text-green-200/80 mb-3">{{ successMessage }}</p>
+                    <div class="text-sm text-green-200/70">
                       <strong>Next Steps:</strong>
                       <ul class="list-disc list-inside mt-1 space-y-1">
                         <li>We'll review your project details within 2-4 hours</li>
@@ -60,7 +92,7 @@
                 <!-- Personal Information -->
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div>
-                    <label for="fullName" class="block font-medium text-gray-700 mb-2">
+                    <label for="fullName" class="block font-medium text-cyan-200 mb-2">
                       {{ t('contact.form.name') }} *
                     </label>
                     <input
@@ -68,15 +100,15 @@
                       id="fullName"
                       v-model="form.fullName"
                       required
-                      class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all duration-200 placeholder-gray-400"
+                      class="w-full px-4 py-3 bg-gray-800/50 backdrop-blur-sm border border-cyan-500/30 rounded-lg focus:border-cyan-400 focus:ring-1 focus:ring-cyan-400 transition-all duration-200 placeholder-cyan-500/50 text-cyan-100"
                       :class="{ 'border-red-500': errors.fullName }"
                       :placeholder="t('contact.form.placeholder.name')"
                     />
-                    <p v-if="errors.fullName" class="mt-1 text-sm text-red-500">{{ errors.fullName }}</p>
+                    <p v-if="errors.fullName" class="mt-1 text-sm text-red-400">{{ errors.fullName }}</p>
                   </div>
 
                   <div>
-                    <label for="email" class="block font-medium text-gray-700 mb-2">
+                    <label for="email" class="block font-medium text-cyan-200 mb-2">
                       {{ t('contact.form.email') }} *
                     </label>
                     <input
@@ -84,37 +116,37 @@
                       id="email"
                       v-model="form.email"
                       required
-                      class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all duration-200 placeholder-gray-400"
+                      class="w-full px-4 py-3 bg-gray-800/50 backdrop-blur-sm border border-cyan-500/30 rounded-lg focus:border-cyan-400 focus:ring-1 focus:ring-cyan-400 transition-all duration-200 placeholder-cyan-500/50 text-cyan-100"
                       :class="{ 'border-red-500': errors.email }"
                       :placeholder="t('contact.form.placeholder.email')"
                     />
-                    <p v-if="errors.email" class="mt-1 text-sm text-red-500">{{ errors.email }}</p>
+                    <p v-if="errors.email" class="mt-1 text-sm text-red-400">{{ errors.email }}</p>
                   </div>
                 </div>
 
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div>
-                    <label for="phone" class="block font-medium text-gray-700 mb-2">
+                    <label for="phone" class="block font-medium text-cyan-200 mb-2">
                       {{ t('contact.form.phone') }}
                     </label>
                     <input
                       type="tel"
                       id="phone"
                       v-model="form.phone"
-                      class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all duration-200 placeholder-gray-400"
+                      class="w-full px-4 py-3 bg-gray-800/50 backdrop-blur-sm border border-cyan-500/30 rounded-lg focus:border-cyan-400 focus:ring-1 focus:ring-cyan-400 transition-all duration-200 placeholder-cyan-500/50 text-cyan-100"
                       :placeholder="t('contact.form.placeholder.phone')"
                     />
                   </div>
 
                   <div>
-                    <label for="company" class="block font-medium text-gray-700 mb-2">
+                    <label for="company" class="block font-medium text-cyan-200 mb-2">
                       {{ t('contact.form.company') }}
                     </label>
                     <input
                       type="text"
                       id="company"
                       v-model="form.company"
-                      class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all duration-200 placeholder-gray-400"
+                      class="w-full px-4 py-3 bg-gray-800/50 backdrop-blur-sm border border-cyan-500/30 rounded-lg focus:border-cyan-400 focus:ring-1 focus:ring-cyan-400 transition-all duration-200 placeholder-cyan-500/50 text-cyan-100"
                       :placeholder="t('contact.form.placeholder.company')"
                     />
                   </div>
@@ -123,14 +155,14 @@
                 <!-- Project Details -->
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div>
-                    <label for="projectType" class="block font-medium text-gray-700 mb-2">
+                    <label for="projectType" class="block font-medium text-cyan-200 mb-2">
                       {{ t('contact.form.projectType.label') }} *
                     </label>
                     <select
                       id="projectType"
                       v-model="form.projectType"
                       required
-                      class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all duration-200 placeholder-gray-400"
+                      class="w-full px-4 py-3 bg-gray-800/50 backdrop-blur-sm border border-cyan-500/30 rounded-lg focus:border-cyan-400 focus:ring-1 focus:ring-cyan-400 transition-all duration-200 placeholder-cyan-500/50 text-cyan-100"
                       :class="{ 'border-red-500': errors.projectType }"
                     >
                       <option value="">{{ t('contact.form.projectType.placeholder') || 'Select project type' }}</option>
@@ -142,18 +174,18 @@
                       <option value="consultation">{{ t('contact.form.projectType.options.consultation') }}</option>
                       <option value="other">{{ t('contact.form.projectType.options.other') }}</option>
                     </select>
-                    <p v-if="errors.projectType" class="mt-1 text-sm text-red-500">{{ errors.projectType }}</p>
+                    <p v-if="errors.projectType" class="mt-1 text-sm text-red-400">{{ errors.projectType }}</p>
                   </div>
 
                   <div>
-                    <label for="budget" class="block font-medium text-gray-700 mb-2">
+                    <label for="budget" class="block font-medium text-cyan-200 mb-2">
                       {{ t('contact.form.budget.label') }} *
                     </label>
                     <select
                       id="budget"
                       v-model="form.budget"
                       required
-                      class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all duration-200 placeholder-gray-400"
+                      class="w-full px-4 py-3 bg-gray-800/50 backdrop-blur-sm border border-cyan-500/30 rounded-lg focus:border-cyan-400 focus:ring-1 focus:ring-cyan-400 transition-all duration-200 placeholder-cyan-500/50 text-cyan-100"
                       :class="{ 'border-red-500': errors.budget }"
                     >
                       <option value="">{{ t('contact.form.budget.placeholder') || 'Select budget range' }}</option>
@@ -164,19 +196,19 @@
                       <option value="above100k">{{ t('contact.form.budget.options.above100k') }}</option>
                       <option value="discuss">{{ t('contact.form.budget.options.discuss') }}</option>
                     </select>
-                    <p v-if="errors.budget" class="mt-1 text-sm text-red-500">{{ errors.budget }}</p>
+                    <p v-if="errors.budget" class="mt-1 text-sm text-red-400">{{ errors.budget }}</p>
                   </div>
                 </div>
 
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div>
-                    <label for="contactMethod" class="block font-medium text-gray-700 mb-2">
+                    <label for="contactMethod" class="block font-medium text-cyan-200 mb-2">
                       {{ t('contact.form.contactMethod') || 'Preferred Contact Method' }}
                     </label>
                     <select
                       id="contactMethod"
                       v-model="form.contactMethod"
-                      class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all duration-200 placeholder-gray-400"
+                      class="w-full px-4 py-3 bg-gray-800/50 backdrop-blur-sm border border-cyan-500/30 rounded-lg focus:border-cyan-400 focus:ring-1 focus:ring-cyan-400 transition-all duration-200 placeholder-cyan-500/50 text-cyan-100"
                     >
                       <option value="email">Email</option>
                       <option value="whatsapp">WhatsApp</option>
@@ -185,13 +217,13 @@
                   </div>
 
                   <div>
-                    <label for="timeline" class="block font-medium text-gray-700 mb-2">
+                    <label for="timeline" class="block font-medium text-cyan-200 mb-2">
                       {{ t('contact.form.timeline.label') }}
                     </label>
                     <select
                       id="timeline"
                       v-model="form.timeline"
-                      class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all duration-200 placeholder-gray-400"
+                      class="w-full px-4 py-3 bg-gray-800/50 backdrop-blur-sm border border-cyan-500/30 rounded-lg focus:border-cyan-400 focus:ring-1 focus:ring-cyan-400 transition-all duration-200 placeholder-cyan-500/50 text-cyan-100"
                     >
                       <option value="asap">{{ t('contact.form.timeline.options.asap') }}</option>
                       <option value="1month">{{ t('contact.form.timeline.options.1month') }}</option>
@@ -204,7 +236,7 @@
 
                 <!-- Project Description -->
                 <div>
-                  <label for="description" class="block font-medium text-gray-700 mb-2">
+                  <label for="description" class="block font-medium text-cyan-200 mb-2">
                     {{ t('contact.form.message') }} *
                   </label>
                   <textarea
@@ -212,12 +244,12 @@
                     v-model="form.description"
                     required
                     rows="5"
-                    class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-primary focus:border-transparent transition-all duration-200 resize-none"
+                    class="w-full px-4 py-3 bg-gray-800/50 backdrop-blur-sm border border-cyan-500/30 rounded-xl focus:ring-2 focus:ring-cyan-400 focus:border-transparent transition-all duration-200 resize-none text-cyan-100"
                     :class="{ 'border-red-500': errors.description }"
                     :placeholder="t('contact.form.placeholder.message')"
                   ></textarea>
-                  <p v-if="errors.description" class="mt-1 text-sm text-red-500">{{ errors.description }}</p>
-                  <p class="mt-1 text-sm text-gray-500">{{ form.description.length }}/500 characters</p>
+                  <p v-if="errors.description" class="mt-1 text-sm text-red-400">{{ errors.description }}</p>
+                  <p class="mt-1 text-sm text-cyan-500/70">{{ form.description.length }}/500 characters</p>
                 </div>
 
                 <!-- Submit Button -->
@@ -225,7 +257,7 @@
                   <button
                     type="submit"
                     :disabled="loading"
-                    class="flex-1 bg-blue-600 hover:bg-blue-700 text-white font-semibold px-8 py-3 rounded-lg shadow-sm hover:shadow-md transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
+                    class="flex-1 bg-gradient-to-r from-cyan-500 to-blue-500 hover:from-cyan-600 hover:to-blue-600 text-white font-semibold px-8 py-3 rounded-lg shadow-lg hover:shadow-cyan-500/30 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed relative overflow-hidden group"
                   >
                     <span v-if="!loading" class="flex items-center justify-center">
                       <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -240,6 +272,8 @@
                       </svg>
                       {{ t('contact.form.submitting') }}
                     </span>
+                    <!-- Efek cahaya pada tombol -->
+                    <div class="absolute top-0 left-0 w-full h-full bg-gradient-to-r from-transparent via-white/20 to-transparent transform -translate-x-full group-hover:translate-x-full transition-transform duration-1000"></div>
                   </button>
 
                   <!-- WhatsApp Alternative -->
@@ -247,17 +281,19 @@
                     :href="whatsappUrl"
                     target="_blank"
                     rel="noopener noreferrer"
-                    class="flex items-center justify-center px-8 py-3 bg-green-500 hover:bg-green-600 text-white font-semibold rounded-lg shadow-sm hover:shadow-md transition-all duration-200"
+                    class="flex items-center justify-center px-8 py-3 bg-gradient-to-r from-green-500 to-emerald-500 hover:from-green-600 hover:to-emerald-600 text-white font-semibold rounded-lg shadow-lg hover:shadow-green-500/30 transition-all duration-200 relative overflow-hidden group"
                   >
                     <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 24 24">
                       <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.890-5.335 11.893-11.893A11.821 11.821 0 0020.885 3.488"/>
                     </svg>
                     {{ t('contact.cta.whatsapp') }}
+                    <!-- Efek cahaya pada tombol WhatsApp -->
+                    <div class="absolute top-0 left-0 w-full h-full bg-gradient-to-r from-transparent via-white/20 to-transparent transform -translate-x-full group-hover:translate-x-full transition-transform duration-1000"></div>
                   </a>
                 </div>
 
                 <!-- Error Message -->
-                <div v-if="errorMessage" class="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-xl">
+                <div v-if="errorMessage" class="bg-red-900/30 backdrop-blur-sm border border-red-500/30 text-red-200 px-4 py-3 rounded-xl">
                   <div class="flex items-center">
                     <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 20 20">
                       <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clip-rule="evenodd" />
@@ -273,106 +309,118 @@
         <!-- Contact Info & Trust Signals -->
         <div class="space-y-6">
           <!-- Contact Information -->
-          <div class="bg-white rounded-2xl shadow-sm p-8 border border-gray-200">
+          <div class="bg-gray-800/30 backdrop-blur-xl rounded-2xl shadow-xl p-8 border border-cyan-500/20">
+            <!-- Glow effect untuk card -->
+            <div class="absolute inset-0 bg-gradient-to-r from-cyan-500/10 to-blue-500/10 rounded-2xl blur-lg -z-10"></div>
+            
             <div class="flex items-center gap-3 mb-6">
-              <div class="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center">
-                <svg class="w-5 h-5 text-secondary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <div class="w-10 h-10 bg-cyan-900/30 backdrop-blur-sm rounded-lg flex items-center justify-center border border-cyan-500/30">
+                <svg class="w-5 h-5 text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
                 </svg>
               </div>
-              <h3 class="font-display text-xl font-bold text-gray-900">{{ t('contact.info.title') || 'Get In Touch' }}</h3>
+              <h3 class="font-sans text-xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-cyan-300 to-blue-300">{{ t('contact.info.title') || 'Get In Touch' }}</h3>
             </div>
 
             <div class="space-y-4">
               <div class="flex items-start">
-                <svg class="w-5 h-5 text-primary mr-3 flex-shrink-0 mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <svg class="w-5 h-5 text-cyan-400 mr-3 flex-shrink-0 mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
                 </svg>
                 <div>
-                  <p class="font-semibold text-gray-900">{{ t('contact.info.address') }}</p>
-                  <p class="text-gray-600 text-sm">{{ t('contact.info.addressDetail') }}</p>
+                  <p class="font-semibold text-cyan-200">{{ t('contact.info.address') }}</p>
+                  <p class="text-cyan-200/70 text-sm">{{ t('contact.info.addressDetail') }}</p>
                 </div>
               </div>
 
               <div class="flex items-start">
-                <svg class="w-5 h-5 text-primary mr-3 flex-shrink-0 mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <svg class="w-5 h-5 text-cyan-400 mr-3 flex-shrink-0 mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
                 </svg>
                 <div>
-                  <p class="font-semibold text-gray-900">{{ t('contact.info.email') }}</p>
-                  <a href="mailto:hello@nusasoftware.com" class="text-primary text-sm hover:underline">{{ t('contact.info.emailDetail') }}</a>
+                  <p class="font-semibold text-cyan-200">{{ t('contact.info.email') }}</p>
+                  <a href="mailto:hello@nusasoftware.com" class="text-cyan-300 text-sm hover:underline">{{ t('contact.info.emailDetail') }}</a>
                 </div>
               </div>
 
               <div class="flex items-start">
-                <svg class="w-5 h-5 text-primary mr-3 flex-shrink-0 mt-1" fill="currentColor" viewBox="0 0 24 24">
+                <svg class="w-5 h-5 text-cyan-400 mr-3 flex-shrink-0 mt-1" fill="currentColor" viewBox="0 0 24 24">
                   <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.890-5.335 11.893-11.893A11.821 11.821 0 0020.885 3.488"/>
                 </svg>
                 <div>
-                  <p class="font-semibold text-gray-900">{{ t('contact.info.phone') }}</p>
-                  <a href="https://wa.me/6281234567890" class="text-primary text-sm hover:underline">{{ t('contact.info.phoneDetail') }}</a>
+                  <p class="font-semibold text-cyan-200">{{ t('contact.info.phone') }}</p>
+                  <a href="https://wa.me/6281234567890" class="text-cyan-300 text-sm hover:underline">{{ t('contact.info.phoneDetail') }}</a>
                 </div>
               </div>
             </div>
           </div>
 
           <!-- Response Time Promise -->
-          <div class="bg-accent rounded-2xl shadow-sm p-8 text-white border border-emerald-600">
+          <div class="bg-gradient-to-br from-emerald-900/40 to-teal-900/40 backdrop-blur-xl rounded-2xl shadow-xl p-8 border border-emerald-500/30">
+            <!-- Glow effect untuk card -->
+            <div class="absolute inset-0 bg-gradient-to-r from-emerald-500/20 to-teal-500/20 rounded-2xl blur-lg -z-10"></div>
+            
             <div class="flex items-center gap-3 mb-4">
-              <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <svg class="w-8 h-8 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
               </svg>
-              <h3 class="font-display text-xl font-bold">{{ t('contact.info.response') }}</h3>
+              <h3 class="font-sans text-xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-emerald-300 to-teal-300">{{ t('contact.info.response') }}</h3>
             </div>
             <div class="space-y-3 text-sm">
               <div class="flex items-center">
-                <span class="font-semibold mr-2">⚡</span>
-                <span>{{ t('contact.info.hoursDetail') }}</span>
+                <span class="font-semibold mr-2 text-emerald-300">⚡</span>
+                <span class="text-emerald-200/80">{{ t('contact.info.hoursDetail') }}</span>
               </div>
               <div class="flex items-center">
-                <span class="font-semibold mr-2">📋</span>
-                <span>{{ t('contact.info.response') }}</span>
+                <span class="font-semibold mr-2 text-emerald-300">📋</span>
+                <span class="text-emerald-200/80">{{ t('contact.info.response') }}</span>
               </div>
               <div class="flex items-center">
-                <span class="font-semibold mr-2">🤝</span>
-                <span>{{ t('navigation.getConsultation') }}</span>
+                <span class="font-semibold mr-2 text-emerald-300">🤝</span>
+                <span class="text-emerald-200/80">{{ t('navigation.getConsultation') }}</span>
               </div>
             </div>
           </div>
 
           <!-- Trust Badges -->
-          <div class="bg-white rounded-2xl shadow-sm p-8 border border-gray-200">
-            <h3 class="font-display text-lg font-bold text-gray-900 mb-4">{{ t('about.title') || 'Why Choose Us?' }}</h3>
+          <div class="bg-gray-800/30 backdrop-blur-xl rounded-2xl shadow-xl p-8 border border-cyan-500/20">
+            <!-- Glow effect untuk card -->
+            <div class="absolute inset-0 bg-gradient-to-r from-cyan-500/10 to-blue-500/10 rounded-2xl blur-lg -z-10"></div>
+            
+            <h3 class="font-sans text-lg font-bold text-transparent bg-clip-text bg-gradient-to-r from-cyan-300 to-blue-300 mb-4">{{ t('about.title') || 'Why Choose Us?' }}</h3>
             <div class="space-y-3">
               <div class="flex items-center text-sm">
-                <svg class="w-5 h-5 text-green-500 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                <svg class="w-5 h-5 text-emerald-400 mr-2" fill="currentColor" viewBox="0 0 20 20">
                   <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
                 </svg>
-                <span>100+ Successful Projects</span>
+                <span class="text-cyan-200/80">100+ Successful Projects</span>
               </div>
               <div class="flex items-center text-sm">
-                <svg class="w-5 h-5 text-green-500 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                <svg class="w-5 h-5 text-emerald-400 mr-2" fill="currentColor" viewBox="0 0 20 20">
                   <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
                 </svg>
-                <span>5+ Years Experience</span>
+                <span class="text-cyan-200/80">5+ Years Experience</span>
               </div>
               <div class="flex items-center text-sm">
-                <svg class="w-5 h-5 text-green-500 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                <svg class="w-5 h-5 text-emerald-400 mr-2" fill="currentColor" viewBox="0 0 20 20">
                   <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
                 </svg>
-                <span>98% Client Satisfaction</span>
+                <span class="text-cyan-200/80">98% Client Satisfaction</span>
               </div>
               <div class="flex items-center text-sm">
-                <svg class="w-5 h-5 text-green-500 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                <svg class="w-5 h-5 text-emerald-400 mr-2" fill="currentColor" viewBox="0 0 20 20">
                   <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
                 </svg>
-                <span>Free Post-Launch Support</span>
+                <span class="text-cyan-200/80">Free Post-Launch Support</span>
               </div>
             </div>
           </div>
         </div>
       </div>
     </div>
+    
+    <!-- Elemen bawah futuristik -->
+    <div class="absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-t from-gray-900 to-transparent z-10"></div>
   </section>
 </template>
 
@@ -553,3 +601,55 @@ const handleSubmit = async () => {
   }
 }
 </script>
+
+<style scoped>
+/* Grid pattern untuk background futuristik */
+.bg-grid-pattern {
+  background-image: 
+    linear-gradient(rgba(100, 200, 255, 0.1) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(100, 200, 255, 0.1) 1px, transparent 1px);
+  background-size: 40px 40px;
+}
+
+/* Animasi pulse yang lebih lambat */
+@keyframes pulse-slow {
+  0%, 100% { opacity: 0.2; transform: scale(1); }
+  50% { opacity: 0.3; transform: scale(1.05); }
+}
+
+.animate-pulse-slow {
+  animation: pulse-slow 4s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+/* Animasi glow untuk efek cahaya */
+@keyframes pulse-glow {
+  0%, 100% { opacity: 0.1; transform: translate(-50%, -50%) scale(1); }
+  50% { opacity: 0.2; transform: translate(-50%, -50%) scale(1.1); }
+}
+
+.animate-pulse-glow {
+  animation: pulse-glow 6s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+/* Animasi partikel melayang */
+@keyframes float {
+  0% { transform: translate(0, 0); opacity: 0; }
+  10% { opacity: 0.2; }
+  90% { opacity: 0.2; }
+  100% { transform: translate(var(--tx, 100px), var(--ty, -100px)); opacity: 0; }
+}
+
+/* Efek glow untuk tombol */
+.shadow-cyan-500\/30 {
+  box-shadow: 0 10px 25px -5px rgba(6, 182, 212, 0.3), 0 10px 10px -5px rgba(6, 182, 212, 0.1);
+}
+
+.shadow-green-500\/30 {
+  box-shadow: 0 10px 25px -5px rgba(16, 185, 129, 0.3), 0 10px 10px -5px rgba(16, 185, 129, 0.1);
+}
+
+/* Efek hover untuk input */
+input:focus, select:focus, textarea:focus {
+  box-shadow: 0 0 0 3px rgba(6, 182, 212, 0.2);
+}
+</style>
