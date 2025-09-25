@@ -8,27 +8,88 @@ export function addSkipToContent() {
   skipLink.textContent = 'Skip to main content'
   skipLink.setAttribute('aria-label', 'Skip navigation and go to main content')
 
-  // Add styles
+  // Add futuristic styles that match the current theme
   const styles = `
     .skip-to-content {
       position: absolute;
       top: -100px;
       left: 50%;
       transform: translateX(-50%);
-      background: #3B82F6;
+      background: linear-gradient(135deg, rgba(6, 182, 212, 0.9), rgba(59, 130, 246, 0.9));
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
       color: white;
-      padding: 12px 24px;
+      padding: 16px 32px;
       text-decoration: none;
       z-index: 100000;
-      border-radius: 0 0 8px 8px;
+      border-radius: 12px;
+      border: 2px solid rgba(6, 182, 212, 0.5);
       font-weight: 600;
-      font-size: 14px;
-      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-      transition: all 0.3s ease;
+      font-size: 16px;
+      font-family: 'Inter', sans-serif;
+      box-shadow:
+        0 8px 32px rgba(6, 182, 212, 0.3),
+        0 0 0 1px rgba(255, 255, 255, 0.1),
+        inset 0 1px 0 rgba(255, 255, 255, 0.2);
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      letter-spacing: 0.5px;
+      text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
     }
 
     .skip-to-content:focus {
-      top: 0;
+      top: 20px;
+      transform: translateX(-50%) scale(1.05);
+      background: linear-gradient(135deg, rgba(6, 182, 212, 1), rgba(59, 130, 246, 1));
+      border-color: rgba(6, 182, 212, 0.8);
+      box-shadow:
+        0 12px 48px rgba(6, 182, 212, 0.4),
+        0 0 0 1px rgba(255, 255, 255, 0.2),
+        inset 0 1px 0 rgba(255, 255, 255, 0.3),
+        0 0 20px rgba(6, 182, 212, 0.5);
+      outline: none;
+    }
+
+    .skip-to-content:hover {
+      background: linear-gradient(135deg, rgba(6, 182, 212, 1), rgba(59, 130, 246, 1));
+      transform: translateX(-50%) translateY(-2px);
+      border-color: rgba(6, 182, 212, 0.7);
+    }
+
+    /* Add glow animation */
+    .skip-to-content::before {
+      content: '';
+      position: absolute;
+      inset: -2px;
+      background: linear-gradient(135deg, rgba(6, 182, 212, 0.6), rgba(59, 130, 246, 0.6));
+      border-radius: 14px;
+      z-index: -1;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .skip-to-content:focus::before {
+      opacity: 1;
+      animation: pulse-glow 2s ease-in-out infinite;
+    }
+
+    @keyframes pulse-glow {
+      0%, 100% {
+        transform: scale(1);
+        opacity: 0.6;
+      }
+      50% {
+        transform: scale(1.1);
+        opacity: 0.8;
+      }
+    }
+
+    /* Responsive adjustments */
+    @media (max-width: 768px) {
+      .skip-to-content {
+        padding: 12px 24px;
+        font-size: 14px;
+        border-radius: 10px;
+      }
     }
   `
 

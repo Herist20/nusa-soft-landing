@@ -1,5 +1,5 @@
 <template>
-  <section id="hero" class="relative min-h-screen flex items-center justify-center pt-20 overflow-hidden">
+  <section id="hero" class="relative w-full h-screen flex items-center justify-center overflow-hidden">
     <!-- Background futuristik -->
     <div class="absolute inset-0 bg-gradient-to-br from-gray-900 via-blue-900 to-indigo-900 z-0"></div>
     
@@ -428,5 +428,151 @@ onMounted(() => {
 /* Custom drop shadow untuk text */
 .drop-shadow-2xl {
   filter: drop-shadow(0 25px 25px rgba(0, 0, 0, 0.15));
+}
+
+/* Ensure full height hero section */
+#hero {
+  height: 100vh !important;
+  min-height: 100vh !important;
+  max-height: 100vh !important;
+}
+
+/* Responsive optimizations for all screen sizes */
+@media (max-height: 900px) {
+  #hero {
+    height: 100vh !important;
+    min-height: 100vh !important;
+  }
+
+  #hero h1 {
+    font-size: 3rem !important;
+    margin-bottom: 1.5rem !important;
+  }
+
+  #hero p {
+    font-size: 1.25rem !important;
+    margin-bottom: 2rem !important;
+  }
+
+  #hero .flex.gap-6 {
+    margin-bottom: 2rem !important;
+  }
+}
+
+@media (max-height: 800px) {
+  #hero h1 {
+    font-size: 2.5rem !important;
+    margin-bottom: 1rem !important;
+  }
+
+  #hero p {
+    font-size: 1.125rem !important;
+    margin-bottom: 1.5rem !important;
+  }
+
+  #hero .flex.gap-6 {
+    margin-bottom: 1.5rem !important;
+  }
+
+  #hero .flex.gap-12 {
+    margin-bottom: 2rem !important;
+  }
+}
+
+@media (max-height: 700px) {
+  #hero h1 {
+    font-size: 2rem !important;
+    margin-bottom: 0.75rem !important;
+  }
+
+  #hero p {
+    font-size: 1rem !important;
+    margin-bottom: 1.25rem !important;
+  }
+
+  #hero .flex.gap-6 {
+    margin-bottom: 1.25rem !important;
+  }
+
+  #hero .flex.gap-12 {
+    margin-bottom: 1.5rem !important;
+  }
+}
+
+@media (max-height: 600px) {
+  #hero h1 {
+    font-size: 1.75rem !important;
+    margin-bottom: 0.5rem !important;
+  }
+
+  #hero p {
+    font-size: 0.875rem !important;
+    margin-bottom: 1rem !important;
+  }
+
+  #hero .flex.gap-6 {
+    margin-bottom: 1rem !important;
+  }
+
+  #hero .flex.gap-12 {
+    margin-bottom: 1rem !important;
+  }
+}
+
+/* Mobile width responsive */
+@media (max-width: 768px) {
+  #hero {
+    height: 100vh !important;
+    padding: 0 !important;
+  }
+
+  #hero h1 {
+    font-size: 2.5rem !important;
+    line-height: 1.2 !important;
+  }
+
+  #hero p {
+    font-size: 1.125rem !important;
+    max-width: 90% !important;
+  }
+
+  #hero .flex.gap-6 {
+    flex-direction: column;
+    gap: 1rem !important;
+  }
+
+  #hero .flex.gap-12 {
+    gap: 2rem !important;
+    justify-content: center;
+  }
+}
+
+@media (max-width: 640px) {
+  #hero h1 {
+    font-size: 2rem !important;
+  }
+
+  #hero p {
+    font-size: 1rem !important;
+  }
+
+  #hero .flex.gap-12 {
+    gap: 1.5rem !important;
+    flex-wrap: wrap;
+  }
+}
+
+@media (max-width: 480px) {
+  #hero h1 {
+    font-size: 1.75rem !important;
+  }
+
+  #hero p {
+    font-size: 0.875rem !important;
+  }
+
+  #hero .flex.gap-12 {
+    gap: 1rem !important;
+  }
 }
 </style>

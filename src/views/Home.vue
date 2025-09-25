@@ -2,7 +2,7 @@
   <div>
     <Header @open-contact="scrollToContact" />
     
-    <main class="pt-16">
+    <main>
       <Hero @open-contact="scrollToContact" />
       <Services />
       <Portfolio @open-project="openProjectModal" />

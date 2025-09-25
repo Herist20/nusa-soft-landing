@@ -40,6 +40,9 @@
 @layer base {
   html {
     scroll-behavior: smooth;
+    height: 100%;
+    margin: 0;
+    padding: 0;
   }
 
   body {
@@ -48,6 +51,15 @@
     background-color: var(--color-background);
     @apply antialiased;
     line-height: 1.6;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+  }
+
+  #app {
+    height: 100%;
+    margin: 0;
+    padding: 0;
   }
 
   * {
@@ -378,6 +390,182 @@
       animation-duration: 0.01ms !important;
       animation-iteration-count: 1 !important;
       transition-duration: 0.01ms !important;
+    }
+  }
+
+  /* Global responsive utilities for all sections */
+  @media (max-width: 1200px) {
+    .container-custom {
+      @apply max-w-5xl px-6;
+    }
+
+    section {
+      @apply px-6;
+    }
+  }
+
+  @media (max-width: 1024px) {
+    .container-custom {
+      @apply max-w-4xl px-6;
+    }
+
+    section {
+      @apply px-4;
+    }
+
+    h1 {
+      @apply text-4xl;
+    }
+
+    h2 {
+      @apply text-3xl;
+    }
+
+    h3 {
+      @apply text-2xl;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .container-custom {
+      @apply max-w-full px-4;
+    }
+
+    section {
+      @apply px-4 py-12;
+    }
+
+    h1 {
+      @apply text-3xl;
+    }
+
+    h2 {
+      @apply text-2xl;
+    }
+
+    h3 {
+      @apply text-xl;
+    }
+
+    .section-padding {
+      @apply py-12;
+    }
+
+    /* Grid adjustments for mobile */
+    .grid-cols-2 {
+      @apply grid-cols-1;
+    }
+
+    .grid-cols-3 {
+      @apply grid-cols-1;
+    }
+
+    .grid-cols-4 {
+      @apply grid-cols-2;
+    }
+
+    /* Flex adjustments for mobile */
+    .flex-row {
+      @apply flex-col;
+    }
+
+    .gap-8 {
+      @apply gap-4;
+    }
+
+    .gap-12 {
+      @apply gap-6;
+    }
+
+    .gap-16 {
+      @apply gap-8;
+    }
+  }
+
+  @media (max-width: 640px) {
+    .container-custom {
+      @apply px-4;
+    }
+
+    section {
+      @apply px-3 py-10;
+    }
+
+    h1 {
+      @apply text-2xl;
+    }
+
+    h2 {
+      @apply text-xl;
+    }
+
+    h3 {
+      @apply text-lg;
+    }
+
+    .section-padding {
+      @apply py-10;
+    }
+
+    .grid-cols-2 {
+      @apply grid-cols-1;
+    }
+
+    .gap-4 {
+      @apply gap-3;
+    }
+
+    .gap-6 {
+      @apply gap-4;
+    }
+
+    .gap-8 {
+      @apply gap-4;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .container-custom {
+      @apply px-3;
+    }
+
+    section {
+      @apply px-3 py-8;
+    }
+
+    h1 {
+      @apply text-xl;
+    }
+
+    h2 {
+      @apply text-lg;
+    }
+
+    h3 {
+      @apply text-base;
+    }
+
+    .section-padding {
+      @apply py-8;
+    }
+
+    /* Button adjustments for small screens */
+    .btn-primary,
+    .btn-secondary {
+      @apply px-4 py-2 text-sm;
+    }
+
+    /* Text adjustments */
+    .text-lg {
+      @apply text-base;
+    }
+
+    .text-xl {
+      @apply text-lg;
+    }
+
+    .text-2xl {
+      @apply text-xl;
     }
   }
 
