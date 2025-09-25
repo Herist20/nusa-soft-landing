@@ -57,60 +57,64 @@
 
         <!-- Title dengan Tag Harga di Sebelah Kanan yang Diperbesar -->
         <div class="relative mb-6 opacity-0 animate-fade-in-up" style="animation-delay: 0.4s">
-          <h1 class="font-sans text-4xl md:text-6xl lg:text-7xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-300 via-cyan-300 to-indigo-300 leading-[1.1] tracking-tight inline-block relative z-20">
+          <h1 class="font-sans text-5xl md:text-7xl lg:text-8xl xl:text-9xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-300 via-cyan-300 to-indigo-300 leading-[1.1] tracking-tight inline-block relative z-20">
             {{ t('hero.title') }}
           </h1>
           
-          <!-- Tag Harga di Sebelah Kanan Title yang Diperbesar --><div class="absolute top-1/2 -right-40 md:-right-50 lg:-right-60 transform -translate-y-1/2 bg-gradient-to-r from-cyan-900/50 to-blue-900/50 backdrop-blur-xl rounded-3xl p-6 md:p-8 border-2 border-cyan-500/60 shadow-2xl transform rotate-6 hover:rotate-3 transition-all duration-500 hover:scale-105 z-10">
-          
+          <!-- Tag Harga di Sebelah Kanan Title untuk Desktop/Large Screens -->
+          <div class="price-tag-desktop hidden xl:block absolute top-1/2 -right-12 transform -translate-y-1/2 bg-gradient-to-r from-cyan-900/50 to-blue-900/50 backdrop-blur-xl rounded-3xl p-6 border-2 border-cyan-500/60 shadow-2xl transform rotate-6 hover:rotate-3 transition-all duration-500 hover:scale-105 z-10">
             <div class="flex flex-col items-center relative">
               <!-- Glow background untuk text -->
               <div class="absolute inset-0 bg-gradient-to-r from-cyan-400/20 to-blue-400/20 rounded-2xl blur-lg"></div>
-              
-              <div class="text-cyan-200/80 text-sm md:text-base mb-2 relative z-10">{{ t('pricing.startingAt') }}</div>
+
+              <div class="text-cyan-200/80 text-sm mb-2 relative z-10">{{ t('pricing.startingAt') }}</div>
               <div class="flex items-baseline relative z-10">
-                <span class="text-3xl md:text-4xl font-bold text-white">$</span>
-                <span class="text-5xl md:text-6xl lg:text-7xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-cyan-300 to-blue-300 drop-shadow-2xl">{{ basicPrice }}</span>
-                <span class="text-sm md:text-base text-cyan-200/80 ml-2">{{ t('pricing.perMonth') }}</span>
+                <span class="text-2xl font-bold text-white">$</span>
+                <span class="text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-cyan-300 to-blue-300 drop-shadow-2xl">{{ basicPrice }}</span>
+                <span class="text-xs text-cyan-200/80 ml-1">{{ t('pricing.perMonth') }}</span>
               </div>
-              <div class="mt-2 text-cyan-300 text-sm md:text-base font-medium relative z-10">{{ t('pricing.noCreditCard') }}</div>
-              
-              <!-- Text overlay effect - membuat teks terlihat menimpa tag -->
+              <div class="mt-1 text-cyan-300 text-xs font-medium relative z-10">{{ t('pricing.noCreditCard') }}</div>
+
+              <!-- Text overlay effect -->
               <div class="absolute inset-0 bg-gradient-to-t from-transparent via-white/5 to-transparent rounded-2xl"></div>
             </div>
-            
-            <!-- Efek cahaya pada tag yang diperbesar -->
-            <div class="absolute -top-3 -right-3 w-6 h-6 bg-cyan-400 rounded-full opacity-60 animate-ping"></div>
-            <div class="absolute -bottom-3 -left-3 w-4 h-4 bg-blue-400 rounded-full opacity-60 animate-ping" style="animation-delay: 0.5s"></div>
-            <div class="absolute top-0 right-0 w-5 h-5 bg-indigo-400 rounded-full opacity-40 animate-ping" style="animation-delay: 1s"></div>
-            
+
+            <!-- Efek cahaya pada tag -->
+            <div class="absolute -top-2 -right-2 w-4 h-4 bg-cyan-400 rounded-full opacity-60 animate-ping"></div>
+            <div class="absolute -bottom-2 -left-2 w-3 h-3 bg-blue-400 rounded-full opacity-60 animate-ping" style="animation-delay: 0.5s"></div>
+
             <!-- Glow effect di sekitar tag -->
             <div class="absolute inset-0 bg-gradient-to-r from-cyan-500/30 to-blue-500/30 rounded-3xl blur-xl -z-10 animate-pulse-glow"></div>
           </div>
         </div>
 
-        <p class="text-xl md:text-2xl text-cyan-100/80 font-normal mb-10 opacity-0 animate-fade-in-up leading-relaxed max-w-3xl mx-auto" style="animation-delay: 0.6s">
+        <p class="text-xl md:text-2xl text-cyan-100/80 font-normal mb-6 opacity-0 animate-fade-in-up leading-relaxed max-w-3xl mx-auto" style="animation-delay: 0.6s">
           {{ t('hero.description') }}
         </p>
 
-        <!-- Harga untuk Mobile (tetap di tengah) -->
-        <div class="opacity-0 animate-fade-in-up mb-10 md:hidden" style="animation-delay: 0.7s">
-          <div class="inline-flex flex-col items-center bg-gradient-to-r from-cyan-900/50 to-blue-900/50 backdrop-blur-xl rounded-3xl p-8 border-2 border-cyan-500/60 shadow-2xl relative">
-            <!-- Glow background untuk mobile -->
+        <!-- Tag Harga Responsif - Muncul di bawah deskripsi pada ukuran kecil sampai large -->
+        <div class="price-tag-responsive xl:hidden opacity-0 animate-fade-in-up mb-8" style="animation-delay: 0.7s">
+          <div class="inline-flex flex-col items-center bg-gradient-to-r from-cyan-900/50 to-blue-900/50 backdrop-blur-xl rounded-3xl p-6 sm:p-8 border-2 border-cyan-500/60 shadow-2xl relative transform hover:scale-105 transition-all duration-300">
+            <!-- Glow background -->
             <div class="absolute inset-0 bg-gradient-to-r from-cyan-400/20 to-blue-400/20 rounded-3xl blur-lg"></div>
-            
-            <div class="text-cyan-200/80 text-base mb-3 relative z-10">{{ t('pricing.startingAt') }}</div>
+
+            <div class="text-cyan-200/80 text-sm sm:text-base mb-3 relative z-10">{{ t('pricing.startingAt') }}</div>
             <div class="flex items-baseline relative z-10">
-              <span class="text-4xl font-bold text-white">$</span>
-              <span class="text-7xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-cyan-300 to-blue-300 drop-shadow-2xl">{{ basicPrice }}</span>
-              <span class="text-xl text-cyan-200/80 ml-2">{{ t('pricing.perMonth') }}</span>
+              <span class="text-3xl sm:text-4xl font-bold text-white">$</span>
+              <span class="text-5xl sm:text-6xl md:text-7xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-cyan-300 to-blue-300 drop-shadow-2xl">{{ basicPrice }}</span>
+              <span class="text-base sm:text-lg text-cyan-200/80 ml-2">{{ t('pricing.perMonth') }}</span>
             </div>
-            <div class="mt-4 text-cyan-300 text-base font-medium relative z-10">{{ t('pricing.noCreditCard') }}</div>
-            
-            <!-- Text overlay effect untuk mobile -->
+            <div class="mt-3 text-cyan-300 text-sm sm:text-base font-medium relative z-10">{{ t('pricing.noCreditCard') }}</div>
+
+            <!-- Text overlay effect -->
             <div class="absolute inset-0 bg-gradient-to-t from-transparent via-white/5 to-transparent rounded-3xl"></div>
-            
-            <!-- Glow effect untuk mobile -->
+
+            <!-- Efek cahaya pada tag -->
+            <div class="absolute -top-3 -right-3 w-5 h-5 bg-cyan-400 rounded-full opacity-60 animate-ping"></div>
+            <div class="absolute -bottom-3 -left-3 w-4 h-4 bg-blue-400 rounded-full opacity-60 animate-ping" style="animation-delay: 0.5s"></div>
+            <div class="absolute top-0 right-0 w-3 h-3 bg-indigo-400 rounded-full opacity-40 animate-ping" style="animation-delay: 1s"></div>
+
+            <!-- Glow effect -->
             <div class="absolute inset-0 bg-gradient-to-r from-cyan-500/30 to-blue-500/30 rounded-3xl blur-xl -z-10 animate-pulse-glow"></div>
           </div>
         </div>
@@ -445,7 +449,7 @@ onMounted(() => {
   }
 
   #hero h1 {
-    font-size: 3rem !important;
+    font-size: 4rem !important;
     margin-bottom: 1.5rem !important;
   }
 
@@ -461,7 +465,7 @@ onMounted(() => {
 
 @media (max-height: 800px) {
   #hero h1 {
-    font-size: 2.5rem !important;
+    font-size: 3.5rem !important;
     margin-bottom: 1rem !important;
   }
 
@@ -481,7 +485,7 @@ onMounted(() => {
 
 @media (max-height: 700px) {
   #hero h1 {
-    font-size: 2rem !important;
+    font-size: 3rem !important;
     margin-bottom: 0.75rem !important;
   }
 
@@ -501,7 +505,7 @@ onMounted(() => {
 
 @media (max-height: 600px) {
   #hero h1 {
-    font-size: 1.75rem !important;
+    font-size: 2.5rem !important;
     margin-bottom: 0.5rem !important;
   }
 
@@ -527,7 +531,7 @@ onMounted(() => {
   }
 
   #hero h1 {
-    font-size: 2.5rem !important;
+    font-size: 3.5rem !important;
     line-height: 1.2 !important;
   }
 
@@ -549,7 +553,7 @@ onMounted(() => {
 
 @media (max-width: 640px) {
   #hero h1 {
-    font-size: 2rem !important;
+    font-size: 2.75rem !important;
   }
 
   #hero p {
@@ -564,7 +568,7 @@ onMounted(() => {
 
 @media (max-width: 480px) {
   #hero h1 {
-    font-size: 1.75rem !important;
+    font-size: 2.25rem !important;
   }
 
   #hero p {
@@ -573,6 +577,94 @@ onMounted(() => {
 
   #hero .flex.gap-12 {
     gap: 1rem !important;
+  }
+}
+
+/* Price tag responsive positioning */
+@media (min-width: 1280px) {
+  .price-tag-desktop {
+    right: -2rem !important;
+  }
+}
+
+@media (min-width: 1400px) {
+  .price-tag-desktop {
+    right: -2.5rem !important;
+  }
+}
+
+@media (min-width: 1536px) {
+  .price-tag-desktop {
+    right: -3rem !important;
+  }
+}
+
+/* Mobile width responsive */
+@media (max-width: 1279px) {
+  /* Ensure price tag appears below description on all sizes below xl */
+  .price-tag-responsive {
+    margin-bottom: 2rem !important;
+  }
+}
+
+@media (max-width: 768px) {
+  /* Price tag sizing for tablet */
+  .price-tag-responsive {
+    margin-bottom: 1.5rem !important;
+  }
+
+  .price-tag-responsive .rounded-3xl {
+    padding: 1rem !important;
+  }
+
+  .price-tag-responsive .text-5xl {
+    font-size: 2.5rem !important;
+  }
+
+  .price-tag-responsive .text-3xl {
+    font-size: 1.5rem !important;
+  }
+}
+
+@media (max-width: 640px) {
+  /* Price tag sizing for mobile */
+  .price-tag-responsive {
+    margin-bottom: 1rem !important;
+  }
+
+  .price-tag-responsive .rounded-3xl {
+    padding: 0.75rem !important;
+  }
+
+  .price-tag-responsive .text-5xl {
+    font-size: 2rem !important;
+  }
+
+  .price-tag-responsive .text-3xl {
+    font-size: 1.25rem !important;
+  }
+}
+
+@media (max-width: 480px) {
+  /* Price tag sizing for small mobile */
+  .price-tag-responsive {
+    margin-bottom: 0.75rem !important;
+  }
+
+  .price-tag-responsive .rounded-3xl {
+    padding: 0.5rem !important;
+  }
+
+  .price-tag-responsive .text-5xl {
+    font-size: 1.75rem !important;
+  }
+
+  .price-tag-responsive .text-3xl {
+    font-size: 1rem !important;
+  }
+
+  .price-tag-responsive .text-sm {
+    font-size: 0.75rem !important;
   }
 }
 </style>
