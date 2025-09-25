@@ -44,13 +44,23 @@ export default defineConfig({
     // Gzip compression
     viteCompression({
       algorithm: 'gzip',
-      ext: '.gz'
+      ext: '.gz',
+      deleteOriginFile: false,
+      threshold: 1024,
+      filter: (fileName) => {
+        return /\.(js|mjs|json|css|html)$/i.test(fileName)
+      }
     }),
 
     // Brotli compression
     viteCompression({
       algorithm: 'brotliCompress',
-      ext: '.br'
+      ext: '.br',
+      deleteOriginFile: false,
+      threshold: 1024,
+      filter: (fileName) => {
+        return /\.(js|mjs|json|css|html)$/i.test(fileName)
+      }
     }),
 
     // Image optimization
@@ -144,7 +154,8 @@ export default defineConfig({
   server: {
     port: 3000,
     strictPort: false,
-    open: true,
+    open: process.platform === 'win32' ? true : false,
+    host: '0.0.0.0',
     cors: true
   },
 
@@ -152,7 +163,8 @@ export default defineConfig({
   preview: {
     port: 4173,
     strictPort: false,
-    open: true,
+    open: process.platform === 'win32' ? true : false,
+    host: '0.0.0.0',
     cors: true
   },
 
@@ -160,5 +172,16 @@ export default defineConfig({
   optimizeDeps: {
     include: ['vue', 'vue-router', '@emailjs/browser'],
     exclude: []
+  },
+
+  // Environment-specific configurations
+  esbuild: {
+    target: 'es2020'
+  },
+
+  // Additional Linux compatibility
+  define: {
+    'process.platform': JSON.stringify(process.platform),
+    __PLATFORM__: JSON.stringify(process.platform)
   }
 })
