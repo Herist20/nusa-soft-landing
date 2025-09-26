@@ -197,7 +197,13 @@
       "website": "Website",
       "mobile": "Mobile App",
       "ecommerce": "E-Commerce",
-      "enterprise": "Enterprise System"
+      "enterprise": "Enterprise System",
+      "design": "UI/UX Design"
+    },
+    "empty": {
+      "title": "Tidak Ada Proyek Ditemukan",
+      "description": "Kami belum memiliki proyek dalam kategori ini. Coba cek lagi nanti atau lihat semua karya kami.",
+      "viewAll": "Lihat Semua Proyek"
     },
     "projects": {
       "globalTrade": {

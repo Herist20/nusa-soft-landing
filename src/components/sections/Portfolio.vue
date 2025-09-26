@@ -44,7 +44,7 @@
       </div>
 
       <!-- Project Grid -->
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 lg:gap-10">
+      <div v-if="filteredProjects.length > 0" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 lg:gap-10">
         <div
           v-for="(project, index) in displayedProjects"
           :key="project.id"
@@ -139,6 +139,29 @@
             </button>
           </div>
         </div>
+      </div>
+
+      <!-- Empty State -->
+      <div v-else class="text-center py-16 max-w-md mx-auto opacity-0 animate-fade-in-up" style="animation-delay: 0.2s">
+        <!-- Icon -->
+        <div class="relative w-20 h-20 mx-auto mb-6 bg-gray-800/50 rounded-full border border-gray-700 flex items-center justify-center">
+          <svg class="w-10 h-10 text-cyan-400/60" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
+          </svg>
+          <div class="absolute inset-0 bg-cyan-500/5 rounded-full blur-lg"></div>
+        </div>
+
+        <!-- Content -->
+        <h3 class="text-lg font-semibold text-white mb-2">{{ t('portfolio.empty.title') }}</h3>
+        <p class="text-cyan-100/60 mb-6 text-sm">{{ t('portfolio.empty.description') }}</p>
+
+        <!-- Button -->
+        <button
+          @click="setActiveCategory('all')"
+          class="bg-cyan-500 hover:bg-cyan-600 text-white px-5 py-2.5 rounded-lg font-medium transition-colors duration-200"
+        >
+          {{ t('portfolio.empty.viewAll') }}
+        </button>
       </div>
 
       <!-- Load More Button -->
@@ -278,11 +301,11 @@ const { t } = useI18n()
 
 const emit = defineEmits(['openProject'])
 
-const activeCategory = ref('All')
+const activeCategory = ref('all')
 const displayedCount = ref(6)
 const selectedProject = ref(null)
 
-const categories = ['all', 'website', 'mobile', 'ecommerce', 'enterprise']
+const categories = ['all', 'website', 'mobile', 'ecommerce', 'enterprise', 'design']
 
 const getCategoryName = (category) => {
   return t(`portfolio.categories.${category}`)
@@ -490,10 +513,21 @@ const allProjects = [
 ]
 
 const filteredProjects = computed(() => {
-  if (activeCategory.value === 'All') {
+  if (activeCategory.value === 'all') {
     return allProjects
   }
-  return allProjects.filter(project => project.category === activeCategory.value)
+
+  // Map filter categories to project categories
+  const categoryMapping = {
+    'website': ['Web'],
+    'mobile': ['Mobile'],
+    'ecommerce': ['E-Commerce'],
+    'enterprise': ['Enterprise'],
+    'design': ['Design']
+  }
+
+  const projectCategories = categoryMapping[activeCategory.value] || []
+  return allProjects.filter(project => projectCategories.includes(project.category))
 })
 
 const displayedProjects = computed(() => {
@@ -539,14 +573,19 @@ const closeCaseStudy = () => {
 
 /* Animasi fade in untuk kartu proyek */
 @keyframes fadeInStagger {
-  from { 
-    opacity: 0; 
-    transform: translateY(20px); 
+  from {
+    opacity: 0;
+    transform: translateY(20px);
   }
-  to { 
-    opacity: 1; 
-    transform: translateY(0); 
+  to {
+    opacity: 1;
+    transform: translateY(0);
   }
+}
+
+/* Reuse existing fadeInStagger animation for empty state to save bytes */
+.animate-fade-in-up {
+  animation: fadeInStagger 0.6s ease-out forwards;
 }
 
 /* Animasi pulse yang lebih lambat */

@@ -197,7 +197,13 @@
       "website": "Web Applications",
       "mobile": "Mobile Apps",
       "ecommerce": "E-Commerce",
-      "enterprise": "Enterprise Systems"
+      "enterprise": "Enterprise Systems",
+      "design": "UI/UX Design"
+    },
+    "empty": {
+      "title": "No Projects Found",
+      "description": "We don't have any projects in this category yet. Check back soon or view all our work.",
+      "viewAll": "View All Projects"
     },
     "projects": {
       "globalTrade": {
