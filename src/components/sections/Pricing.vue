@@ -194,8 +194,6 @@ const professionalFeatures = computed(() => [
   t('pricing.professional.features.3'),
   t('pricing.professional.features.4'),
   t('pricing.professional.features.5'),
-  t('pricing.professional.features.6'),
-  t('pricing.professional.features.7')
 ])
 
 const enterpriseFeatures = computed(() => [
@@ -207,7 +205,9 @@ const enterpriseFeatures = computed(() => [
   t('pricing.enterprise.features.5'),
   t('pricing.enterprise.features.6'),
   t('pricing.enterprise.features.7'),
-  t('pricing.enterprise.features.8')
+  t('pricing.enterprise.features.8'),
+  t('pricing.enterprise.features.9'),
+  t('pricing.enterprise.features.10'),
 ])
 </script>
 
