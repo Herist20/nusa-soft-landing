@@ -44,8 +44,8 @@
       </div>
 
       <!-- Konten Hero (Muncul Setelah Kode) -->
-      <div v-if="showTitle" 
-           class="text-center transition-all duration-1000"
+      <div v-if="showTitle"
+           class="text-center transition-all duration-1000 mt-12 mb-16 md:mt-0 md:mb-0"
            :class="{
              'opacity-0 translate-y-10': titleTransitioning,
              'opacity-100 translate-y-0': !titleTransitioning
@@ -66,7 +66,7 @@
         <!-- Minimal Inline Price & Subtitle -->
         <div class="text-center mb-4 opacity-0 animate-fade-in-up" style="animation-delay: 0.7s">
           <!-- Compact inline price display -->
-          <div class="inline-flex items-center gap-2 md:gap-4 bg-gradient-to-r from-cyan-500/10 to-blue-500/10 backdrop-blur-sm px-6 py-3 rounded-full border border-cyan-500/20 shadow-lg hover:scale-105 transition-transform duration-300">
+          <div class="inline-flex items-center gap-1 md:gap-4 bg-gradient-to-r from-cyan-500/10 to-blue-500/10 backdrop-blur-sm px-6 py-3 rounded-full border border-cyan-500/20 shadow-lg hover:scale-105 transition-transform duration-300">
             <!-- Starting from label -->
             <span class="text-cyan-300/70 text-sm font-medium">{{ t('hero.price.startingFrom') }}</span>
 
@@ -181,8 +181,8 @@
     <!-- Elemen bawah futuristik -->
     <div class="absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-t from-gray-900 to-transparent z-10"></div>
     
-    <!-- Indikator scroll -->
-    <div v-if="showTitle" class="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce">
+    <!-- Indikator scroll - hidden on mobile -->
+    <div v-if="showTitle" class="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce hidden md:block">
       <svg class="w-6 h-6 text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
       </svg>
@@ -456,7 +456,7 @@ onMounted(() => {
   }
 
   /* Mobile price tag adjustments - more rectangular design */
-  #hero .inline-flex.items-center.gap-2 {
+  #hero .inline-flex.items-center.gap-1 {
     flex-direction: column !important;
     padding: 1.25rem 1.5rem !important;
     max-width: 300px !important;
