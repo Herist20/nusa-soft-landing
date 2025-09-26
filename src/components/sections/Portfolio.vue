@@ -253,7 +253,7 @@ const activeCategory = ref('All')
 const displayedCount = ref(6)
 const selectedProject = ref(null)
 
-const categories = ['All', 'Web', 'ecommerce', 'Mobile']
+const categories = ['All', 'Web', 'Mobile']
 
 const getCategoryName = (category) => {
   return category === 'All' ? 'Semua' : category
