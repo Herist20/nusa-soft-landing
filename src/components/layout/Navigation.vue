@@ -275,18 +275,7 @@ const activeMobileSubmenu = ref(null)
 
 const navItems = ref([
   { name: () => t('navigation.home'), href: '#hero' },
-  { name: () => t('navigation.services'), href: '#services' },
   { name: () => t('navigation.portfolio'), href: '#portfolio' },
-  {
-    name: () => t('navigation.about'),
-    href: '#about',
-    hasDropdown: true,
-    submenu: [
-      { name: () => t('navigation.about'), href: '#about' },
-      { name: () => t('navigation.team'), href: '#team' },
-      { name: () => t('navigation.process'), href: '#process' }
-    ]
-  },
   { name: () => t('navigation.contact'), href: '#contact' }
 ])
 
