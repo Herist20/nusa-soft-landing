@@ -38,10 +38,8 @@
         <div>
           <h4 class="font-semibold text-lg mb-4">{{ t('footer.quickLinks') }}</h4>
           <ul class="space-y-2">
-            <li><a href="#services" class="text-gray-400 hover:text-white transition-colors">{{ t('navigation.services') }}</a></li>
+            <li><a href="#hero" class="text-gray-400 hover:text-white transition-colors">{{ t('navigation.home') }}</a></li>
             <li><a href="#portfolio" class="text-gray-400 hover:text-white transition-colors">{{ t('navigation.portfolio') }}</a></li>
-            <li><a href="#about" class="text-gray-400 hover:text-white transition-colors">{{ t('navigation.about') }}</a></li>
-            <li><a href="#process" class="text-gray-400 hover:text-white transition-colors">{{ t('navigation.process') }}</a></li>
             <li><a href="#contact" class="text-gray-400 hover:text-white transition-colors">{{ t('navigation.contact') }}</a></li>
           </ul>
         </div>

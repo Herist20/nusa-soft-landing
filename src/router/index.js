@@ -44,32 +44,12 @@ const localizedRoutes = {
       }
     },
     {
-      path: '/layanan',
-      name: 'Services',
-      component: () => import('../views/Services.vue'),
-      meta: {
-        title: 'services',
-        locale: 'id'
-      }
-    },
-    {
       path: '/portofolio',
       name: 'Portfolio',
       component: () => import('../views/Portfolio.vue'),
       meta: {
         title: 'portfolio',
         locale: 'id'
-      }
-    },
-    {
-      path: '/tentang',
-      name: 'About',
-      component: () => import('../views/About.vue'),
-      meta: {
-        title: 'about',
-        locale: 'id',
-        hasSubmenu: true,
-        submenuSections: ['about', 'team', 'process']
       }
     },
     {
@@ -93,32 +73,12 @@ const localizedRoutes = {
       }
     },
     {
-      path: '/en/services',
-      name: 'Services-en',
-      component: () => import('../views/Services.vue'),
-      meta: {
-        title: 'services',
-        locale: 'en'
-      }
-    },
-    {
       path: '/en/portfolio',
       name: 'Portfolio-en',
       component: () => import('../views/Portfolio.vue'),
       meta: {
         title: 'portfolio',
         locale: 'en'
-      }
-    },
-    {
-      path: '/en/about',
-      name: 'About-en',
-      component: () => import('../views/About.vue'),
-      meta: {
-        title: 'about',
-        locale: 'en',
-        hasSubmenu: true,
-        submenuSections: ['about', 'team', 'process']
       }
     },
     {
@@ -135,9 +95,7 @@ const localizedRoutes = {
 
 // Legacy redirects for SEO
 const legacyRedirects = [
-  { path: '/services', redirect: '/layanan' },
   { path: '/portfolio', redirect: '/portofolio' },
-  { path: '/about', redirect: '/tentang' },
   { path: '/contact', redirect: '/kontak' }
 ]
 
