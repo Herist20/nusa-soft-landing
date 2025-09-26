@@ -8,7 +8,7 @@ import i18n from './locales'
 
 // Import optimization utilities
 import lazyLoad from './directives/lazyload.js'
-import { updateMetaTags, injectStructuredData, preloadResources } from './utils/seo'
+import { updateMetaTags, injectStructuredData, preloadResources, reportWebVitals } from './utils/seo'
 import { initializeAccessibility } from './utils/accessibility'
 import { multilingualSEO } from './utils/seoMultilingual'
 import { analytics } from './utils/analytics'
@@ -57,9 +57,7 @@ app.mixin({
 
       // Performance monitoring in production
       if (import.meta.env.PROD) {
-        import('./utils/seo').then(({ reportWebVitals }) => {
-          reportWebVitals(console.log)
-        })
+        reportWebVitals(console.log)
       }
     }
   }

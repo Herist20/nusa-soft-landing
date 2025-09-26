@@ -276,6 +276,7 @@ const activeMobileSubmenu = ref(null)
 const navItems = ref([
   { name: () => t('navigation.home'), href: '#hero' },
   { name: () => t('navigation.portfolio'), href: '#portfolio' },
+  { name: () => t('navigation.pricing'), href: '#pricing' },
   { name: () => t('navigation.contact'), href: '#contact' }
 ])
 

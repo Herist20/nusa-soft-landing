@@ -13,6 +13,7 @@
   "navigation": {
     "home": "Beranda",
     "portfolio": "Portofolio",
+    "pricing": "Harga",
     "contact": "Kontak",
     "getConsultation": "Konsultasi Gratis",
     "startProject": "Mulai Proyek"
@@ -29,40 +30,69 @@
       "projects": "Proyek Selesai",
       "clients": "Klien Puas",
       "experience": "Tahun Pengalaman"
+    },
+    "price": {
+      "startingFrom": "Mulai dari",
+      "thousand": "ribu",
+      "oneTimePayment": "Pembayaran sekali"
     }
   },
   "pricing": {
-    "startingAt": "Mulai dari",
-    "perMonth": "/bulan",
-    "noCreditCard": "Tanpa kartu kredit",
+    "badge": "Paket Harga",
+    "title": "Pilih Paket Yang Tepat",
+    "subtitle": "Paket pengembangan profesional yang dirancang untuk memenuhi kebutuhan dan anggaran setiap bisnis",
+    "recommended": "Paling Populer",
     "basic": {
+      "name": "Basic",
+      "description": "Sempurna untuk bisnis kecil dan startup",
+      "period": "pembayaran sekali",
+      "cta": "Pilih Basic",
       "features": [
-        "Desain website dasar",
-        "Responsif mobile",
-        "Optimasi SEO",
-        "Dukungan 1 bulan"
+        "Desain landing page responsif",
+        "Optimasi mobile-first",
+        "Setup SEO dasar",
+        "Integrasi form kontak",
+        "Dukungan gratis 1 bulan",
+        "Bantuan setup domain"
       ]
     },
     "professional": {
+      "name": "Professional",
+      "description": "Ideal untuk bisnis berkembang dengan kebutuhan lanjutan",
+      "period": "pembayaran sekali",
+      "cta": "Pilih Professional",
       "features": [
-        "Desain website canggih",
+        "Desain website multi-halaman",
+        "Animasi & interaksi canggih",
         "Integrasi e-commerce",
-        "Fitur custom",
-        "Setup analytics",
-        "Dukungan 3 bulan",
-        "Optimasi performa"
+        "Setup payment gateway",
+        "Optimasi SEO lanjutan",
+        "Setup analytics & tracking",
+        "Dukungan gratis 3 bulan",
+        "Sistem manajemen konten"
       ]
     },
     "enterprise": {
+      "name": "Enterprise",
+      "description": "Solusi komprehensif untuk bisnis mapan",
+      "period": "pembayaran sekali",
+      "cta": "Pilih Enterprise",
       "features": [
-        "Solusi enterprise custom",
-        "Integrasi lanjutan",
-        "Arsitektur scalable",
-        "Audit keamanan",
-        "Tim dukungan khusus",
-        "Monitoring 24/7",
-        "Revisi unlimited"
+        "Aplikasi web custom",
+        "Integrasi database",
+        "Sistem autentikasi user",
+        "Dashboard admin",
+        "Pengembangan API",
+        "Implementasi keamanan",
+        "Optimasi performa",
+        "Dukungan gratis 6 bulan",
+        "Project manager khusus"
       ]
+    },
+    "custom": {
+      "title": "Butuh Yang Lebih Kompleks?",
+      "description": "Kami menawarkan solusi enterprise custom yang disesuaikan dengan kebutuhan bisnis spesifik Anda dengan fitur unlimited dan dukungan khusus.",
+      "cta": "Diskusi Proyek Custom"
     }
   },
   "contact": {

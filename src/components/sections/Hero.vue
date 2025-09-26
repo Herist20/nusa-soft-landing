@@ -67,13 +67,13 @@
               <!-- Glow background untuk text -->
               <div class="absolute inset-0 bg-gradient-to-r from-cyan-400/20 to-blue-400/20 rounded-2xl blur-lg"></div>
 
-              <div class="text-cyan-200/80 text-sm mb-2 relative z-10">{{ t('pricing.startingAt') }}</div>
+              <div class="text-cyan-200/80 text-sm mb-2 relative z-10">{{ t('hero.price.startingFrom') }}</div>
               <div class="flex items-baseline relative z-10">
-                <span class="text-2xl font-bold text-white">$</span>
+                <span class="text-2xl font-bold text-white">Rp</span>
                 <span class="text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-cyan-300 to-blue-300 drop-shadow-2xl">{{ basicPrice }}</span>
-                <span class="text-xs text-cyan-200/80 ml-1">{{ t('pricing.perMonth') }}</span>
+                <span class="text-xs text-cyan-200/80 ml-1">{{ t('hero.price.thousand') }}</span>
               </div>
-              <div class="mt-1 text-cyan-300 text-xs font-medium relative z-10">{{ t('pricing.noCreditCard') }}</div>
+              <div class="mt-1 text-cyan-300 text-xs font-medium relative z-10">{{ t('hero.price.oneTimePayment') }}</div>
 
               <!-- Text overlay effect -->
               <div class="absolute inset-0 bg-gradient-to-t from-transparent via-white/5 to-transparent rounded-2xl"></div>
@@ -98,13 +98,13 @@
             <!-- Glow background -->
             <div class="absolute inset-0 bg-gradient-to-r from-cyan-400/20 to-blue-400/20 rounded-3xl blur-lg"></div>
 
-            <div class="text-cyan-200/80 text-sm sm:text-base mb-3 relative z-10">{{ t('pricing.startingAt') }}</div>
+            <div class="text-cyan-200/80 text-sm sm:text-base mb-3 relative z-10">Mulai dari</div>
             <div class="flex items-baseline relative z-10">
-              <span class="text-3xl sm:text-4xl font-bold text-white">$</span>
+              <span class="text-3xl sm:text-4xl font-bold text-white">Rp</span>
               <span class="text-5xl sm:text-6xl md:text-7xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-cyan-300 to-blue-300 drop-shadow-2xl">{{ basicPrice }}</span>
-              <span class="text-base sm:text-lg text-cyan-200/80 ml-2">{{ t('pricing.perMonth') }}</span>
+              <span class="text-base sm:text-lg text-cyan-200/80 ml-2">ribu</span>
             </div>
-            <div class="mt-3 text-cyan-300 text-sm sm:text-base font-medium relative z-10">{{ t('pricing.noCreditCard') }}</div>
+            <div class="mt-3 text-cyan-300 text-sm sm:text-base font-medium relative z-10">Pembayaran sekali</div>
 
             <!-- Text overlay effect -->
             <div class="absolute inset-0 bg-gradient-to-t from-transparent via-white/5 to-transparent rounded-3xl"></div>
@@ -239,34 +239,8 @@ const showTitle = ref(false)
 const titleTransitioning = ref(false)
 
 // Pricing data
-const basicPrice = ref(99)
-const professionalPrice = ref(299)
-
-const basicFeatures = computed(() => [
-  t('pricing.basic.features.0'),
-  t('pricing.basic.features.1'),
-  t('pricing.basic.features.2'),
-  t('pricing.basic.features.3')
-])
-
-const professionalFeatures = computed(() => [
-  t('pricing.professional.features.0'),
-  t('pricing.professional.features.1'),
-  t('pricing.professional.features.2'),
-  t('pricing.professional.features.3'),
-  t('pricing.professional.features.4'),
-  t('pricing.professional.features.5')
-])
-
-const enterpriseFeatures = computed(() => [
-  t('pricing.enterprise.features.0'),
-  t('pricing.enterprise.features.1'),
-  t('pricing.enterprise.features.2'),
-  t('pricing.enterprise.features.3'),
-  t('pricing.enterprise.features.4'),
-  t('pricing.enterprise.features.5'),
-  t('pricing.enterprise.features.6')
-])
+const basicPrice = ref(850)
+const professionalPrice = ref(1000)
 
 const projectsCount = 150
 const yearsCount = 5

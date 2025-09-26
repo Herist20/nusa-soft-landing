@@ -13,6 +13,7 @@
   "navigation": {
     "home": "Home",
     "portfolio": "Portfolio",
+    "pricing": "Pricing",
     "contact": "Contact",
     "getConsultation": "Free Consultation",
     "startProject": "Start Project"
@@ -29,40 +30,69 @@
       "projects": "Projects Delivered",
       "clients": "Satisfied Clients",
       "experience": "Years of Experience"
+    },
+    "price": {
+      "startingFrom": "Starting from",
+      "thousand": "thousand",
+      "oneTimePayment": "One-time payment"
     }
   },
   "pricing": {
-    "startingAt": "Starting at",
-    "perMonth": "/month",
-    "noCreditCard": "No credit card required",
+    "badge": "Pricing Plans",
+    "title": "Choose Your Perfect Package",
+    "subtitle": "Professional development packages designed to fit every business need and budget",
+    "recommended": "Most Popular",
     "basic": {
+      "name": "Basic",
+      "description": "Perfect for small businesses and startups",
+      "period": "one-time payment",
+      "cta": "Choose Basic",
       "features": [
-        "Basic website design",
-        "Mobile responsive",
-        "SEO optimization",
-        "1 month support"
+        "Responsive landing page design",
+        "Mobile-first optimization",
+        "Basic SEO setup",
+        "Contact form integration",
+        "1 month free support",
+        "Domain setup assistance"
       ]
     },
     "professional": {
+      "name": "Professional",
+      "description": "Ideal for growing businesses with advanced needs",
+      "period": "one-time payment",
+      "cta": "Choose Professional",
       "features": [
-        "Advanced website design",
+        "Multi-page website design",
+        "Advanced animations & interactions",
         "E-commerce integration",
-        "Custom functionality",
-        "Analytics setup",
-        "3 months support",
-        "Performance optimization"
+        "Payment gateway setup",
+        "Advanced SEO optimization",
+        "Analytics & tracking setup",
+        "3 months free support",
+        "Content management system"
       ]
     },
     "enterprise": {
+      "name": "Enterprise",
+      "description": "Comprehensive solution for established businesses",
+      "period": "one-time payment",
+      "cta": "Choose Enterprise",
       "features": [
-        "Custom enterprise solution",
-        "Advanced integrations",
-        "Scalable architecture",
-        "Security audit",
-        "Dedicated support team",
-        "24/7 monitoring",
-        "Unlimited revisions"
+        "Custom web application",
+        "Database integration",
+        "User authentication system",
+        "Admin dashboard",
+        "API development",
+        "Security implementation",
+        "Performance optimization",
+        "6 months free support",
+        "Dedicated project manager"
       ]
+    },
+    "custom": {
+      "title": "Need Something More Complex?",
+      "description": "We offer custom enterprise solutions tailored to your specific business requirements with unlimited features and dedicated support.",
+      "cta": "Discuss Custom Project"
     }
   },
   "contact": {
