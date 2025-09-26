@@ -28,7 +28,7 @@
       </div>
     </div>
 
-    <div class="relative max-w-6xl mx-auto px-8 lg:px-16 py-12 z-10">
+    <div class="relative max-w-6xl mx-auto px-4 sm:px-6 md:px-8 lg:px-16 py-6 sm:py-8 md:py-12 z-10">
       <!-- Animasi Mengetik Kode -->
       <div v-if="!showTitle" 
            class="text-center transition-all duration-1000"
@@ -142,8 +142,8 @@
           </a>
         </div>
 
-        <!-- Statistics Counter -->
-        <div class="flex flex-wrap justify-center gap-12 mb-16 opacity-0 animate-fade-in-up" style="animation-delay: 1s">
+        <!-- Statistics Counter - Hidden on mobile -->
+        <div class="hidden md:flex flex-wrap justify-center gap-12 mb-16 opacity-0 animate-fade-in-up" style="animation-delay: 1s">
           <div class="flex items-center gap-3 group">
             <div class="w-12 h-12 bg-cyan-900/30 backdrop-blur-sm rounded-lg flex items-center justify-center transform group-hover:scale-110 transition-transform">
               <svg class="w-6 h-6 text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -177,7 +177,7 @@
           <div class="flex items-center gap-3 group">
             <div class="w-12 h-12 bg-purple-900/30 backdrop-blur-sm rounded-lg flex items-center justify-center transform group-hover:scale-110 transition-transform">
               <svg class="w-6 h-6 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656-.126-1.283-.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path>
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 515.356-1.857M7 20v-2c0-.656-.126-1.283-.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path>
               </svg>
             </div>
             <div>
@@ -408,18 +408,37 @@ onMounted(() => {
   filter: drop-shadow(0 25px 25px rgba(0, 0, 0, 0.15));
 }
 
-/* Ensure full height hero section */
+/* Ensure full height hero section but allow content to be visible */
 #hero {
-  height: 100vh !important;
   min-height: 100vh !important;
-  max-height: 100vh !important;
+  min-height: 100dvh !important; /* Dynamic viewport height for mobile browsers */
+  height: auto !important;
+  padding-top: 80px !important;
+  padding-bottom: 2rem !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+
+/* Mobile-first responsive approach */
+@media (max-width: 768px) {
+  #hero {
+    min-height: 100vh !important;
+    height: auto !important;
+    padding-top: 60px !important;
+    padding-bottom: 1rem !important;
+  }
+  
+  #hero .relative.max-w-6xl {
+    padding: 1rem !important;
+  }
 }
 
 /* Responsive optimizations for all screen sizes */
 @media (max-height: 900px) {
   #hero {
-    height: 100vh !important;
     min-height: 100vh !important;
+    height: auto !important;
   }
 
   #hero h1 {
@@ -438,6 +457,11 @@ onMounted(() => {
 }
 
 @media (max-height: 800px) {
+  #hero {
+    padding-top: 40px !important;
+    padding-bottom: 1rem !important;
+  }
+
   #hero h1 {
     font-size: 3.5rem !important;
     margin-bottom: 1rem !important;
@@ -453,11 +477,15 @@ onMounted(() => {
   }
 
   #hero .flex.gap-12 {
-    margin-bottom: 2rem !important;
+    margin-bottom: 1.5rem !important;
   }
 }
 
 @media (max-height: 700px) {
+  #hero {
+    padding-top: 30px !important;
+  }
+
   #hero h1 {
     font-size: 3rem !important;
     margin-bottom: 0.75rem !important;
@@ -465,21 +493,144 @@ onMounted(() => {
 
   #hero p {
     font-size: 1rem !important;
-    margin-bottom: 1.25rem !important;
+    margin-bottom: 1rem !important;
   }
 
   #hero .flex.gap-6 {
-    margin-bottom: 1.25rem !important;
+    margin-bottom: 1rem !important;
   }
 
   #hero .flex.gap-12 {
-    margin-bottom: 1.5rem !important;
+    margin-bottom: 1rem !important;
+    gap: 1.5rem !important;
   }
 }
 
 @media (max-height: 600px) {
+  #hero {
+    padding-top: 20px !important;
+  }
+
   #hero h1 {
     font-size: 2.5rem !important;
+    margin-bottom: 0.5rem !important;
+  }
+
+  #hero p {
+    font-size: 0.875rem !important;
+    margin-bottom: 0.75rem !important;
+  }
+
+  #hero .flex.gap-6 {
+    margin-bottom: 0.75rem !important;
+  }
+
+  #hero .flex.gap-12 {
+    margin-bottom: 0.75rem !important;
+    gap: 1rem !important;
+  }
+
+}
+
+/* Mobile width responsive */
+@media (max-width: 768px) {
+  #hero {
+    min-height: 100vh !important;
+    height: auto !important;
+    padding-top: 60px !important;
+    padding-bottom: 2rem !important;
+  }
+
+  #hero .relative.max-w-6xl {
+    padding: 1rem !important;
+    margin: 0 auto !important;
+  }
+
+  #hero h1 {
+    font-size: 2.5rem !important;
+    line-height: 1.2 !important;
+    margin-bottom: 1rem !important;
+  }
+
+  #hero p {
+    font-size: 1rem !important;
+    max-width: 95% !important;
+    margin-bottom: 1.5rem !important;
+  }
+
+  #hero .flex.gap-6 {
+    flex-direction: column;
+    gap: 1rem !important;
+    margin-bottom: 2rem !important;
+  }
+
+  #hero .flex.gap-12 {
+    gap: 1.5rem !important;
+    justify-content: center;
+    margin-bottom: 2rem !important;
+    flex-wrap: wrap;
+  }
+
+  /* Price tag responsive adjustments */
+  .price-tag-responsive {
+    margin-bottom: 1.5rem !important;
+  }
+
+  .price-tag-responsive .rounded-3xl {
+    padding: 1rem !important;
+    max-width: 280px !important;
+    margin: 0 auto !important;
+  }
+}
+
+@media (max-width: 640px) {
+  #hero {
+    padding-top: 50px !important;
+  }
+
+  #hero .relative.max-w-6xl {
+    padding: 0.75rem !important;
+  }
+
+  #hero h1 {
+    font-size: 2.25rem !important;
+    margin-bottom: 0.75rem !important;
+  }
+
+  #hero p {
+    font-size: 0.95rem !important;
+    margin-bottom: 1.25rem !important;
+  }
+
+  #hero .flex.gap-6 {
+    gap: 0.75rem !important;
+    margin-bottom: 1.5rem !important;
+  }
+
+  #hero .flex.gap-12 {
+    gap: 1rem !important;
+    flex-wrap: wrap;
+    margin-bottom: 1.5rem !important;
+  }
+
+  /* Adjust button sizes for small screens */
+  #hero .flex.gap-6 a {
+    padding: 0.75rem 1.5rem !important;
+    font-size: 0.875rem !important;
+  }
+}
+
+@media (max-width: 480px) {
+  #hero {
+    padding-top: 40px !important;
+  }
+
+  #hero .relative.max-w-6xl {
+    padding: 0.5rem !important;
+  }
+
+  #hero h1 {
+    font-size: 2rem !important;
     margin-bottom: 0.5rem !important;
   }
 
@@ -489,69 +640,21 @@ onMounted(() => {
   }
 
   #hero .flex.gap-6 {
-    margin-bottom: 1rem !important;
+    gap: 0.5rem !important;
+    margin-bottom: 1.25rem !important;
   }
 
   #hero .flex.gap-12 {
-    margin-bottom: 1rem !important;
-  }
-}
-
-/* Mobile width responsive */
-@media (max-width: 768px) {
-  #hero {
-    height: 100vh !important;
-    padding: 0 !important;
+    gap: 0.75rem !important;
+    margin-bottom: 1.25rem !important;
   }
 
-  #hero h1 {
-    font-size: 3.5rem !important;
-    line-height: 1.2 !important;
+  /* Further reduce button sizes */
+  #hero .flex.gap-6 a {
+    padding: 0.625rem 1.25rem !important;
+    font-size: 0.8125rem !important;
   }
 
-  #hero p {
-    font-size: 1.125rem !important;
-    max-width: 90% !important;
-  }
-
-  #hero .flex.gap-6 {
-    flex-direction: column;
-    gap: 1rem !important;
-  }
-
-  #hero .flex.gap-12 {
-    gap: 2rem !important;
-    justify-content: center;
-  }
-}
-
-@media (max-width: 640px) {
-  #hero h1 {
-    font-size: 2.75rem !important;
-  }
-
-  #hero p {
-    font-size: 1rem !important;
-  }
-
-  #hero .flex.gap-12 {
-    gap: 1.5rem !important;
-    flex-wrap: wrap;
-  }
-}
-
-@media (max-width: 480px) {
-  #hero h1 {
-    font-size: 2.25rem !important;
-  }
-
-  #hero p {
-    font-size: 0.875rem !important;
-  }
-
-  #hero .flex.gap-12 {
-    gap: 1rem !important;
-  }
 }
 
 /* Price tag responsive positioning */
@@ -589,13 +692,18 @@ onMounted(() => {
 
   .price-tag-responsive .rounded-3xl {
     padding: 1rem !important;
+    max-width: 280px !important;
+    margin: 0 auto !important;
   }
 
-  .price-tag-responsive .text-5xl {
+  .price-tag-responsive .text-5xl,
+  .price-tag-responsive .text-6xl,
+  .price-tag-responsive .text-7xl {
     font-size: 2.5rem !important;
   }
 
-  .price-tag-responsive .text-3xl {
+  .price-tag-responsive .text-3xl,
+  .price-tag-responsive .text-4xl {
     font-size: 1.5rem !important;
   }
 }
@@ -608,13 +716,18 @@ onMounted(() => {
 
   .price-tag-responsive .rounded-3xl {
     padding: 0.75rem !important;
+    max-width: 250px !important;
+    margin: 0 auto !important;
   }
 
-  .price-tag-responsive .text-5xl {
+  .price-tag-responsive .text-5xl,
+  .price-tag-responsive .text-6xl,
+  .price-tag-responsive .text-7xl {
     font-size: 2rem !important;
   }
 
-  .price-tag-responsive .text-3xl {
+  .price-tag-responsive .text-3xl,
+  .price-tag-responsive .text-4xl {
     font-size: 1.25rem !important;
   }
 }
@@ -626,19 +739,155 @@ onMounted(() => {
   }
 
   .price-tag-responsive .rounded-3xl {
-    padding: 0.5rem !important;
+    padding: 0.625rem !important;
+    max-width: 220px !important;
+    margin: 0 auto !important;
   }
 
-  .price-tag-responsive .text-5xl {
+  .price-tag-responsive .text-5xl,
+  .price-tag-responsive .text-6xl,
+  .price-tag-responsive .text-7xl {
     font-size: 1.75rem !important;
   }
 
-  .price-tag-responsive .text-3xl {
+  .price-tag-responsive .text-3xl,
+  .price-tag-responsive .text-4xl {
     font-size: 1rem !important;
   }
 
-  .price-tag-responsive .text-sm {
+  .price-tag-responsive .text-sm,
+  .price-tag-responsive .text-base {
     font-size: 0.75rem !important;
+  }
+}
+
+/* Ultra small screens (320px and below) */
+@media (max-width: 320px) {
+  #hero {
+    padding-top: 30px !important;
+  }
+
+  #hero .relative.max-w-6xl {
+    padding: 0.25rem !important;
+  }
+
+  #hero h1 {
+    font-size: 1.75rem !important;
+    margin-bottom: 0.5rem !important;
+  }
+
+  #hero p {
+    font-size: 0.8125rem !important;
+    margin-bottom: 0.75rem !important;
+  }
+
+  #hero .flex.gap-6 {
+    gap: 0.5rem !important;
+    margin-bottom: 1rem !important;
+  }
+
+  #hero .flex.gap-6 a {
+    padding: 0.5rem 1rem !important;
+    font-size: 0.75rem !important;
+  }
+
+
+
+  .price-tag-responsive .rounded-3xl {
+    padding: 0.5rem !important;
+    max-width: 200px !important;
+  }
+
+  .price-tag-responsive .text-5xl,
+  .price-tag-responsive .text-6xl,
+  .price-tag-responsive .text-7xl {
+    font-size: 1.5rem !important;
+  }
+
+  .price-tag-responsive .text-3xl,
+  .price-tag-responsive .text-4xl {
+    font-size: 0.875rem !important;
+  }
+}
+
+/* Landscape orientation on mobile devices */
+@media (max-width: 768px) and (orientation: landscape) {
+  #hero {
+    padding-top: 20px !important;
+    padding-bottom: 1rem !important;
+  }
+
+  #hero h1 {
+    font-size: 2rem !important;
+    margin-bottom: 0.5rem !important;
+  }
+
+  #hero p {
+    font-size: 0.875rem !important;
+    margin-bottom: 1rem !important;
+  }
+
+  #hero .flex.gap-6 {
+    margin-bottom: 1rem !important;
+  }
+
+  #hero .flex.gap-12 {
+    margin-bottom: 1rem !important;
+    gap: 1rem !important;
+  }
+
+  .price-tag-responsive {
+    margin-bottom: 1rem !important;
+  }
+}
+
+/* Ensure typing animation is also responsive */
+@media (max-width: 768px) {
+  #hero .font-mono {
+    font-size: 1.5rem !important;
+  }
+}
+
+@media (max-width: 640px) {
+  #hero .font-mono {
+    font-size: 1.25rem !important;
+  }
+}
+
+@media (max-width: 480px) {
+  #hero .font-mono {
+    font-size: 1rem !important;
+  }
+}
+
+/* Safe area handling for notched devices */
+@supports (padding: max(0px)) {
+  #hero {
+    padding-left: max(1rem, env(safe-area-inset-left)) !important;
+    padding-right: max(1rem, env(safe-area-inset-right)) !important;
+    padding-top: max(80px, env(safe-area-inset-top) + 60px) !important;
+    padding-bottom: max(2rem, env(safe-area-inset-bottom) + 1rem) !important;
+  }
+
+  @media (max-width: 768px) {
+    #hero {
+      padding-top: max(60px, env(safe-area-inset-top) + 40px) !important;
+      padding-bottom: max(1rem, env(safe-area-inset-bottom) + 0.5rem) !important;
+    }
+  }
+}
+
+/* Prevent content from being cut off on very short screens */
+@media (max-height: 500px) {
+  #hero {
+    min-height: auto !important;
+    height: auto !important;
+    padding-top: 20px !important;
+    padding-bottom: 20px !important;
+  }
+
+  #hero .absolute.bottom-8 {
+    display: none !important;
   }
 }
 </style>

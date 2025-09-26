@@ -38,7 +38,7 @@
           @click="closeMenu"
         >
           <div
-            class="mobile-menu-container"
+            class="mobile-menu-container top-menu"
             @click.stop
           >
             <div class="menu-header">
@@ -222,7 +222,7 @@ onUnmounted(() => {
   background: rgba(0, 0, 0, 0.5);
   z-index: 9999;
   display: flex;
-  align-items: flex-end;
+  align-items: flex-start;
   backdrop-filter: blur(4px);
 }
 
@@ -230,17 +230,25 @@ onUnmounted(() => {
   position: relative;
   width: 100%;
   background: white;
-  border-top-left-radius: 1.5rem;
-  border-top-right-radius: 1.5rem;
-  padding-bottom: env(safe-area-inset-bottom);
+  border-bottom-left-radius: 1.5rem;
+  border-bottom-right-radius: 1.5rem;
+  padding-top: env(safe-area-inset-top);
   max-height: 70vh;
   overflow-y: auto;
-  animation: slideUp 0.3s ease-out;
+  animation: slideDown 0.3s ease-out;
 }
 
-@keyframes slideUp {
+/* Top menu variant */
+.mobile-menu-container.top-menu {
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+  border-bottom-left-radius: 1.5rem;
+  border-bottom-right-radius: 1.5rem;
+}
+
+@keyframes slideDown {
   from {
-    transform: translateY(100%);
+    transform: translateY(-100%);
   }
   to {
     transform: translateY(0);
@@ -356,8 +364,8 @@ onUnmounted(() => {
   align-items: center;
   justify-content: center;
   gap: 1rem;
-  border-top-left-radius: 1.5rem;
-  border-top-right-radius: 1.5rem;
+  border-bottom-left-radius: 1.5rem;
+  border-bottom-right-radius: 1.5rem;
 }
 
 .loading-spinner {

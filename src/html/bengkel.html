@@ -1,0 +1,2157 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistem Rental Mobil</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- Leaflet CSS and JS for GPS Tracking Map -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+        
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        
+        .rental-nav-item {
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .rental-nav-item::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            height: 100%;
+            width: 4px;
+            background: linear-gradient(to bottom, #ea580c, #dc2626);
+            transform: scaleY(0);
+            transition: transform 0.3s ease;
+        }
+        
+        .rental-nav-item:hover::before,
+        .rental-nav-item.active::before {
+            transform: scaleY(1);
+        }
+        
+        .rental-nav-item.active {
+            background: linear-gradient(to right, rgba(234, 88, 12, 0.2), rgba(220, 38, 38, 0.1));
+            color: #fff !important;
+        }
+        
+        .rental-nav-item.active .bg-slate-800 {
+            background: linear-gradient(135deg, #ea580c, #dc2626) !important;
+            color: white !important;
+        }
+        
+        .card-hover {
+            transition: all 0.3s ease;
+        }
+        
+        .card-hover:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+        
+        .car-card {
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .car-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+        }
+        
+        .car-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: linear-gradient(90deg, #3b82f6, #60a5fa);
+        }
+        
+        .table-row:hover {
+            background-color: #f9fafb;
+        }
+        
+        .notification {
+            animation: slideIn 0.5s ease-out;
+        }
+        
+        @keyframes slideIn {
+            from {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+        
+        .dark-mode {
+            background-color: #1a202c;
+            color: #e2e8f0;
+        }
+        
+        .dark-mode .bg-white {
+            background-color: #2d3748;
+        }
+        
+        .dark-mode .text-gray-800 {
+            color: #e2e8f0;
+        }
+        
+        .dark-mode .text-gray-600 {
+            color: #cbd5e0;
+        }
+        
+        .dark-mode .text-gray-500 {
+            color: #a0aec0;
+        }
+        
+        .dark-mode .text-gray-700 {
+            color: #e2e8f0;
+        }
+        
+        .dark-mode .bg-gray-50 {
+            background-color: #2d3748;
+        }
+        
+        .dark-mode .border-t {
+            border-color: #4a5568;
+        }
+        
+        .dark-mode .shadow-lg {
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.5), 0 4px 6px -2px rgba(0, 0, 0, 0.3);
+        }
+        
+        .map-container {
+            height: 500px;
+            background-color: #e5e7eb;
+            border-radius: 0.75rem;
+            position: relative;
+            overflow: hidden;
+            border: 2px solid #e5e7eb;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+        
+        .map-placeholder {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100%;
+            color: #6b7280;
+        }
+        
+        /* Leaflet Map Styling */
+        #trackingMap {
+            height: 100%;
+            width: 100%;
+            border-radius: 0.75rem;
+            z-index: 1;
+        }
+        
+        /* Custom Leaflet Popup Styling */
+        .leaflet-popup-content-wrapper {
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+        
+        .leaflet-popup-content {
+            margin: 12px 16px;
+            line-height: 1.4;
+        }
+        
+        /* Vehicle marker styles */
+        .vehicle-marker {
+            background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+            border: 3px solid white;
+            border-radius: 50%;
+            width: 32px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+            animation: pulse 2s infinite;
+        }
+        
+        .vehicle-marker.active {
+            background: linear-gradient(135deg, #10b981, #059669);
+        }
+        
+        .vehicle-marker.inactive {
+            background: linear-gradient(135deg, #ef4444, #dc2626);
+        }
+        
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+        
+        .status-indicator {
+            display: inline-block;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            margin-right: 6px;
+        }
+        
+        .status-available {
+            background-color: #10b981;
+        }
+        
+        .status-rented {
+            background-color: #ef4444;
+        }
+        
+        .status-maintenance {
+            background-color: #f59e0b;
+        }
+        
+        .booking-card {
+            border-left: 4px solid #3b82f6;
+        }
+        
+        .booking-card.completed {
+            border-left-color: #10b981;
+        }
+        
+        .booking-card.cancelled {
+            border-left-color: #ef4444;
+        }
+        
+        .payment-method {
+            display: inline-flex;
+            align-items: center;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: 500;
+        }
+        
+        .payment-cash {
+            background-color: #dbeafe;
+            color: #1e40af;
+        }
+        
+        .payment-card {
+            background-color: #dcfce7;
+            color: #166534;
+        }
+        
+        .payment-transfer {
+            background-color: #fef3c7;
+            color: #92400e;
+        }
+        
+        .payment-ewallet {
+            background-color: #f3e8ff;
+            color: #6b21a8;
+        }
+        
+        /* Custom AutoRent Pro Sidebar Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .rental-nav-item {
+            animation: fadeInUp 0.5s ease-out;
+        }
+        
+        .rental-nav-item:nth-child(1) { animation-delay: 0.1s; }
+        .rental-nav-item:nth-child(2) { animation-delay: 0.2s; }
+        .rental-nav-item:nth-child(3) { animation-delay: 0.3s; }
+        .rental-nav-item:nth-child(4) { animation-delay: 0.4s; }
+        .rental-nav-item:nth-child(5) { animation-delay: 0.5s; }
+        .rental-nav-item:nth-child(6) { animation-delay: 0.6s; }
+        
+        /* Hover glow effect */
+        .rental-nav-item:hover {
+            box-shadow: 0 0 20px rgba(234, 88, 12, 0.3);
+        }
+        
+        /* Mobile responsiveness for the wider sidebar */
+        @media (max-width: 1024px) {
+            .ml-72 {
+                margin-left: 0;
+            }
+            
+            .w-72 {
+                transform: translateX(-100%);
+                transition: transform 0.3s ease;
+            }
+            
+            .w-72.mobile-open {
+                transform: translateX(0);
+            }
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <!-- Sidebar -->
+    <div class="fixed inset-y-0 left-0 z-50 w-72 bg-gradient-to-b from-slate-900 to-slate-800 shadow-2xl">
+        <div class="flex flex-col h-full">
+            <!-- Logo with Animation -->
+            <div class="relative h-20 px-6 bg-gradient-to-r from-orange-600 to-red-600 flex items-center justify-between overflow-hidden">
+                <div class="absolute inset-0 bg-black opacity-10"></div>
+                <div class="relative z-10 flex items-center">
+                    <div class="bg-white rounded-full p-2 mr-3 shadow-lg">
+                        <i class="fas fa-car-side text-orange-600 text-xl"></i>
+                    </div>
+                    <div>
+                        <h1 class="text-xl font-bold text-white">AutoRent Pro</h1>
+                        <p class="text-xs text-orange-100">Management System</p>
+                    </div>
+                </div>
+                <!-- Decorative Elements -->
+                <div class="absolute -right-4 -top-4 w-16 h-16 bg-white opacity-5 rounded-full"></div>
+                <div class="absolute -right-8 -bottom-2 w-12 h-12 bg-white opacity-5 rounded-full"></div>
+            </div>
+
+            <!-- Quick Stats Mini Cards -->
+            <div class="px-4 py-4 bg-slate-800 border-b border-slate-700">
+                <div class="grid grid-cols-2 gap-3">
+                    <div class="bg-green-600 rounded-lg p-3 text-center">
+                        <div class="text-white text-lg font-bold">32</div>
+                        <div class="text-green-100 text-xs">Tersedia</div>
+                    </div>
+                    <div class="bg-blue-600 rounded-lg p-3 text-center">
+                        <div class="text-white text-lg font-bold">12</div>
+                        <div class="text-blue-100 text-xs">Disewa</div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Navigation with Enhanced Design -->
+            <nav class="flex-1 px-4 py-6 overflow-y-auto bg-slate-900">
+                <!-- Main Menu Label -->
+                <div class="text-slate-400 text-xs font-semibold uppercase tracking-wider mb-4 px-3">
+                    Menu Utama
+                </div>
+                
+                <a href="#" onclick="showPage('dashboard')" class="rental-nav-item active group flex items-center px-4 py-3 mb-2 text-slate-300 rounded-xl hover:bg-gradient-to-r hover:from-orange-600 hover:to-red-600 transition-all duration-300">
+                    <div class="flex items-center justify-center w-10 h-10 bg-slate-800 rounded-lg mr-3 group-hover:bg-white group-hover:text-orange-600 transition-all duration-300">
+                        <i class="fas fa-home"></i>
+                    </div>
+                    <span class="font-medium">Dashboard</span>
+                </a>
+                
+                <a href="#" onclick="showPage('armada')" class="rental-nav-item group flex items-center px-4 py-3 mb-2 text-slate-300 rounded-xl hover:bg-gradient-to-r hover:from-orange-600 hover:to-red-600 transition-all duration-300">
+                    <div class="flex items-center justify-center w-10 h-10 bg-slate-800 rounded-lg mr-3 group-hover:bg-white group-hover:text-orange-600 transition-all duration-300">
+                        <i class="fas fa-car-side"></i>
+                    </div>
+                    <span class="font-medium">Fleet Management</span>
+                </a>
+                
+                <!-- Operational Menu Label -->
+                <div class="text-slate-400 text-xs font-semibold uppercase tracking-wider mb-4 mt-6 px-3">
+                    Operasional
+                </div>
+                
+                <a href="#" onclick="showPage('pemesanan')" class="rental-nav-item group flex items-center px-4 py-3 mb-2 text-slate-300 rounded-xl hover:bg-gradient-to-r hover:from-blue-600 hover:to-cyan-600 transition-all duration-300">
+                    <div class="flex items-center justify-center w-10 h-10 bg-slate-800 rounded-lg mr-3 group-hover:bg-white group-hover:text-blue-600 transition-all duration-300">
+                        <i class="fas fa-calendar-alt"></i>
+                    </div>
+                    <span class="font-medium">Booking System</span>
+                </a>
+                
+                <a href="#" onclick="showPage('tracking')" class="rental-nav-item group flex items-center px-4 py-3 mb-2 text-slate-300 rounded-xl hover:bg-gradient-to-r hover:from-green-600 hover:to-teal-600 transition-all duration-300">
+                    <div class="flex items-center justify-center w-10 h-10 bg-slate-800 rounded-lg mr-3 group-hover:bg-white group-hover:text-green-600 transition-all duration-300">
+                        <i class="fas fa-route"></i>
+                    </div>
+                    <span class="font-medium">Live Tracking</span>
+                </a>
+                
+                <!-- Financial Menu Label -->
+                <div class="text-slate-400 text-xs font-semibold uppercase tracking-wider mb-4 mt-6 px-3">
+                    Keuangan
+                </div>
+                
+                <a href="#" onclick="showPage('pembayaran')" class="rental-nav-item group flex items-center px-4 py-3 mb-2 text-slate-300 rounded-xl hover:bg-gradient-to-r hover:from-purple-600 hover:to-pink-600 transition-all duration-300">
+                    <div class="flex items-center justify-center w-10 h-10 bg-slate-800 rounded-lg mr-3 group-hover:bg-white group-hover:text-purple-600 transition-all duration-300">
+                        <i class="fas fa-wallet"></i>
+                    </div>
+                    <span class="font-medium">Payment Hub</span>
+                </a>
+                
+                <a href="#" onclick="showPage('laporan')" class="rental-nav-item group flex items-center px-4 py-3 mb-2 text-slate-300 rounded-xl hover:bg-gradient-to-r hover:from-yellow-600 hover:to-orange-600 transition-all duration-300">
+                    <div class="flex items-center justify-center w-10 h-10 bg-slate-800 rounded-lg mr-3 group-hover:bg-white group-hover:text-yellow-600 transition-all duration-300">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <span class="font-medium">Analytics</span>
+                </a>
+            </nav>
+            
+            <!-- Enhanced User Profile with Status -->
+            <div class="px-4 py-4 bg-slate-800 border-t border-slate-700">
+                <div class="flex items-center justify-between">
+                    <div class="flex items-center">
+                        <div class="relative">
+                            <img class="h-12 w-12 rounded-full border-2 border-orange-500" src="https://picsum.photos/seed/rental-admin/48/48.jpg" alt="Admin">
+                            <div class="absolute -bottom-1 -right-1 w-4 h-4 bg-green-500 border-2 border-slate-800 rounded-full"></div>
+                        </div>
+                        <div class="ml-3">
+                            <p class="text-sm font-semibold text-white">Rahman Putra</p>
+                            <p class="text-xs text-slate-400">Fleet Manager</p>
+                        </div>
+                    </div>
+                    <button class="text-slate-400 hover:text-white transition-colors">
+                        <i class="fas fa-cog"></i>
+                    </button>
+                </div>
+                <!-- System Status -->
+                <div class="mt-3 pt-3 border-t border-slate-700">
+                    <div class="flex items-center justify-between text-xs">
+                        <span class="text-slate-400">System Status</span>
+                        <div class="flex items-center text-green-400">
+                            <div class="w-2 h-2 bg-green-400 rounded-full mr-2 animate-pulse"></div>
+                            Online
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="ml-72">
+        <!-- Top Bar -->
+        <header class="bg-gradient-to-r from-white to-gray-50 shadow-lg border-b border-gray-200">
+            <div class="px-8 py-5 flex items-center justify-between">
+                <div class="flex items-center">
+                    <div class="mr-4">
+                        <h2 class="text-3xl font-bold bg-gradient-to-r from-slate-800 to-slate-600 bg-clip-text text-transparent" id="pageTitle">Dashboard Overview</h2>
+                        <p class="text-sm text-gray-500 mt-1">Welcome back, Rahman! Here's what's happening today.</p>
+                    </div>
+                </div>
+                <div class="flex items-center space-x-3">
+                    <!-- Quick Actions -->
+                    <div class="hidden md:flex items-center space-x-2 mr-4">
+                        <button class="bg-gradient-to-r from-green-500 to-green-600 text-white px-4 py-2 rounded-lg text-sm font-medium hover:from-green-600 hover:to-green-700 transition-all duration-300 shadow-md">
+                            <i class="fas fa-plus mr-2"></i>New Booking
+                        </button>
+                        <button class="bg-gradient-to-r from-blue-500 to-blue-600 text-white px-4 py-2 rounded-lg text-sm font-medium hover:from-blue-600 hover:to-blue-700 transition-all duration-300 shadow-md">
+                            <i class="fas fa-car mr-2"></i>Add Vehicle
+                        </button>
+                    </div>
+                    
+                    <!-- Notification -->
+                    <button class="relative p-3 text-gray-600 hover:text-orange-600 hover:bg-orange-50 rounded-lg transition-all duration-300">
+                        <i class="fas fa-bell text-lg"></i>
+                        <span class="absolute -top-1 -right-1 h-5 w-5 bg-red-500 text-white text-xs rounded-full flex items-center justify-center animate-pulse">3</span>
+                    </button>
+                    
+                    <!-- Settings -->
+                    <button onclick="toggleDarkMode()" class="p-3 text-gray-600 hover:text-orange-600 hover:bg-orange-50 rounded-lg transition-all duration-300">
+                        <i class="fas fa-cog text-lg"></i>
+                    </button>
+                    
+                    <!-- Logout -->
+                    <button onclick="logout()" class="bg-gradient-to-r from-orange-600 to-red-600 text-white px-6 py-2 rounded-lg font-medium hover:from-orange-700 hover:to-red-700 transition-all duration-300 shadow-md">
+                        <i class="fas fa-sign-out-alt mr-2"></i>Logout
+                    </button>
+                </div>
+            </div>
+        </header>
+
+        <!-- Page Content -->
+        <main class="p-6">
+            <!-- Dashboard Page -->
+            <div id="dashboard" class="page">
+                <!-- Enhanced Stats Cards -->
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+                    <div class="bg-gradient-to-br from-blue-50 to-blue-100 rounded-2xl p-6 border border-blue-200 hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <div class="flex items-center mb-2">
+                                    <div class="w-3 h-3 bg-blue-500 rounded-full mr-2 animate-pulse"></div>
+                                    <p class="text-blue-700 text-sm font-medium">Total Fleet</p>
+                                </div>
+                                <p class="text-4xl font-bold text-blue-900 mb-1">48</p>
+                                <p class="text-sm text-blue-600 flex items-center">
+                                    <i class="fas fa-arrow-up mr-1"></i> +5 from last month
+                                </p>
+                            </div>
+                            <div class="bg-gradient-to-br from-blue-500 to-blue-600 p-4 rounded-xl shadow-lg">
+                                <i class="fas fa-car-side text-white text-2xl"></i>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="bg-gradient-to-br from-green-50 to-green-100 rounded-2xl p-6 border border-green-200 hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <div class="flex items-center mb-2">
+                                    <div class="w-3 h-3 bg-green-500 rounded-full mr-2 animate-pulse"></div>
+                                    <p class="text-green-700 text-sm font-medium">Available Cars</p>
+                                </div>
+                                <p class="text-4xl font-bold text-green-900 mb-1">32</p>
+                                <p class="text-sm text-green-600 flex items-center">
+                                    <i class="fas fa-check-circle mr-1"></i> Ready to rent
+                                </p>
+                            </div>
+                            <div class="bg-gradient-to-br from-green-500 to-green-600 p-4 rounded-xl shadow-lg">
+                                <i class="fas fa-check-circle text-white text-2xl"></i>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="bg-gradient-to-br from-purple-50 to-purple-100 rounded-2xl p-6 border border-purple-200 hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <div class="flex items-center mb-2">
+                                    <div class="w-3 h-3 bg-purple-500 rounded-full mr-2 animate-pulse"></div>
+                                    <p class="text-purple-700 text-sm font-medium">Today's Bookings</p>
+                                </div>
+                                <p class="text-4xl font-bold text-purple-900 mb-1">24</p>
+                                <p class="text-sm text-purple-600 flex items-center">
+                                    <i class="fas fa-calendar-alt mr-1"></i> Active rentals
+                                </p>
+                            </div>
+                            <div class="bg-gradient-to-br from-purple-500 to-purple-600 p-4 rounded-xl shadow-lg">
+                                <i class="fas fa-calendar-check text-white text-2xl"></i>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="bg-gradient-to-br from-orange-50 to-orange-100 rounded-2xl p-6 border border-orange-200 hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <div class="flex items-center mb-2">
+                                    <div class="w-3 h-3 bg-orange-500 rounded-full mr-2 animate-pulse"></div>
+                                    <p class="text-orange-700 text-sm font-medium">Monthly Revenue</p>
+                                </div>
+                                <p class="text-4xl font-bold text-orange-900 mb-1">85.6M</p>
+                                <p class="text-sm text-orange-600 flex items-center">
+                                    <i class="fas fa-arrow-up mr-1"></i> +12% growth
+                                </p>
+                            </div>
+                            <div class="bg-gradient-to-br from-orange-500 to-orange-600 p-4 rounded-xl shadow-lg">
+                                <i class="fas fa-money-bill-wave text-white text-2xl"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Enhanced Charts Section -->
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
+                    <!-- Monthly Revenue Chart -->
+                    <div class="bg-white rounded-2xl p-8 shadow-xl border border-gray-100 hover:shadow-2xl transition-all duration-300">
+                        <div class="flex items-center justify-between mb-6">
+                            <div>
+                                <h3 class="text-xl font-bold text-gray-800">Monthly Revenue</h3>
+                                <p class="text-sm text-gray-500">Track your earning trends</p>
+                            </div>
+                            <div class="bg-gradient-to-r from-blue-500 to-blue-600 p-3 rounded-xl">
+                                <i class="fas fa-chart-line text-white text-lg"></i>
+                            </div>
+                        </div>
+                        <div class="relative">
+                            <canvas id="revenueChart" width="400" height="300" class="rounded-lg"></canvas>
+                        </div>
+                    </div>
+                    
+                    <!-- Car Utilization Chart -->
+                    <div class="bg-white rounded-2xl p-8 shadow-xl border border-gray-100 hover:shadow-2xl transition-all duration-300">
+                        <div class="flex items-center justify-between mb-6">
+                            <div>
+                                <h3 class="text-xl font-bold text-gray-800">Fleet Utilization</h3>
+                                <p class="text-sm text-gray-500">Current fleet status overview</p>
+                            </div>
+                            <div class="bg-gradient-to-r from-green-500 to-green-600 p-3 rounded-xl">
+                                <i class="fas fa-chart-pie text-white text-lg"></i>
+                            </div>
+                        </div>
+                        <div class="relative">
+                            <canvas id="utilizationChart" width="400" height="300" class="rounded-lg"></canvas>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Enhanced Recent Activity Section -->
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                    <div class="bg-white rounded-2xl p-8 shadow-xl border border-gray-100">
+                        <div class="flex justify-between items-center mb-6">
+                            <div>
+                                <h3 class="text-xl font-bold text-gray-800">Recent Bookings</h3>
+                                <p class="text-sm text-gray-500">Latest rental activities</p>
+                            </div>
+                            <a href="#" onclick="showPage('pemesanan')" class="bg-gradient-to-r from-blue-500 to-blue-600 text-white px-4 py-2 rounded-lg text-sm font-medium hover:from-blue-600 hover:to-blue-700 transition-all duration-300">
+                                View All
+                            </a>
+                        </div>
+                        <div class="space-y-4">
+                            <div class="flex items-center justify-between p-4 bg-gradient-to-r from-blue-50 to-blue-100 rounded-xl border-l-4 border-blue-500 hover:shadow-md transition-all duration-300">
+                                <div class="flex items-center">
+                                    <div class="w-10 h-10 bg-blue-500 rounded-full flex items-center justify-center mr-4">
+                                        <i class="fas fa-car text-white text-sm"></i>
+                                    </div>
+                                    <div>
+                                        <p class="font-semibold text-gray-800">Toyota Avanza</p>
+                                        <p class="text-sm text-gray-600">Budi Santoso • 2 days</p>
+                                    </div>
+                                </div>
+                                <div class="text-right">
+                                    <p class="font-bold text-gray-800">Rp 600.000</p>
+                                    <p class="text-xs text-blue-600 bg-blue-200 px-2 py-1 rounded-full">Active</p>
+                                </div>
+                            </div>
+                            <div class="flex items-center justify-between p-4 bg-gradient-to-r from-green-50 to-green-100 rounded-xl border-l-4 border-green-500 hover:shadow-md transition-all duration-300">
+                                <div class="flex items-center">
+                                    <div class="w-10 h-10 bg-green-500 rounded-full flex items-center justify-center mr-4">
+                                        <i class="fas fa-check text-white text-sm"></i>
+                                    </div>
+                                    <div>
+                                        <p class="font-semibold text-gray-800">Honda Brio</p>
+                                        <p class="text-sm text-gray-600">Siti Nurhaliza • 3 days</p>
+                                    </div>
+                                </div>
+                                <div class="text-right">
+                                    <p class="font-bold text-gray-800">Rp 900.000</p>
+                                    <p class="text-xs text-green-600 bg-green-200 px-2 py-1 rounded-full">Completed</p>
+                                </div>
+                            </div>
+                            <div class="flex items-center justify-between p-4 bg-gradient-to-r from-orange-50 to-orange-100 rounded-xl border-l-4 border-orange-500 hover:shadow-md transition-all duration-300">
+                                <div class="flex items-center">
+                                    <div class="w-10 h-10 bg-orange-500 rounded-full flex items-center justify-center mr-4">
+                                        <i class="fas fa-clock text-white text-sm"></i>
+                                    </div>
+                                    <div>
+                                        <p class="font-semibold text-gray-800">Daihatsu Xenia</p>
+                                        <p class="text-sm text-gray-600">Ahmad Pratama • 1 day</p>
+                                    </div>
+                                </div>
+                                <div class="text-right">
+                                    <p class="font-bold text-gray-800">Rp 350.000</p>
+                                    <p class="text-xs text-orange-600 bg-orange-200 px-2 py-1 rounded-full">Upcoming</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="bg-white rounded-2xl p-8 shadow-xl border border-gray-100">
+                        <div class="flex justify-between items-center mb-6">
+                            <div>
+                                <h3 class="text-xl font-bold text-gray-800">Popular Vehicles</h3>
+                                <p class="text-sm text-gray-500">Most rented cars this month</p>
+                            </div>
+                            <a href="#" onclick="showPage('armada')" class="bg-gradient-to-r from-green-500 to-green-600 text-white px-4 py-2 rounded-lg text-sm font-medium hover:from-green-600 hover:to-green-700 transition-all duration-300">
+                                View Fleet
+                            </a>
+                        </div>
+                        <div class="space-y-4">
+                            <div class="flex items-center p-4 bg-gradient-to-r from-gray-50 to-gray-100 rounded-xl hover:shadow-md transition-all duration-300">
+                                <div class="relative mr-4">
+                                    <img src="https://images.unsplash.com/photo-1554224712-d8560f709cbe?w=80&h=60&fit=crop" alt="Avanza" class="w-20 h-14 object-cover rounded-lg shadow-md">
+                                    <div class="absolute -top-2 -right-2 bg-yellow-400 text-yellow-800 text-xs font-bold px-2 py-1 rounded-full">#1</div>
+                                </div>
+                                <div class="flex-1">
+                                    <p class="font-bold text-gray-800">Toyota Avanza</p>
+                                    <p class="text-sm text-gray-600 flex items-center mt-1">
+                                        <i class="fas fa-fire text-orange-500 mr-1"></i>
+                                        12 times rented this month
+                                    </p>
+                                </div>
+                                <div class="text-right">
+                                    <div class="flex items-center justify-end mb-1">
+                                        <div class="w-3 h-3 bg-green-500 rounded-full mr-2 animate-pulse"></div>
+                                        <span class="text-sm font-medium text-green-600">Available</span>
+                                    </div>
+                                    <p class="text-xs text-gray-500">Rp 300K/day</p>
+                                </div>
+                            </div>
+                            <div class="flex items-center p-4 bg-gradient-to-r from-gray-50 to-gray-100 rounded-xl hover:shadow-md transition-all duration-300">
+                                <div class="relative mr-4">
+                                    <img src="https://images.unsplash.com/photo-1580273916550-e3bdbeff384d?w=80&h=60&fit=crop" alt="Brio" class="w-20 h-14 object-cover rounded-lg shadow-md">
+                                    <div class="absolute -top-2 -right-2 bg-gray-400 text-gray-800 text-xs font-bold px-2 py-1 rounded-full">#2</div>
+                                </div>
+                                <div class="flex-1">
+                                    <p class="font-bold text-gray-800">Honda Brio</p>
+                                    <p class="text-sm text-gray-600 flex items-center mt-1">
+                                        <i class="fas fa-star text-yellow-500 mr-1"></i>
+                                        10 times rented this month
+                                    </p>
+                                </div>
+                                <div class="text-right">
+                                    <div class="flex items-center justify-end mb-1">
+                                        <div class="w-3 h-3 bg-red-500 rounded-full mr-2"></div>
+                                        <span class="text-sm font-medium text-red-600">Rented</span>
+                                    </div>
+                                    <p class="text-xs text-gray-500">Rp 250K/day</p>
+                                </div>
+                            </div>
+                            <div class="flex items-center p-4 bg-gradient-to-r from-gray-50 to-gray-100 rounded-xl hover:shadow-md transition-all duration-300">
+                                <div class="relative mr-4">
+                                    <img src="https://images.unsplash.com/photo-1549317661-bd32c8ce0db2?w=80&h=60&fit=crop" alt="Xenia" class="w-20 h-14 object-cover rounded-lg shadow-md">
+                                    <div class="absolute -top-2 -right-2 bg-orange-400 text-orange-800 text-xs font-bold px-2 py-1 rounded-full">#3</div>
+                                </div>
+                                <div class="flex-1">
+                                    <p class="font-bold text-gray-800">Daihatsu Xenia</p>
+                                    <p class="text-sm text-gray-600 flex items-center mt-1">
+                                        <i class="fas fa-chart-line text-blue-500 mr-1"></i>
+                                        8 times rented this month
+                                    </p>
+                                </div>
+                                <div class="text-right">
+                                    <div class="flex items-center justify-end mb-1">
+                                        <div class="w-3 h-3 bg-green-500 rounded-full mr-2 animate-pulse"></div>
+                                        <span class="text-sm font-medium text-green-600">Available</span>
+                                    </div>
+                                    <p class="text-xs text-gray-500">Rp 280K/day</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Armada Page -->
+            <div id="armada" class="page hidden">
+                <div class="bg-white rounded-xl p-6 card-shadow mb-6">
+                    <div class="flex justify-between items-center mb-6">
+                        <h3 class="text-xl font-semibold text-gray-800">Manajemen Armada</h3>
+                        <button onclick="showModal('tambahMobil')" class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition">
+                            <i class="fas fa-plus mr-2"></i>Tambah Mobil
+                        </button>
+                    </div>
+                    
+                    <!-- Search and Filter -->
+                    <div class="flex flex-wrap gap-4 mb-6">
+                        <div class="flex-1 min-w-[200px]">
+                            <input type="text" placeholder="Cari mobil..." class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                        </div>
+                        <select class="px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                            <option>Semua Tipe</option>
+                            <option>MPV</option>
+                            <option>SUV</option>
+                            <option>Sedan</option>
+                            <option>Pickup</option>
+                        </select>
+                        <select class="px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                            <option>Semua Status</option>
+                            <option>Tersedia</option>
+                            <option>Disewa</option>
+                            <option>Perawatan</option>
+                        </select>
+                    </div>
+                    
+                    <!-- Car Grid -->
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                        <div class="bg-white border rounded-xl overflow-hidden car-card">
+                            <img src="https://images.unsplash.com/photo-1554224712-d8560f709cbe?w=400&h=200&fit=crop" alt="Avanza" class="w-full h-40 object-cover">
+                            <div class="p-4">
+                                <div class="flex justify-between items-start mb-2">
+                                    <div>
+                                        <h4 class="font-semibold text-lg">Toyota Avanza</h4>
+                                        <p class="text-sm text-gray-600">MPV • 7 seaters</p>
+                                    </div>
+                                    <span class="status-indicator status-available"></span>
+                                </div>
+                                <div class="flex justify-between items-center mb-3">
+                                    <div>
+                                        <p class="text-sm text-gray-600">Plat: B 1234 AB</p>
+                                        <p class="text-sm text-gray-600">Tahun: 2022</p>
+                                    </div>
+                                    <div class="text-right">
+                                        <p class="font-bold text-blue-600">Rp 300.000</p>
+                                        <p class="text-xs text-gray-500">/ hari</p>
+                                    </div>
+                                </div>
+                                <div class="flex gap-2">
+                                    <button class="flex-1 bg-blue-600 text-white py-2 rounded-lg text-sm hover:bg-blue-700 transition">Edit</button>
+                                    <button class="flex-1 bg-gray-200 text-gray-700 py-2 rounded-lg text-sm hover:bg-gray-300 transition">Detail</button>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="bg-white border rounded-xl overflow-hidden car-card">
+                            <img src="https://images.unsplash.com/photo-1580273916550-e3bdbeff384d?w=400&h=200&fit=crop" alt="Brio" class="w-full h-40 object-cover">
+                            <div class="p-4">
+                                <div class="flex justify-between items-start mb-2">
+                                    <div>
+                                        <h4 class="font-semibold text-lg">Honda Brio</h4>
+                                        <p class="text-sm text-gray-600">City Car • 5 seaters</p>
+                                    </div>
+                                    <span class="status-indicator status-rented"></span>
+                                </div>
+                                <div class="flex justify-between items-center mb-3">
+                                    <div>
+                                        <p class="text-sm text-gray-600">Plat: B 5678 CD</p>
+                                        <p class="text-sm text-gray-600">Tahun: 2023</p>
+                                    </div>
+                                    <div class="text-right">
+                                        <p class="font-bold text-blue-600">Rp 250.000</p>
+                                        <p class="text-xs text-gray-500">/ hari</p>
+                                    </div>
+                                </div>
+                                <div class="flex gap-2">
+                                    <button class="flex-1 bg-blue-600 text-white py-2 rounded-lg text-sm hover:bg-blue-700 transition">Edit</button>
+                                    <button class="flex-1 bg-gray-200 text-gray-700 py-2 rounded-lg text-sm hover:bg-gray-300 transition">Detail</button>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="bg-white border rounded-xl overflow-hidden car-card">
+                            <img src="https://images.unsplash.com/photo-1549317661-bd32c8ce0db2?w=400&h=200&fit=crop" alt="Xenia" class="w-full h-40 object-cover">
+                            <div class="p-4">
+                                <div class="flex justify-between items-start mb-2">
+                                    <div>
+                                        <h4 class="font-semibold text-lg">Daihatsu Xenia</h4>
+                                        <p class="text-sm text-gray-600">MPV • 7 seaters</p>
+                                    </div>
+                                    <span class="status-indicator status-maintenance"></span>
+                                </div>
+                                <div class="flex justify-between items-center mb-3">
+                                    <div>
+                                        <p class="text-sm text-gray-600">Plat: B 9012 EF</p>
+                                        <p class="text-sm text-gray-600">Tahun: 2021</p>
+                                    </div>
+                                    <div class="text-right">
+                                        <p class="font-bold text-blue-600">Rp 280.000</p>
+                                        <p class="text-xs text-gray-500">/ hari</p>
+                                    </div>
+                                </div>
+                                <div class="flex gap-2">
+                                    <button class="flex-1 bg-blue-600 text-white py-2 rounded-lg text-sm hover:bg-blue-700 transition">Edit</button>
+                                    <button class="flex-1 bg-gray-200 text-gray-700 py-2 rounded-lg text-sm hover:bg-gray-300 transition">Detail</button>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="bg-white border rounded-xl overflow-hidden car-card">
+                            <img src="https://images.unsplash.com/photo-1617814076366-b300b53a5d7c?w=400&h=200&fit=crop" alt="CR-V" class="w-full h-40 object-cover">
+                            <div class="p-4">
+                                <div class="flex justify-between items-start mb-2">
+                                    <div>
+                                        <h4 class="font-semibold text-lg">Honda CR-V</h4>
+                                        <p class="text-sm text-gray-600">SUV • 5 seaters</p>
+                                    </div>
+                                    <span class="status-indicator status-available"></span>
+                                </div>
+                                <div class="flex justify-between items-center mb-3">
+                                    <div>
+                                        <p class="text-sm text-gray-600">Plat: B 3456 GH</p>
+                                        <p class="text-sm text-gray-600">Tahun: 2023</p>
+                                    </div>
+                                    <div class="text-right">
+                                        <p class="font-bold text-blue-600">Rp 450.000</p>
+                                        <p class="text-xs text-gray-500">/ hari</p>
+                                    </div>
+                                </div>
+                                <div class="flex gap-2">
+                                    <button class="flex-1 bg-blue-600 text-white py-2 rounded-lg text-sm hover:bg-blue-700 transition">Edit</button>
+                                    <button class="flex-1 bg-gray-200 text-gray-700 py-2 rounded-lg text-sm hover:bg-gray-300 transition">Detail</button>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="bg-white border rounded-xl overflow-hidden car-card">
+                            <img src="https://images.unsplash.com/photo-1558618047-3c8c76ca7d13?w=400&h=200&fit=crop" alt="Ertiga" class="w-full h-40 object-cover">
+                            <div class="p-4">
+                                <div class="flex justify-between items-start mb-2">
+                                    <div>
+                                        <h4 class="font-semibold text-lg">Suzuki Ertiga</h4>
+                                        <p class="text-sm text-gray-600">MPV • 7 seaters</p>
+                                    </div>
+                                    <span class="status-indicator status-available"></span>
+                                </div>
+                                <div class="flex justify-between items-center mb-3">
+                                    <div>
+                                        <p class="text-sm text-gray-600">Plat: B 7890 IJ</p>
+                                        <p class="text-sm text-gray-600">Tahun: 2022</p>
+                                    </div>
+                                    <div class="text-right">
+                                        <p class="font-bold text-blue-600">Rp 320.000</p>
+                                        <p class="text-xs text-gray-500">/ hari</p>
+                                    </div>
+                                </div>
+                                <div class="flex gap-2">
+                                    <button class="flex-1 bg-blue-600 text-white py-2 rounded-lg text-sm hover:bg-blue-700 transition">Edit</button>
+                                    <button class="flex-1 bg-gray-200 text-gray-700 py-2 rounded-lg text-sm hover:bg-gray-300 transition">Detail</button>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="bg-white border rounded-xl overflow-hidden car-card">
+                            <img src="https://images.unsplash.com/photo-1606016159991-3cfa77f989bb?w=400&h=200&fit=crop" alt="Grand Max" class="w-full h-40 object-cover">
+                            <div class="p-4">
+                                <div class="flex justify-between items-start mb-2">
+                                    <div>
+                                        <h4 class="font-semibold text-lg">Daihatsu Grand Max</h4>
+                                        <p class="text-sm text-gray-600">Pickup • 3 seaters</p>
+                                    </div>
+                                    <span class="status-indicator status-available"></span>
+                                </div>
+                                <div class="flex justify-between items-center mb-3">
+                                    <div>
+                                        <p class="text-sm text-gray-600">Plat: B 2468 KL</p>
+                                        <p class="text-sm text-gray-600">Tahun: 2021</p>
+                                    </div>
+                                    <div class="text-right">
+                                        <p class="font-bold text-blue-600">Rp 200.000</p>
+                                        <p class="text-xs text-gray-500">/ hari</p>
+                                    </div>
+                                </div>
+                                <div class="flex gap-2">
+                                    <button class="flex-1 bg-blue-600 text-white py-2 rounded-lg text-sm hover:bg-blue-700 transition">Edit</button>
+                                    <button class="flex-1 bg-gray-200 text-gray-700 py-2 rounded-lg text-sm hover:bg-gray-300 transition">Detail</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Pemesanan Page -->
+            <div id="pemesanan" class="page hidden">
+                <div class="bg-white rounded-xl p-6 card-shadow mb-6">
+                    <div class="flex justify-between items-center mb-6">
+                        <h3 class="text-xl font-semibold text-gray-800">Manajemen Pemesanan</h3>
+                        <button onclick="showModal('tambahPemesanan')" class="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 transition">
+                            <i class="fas fa-plus mr-2"></i>Tambah Pemesanan
+                        </button>
+                    </div>
+                    
+                    <!-- Booking Stats -->
+                    <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-8">
+                        <div class="bg-blue-50 p-4 rounded-lg">
+                            <div class="flex items-center justify-between">
+                                <div>
+                                    <p class="text-blue-800 font-medium">Menunggu</p>
+                                    <p class="text-2xl font-bold text-blue-900">12</p>
+                                </div>
+                                <i class="fas fa-clock text-blue-600 text-2xl"></i>
+                            </div>
+                        </div>
+                        <div class="bg-green-50 p-4 rounded-lg">
+                            <div class="flex items-center justify-between">
+                                <div>
+                                    <p class="text-green-800 font-medium">Dikonfirmasi</p>
+                                    <p class="text-2xl font-bold text-green-900">8</p>
+                                </div>
+                                <i class="fas fa-check-circle text-green-600 text-2xl"></i>
+                            </div>
+                        </div>
+                        <div class="bg-yellow-50 p-4 rounded-lg">
+                            <div class="flex items-center justify-between">
+                                <div>
+                                    <p class="text-yellow-800 font-medium">Aktif</p>
+                                    <p class="text-2xl font-bold text-yellow-900">24</p>
+                                </div>
+                                <i class="fas fa-car text-yellow-600 text-2xl"></i>
+                            </div>
+                        </div>
+                        <div class="bg-purple-50 p-4 rounded-lg">
+                            <div class="flex items-center justify-between">
+                                <div>
+                                    <p class="text-purple-800 font-medium">Selesai</p>
+                                    <p class="text-2xl font-bold text-purple-900">156</p>
+                                </div>
+                                <i class="fas fa-flag-checkered text-purple-600 text-2xl"></i>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Bookings Table -->
+                    <div class="overflow-x-auto">
+                        <table class="w-full">
+                            <thead class="bg-gray-50">
+                                <tr>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">ID</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Pelanggan</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Mobil</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Tanggal</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Durasi</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Total</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Aksi</th>
+                                </tr>
+                            </thead>
+                            <tbody class="bg-white divide-y divide-gray-200">
+                                <tr class="table-row">
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">#BK001</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                                        <div>
+                                            <p class="font-medium">Budi Santoso</p>
+                                            <p class="text-xs text-gray-500">08123456789</p>
+                                        </div>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">Toyota Avanza</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">15 Nov 2024</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">2 hari</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">Rp 600.000</td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-yellow-100 text-yellow-800">
+                                            Aktif
+                                        </span>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                                        <button class="text-blue-600 hover:text-blue-900 mr-3">Detail</button>
+                                        <button class="text-green-600 hover:text-green-900">Edit</button>
+                                    </td>
+                                </tr>
+                                <tr class="table-row">
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">#BK002</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                                        <div>
+                                            <p class="font-medium">Siti Nurhaliza</p>
+                                            <p class="text-xs text-gray-500">08987654321</p>
+                                        </div>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">Honda Brio</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">16 Nov 2024</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">3 hari</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">Rp 750.000</td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-blue-100 text-blue-800">
+                                            Dikonfirmasi
+                                        </span>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                                        <button class="text-blue-600 hover:text-blue-900 mr-3">Detail</button>
+                                        <button class="text-green-600 hover:text-green-900">Edit</button>
+                                    </td>
+                                </tr>
+                                <tr class="table-row">
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">#BK003</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                                        <div>
+                                            <p class="font-medium">Ahmad Pratama</p>
+                                            <p class="text-xs text-gray-500">08111222333</p>
+                                        </div>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">Daihatsu Xenia</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">10 Nov 2024</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">1 hari</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">Rp 280.000</td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
+                                            Selesai
+                                        </span>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                                        <button class="text-blue-600 hover:text-blue-900">Detail</button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tracking Page -->
+            <div id="tracking" class="page hidden">
+                <div class="bg-gradient-to-br from-white to-gray-50 rounded-2xl p-8 shadow-xl border border-gray-100 mb-6">
+                    <div class="flex items-center justify-between mb-6">
+                        <div>
+                            <h3 class="text-2xl font-bold text-gray-800 flex items-center">
+                                <div class="bg-gradient-to-r from-green-500 to-blue-500 p-3 rounded-xl mr-4">
+                                    <i class="fas fa-satellite-dish text-white text-xl"></i>
+                                </div>
+                                Live GPS Tracking
+                            </h3>
+                            <p class="text-gray-600 mt-1">Real-time vehicle monitoring and location tracking</p>
+                        </div>
+                        <div class="flex items-center space-x-3">
+                            <button onclick="refreshMap()" class="bg-gradient-to-r from-blue-500 to-blue-600 text-white px-4 py-2 rounded-lg hover:from-blue-600 hover:to-blue-700 transition-all duration-300 shadow-md">
+                                <i class="fas fa-sync-alt mr-2"></i>Refresh
+                            </button>
+                            <button onclick="centerMap()" class="bg-gradient-to-r from-green-500 to-green-600 text-white px-4 py-2 rounded-lg hover:from-green-600 hover:to-green-700 transition-all duration-300 shadow-md">
+                                <i class="fas fa-crosshairs mr-2"></i>Center View
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <!-- Map Controls -->
+                    <div class="bg-gray-50 rounded-xl p-4 mb-6">
+                        <div class="flex flex-wrap items-center justify-between gap-4">
+                            <div class="flex items-center space-x-4">
+                                <div class="flex items-center">
+                                    <div class="w-4 h-4 bg-green-500 rounded-full mr-2 animate-pulse"></div>
+                                    <span class="text-sm text-gray-700 font-medium">Active Vehicles: <span class="text-green-600 font-bold">2</span></span>
+                                </div>
+                                <div class="flex items-center">
+                                    <div class="w-4 h-4 bg-red-500 rounded-full mr-2"></div>
+                                    <span class="text-sm text-gray-700 font-medium">Offline: <span class="text-red-600 font-bold">0</span></span>
+                                </div>
+                                <div class="flex items-center">
+                                    <div class="w-4 h-4 bg-blue-500 rounded-full mr-2"></div>
+                                    <span class="text-sm text-gray-700 font-medium">Total Fleet: <span class="text-blue-600 font-bold">48</span></span>
+                                </div>
+                            </div>
+                            <div class="flex items-center space-x-2">
+                                <label class="text-sm text-gray-700 font-medium">Auto Refresh:</label>
+                                <input type="checkbox" id="autoRefresh" class="rounded" checked>
+                                <span class="text-xs text-gray-500">Every 30s</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Interactive Map -->
+                    <div class="map-container mb-6">
+                        <div id="trackingMap"></div>
+                    </div>
+                    
+                    <!-- Active Rentals -->
+                    <div class="bg-white rounded-xl p-6 shadow-lg border border-gray-100">
+                        <h4 class="text-xl font-bold text-gray-800 mb-6 flex items-center">
+                            <i class="fas fa-car-side text-blue-600 mr-3"></i>
+                            Currently Rented Vehicles
+                        </h4>
+                        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                            <div class="bg-gradient-to-br from-green-50 to-green-100 border border-green-200 rounded-xl p-5 hover:shadow-lg transition-all duration-300">
+                                <div class="flex justify-between items-start mb-4">
+                                    <div class="flex items-center">
+                                        <div class="bg-green-500 p-2 rounded-lg mr-3">
+                                            <i class="fas fa-car text-white"></i>
+                                        </div>
+                                        <div>
+                                            <h5 class="font-bold text-gray-800">Toyota Avanza</h5>
+                                            <p class="text-sm text-gray-600">B 1234 AB</p>
+                                        </div>
+                                    </div>
+                                    <div class="flex flex-col items-end">
+                                        <span class="flex items-center bg-green-500 text-white px-3 py-1 rounded-full text-xs font-medium mb-1">
+                                            <div class="w-2 h-2 bg-white rounded-full mr-2 animate-pulse"></div>
+                                            Online
+                                        </span>
+                                        <span class="text-xs text-gray-500">Updated 1m ago</span>
+                                    </div>
+                                </div>
+                                <div class="space-y-3 text-sm">
+                                    <div class="flex items-center justify-between">
+                                        <div class="flex items-center">
+                                            <i class="fas fa-user text-gray-400 w-5 mr-2"></i>
+                                            <span class="text-gray-700">Budi Santoso</span>
+                                        </div>
+                                    </div>
+                                    <div class="flex items-center justify-between">
+                                        <div class="flex items-center">
+                                            <i class="fas fa-clock text-gray-400 w-5 mr-2"></i>
+                                            <span class="text-gray-700">Return in 2 hours</span>
+                                        </div>
+                                    </div>
+                                    <div class="flex items-center justify-between">
+                                        <div class="flex items-center">
+                                            <i class="fas fa-map-marker-alt text-red-500 w-5 mr-2"></i>
+                                            <span class="text-gray-700">Sudirman, Jakarta</span>
+                                        </div>
+                                    </div>
+                                    <div class="flex items-center justify-between">
+                                        <div class="flex items-center">
+                                            <i class="fas fa-tachometer-alt text-gray-400 w-5 mr-2"></i>
+                                            <span class="text-gray-700">45 km/h</span>
+                                        </div>
+                                        <div class="flex items-center">
+                                            <i class="fas fa-route text-gray-400 w-5 mr-2"></i>
+                                            <span class="text-gray-700">12.5 km</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="grid grid-cols-2 gap-2 mt-4">
+                                    <button onclick="focusVehicle('avanza')" class="bg-blue-600 text-white py-2 rounded-lg text-sm font-medium hover:bg-blue-700 transition-all duration-300">
+                                        <i class="fas fa-crosshairs mr-1"></i>Locate
+                                    </button>
+                                    <button onclick="trackVehicle('avanza')" class="bg-green-600 text-white py-2 rounded-lg text-sm font-medium hover:bg-green-700 transition-all duration-300">
+                                        <i class="fas fa-route mr-1"></i>Track
+                                    </button>
+                                </div>
+                            </div>
+                            
+                            <div class="bg-gradient-to-br from-blue-50 to-blue-100 border border-blue-200 rounded-xl p-5 hover:shadow-lg transition-all duration-300">
+                                <div class="flex justify-between items-start mb-4">
+                                    <div class="flex items-center">
+                                        <div class="bg-blue-500 p-2 rounded-lg mr-3">
+                                            <i class="fas fa-car text-white"></i>
+                                        </div>
+                                        <div>
+                                            <h5 class="font-bold text-gray-800">Honda Brio</h5>
+                                            <p class="text-sm text-gray-600">B 5678 CD</p>
+                                        </div>
+                                    </div>
+                                    <div class="flex flex-col items-end">
+                                        <span class="flex items-center bg-blue-500 text-white px-3 py-1 rounded-full text-xs font-medium mb-1">
+                                            <div class="w-2 h-2 bg-white rounded-full mr-2 animate-pulse"></div>
+                                            Online
+                                        </span>
+                                        <span class="text-xs text-gray-500">Updated 30s ago</span>
+                                    </div>
+                                </div>
+                                <div class="space-y-3 text-sm">
+                                    <div class="flex items-center justify-between">
+                                        <div class="flex items-center">
+                                            <i class="fas fa-user text-gray-400 w-5 mr-2"></i>
+                                            <span class="text-gray-700">Siti Nurhaliza</span>
+                                        </div>
+                                    </div>
+                                    <div class="flex items-center justify-between">
+                                        <div class="flex items-center">
+                                            <i class="fas fa-clock text-gray-400 w-5 mr-2"></i>
+                                            <span class="text-gray-700">Return in 5 hours</span>
+                                        </div>
+                                    </div>
+                                    <div class="flex items-center justify-between">
+                                        <div class="flex items-center">
+                                            <i class="fas fa-map-marker-alt text-red-500 w-5 mr-2"></i>
+                                            <span class="text-gray-700">Thamrin, Jakarta</span>
+                                        </div>
+                                    </div>
+                                    <div class="flex items-center justify-between">
+                                        <div class="flex items-center">
+                                            <i class="fas fa-tachometer-alt text-gray-400 w-5 mr-2"></i>
+                                            <span class="text-gray-700">0 km/h</span>
+                                        </div>
+                                        <div class="flex items-center">
+                                            <i class="fas fa-route text-gray-400 w-5 mr-2"></i>
+                                            <span class="text-gray-700">8.2 km</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="grid grid-cols-2 gap-2 mt-4">
+                                    <button onclick="focusVehicle('brio')" class="bg-blue-600 text-white py-2 rounded-lg text-sm font-medium hover:bg-blue-700 transition-all duration-300">
+                                        <i class="fas fa-crosshairs mr-1"></i>Locate
+                                    </button>
+                                    <button onclick="trackVehicle('brio')" class="bg-green-600 text-white py-2 rounded-lg text-sm font-medium hover:bg-green-700 transition-all duration-300">
+                                        <i class="fas fa-route mr-1"></i>Track
+                                    </button>
+                                </div>
+                            </div>
+                            
+                            <!-- Add New Vehicle Card -->
+                            <div class="bg-gradient-to-br from-gray-50 to-gray-100 border border-gray-200 rounded-xl p-5 hover:shadow-lg transition-all duration-300 flex items-center justify-center">
+                                <div class="text-center">
+                                    <div class="bg-gray-300 p-4 rounded-full mb-3 mx-auto w-fit">
+                                        <i class="fas fa-plus text-gray-600 text-xl"></i>
+                                    </div>
+                                    <p class="font-medium text-gray-700 mb-2">Add Vehicle</p>
+                                    <button onclick="showModal('tambahPemesanan')" class="bg-gradient-to-r from-blue-500 to-blue-600 text-white px-4 py-2 rounded-lg text-sm font-medium hover:from-blue-600 hover:to-blue-700 transition-all duration-300">
+                                        New Rental
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Pembayaran Page -->
+            <div id="pembayaran" class="page hidden">
+                <div class="bg-white rounded-xl p-6 card-shadow mb-6">
+                    <div class="flex justify-between items-center mb-6">
+                        <h3 class="text-xl font-semibold text-gray-800">Manajemen Pembayaran</h3>
+                        <button onclick="showModal('tambahPembayaran')" class="bg-purple-600 text-white px-4 py-2 rounded-lg hover:bg-purple-700 transition">
+                            <i class="fas fa-plus mr-2"></i>Proses Pembayaran
+                        </button>
+                    </div>
+                    
+                    <!-- Payment Stats -->
+                    <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-8">
+                        <div class="bg-green-50 p-4 rounded-lg">
+                            <div class="flex items-center justify-between">
+                                <div>
+                                    <p class="text-green-800 font-medium">Lunas</p>
+                                    <p class="text-2xl font-bold text-green-900">142</p>
+                                </div>
+                                <i class="fas fa-check-circle text-green-600 text-2xl"></i>
+                            </div>
+                        </div>
+                        <div class="bg-yellow-50 p-4 rounded-lg">
+                            <div class="flex items-center justify-between">
+                                <div>
+                                    <p class="text-yellow-800 font-medium">Pending</p>
+                                    <p class="text-2xl font-bold text-yellow-900">18</p>
+                                </div>
+                                <i class="fas fa-clock text-yellow-600 text-2xl"></i>
+                            </div>
+                        </div>
+                        <div class="bg-red-50 p-4 rounded-lg">
+                            <div class="flex items-center justify-between">
+                                <div>
+                                    <p class="text-red-800 font-medium">Terlambat</p>
+                                    <p class="text-2xl font-bold text-red-900">5</p>
+                                </div>
+                                <i class="fas fa-exclamation-triangle text-red-600 text-2xl"></i>
+                            </div>
+                        </div>
+                        <div class="bg-blue-50 p-4 rounded-lg">
+                            <div class="flex items-center justify-between">
+                                <div>
+                                    <p class="text-blue-800 font-medium">Refund</p>
+                                    <p class="text-2xl font-bold text-blue-900">3</p>
+                                </div>
+                                <i class="fas fa-undo text-blue-600 text-2xl"></i>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Payment Methods -->
+                    <div class="mb-8">
+                        <h4 class="text-lg font-semibold text-gray-800 mb-4">Metode Pembayaran</h4>
+                        <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                            <div class="border rounded-lg p-4 text-center">
+                                <i class="fas fa-money-bill-wave text-green-600 text-2xl mb-2"></i>
+                                <p class="font-medium">Tunai</p>
+                                <p class="text-sm text-gray-600">45%</p>
+                            </div>
+                            <div class="border rounded-lg p-4 text-center">
+                                <i class="fas fa-credit-card text-blue-600 text-2xl mb-2"></i>
+                                <p class="font-medium">Kartu</p>
+                                <p class="text-sm text-gray-600">30%</p>
+                            </div>
+                            <div class="border rounded-lg p-4 text-center">
+                                <i class="fas fa-exchange-alt text-yellow-600 text-2xl mb-2"></i>
+                                <p class="font-medium">Transfer</p>
+                                <p class="text-sm text-gray-600">20%</p>
+                            </div>
+                            <div class="border rounded-lg p-4 text-center">
+                                <i class="fas fa-wallet text-purple-600 text-2xl mb-2"></i>
+                                <p class="font-medium">E-Wallet</p>
+                                <p class="text-sm text-gray-600">5%</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Payments Table -->
+                    <h4 class="text-lg font-semibold text-gray-800 mb-4">Riwayat Pembayaran</h4>
+                    <div class="overflow-x-auto">
+                        <table class="w-full">
+                            <thead class="bg-gray-50">
+                                <tr>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">ID</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Pemesanan</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Pelanggan</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Jumlah</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Metode</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Tanggal</th>
+                                </tr>
+                            </thead>
+                            <tbody class="bg-white divide-y divide-gray-200">
+                                <tr class="table-row">
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">#PY001</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">#BK001</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">Budi Santoso</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">Rp 600.000</td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <span class="payment-method payment-cash">Tunai</span>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
+                                            Lunas
+                                        </span>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">15 Nov 2024</td>
+                                </tr>
+                                <tr class="table-row">
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">#PY002</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">#BK002</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">Siti Nurhaliza</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">Rp 750.000</td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <span class="payment-method payment-card">Kartu</span>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
+                                            Lunas
+                                        </span>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">16 Nov 2024</td>
+                                </tr>
+                                <tr class="table-row">
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">#PY003</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">#BK003</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">Ahmad Pratama</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">Rp 280.000</td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <span class="payment-method payment-transfer">Transfer</span>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-yellow-100 text-yellow-800">
+                                            Pending
+                                        </span>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">17 Nov 2024</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Laporan Page -->
+            <div id="laporan" class="page hidden">
+                <div class="bg-white rounded-xl p-6 card-shadow mb-6">
+                    <h3 class="text-xl font-semibold text-gray-800 mb-6">Laporan Analitik Bisnis</h3>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+                        <!-- Revenue Trend -->
+                        <div class="bg-gray-50 p-6 rounded-xl">
+                            <h4 class="text-lg font-semibold text-gray-800 mb-4">Trend Pendapatan</h4>
+                            <canvas id="revenueTrendChart" width="400" height="300"></canvas>
+                        </div>
+                        
+                        <!-- Car Utilization -->
+                        <div class="bg-gray-50 p-6 rounded-xl">
+                            <h4 class="text-lg font-semibold text-gray-800 mb-4">Pemanfaatan Armada per Tipe</h4>
+                            <canvas id="carTypeChart" width="400" height="300"></canvas>
+                        </div>
+                        
+                        <!-- Customer Demographics -->
+                        <div class="bg-gray-50 p-6 rounded-xl">
+                            <h4 class="text-lg font-semibold text-gray-800 mb-4">Demografi Pelanggan</h4>
+                            <canvas id="customerChart" width="400" height="300"></canvas>
+                        </div>
+                        
+                        <!-- Payment Methods -->
+                        <div class="bg-gray-50 p-6 rounded-xl">
+                            <h4 class="text-lg font-semibold text-gray-800 mb-4">Distribusi Metode Pembayaran</h4>
+                            <canvas id="paymentChart" width="400" height="300"></canvas>
+                        </div>
+                    </div>
+                    
+                    <!-- Report Generation -->
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div>
+                            <h4 class="text-lg font-medium text-gray-800 mb-4">Generate Laporan</h4>
+                            <div class="space-y-4">
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-2">Tipe Laporan</label>
+                                    <select class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                                        <option>Laporan Pendapatan</option>
+                                        <option>Laporan Pemanfaatan Armada</option>
+                                        <option>Laporan Pelanggan</option>
+                                        <option>Laporan Pembayaran</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-2">Periode</label>
+                                    <select class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                                        <option>Hari Ini</option>
+                                        <option>Minggu Ini</option>
+                                        <option>Bulan Ini</option>
+                                        <option>Kustom</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-2">Format</label>
+                                    <select class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                                        <option>PDF</option>
+                                        <option>Excel</option>
+                                        <option>CSV</option>
+                                    </select>
+                                </div>
+                                <button class="w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 transition">
+                                    <i class="fas fa-download mr-2"></i>Generate Laporan
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <div>
+                            <h4 class="text-lg font-medium text-gray-800 mb-4">Laporan Terbaru</h4>
+                            <div class="space-y-3">
+                                <div class="flex items-center justify-between p-4 border rounded-lg">
+                                    <div class="flex items-center">
+                                        <i class="fas fa-file-pdf text-red-600 text-2xl mr-4"></i>
+                                        <div>
+                                            <p class="font-medium">Laporan Pendapatan November 2024.pdf</p>
+                                            <p class="text-sm text-gray-600">Generated: 18 Nov 2024</p>
+                                        </div>
+                                    </div>
+                                    <button class="text-blue-600 hover:text-blue-900">
+                                        <i class="fas fa-download"></i>
+                                    </button>
+                                </div>
+                                <div class="flex items-center justify-between p-4 border rounded-lg">
+                                    <div class="flex items-center">
+                                        <i class="fas fa-file-excel text-green-600 text-2xl mr-4"></i>
+                                        <div>
+                                            <p class="font-medium">Rekapitulasi Pemanfaatan Armada.xlsx</p>
+                                            <p class="text-sm text-gray-600">Generated: 15 Nov 2024</p>
+                                        </div>
+                                    </div>
+                                    <button class="text-blue-600 hover:text-blue-900">
+                                        <i class="fas fa-download"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Modal -->
+    <div id="modal" class="fixed inset-0 bg-black bg-opacity-50 hidden z-50">
+        <div class="flex items-center justify-center min-h-screen p-4">
+            <div class="bg-white rounded-xl max-w-2xl w-full p-6">
+                <div class="flex justify-between items-center mb-6">
+                    <h3 id="modalTitle" class="text-2xl font-bold text-gray-800">Tambah Data</h3>
+                    <button onclick="closeModal()" class="text-gray-500 hover:text-gray-700">
+                        <i class="fas fa-times text-xl"></i>
+                    </button>
+                </div>
+                
+                <form id="modalForm">
+                    <!-- Dynamic content will be inserted here -->
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Page Navigation
+        function showPage(pageId) {
+            // Hide all pages
+            document.querySelectorAll('.page').forEach(page => {
+                page.classList.add('hidden');
+            });
+            
+            // Show selected page
+            document.getElementById(pageId).classList.remove('hidden');
+            
+            // Update page title
+            const titles = {
+                'dashboard': 'Dashboard Overview',
+                'armada': 'Fleet Management',
+                'pemesanan': 'Booking System',
+                'tracking': 'Live Tracking',
+                'pembayaran': 'Payment Hub',
+                'laporan': 'Analytics Dashboard'
+            };
+            document.getElementById('pageTitle').textContent = titles[pageId];
+            
+            // Update active sidebar item
+            document.querySelectorAll('.rental-nav-item').forEach(item => {
+                item.classList.remove('active');
+            });
+            event.target.closest('.rental-nav-item').classList.add('active');
+            
+            // Initialize charts and maps if needed
+            if (pageId === 'dashboard') {
+                setTimeout(() => {
+                    initializeDashboardCharts();
+                }, 100);
+            } else if (pageId === 'laporan') {
+                setTimeout(() => {
+                    initializeReportCharts();
+                }, 100);
+            } else if (pageId === 'tracking') {
+                setTimeout(() => {
+                    initializeTrackingMap();
+                }, 200);
+            }
+        }
+
+        // Modal Functions
+        function showModal(type) {
+            const modal = document.getElementById('modal');
+            const modalTitle = document.getElementById('modalTitle');
+            const modalForm = document.getElementById('modalForm');
+            
+            // Set modal content based on type
+            switch(type) {
+                case 'tambahMobil':
+                    modalTitle.textContent = 'Tambah Mobil';
+                    modalForm.innerHTML = `
+                        <div class="space-y-4">
+                            <div class="grid grid-cols-2 gap-4">
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-2">Merk</label>
+                                    <input type="text" class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent" placeholder="Toyota">
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-2">Model</label>
+                                    <input type="text" class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent" placeholder="Avanza">
+                                </div>
+                            </div>
+                            <div class="grid grid-cols-2 gap-4">
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-2">Tipe</label>
+                                    <select class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                                        <option>MPV</option>
+                                        <option>SUV</option>
+                                        <option>Sedan</option>
+                                        <option>Pickup</option>
+                                        <option>City Car</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-2">Tahun</label>
+                                    <input type="number" class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent" placeholder="2023">
+                                </div>
+                            </div>
+                            <div class="grid grid-cols-2 gap-4">
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-2">Plat Nomor</label>
+                                    <input type="text" class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent" placeholder="B 1234 AB">
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-2">Kapasitas</label>
+                                    <input type="number" class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent" placeholder="7">
+                                </div>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">Harga Sewa per Hari</label>
+                                <input type="number" class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent" placeholder="300000">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">Status</label>
+                                <select class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                                    <option>Tersedia</option>
+                                    <option>Disewa</option>
+                                    <option>Perawatan</option>
+                                </select>
+                            </div>
+                        </div>
+                    `;
+                    break;
+                    
+                case 'tambahPemesanan':
+                    modalTitle.textContent = 'Tambah Pemesanan';
+                    modalForm.innerHTML = `
+                        <div class="space-y-4">
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">Pelanggan</label>
+                                <input type="text" class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent" placeholder="Nama pelanggan">
+                            </div>
+                            <div class="grid grid-cols-2 gap-4">
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-2">No. HP</label>
+                                    <input type="text" class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent" placeholder="08xxxxxxxxxx">
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-2">Email</label>
+                                    <input type="email" class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent" placeholder="email@example.com">
+                                </div>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">Mobil</label>
+                                <select class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent">
+                                    <option>Toyota Avanza - Rp 300.000/hari</option>
+                                    <option>Honda Brio - Rp 250.000/hari</option>
+                                    <option>Daihatsu Xenia - Rp 280.000/hari</option>
+                                </select>
+                            </div>
+                            <div class="grid grid-cols-2 gap-4">
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-2">Tanggal Mulai</label>
+                                    <input type="date" class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent">
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-2">Tanggal Selesai</label>
+                                    <input type="date" class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent">
+                                </div>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">Catatan</label>
+                                <textarea class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent" rows="3" placeholder="Catatan tambahan"></textarea>
+                            </div>
+                        </div>
+                    `;
+                    break;
+                    
+                case 'tambahPembayaran':
+                    modalTitle.textContent = 'Proses Pembayaran';
+                    modalForm.innerHTML = `
+                        <div class="space-y-4">
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">ID Pemesanan</label>
+                                <select class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent">
+                                    <option>#BK001 - Toyota Avanza - Rp 600.000</option>
+                                    <option>#BK002 - Honda Brio - Rp 750.000</option>
+                                    <option>#BK003 - Daihatsu Xenia - Rp 280.000</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">Metode Pembayaran</label>
+                                <select class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent">
+                                    <option>Tunai</option>
+                                    <option>Kartu Kredit/Debit</option>
+                                    <option>Transfer Bank</option>
+                                    <option>E-Wallet</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">Jumlah Pembayaran</label>
+                                <input type="number" class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent" placeholder="600000">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">Tanggal Pembayaran</label>
+                                <input type="date" class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">Bukti Pembayaran</label>
+                                <input type="file" class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent">
+                            </div>
+                        </div>
+                    `;
+                    break;
+            }
+            
+            // Add submit button
+            modalForm.innerHTML += `
+                <div class="flex gap-4 mt-6">
+                    <button type="submit" class="flex-1 bg-blue-600 text-white py-2 rounded-lg font-medium hover:bg-blue-700 transition">
+                        Simpan
+                    </button>
+                    <button type="button" onclick="closeModal()" class="flex-1 bg-gray-300 text-gray-700 py-2 rounded-lg font-medium hover:bg-gray-400 transition">
+                        Batal
+                    </button>
+                </div>
+            `;
+            
+            modal.classList.remove('hidden');
+        }
+
+        function closeModal() {
+            document.getElementById('modal').classList.add('hidden');
+        }
+
+        // Form submission
+        document.getElementById('modalForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            // Show success notification
+            showNotification('Data berhasil disimpan!', 'success');
+            closeModal();
+        });
+
+        // Notification function
+        function showNotification(message, type) {
+            const notification = document.createElement('div');
+            notification.className = `fixed top-4 right-4 px-6 py-3 rounded-lg text-white z-50 notification ${
+                type === 'success' ? 'bg-green-500' : 
+                type === 'error' ? 'bg-red-500' : 'bg-blue-500'
+            }`;
+            notification.innerHTML = `
+                <div class="flex items-center">
+                    <i class="fas ${type === 'success' ? 'fa-check-circle' : type === 'error' ? 'fa-exclamation-circle' : 'fa-info-circle'} mr-2"></i>
+                    ${message}
+                </div>
+            `;
+            document.body.appendChild(notification);
+            
+            setTimeout(() => {
+                notification.remove();
+            }, 3000);
+        }
+
+        // Initialize Dashboard Charts
+        function initializeDashboardCharts() {
+            // Revenue Chart
+            const revenueCtx = document.getElementById('revenueChart').getContext('2d');
+            new Chart(revenueCtx, {
+                type: 'line',
+                data: {
+                    labels: ['Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun', 'Jul', 'Agu', 'Sep', 'Okt', 'Nov'],
+                    datasets: [{
+                        label: 'Pendapatan (juta Rp)',
+                        data: [65, 72, 68, 75, 82, 88, 85, 90, 95, 92, 85],
+                        borderColor: '#3b82f6',
+                        backgroundColor: 'rgba(59, 130, 246, 0.1)',
+                        tension: 0.4,
+                        fill: true
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+
+            // Utilization Chart
+            const utilizationCtx = document.getElementById('utilizationChart').getContext('2d');
+            new Chart(utilizationCtx, {
+                type: 'doughnut',
+                data: {
+                    labels: ['Tersedia', 'Disewa', 'Perawatan'],
+                    datasets: [{
+                        data: [32, 12, 4],
+                        backgroundColor: [
+                            '#10b981',
+                            '#3b82f6',
+                            '#f59e0b'
+                        ]
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'bottom'
+                        }
+                    }
+                }
+            });
+        }
+
+        // Initialize Report Charts
+        function initializeReportCharts() {
+            // Revenue Trend Chart
+            const revenueTrendCtx = document.getElementById('revenueTrendChart').getContext('2d');
+            new Chart(revenueTrendCtx, {
+                type: 'line',
+                data: {
+                    labels: ['Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun', 'Jul', 'Agu', 'Sep', 'Okt', 'Nov'],
+                    datasets: [{
+                        label: 'Pendapatan (juta Rp)',
+                        data: [65, 72, 68, 75, 82, 88, 85, 90, 95, 92, 85],
+                        borderColor: '#3b82f6',
+                        backgroundColor: 'rgba(59, 130, 246, 0.1)',
+                        tension: 0.4,
+                        fill: true
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+
+            // Car Type Chart
+            const carTypeCtx = document.getElementById('carTypeChart').getContext('2d');
+            new Chart(carTypeCtx, {
+                type: 'bar',
+                data: {
+                    labels: ['MPV', 'SUV', 'Sedan', 'Pickup', 'City Car'],
+                    datasets: [{
+                        label: 'Pemanfaatan (%)',
+                        data: [85, 70, 65, 60, 75],
+                        backgroundColor: '#3b82f6'
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            max: 100
+                        }
+                    }
+                }
+            });
+
+            // Customer Chart
+            const customerCtx = document.getElementById('customerChart').getContext('2d');
+            new Chart(customerCtx, {
+                type: 'pie',
+                data: {
+                    labels: ['18-25 tahun', '26-35 tahun', '36-45 tahun', '46+ tahun'],
+                    datasets: [{
+                        data: [35, 40, 20, 5],
+                        backgroundColor: [
+                            '#3b82f6',
+                            '#10b981',
+                            '#f59e0b',
+                            '#ef4444'
+                        ]
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'bottom'
+                        }
+                    }
+                }
+            });
+
+            // Payment Chart
+            const paymentCtx = document.getElementById('paymentChart').getContext('2d');
+            new Chart(paymentCtx, {
+                type: 'doughnut',
+                data: {
+                    labels: ['Tunai', 'Kartu', 'Transfer', 'E-Wallet'],
+                    datasets: [{
+                        data: [45, 30, 20, 5],
+                        backgroundColor: [
+                            '#10b981',
+                            '#3b82f6',
+                            '#f59e0b',
+                            '#8b5cf6'
+                        ]
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'bottom'
+                        }
+                    }
+                }
+            });
+        }
+
+        function toggleDarkMode() {
+            document.body.classList.toggle('dark-mode');
+        }
+
+        function logout() {
+            if (confirm('Apakah Anda yakin ingin keluar?')) {
+                showNotification('Anda telah keluar dari sistem', 'info');
+                setTimeout(() => {
+                    window.location.href = '#';
+                }, 1500);
+            }
+        }
+
+        // GPS Tracking Map Variables
+        let trackingMap;
+        let vehicleMarkers = {};
+        let autoRefreshInterval;
+
+        // Vehicle data with GPS coordinates (Jakarta area)
+        const vehicleData = {
+            'avanza': {
+                id: 'avanza',
+                name: 'Toyota Avanza',
+                plate: 'B 1234 AB',
+                customer: 'Budi Santoso',
+                lat: -6.2088,
+                lng: 106.8456,
+                status: 'active',
+                speed: 45,
+                distance: 12.5,
+                returnTime: '2 hours',
+                color: 'green'
+            },
+            'brio': {
+                id: 'brio',
+                name: 'Honda Brio',
+                plate: 'B 5678 CD',
+                customer: 'Siti Nurhaliza',
+                lat: -6.1944,
+                lng: 106.8229,
+                status: 'active',
+                speed: 0,
+                distance: 8.2,
+                returnTime: '5 hours',
+                color: 'blue'
+            }
+        };
+
+        // Initialize GPS Tracking Map
+        function initializeTrackingMap() {
+            if (trackingMap) {
+                trackingMap.remove();
+            }
+
+            // Create map centered on Jakarta
+            trackingMap = L.map('trackingMap').setView([-6.2088, 106.8456], 12);
+
+            // Add OpenStreetMap tiles
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                attribution: '© OpenStreetMap contributors',
+                maxZoom: 19
+            }).addTo(trackingMap);
+
+            // Add vehicle markers
+            Object.values(vehicleData).forEach(vehicle => {
+                addVehicleMarker(vehicle);
+            });
+
+            // Setup auto refresh
+            setupAutoRefresh();
+
+            console.log('GPS Tracking Map initialized successfully');
+        }
+
+        // Add vehicle marker to map
+        function addVehicleMarker(vehicle) {
+            const markerColor = vehicle.status === 'active' ? '#10b981' : '#ef4444';
+            
+            // Create custom icon
+            const customIcon = L.divIcon({
+                className: 'vehicle-marker',
+                html: `<i class="fas fa-car text-white text-sm"></i>`,
+                iconSize: [32, 32],
+                iconAnchor: [16, 16],
+                popupAnchor: [0, -16]
+            });
+
+            // Create marker
+            const marker = L.marker([vehicle.lat, vehicle.lng], { icon: customIcon })
+                .addTo(trackingMap);
+
+            // Create popup content
+            const popupContent = `
+                <div class="p-2">
+                    <div class="flex items-center mb-2">
+                        <div class="bg-${vehicle.color}-500 p-1 rounded mr-2">
+                            <i class="fas fa-car text-white text-xs"></i>
+                        </div>
+                        <div>
+                            <h6 class="font-bold text-gray-800">${vehicle.name}</h6>
+                            <p class="text-xs text-gray-500">${vehicle.plate}</p>
+                        </div>
+                    </div>
+                    <div class="space-y-1 text-xs">
+                        <div class="flex justify-between">
+                            <span class="text-gray-600">Customer:</span>
+                            <span class="font-medium">${vehicle.customer}</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-gray-600">Speed:</span>
+                            <span class="font-medium">${vehicle.speed} km/h</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-gray-600">Distance:</span>
+                            <span class="font-medium">${vehicle.distance} km</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-gray-600">Return:</span>
+                            <span class="font-medium">${vehicle.returnTime}</span>
+                        </div>
+                    </div>
+                    <div class="mt-2 pt-2 border-t">
+                        <button onclick="trackVehicle('${vehicle.id}')" class="w-full bg-blue-500 text-white px-2 py-1 rounded text-xs hover:bg-blue-600 transition">
+                            <i class="fas fa-route mr-1"></i>Track Route
+                        </button>
+                    </div>
+                </div>
+            `;
+
+            marker.bindPopup(popupContent, {
+                maxWidth: 250,
+                className: 'custom-popup'
+            });
+
+            vehicleMarkers[vehicle.id] = marker;
+        }
+
+        // Focus on specific vehicle
+        function focusVehicle(vehicleId) {
+            const vehicle = vehicleData[vehicleId];
+            const marker = vehicleMarkers[vehicleId];
+            
+            if (vehicle && marker) {
+                trackingMap.setView([vehicle.lat, vehicle.lng], 15);
+                marker.openPopup();
+                showNotification(`Focusing on ${vehicle.name}`, 'info');
+            }
+        }
+
+        // Track vehicle with route simulation
+        function trackVehicle(vehicleId) {
+            const vehicle = vehicleData[vehicleId];
+            
+            if (vehicle) {
+                // Simulate route tracking
+                focusVehicle(vehicleId);
+                
+                // Add a simple route line (simulation)
+                const routeCoords = [
+                    [vehicle.lat, vehicle.lng],
+                    [vehicle.lat + 0.01, vehicle.lng + 0.01],
+                    [vehicle.lat + 0.02, vehicle.lng - 0.01]
+                ];
+                
+                const routeLine = L.polyline(routeCoords, {
+                    color: vehicle.color === 'green' ? '#10b981' : '#3b82f6',
+                    weight: 4,
+                    opacity: 0.7
+                }).addTo(trackingMap);
+                
+                // Remove route line after 5 seconds
+                setTimeout(() => {
+                    trackingMap.removeLayer(routeLine);
+                }, 5000);
+                
+                showNotification(`Tracking route for ${vehicle.name}`, 'success');
+            }
+        }
+
+        // Refresh map data
+        function refreshMap() {
+            if (trackingMap) {
+                // Simulate position updates
+                Object.keys(vehicleData).forEach(vehicleId => {
+                    const vehicle = vehicleData[vehicleId];
+                    // Add small random movement
+                    vehicle.lat += (Math.random() - 0.5) * 0.001;
+                    vehicle.lng += (Math.random() - 0.5) * 0.001;
+                    
+                    // Update marker position
+                    const marker = vehicleMarkers[vehicleId];
+                    if (marker) {
+                        marker.setLatLng([vehicle.lat, vehicle.lng]);
+                    }
+                });
+                
+                showNotification('Map data refreshed', 'success');
+            }
+        }
+
+        // Center map view
+        function centerMap() {
+            if (trackingMap) {
+                trackingMap.setView([-6.2088, 106.8456], 12);
+                showNotification('Map centered on Jakarta', 'info');
+            }
+        }
+
+        // Setup auto refresh
+        function setupAutoRefresh() {
+            const autoRefreshCheckbox = document.getElementById('autoRefresh');
+            
+            if (autoRefreshCheckbox) {
+                autoRefreshCheckbox.addEventListener('change', function() {
+                    if (this.checked) {
+                        autoRefreshInterval = setInterval(refreshMap, 30000); // 30 seconds
+                        showNotification('Auto refresh enabled', 'info');
+                    } else {
+                        clearInterval(autoRefreshInterval);
+                        showNotification('Auto refresh disabled', 'info');
+                    }
+                });
+                
+                // Start auto refresh by default
+                if (autoRefreshCheckbox.checked) {
+                    autoRefreshInterval = setInterval(refreshMap, 30000);
+                }
+            }
+        }
+
+        // Initialize on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            showPage('dashboard');
+        });
+    </script>
+</body>
+</html>

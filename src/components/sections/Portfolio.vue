@@ -44,13 +44,13 @@
       </div>
 
       <!-- Project Grid -->
-      <div v-if="filteredProjects.length > 0" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 lg:gap-10">
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 lg:gap-10">
         <div
           v-for="(project, index) in displayedProjects"
           :key="project.id"
           class="group bg-gray-800/50 backdrop-blur-md rounded-xl shadow-lg hover:shadow-cyan-500/10 transition-all duration-300 overflow-hidden border border-gray-700 hover:border-cyan-500/50 cursor-pointer transform hover:-translate-y-2"
           :style="`opacity: 0; animation: fadeInStagger 0.6s ease-out forwards; animation-delay: ${index * 0.1}s;`"
-          @click="openProject(project)"
+          @click="openCaseStudy(project)"
         >
           <!-- Project Image -->
           <div class="relative h-48 overflow-hidden rounded-t-xl">
@@ -139,29 +139,6 @@
             </button>
           </div>
         </div>
-      </div>
-
-      <!-- Empty State -->
-      <div v-else class="text-center py-16 max-w-md mx-auto opacity-0 animate-fade-in-up" style="animation-delay: 0.2s">
-        <!-- Icon -->
-        <div class="relative w-20 h-20 mx-auto mb-6 bg-gray-800/50 rounded-full border border-gray-700 flex items-center justify-center">
-          <svg class="w-10 h-10 text-cyan-400/60" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
-          </svg>
-          <div class="absolute inset-0 bg-cyan-500/5 rounded-full blur-lg"></div>
-        </div>
-
-        <!-- Content -->
-        <h3 class="text-lg font-semibold text-white mb-2">{{ t('portfolio.empty.title') }}</h3>
-        <p class="text-cyan-100/60 mb-6 text-sm">{{ t('portfolio.empty.description') }}</p>
-
-        <!-- Button -->
-        <button
-          @click="setActiveCategory('all')"
-          class="bg-cyan-500 hover:bg-cyan-600 text-white px-5 py-2.5 rounded-lg font-medium transition-colors duration-200"
-        >
-          {{ t('portfolio.empty.viewAll') }}
-        </button>
       </div>
 
       <!-- Load More Button -->
@@ -257,33 +234,6 @@
                     {{ tech }}
                   </span>
                 </div>
-
-                <div class="space-y-3">
-                  <a
-                    v-if="selectedProject.liveDemo"
-                    :href="selectedProject.liveDemo"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    class="w-full bg-gradient-to-r from-cyan-500 to-blue-500 text-white px-6 py-3 rounded-xl font-semibold transition-all duration-300 hover:from-cyan-600 hover:to-blue-600 hover:shadow-lg hover:shadow-cyan-500/30 flex items-center justify-center space-x-2 transform hover:-translate-y-1"
-                  >
-                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
-                    </svg>
-                    <span>{{ t('portfolio.liveDemo') }}</span>
-                  </a>
-                  <a
-                    v-if="selectedProject.github"
-                    :href="selectedProject.github"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    class="w-full border-2 border-cyan-800/50 text-cyan-300 px-6 py-3 rounded-xl font-semibold transition-all duration-300 hover:border-cyan-600/50 hover:shadow-lg hover:shadow-cyan-500/10 flex items-center justify-center space-x-2 transform hover:-translate-y-1"
-                  >
-                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-                      <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
-                    </svg>
-                    <span>{{ t('common.viewAll') }}</span>
-                  </a>
-                </div>
               </div>
             </div>
           </div>
@@ -299,235 +249,202 @@ import { useI18n } from 'vue-i18n'
 
 const { t } = useI18n()
 
-const emit = defineEmits(['openProject'])
-
-const activeCategory = ref('all')
+const activeCategory = ref('All')
 const displayedCount = ref(6)
 const selectedProject = ref(null)
 
-const categories = ['all', 'website', 'mobile', 'ecommerce', 'enterprise', 'design']
+const categories = ['All', 'Web', 'ecommerce', 'Mobile']
 
 const getCategoryName = (category) => {
-  return t(`portfolio.categories.${category}`)
+  return category === 'All' ? 'Semua' : category
 }
 
 const allProjects = [
   {
     id: 1,
-    title: 'TechCorp E-Commerce Platform',
+    title: 'Sistem Informasi Desa',
     category: 'Web',
-    description: 'Modern e-commerce platform with advanced features including real-time inventory, multiple payment gateways, and AI-powered recommendations.',
-    fullDescription: 'A comprehensive e-commerce solution built for TechCorp, featuring modern design, seamless user experience, and robust backend infrastructure. The platform handles thousands of daily transactions with 99.9% uptime.',
-    image: 'https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=800&h=600&fit=crop',
-    technologies: ['Vue.js', 'Node.js', 'MongoDB', 'Stripe', 'Redis', 'AWS'],
-    liveDemo: 'https://demo-ecommerce.nusasoftware.com',
-    github: 'https://github.com/nusasoftware/ecommerce-platform',
-    duration: '4 months',
-    teamSize: '5 developers',
-    client: 'TechCorp Ltd.',
+    description: 'Platform terintegrasi untuk mengelola data administrasi dan pelayanan masyarakat desa secara digital.',
+    fullDescription: 'Sistem Informasi Desa adalah solusi komprehensif yang dirancang untuk membantu pemerintah desa dalam mengelola data administrasi, keuangan, dan pelayanan masyarakat. Sistem ini memfasilitasi transparansi dan partisipasi publik melalui akses informasi yang mudah.',
+    image: '/src/assets/images/desa.png',
+    technologies: ['PHP', 'Laravel', 'MySQL', 'Bootstrap', 'JavaScript'],
+    liveDemo: 'https://demo-sistemdesa.example.com',
+    github: 'https://github.com/example/sistem-informasi-desa',
+    duration: '3 bulan',
+    teamSize: '4 pengembang',
+    client: 'Pemerintah Desa',
     features: [
-      'Real-time inventory management',
-      'Multi-vendor marketplace',
-      'AI-powered product recommendations',
-      'Advanced analytics dashboard',
-      'Mobile-responsive design',
-      'Multi-language support'
+      'Manajemen data penduduk',
+      'Pengelolaan administrasi desa',
+      'Sistem informasi keuangan desa',
+      'Pelayanan surat online',
+      'Portal informasi publik',
+      'Statistik dan laporan desa'
     ]
   },
   {
     id: 2,
-    title: 'TaskFlow Project Manager',
+    title: 'Sistem Informasi Jurusan Kampus',
     category: 'Web',
-    description: 'Collaborative project management solution with real-time updates, team communication, and advanced reporting capabilities.',
-    fullDescription: 'TaskFlow revolutionizes team collaboration with intuitive project management tools, real-time messaging, and comprehensive analytics. Built for modern teams who need to stay connected and productive.',
-    image: 'https://images.unsplash.com/photo-1611224923853-80b023f02d71?w=800&h=600&fit=crop',
-    technologies: ['React', 'TypeScript', 'Socket.io', 'PostgreSQL', 'Docker'],
-    liveDemo: 'https://taskflow-demo.nusasoftware.com',
-    github: 'https://github.com/nusasoftware/taskflow',
-    duration: '3 months',
-    teamSize: '4 developers',
-    client: 'StartupXYZ',
+    description: 'Sistem manajemen data akademik dan kemahasiswaan untuk jurusan di perguruan tinggi.',
+    fullDescription: 'Sistem ini dirancang khusus untuk membantu jurusan di perguruan tinggi mengelola data akademik, kemahasiswaan, dan penelitian. Dengan antarmuka yang intuitif, sistem ini memudahkan dosen dan staf administrasi dalam melaksanakan tugas sehari-hari.',
+    image: '/src/assets/images/kampus.png',
+    technologies: ['Vue.js', 'Node.js', 'MongoDB', 'Express', 'Chart.js'],
+    liveDemo: 'https://demo-sijur.example.com',
+    github: 'https://github.com/example/sistem-informasi-jurusan',
+    duration: '4 bulan',
+    teamSize: '5 pengembang',
+    client: 'Universitas Negeri',
     features: [
-      'Real-time collaboration',
-      'Gantt chart visualization',
-      'Team messaging system',
-      'File sharing and version control',
-      'Advanced reporting',
-      'Third-party integrations'
+      'Manajemen data mahasiswa',
+      'Pengelolaan kurikulum dan mata kuliah',
+      'Sistem penilaian akademik',
+      'Tracking alumni',
+      'Manajemen penelitian dosen',
+      'Dashboard analitik akademik'
     ]
   },
   {
     id: 3,
-    title: 'FitTracker Mobile App',
-    category: 'Mobile',
-    description: 'Comprehensive health and fitness tracking app with social features, workout plans, and nutrition tracking.',
-    fullDescription: 'FitTracker combines fitness tracking, nutrition monitoring, and social engagement in one powerful mobile application. Users can track workouts, monitor progress, and connect with fitness communities.',
-    image: 'https://images.unsplash.com/photo-1526256262350-7da7584cf5eb?w=800&h=600&fit=crop',
-    technologies: ['React Native', 'Redux', 'Firebase', 'Health APIs', 'Push Notifications'],
-    liveDemo: 'https://play.google.com/store/apps/details?id=com.nusasoftware.fittracker',
-    github: null,
-    duration: '5 months',
-    teamSize: '3 developers',
-    client: 'FitLife Inc.',
+    title: 'Sistem Rental Mobil',
+    category: 'Web',
+    description: 'Platform pemesanan dan manajemen rental mobil dengan fitur tracking dan pembayaran online.',
+    fullDescription: 'Sistem Rental Mobil adalah solusi end-to-end untuk bisnis rental yang mengintegrasikan manajemen armada, pemesanan online, pembayaran digital, dan GPS tracking. Sistem ini dirancang untuk meningkatkan efisiensi operasional dan pengalaman pelanggan.',
+    image: '/src/assets/images/rental.png',
+    technologies: ['React', 'Django', 'PostgreSQL', 'Google Maps API', 'Stripe'],
+    liveDemo: 'https://demo-rentalmobil.example.com',
+    github: 'https://github.com/example/sistem-rental-mobil',
+    duration: '5 bulan',
+    teamSize: '6 pengembang',
+    client: 'PT. Transportasi Nusantara',
     features: [
-      'Workout tracking and planning',
-      'Nutrition and calorie monitoring',
-      'Social fitness challenges',
-      'Wearable device integration',
-      'Progress analytics',
-      'Personalized recommendations'
+      'Katalog dan pencarian mobil',
+      'Pemesanan online real-time',
+      'Manajemen armada',
+      'GPS tracking mobil',
+      'Pembayaran digital',
+      'Laporan analitik bisnis'
     ]
   },
-  {
+   {
     id: 4,
-    title: 'InnovateCorp Brand Identity',
-    category: 'Design',
-    description: 'Complete brand identity design including logo, color palette, typography, and brand guidelines for a tech startup.',
-    fullDescription: 'A comprehensive brand identity project that established InnovateCorp as a modern, trustworthy technology company. The design system includes all visual elements needed for consistent brand representation.',
-    image: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800&h=600&fit=crop',
-    technologies: ['Figma', 'Adobe Creative Suite', 'Sketch', 'Principle'],
-    liveDemo: 'https://innovatecorp.com',
-    github: null,
-    duration: '2 months',
-    teamSize: '2 designers',
-    client: 'InnovateCorp',
+    title: 'EduTrack - Aplikasi Monitoring Kehadiran Siswa',
+    category: 'Mobile',
+    description: 'Aplikasi mobile untuk monitoring kehadiran siswa secara real-time dengan teknologi QR Code dan geofencing.',
+    fullDescription: 'EduTrack adalah solusi inovatif untuk monitoring kehadiran siswa yang mengintegrasikan teknologi QR Code, geofencing, dan real-time tracking. Aplikasi ini mengurangi administrasi presensi manual dan meningkatkan akurasi data kehadiran dengan memberikan akses monitoring real-time kepada orang tua dan sekolah.',
+    image: '/src/assets/images/absen.png',
+    technologies: ['Flutter', 'Node.js', 'Firebase', 'Google Maps API', 'WebSocket'],
+    liveDemo: 'https://demo-edutrack.example.com',
+    github: 'https://github.com/example/edutrack-attendance',
+    duration: '4 bulan',
+    teamSize: '5 pengembang',
+    client: 'Yayasan Pendidikan Cerdas',
     features: [
-      'Logo design and variations',
-      'Color palette and typography',
-      'Brand guidelines document',
-      'Marketing collateral design',
-      'Website mockups',
-      'Social media templates'
+      'QR Code check-in untuk presensi',
+      'Real-time location tracking dengan geofencing', 
+      'Integrasi dengan jadwal pelajaran',
+      'Parent dashboard untuk monitoring',
+      'Sistem notifikasi otomatis',
+      'Analytics kehadiran komprehensif',
+      'Integrasi sistem informasi akademik',
+      'Push notification real-time'
     ]
   },
   {
     id: 5,
-    title: 'QuickEats Delivery App',
-    category: 'Mobile',
-    description: 'On-demand food delivery application with real-time tracking, multiple payment options, and restaurant management.',
-    fullDescription: 'QuickEats connects hungry customers with local restaurants through an intuitive mobile app. Features include real-time order tracking, integrated payments, and a comprehensive restaurant dashboard.',
-    image: 'https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?w=800&h=600&fit=crop',
-    technologies: ['Flutter', 'Firebase', 'Google Maps API', 'Stripe', 'Push Notifications'],
-    liveDemo: 'https://quickeats-demo.nusasoftware.com',
-    github: 'https://github.com/nusasoftware/quickeats',
-    duration: '6 months',
-    teamSize: '6 developers',
-    client: 'QuickEats Ltd.',
+    title: 'Sistem Penjadwalan Perkuliahan Otomatis',
+    category: 'Web',
+    description: 'Solusi cerdas untuk menghasilkan jadwal perkuliahan otomatis dengan algoritma optimasi.',
+    fullDescription: 'Sistem ini menggunakan algoritma genetika untuk menghasilkan jadwal perkuliahan optimal secara otomatis, mempertimbangkan kendala seperti ketersediaan ruang, dosen, dan waktu. Sistem ini mengurangi konflik jadwal dan meningkatkan efisiensi penggunaan sumber daya.',
+    image: '/src/assets/images/jadwal.png',
+    technologies: ['Python', 'Django', 'PostgreSQL', 'D3.js', 'Algorithm'],
+    liveDemo: 'https://demo-jadwal.example.com',
+    github: 'https://github.com/example/sistem-penjadwalan',
+    duration: '6 bulan',
+    teamSize: '5 pengembang',
+    client: 'Fakultas Teknologi Informasi',
     features: [
-      'Real-time order tracking',
-      'Multi-restaurant marketplace',
-      'Delivery route optimization',
-      'In-app payments',
-      'Rating and review system',
-      'Restaurant dashboard'
+      'Algoritma penjadwalan otomatis',
+      'Manajemen data dosen dan ruangan',
+      'Optimasi jadwal berbasis AI',
+      'Deteksi konflik jadwal',
+      'Visualisasi jadwal interaktif',
+      'Manajemen perubahan jadwal'
     ]
   },
   {
     id: 6,
-    title: 'EduPlatform Learning System',
+    title: 'Sistem Monitoring Ruang Kelas',
     category: 'Web',
-    description: 'Comprehensive online education platform with video streaming, interactive assignments, and progress tracking.',
-    fullDescription: 'EduPlatform transforms online education with interactive video lessons, real-time collaboration tools, and comprehensive progress tracking. Built to scale for institutions of all sizes.',
-    image: 'https://images.unsplash.com/photo-1501504905252-473c47e087f8?w=800&h=600&fit=crop',
-    technologies: ['Vue.js', 'Laravel', 'MySQL', 'WebRTC', 'AWS S3', 'ElasticSearch'],
-    liveDemo: 'https://eduplatform-demo.nusasoftware.com',
-    github: null,
-    duration: '8 months',
-    teamSize: '7 developers',
-    client: 'EduTech Institute',
+    description: 'Platform IoT untuk monitoring dan pengelolaan penggunaan ruang kelas secara real-time.',
+    fullDescription: 'Sistem ini mengintegrasikan sensor IoT untuk monitoring penggunaan ruang kelas secara real-time, termasuk deteksi kehadiran, penggunaan peralatan, dan kondisi lingkungan. Data yang dikumpulkan dianalisis untuk optimasi penggunaan ruang dan penghematan energi.',
+    image: '/src/assets/images/kelas.png',
+    technologies: ['Vue.js', 'Node.js', 'MongoDB', 'MQTT', 'Arduino'],
+    liveDemo: 'https://demo-monitoring.example.com',
+    github: 'https://github.com/example/sistem-monitoring-ruang',
+    duration: '4 bulan',
+    teamSize: '4 pengembang',
+    client: 'Universitas Teknologi',
     features: [
-      'HD video streaming',
-      'Interactive assignments',
-      'Real-time messaging',
-      'Progress analytics',
-      'Certificate generation',
-      'Multi-language support'
+      'Monitoring kehadiran real-time',
+      'Tracking penggunaan peralatan',
+      'Monitoring kondisi lingkungan',
+      'Notifikasi otomatis',
+      'Dashboard analitik penggunaan',
+      'Integrasi sistem penjadwalan'
     ]
   },
   {
     id: 7,
-    title: 'RetailPro Dashboard Design',
-    category: 'Design',
-    description: 'Modern dashboard interface design for retail analytics platform with data visualization and user experience optimization.',
-    fullDescription: 'RetailPro needed a complete dashboard redesign to better serve their analytics platform users. The new design focuses on data clarity, user workflow optimization, and modern aesthetics.',
-    image: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&h=600&fit=crop',
-    technologies: ['Figma', 'Adobe XD', 'Principle', 'InVision'],
-    liveDemo: 'https://retailpro.nusasoftware.com/dashboard',
-    github: null,
-    duration: '3 months',
-    teamSize: '3 designers',
-    client: 'RetailPro Analytics',
+    title: 'Sistem Inventaris',
+    category: 'Web',
+    description: 'Solusi manajemen inventaris lengkap dengan barcode scanning dan laporan stok real-time.',
+    fullDescription: 'Sistem Inventaris adalah platform komprehensif untuk mengelola aset dan persediaan barang. Dengan fitur barcode scanning, tracking pergerakan barang, dan notifikasi stok otomatis, sistem ini membantu organisasi mengoptimalkan manajemen inventaris mereka.',
+    image: '/src/assets/images/inventaris.png',
+    technologies: ['Laravel', 'MySQL', 'Vue.js', 'Barcode API', 'Chart.js'],
+    liveDemo: 'https://demo-inventaris.example.com',
+    github: 'https://github.com/example/sistem-inventaris',
+    duration: '3 bulan',
+    teamSize: '4 pengembang',
+    client: 'PT. Logistik Indonesia',
     features: [
-      'Interactive data visualizations',
-      'Responsive dashboard layout',
-      'Dark/light mode support',
-      'Custom chart components',
-      'User onboarding flow',
-      'Accessibility compliance'
+      'Manajemen data barang',
+      'Barcode scanning system',
+      'Tracking pergerakan barang',
+      'Notifikasi stok otomatis',
+      'Laporan inventaris real-time',
+      'Manajemen gudang multi-lokasi'
     ]
   },
   {
     id: 8,
-    title: 'HealthTracker Mobile App',
-    category: 'Mobile',
-    description: 'Personal health monitoring app with symptom tracking, medication reminders, and healthcare provider integration.',
-    fullDescription: 'HealthTracker empowers users to take control of their health with comprehensive tracking tools, medication management, and seamless healthcare provider communication.',
-    image: 'https://images.unsplash.com/photo-1559757148-5c350d0d3c56?w=800&h=600&fit=crop',
-    technologies: ['React Native', 'TypeScript', 'Firebase', 'HealthKit', 'Google Fit'],
-    liveDemo: 'https://apps.apple.com/app/healthtracker',
-    github: null,
-    duration: '4 months',
-    teamSize: '4 developers',
-    client: 'HealthCare Solutions',
-    features: [
-      'Symptom tracking and logging',
-      'Medication reminder system',
-      'Doctor appointment scheduling',
-      'Health data visualization',
-      'Emergency contact integration',
-      'HIPAA compliant security'
-    ]
-  },
-  {
-    id: 9,
-    title: 'FinanceFlow Web Application',
+    title: 'Sistem Quiz Test Pertanyaan',
     category: 'Web',
-    description: 'Personal finance management platform with budget tracking, expense categorization, and financial goal setting.',
-    fullDescription: 'FinanceFlow helps users take control of their finances with intuitive budgeting tools, expense tracking, and goal-setting features. Built with security and user privacy as top priorities.',
-    image: 'https://images.unsplash.com/photo-1554224155-6726b3ff858f?w=800&h=600&fit=crop',
-    technologies: ['Angular', 'Node.js', 'PostgreSQL', 'Plaid API', 'Chart.js'],
-    liveDemo: 'https://financeflow-demo.nusasoftware.com',
-    github: 'https://github.com/nusasoftware/financeflow',
-    duration: '5 months',
-    teamSize: '5 developers',
-    client: 'Personal Finance Inc.',
+    description: 'Platform pembuatan dan pengelolaan ujian online dengan berbagai jenis pertanyaan dan analitik hasil.',
+    fullDescription: 'Sistem ini menyediakan solusi end-to-end untuk pembuatan, pengelolaan, dan pelaksanaan ujian online. Dengan berbagai jenis pertanyaan, sistem anti-kecurangan, dan analitik hasil yang mendalam, sistem ini cocok untuk institusi pendidikan dan pelatihan.',
+    image: '/src/assets/images/quiz.png',
+    technologies: ['React', 'Node.js', 'MongoDB', 'Socket.io', 'WebRTC'],
+    liveDemo: 'https://demo-quiz.example.com',
+    github: 'https://github.com/example/sistem-quiz-test',
+    duration: '4 bulan',
+    teamSize: '5 pengembang',
+    client: 'Lembaga Pendidikan Profesional',
     features: [
-      'Bank account integration',
-      'Automated expense categorization',
-      'Budget planning and tracking',
-      'Financial goal setting',
-      'Investment portfolio tracking',
-      'Security and encryption'
+      'Pembuatan soal berbagai tipe',
+      'Bank soal terintegrasi',
+      'Sistem anti-kecurangan',
+      'Timer dan pengawasan ujian',
+      'Analitik hasil ujian',
+      'Sertifikat otomatis'
     ]
   }
 ]
 
 const filteredProjects = computed(() => {
-  if (activeCategory.value === 'all') {
+  if (activeCategory.value === 'All') {
     return allProjects
   }
-
-  // Map filter categories to project categories
-  const categoryMapping = {
-    'website': ['Web'],
-    'mobile': ['Mobile'],
-    'ecommerce': ['E-Commerce'],
-    'enterprise': ['Enterprise'],
-    'design': ['Design']
-  }
-
-  const projectCategories = categoryMapping[activeCategory.value] || []
-  return allProjects.filter(project => projectCategories.includes(project.category))
+  return allProjects.filter(project => project.category === activeCategory.value)
 })
 
 const displayedProjects = computed(() => {
@@ -545,10 +462,6 @@ const setActiveCategory = (category) => {
 
 const loadMore = () => {
   displayedCount.value += 6
-}
-
-const openProject = (project) => {
-  emit('openProject', project)
 }
 
 const openCaseStudy = (project) => {
@@ -573,19 +486,14 @@ const closeCaseStudy = () => {
 
 /* Animasi fade in untuk kartu proyek */
 @keyframes fadeInStagger {
-  from {
-    opacity: 0;
-    transform: translateY(20px);
+  from { 
+    opacity: 0; 
+    transform: translateY(20px); 
   }
-  to {
-    opacity: 1;
-    transform: translateY(0);
+  to { 
+    opacity: 1; 
+    transform: translateY(0); 
   }
-}
-
-/* Reuse existing fadeInStagger animation for empty state to save bytes */
-.animate-fade-in-up {
-  animation: fadeInStagger 0.6s ease-out forwards;
 }
 
 /* Animasi pulse yang lebih lambat */

@@ -1,0 +1,1898 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistem Monitoring Ruang Kelas</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+        
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        
+        .sidebar-item {
+            transition: all 0.3s ease;
+        }
+        
+        .sidebar-item:hover {
+            background-color: rgba(16, 185, 129, 0.1);
+            border-left: 4px solid #10b981;
+        }
+        
+        .sidebar-item.active {
+            background-color: rgba(16, 185, 129, 0.1);
+            border-left: 4px solid #10b981;
+        }
+        
+        .card-hover {
+            transition: all 0.3s ease;
+        }
+        
+        .card-hover:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+        
+        .room-card {
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .room-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+        }
+        
+        .room-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: linear-gradient(90deg, #10b981, #34d399);
+        }
+        
+        .sensor-card {
+            background: linear-gradient(135deg, #f0fdfa 0%, #ecfdf5 100%);
+            border: 1px solid #a7f3d0;
+        }
+        
+        .sensor-card.active {
+            background: linear-gradient(135deg, #ecfdf5 0%, #d1fae5 100%);
+            border-color: #34d399;
+        }
+        
+        .sensor-card.warning {
+            background: linear-gradient(135deg, #fffbeb 0%, #fef3c7 100%);
+            border-color: #fcd34d;
+        }
+        
+        .sensor-card.error {
+            background: linear-gradient(135deg, #fef2f2 0%, #fee2e2 100%);
+            border-color: #fca5a5;
+        }
+        
+        .live-indicator {
+            display: inline-block;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background-color: #10b981;
+            margin-right: 6px;
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0% {
+                box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7);
+            }
+            70% {
+                box-shadow: 0 0 0 10px rgba(16, 185, 129, 0);
+            }
+            100% {
+                box-shadow: 0 0 0 0 rgba(16, 185, 129, 0);
+            }
+        }
+        
+        .status-badge {
+            display: inline-flex;
+            align-items: center;
+            padding: 4px 8px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 500;
+        }
+        
+        .status-active {
+            background-color: #d1fae5;
+            color: #065f46;
+        }
+        
+        .status-inactive {
+            background-color: #e5e7eb;
+            color: #374151;
+        }
+        
+        .status-warning {
+            background-color: #fef3c7;
+            color: #92400e;
+        }
+        
+        .mini-chart {
+            height: 60px;
+            width: 100%;
+        }
+        
+        .iot-icon {
+            font-size: 1.5rem;
+            margin-right: 0.5rem;
+            color: #10b981;
+        }
+        
+        .dark-mode {
+            background-color: #1a202c;
+            color: #e2e8f0;
+        }
+        
+        .dark-mode .bg-white {
+            background-color: #2d3748;
+        }
+        
+        .dark-mode .text-gray-800 {
+            color: #e2e8f0;
+        }
+        
+        .dark-mode .text-gray-600 {
+            color: #cbd5e0;
+        }
+        
+        .dark-mode .text-gray-500 {
+            color: #a0aec0;
+        }
+        
+        .dark-mode .text-gray-700 {
+            color: #e2e8f0;
+        }
+        
+        .dark-mode .bg-gray-50 {
+            background-color: #2d3748;
+        }
+        
+        .dark-mode .border-t {
+            border-color: #4a5568;
+        }
+        
+        .dark-mode .shadow-lg {
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.5), 0 4px 6px -2px rgba(0, 0, 0, 0.3);
+        }
+        
+        .floor-plan {
+            background-color: #f9fafb;
+            border-radius: 0.5rem;
+            padding: 1rem;
+            position: relative;
+            min-height: 300px;
+        }
+        
+        .room-box {
+            position: absolute;
+            border: 2px solid #d1d5db;
+            border-radius: 0.25rem;
+            padding: 0.5rem;
+            background-color: white;
+            transition: all 0.3s ease;
+        }
+        
+        .room-box:hover {
+            border-color: #10b981;
+            transform: scale(1.05);
+            z-index: 10;
+        }
+        
+        .room-box.active {
+            border-color: #10b981;
+            background-color: #ecfdf5;
+        }
+        
+        .room-box.warning {
+            border-color: #f59e0b;
+            background-color: #fffbeb;
+        }
+        
+        .notification {
+            animation: slideIn 0.5s ease-out;
+        }
+        
+        @keyframes slideIn {
+            from {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+        
+        .data-stream {
+            font-family: 'Courier New', monospace;
+            font-size: 0.75rem;
+            color: #10b981;
+            background-color: #f0fdfa;
+            padding: 0.5rem;
+            border-radius: 0.25rem;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <!-- Sidebar -->
+    <div class="fixed inset-y-0 left-0 z-50 w-64 bg-white shadow-lg">
+        <div class="flex flex-col h-full">
+            <!-- Logo -->
+            <div class="flex items-center justify-center h-16 px-4 bg-gradient-to-r from-green-600 to-teal-600">
+                <i class="fas fa-microchip text-white text-2xl mr-3"></i>
+                <h1 class="text-xl font-bold text-white">IoT Monitor</h1>
+            </div>
+            
+            <!-- Navigation -->
+            <nav class="flex-1 px-4 py-6 overflow-y-auto">
+                <a href="#" onclick="showPage('dashboard')" class="sidebar-item active flex items-center px-4 py-3 mb-2 text-gray-700 rounded-lg">
+                    <i class="fas fa-tachometer-alt w-5 mr-3"></i>
+                    Dashboard
+                </a>
+                <a href="#" onclick="showPage('ruangan')" class="sidebar-item flex items-center px-4 py-3 mb-2 text-gray-700 rounded-lg">
+                    <i class="fas fa-door-open w-5 mr-3"></i>
+                    Monitoring Ruang
+                </a>
+                <a href="#" onclick="showPage('sensor')" class="sidebar-item flex items-center px-4 py-3 mb-2 text-gray-700 rounded-lg">
+                    <i class="fas fa-wifi w-5 mr-3"></i>
+                    Data Sensor
+                </a>
+                <a href="#" onclick="showPage('kehadiran')" class="sidebar-item flex items-center px-4 py-3 mb-2 text-gray-700 rounded-lg">
+                    <i class="fas fa-user-check w-5 mr-3"></i>
+                    Kehadiran
+                </a>
+                <a href="#" onclick="showPage('peralatan')" class="sidebar-item flex items-center px-4 py-3 mb-2 text-gray-700 rounded-lg">
+                    <i class="fas fa-plug w-5 mr-3"></i>
+                    Peralatan
+                </a>
+                <a href="#" onclick="showPage('analitik')" class="sidebar-item flex items-center px-4 py-3 mb-2 text-gray-700 rounded-lg">
+                    <i class="fas fa-chart-line w-5 mr-3"></i>
+                    Analitik
+                </a>
+            </nav>
+            
+            <!-- Connection Status -->
+            <div class="px-4 py-4 border-t">
+                <div class="flex items-center justify-between mb-2">
+                    <span class="text-sm font-medium text-gray-700">Koneksi IoT</span>
+                    <span class="live-indicator"></span>
+                </div>
+                <p class="text-xs text-gray-500">12 perangkat terhubung</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="ml-64">
+        <!-- Top Bar -->
+        <header class="bg-white shadow-sm">
+            <div class="px-6 py-4 flex items-center justify-between">
+                <div>
+                    <h2 class="text-2xl font-bold text-gray-800" id="pageTitle">Dashboard Monitoring</h2>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <div class="flex items-center text-sm text-gray-600">
+                        <i class="fas fa-clock mr-2"></i>
+                        <span id="currentTime"></span>
+                    </div>
+                    <button onclick="toggleDarkMode()" class="p-2 text-gray-600 hover:text-gray-900">
+                        <i class="fas fa-moon text-xl"></i>
+                    </button>
+                    <button class="p-2 text-gray-600 hover:text-gray-900">
+                        <i class="fas fa-bell text-xl"></i>
+                        <span class="absolute top-4 right-4 h-2 w-2 bg-red-500 rounded-full"></span>
+                    </button>
+                    <button onclick="logout()" class="bg-green-600 text-white px-4 py-2 rounded-lg font-medium hover:bg-green-700 transition">
+                        <i class="fas fa-sign-out-alt mr-2"></i>Keluar
+                    </button>
+                </div>
+            </div>
+        </header>
+
+        <!-- Page Content -->
+        <main class="p-6">
+            <!-- Dashboard Page -->
+            <div id="dashboard" class="page">
+                <!-- Real-time Stats -->
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+                    <div class="bg-white rounded-xl p-6 card-shadow">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <p class="text-gray-500 text-sm">Total Ruangan</p>
+                                <p class="text-3xl font-bold text-gray-800">24</p>
+                                <div class="mt-2">
+                                    <canvas id="roomUsageMini" class="mini-chart"></canvas>
+                                </div>
+                            </div>
+                            <div class="bg-green-100 p-3 rounded-lg">
+                                <i class="fas fa-building text-green-600 text-xl"></i>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="bg-white rounded-xl p-6 card-shadow">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <p class="text-gray-500 text-sm">Ruangan Aktif</p>
+                                <p class="text-3xl font-bold text-gray-800">18</p>
+                                <p class="text-sm text-green-600 mt-1">
+                                    <i class="fas fa-arrow-up"></i> 75% kapasitas
+                                </p>
+                            </div>
+                            <div class="bg-blue-100 p-3 rounded-lg">
+                                <i class="fas fa-door-open text-blue-600 text-xl"></i>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="bg-white rounded-xl p-6 card-shadow">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <p class="text-gray-500 text-sm">Kehadiran Hari Ini</p>
+                                <p class="text-3xl font-bold text-gray-800">342</p>
+                                <div class="mt-2">
+                                    <canvas id="attendanceMini" class="mini-chart"></canvas>
+                                </div>
+                            </div>
+                            <div class="bg-purple-100 p-3 rounded-lg">
+                                <i class="fas fa-users text-purple-600 text-xl"></i>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="bg-white rounded-xl p-6 card-shadow">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <p class="text-gray-500 text-sm">Efisiensi Energi</p>
+                                <p class="text-3xl font-bold text-gray-800">82%</p>
+                                <p class="text-sm text-green-600 mt-1">
+                                    <i class="fas fa-leaf"></i> Optimal
+                                </p>
+                            </div>
+                            <div class="bg-yellow-100 p-3 rounded-lg">
+                                <i class="fas fa-bolt text-yellow-600 text-xl"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Live Floor Plan -->
+                <div class="bg-white rounded-xl p-6 card-shadow mb-8">
+                    <div class="flex justify-between items-center mb-6">
+                        <h3 class="text-xl font-semibold text-gray-800">Denah Lantai Real-time</h3>
+                        <div class="flex items-center space-x-4">
+                            <div class="flex items-center">
+                                <div class="w-3 h-3 bg-green-500 rounded-full mr-2"></div>
+                                <span class="text-sm">Aktif</span>
+                            </div>
+                            <div class="flex items-center">
+                                <div class="w-3 h-3 bg-yellow-500 rounded-full mr-2"></div>
+                                <span class="text-sm">Peringatan</span>
+                            </div>
+                            <div class="flex items-center">
+                                <div class="w-3 h-3 bg-gray-400 rounded-full mr-2"></div>
+                                <span class="text-sm">Tidak Aktif</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="floor-plan">
+                        <div class="room-box active" style="top: 20px; left: 20px; width: 120px; height: 100px;">
+                            <div class="font-medium text-sm">R. 101</div>
+                            <div class="text-xs text-gray-600">25/30</div>
+                        </div>
+                        <div class="room-box active" style="top: 20px; left: 160px; width: 120px; height: 100px;">
+                            <div class="font-medium text-sm">R. 102</div>
+                            <div class="text-xs text-gray-600">22/30</div>
+                        </div>
+                        <div class="room-box warning" style="top: 20px; left: 300px; width: 120px; height: 100px;">
+                            <div class="font-medium text-sm">R. 103</div>
+                            <div class="text-xs text-gray-600">35/30</div>
+                        </div>
+                        <div class="room-box" style="top: 140px; left: 20px; width: 120px; height: 100px;">
+                            <div class="font-medium text-sm">R. 201</div>
+                            <div class="text-xs text-gray-600">0/40</div>
+                        </div>
+                        <div class="room-box active" style="top: 140px; left: 160px; width: 120px; height: 100px;">
+                            <div class="font-medium text-sm">R. 202</div>
+                            <div class="text-xs text-gray-600">18/40</div>
+                        </div>
+                        <div class="room-box active" style="top: 140px; left: 300px; width: 120px; height: 100px;">
+                            <div class="font-medium text-sm">R. 203</div>
+                            <div class="text-xs text-gray-600">30/40</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Sensor Data Stream -->
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                    <div class="bg-white rounded-xl p-6 card-shadow">
+                        <h3 class="text-lg font-semibold text-gray-800 mb-4">Stream Data Sensor</h3>
+                        <div class="space-y-3">
+                            <div class="sensor-card active p-4 rounded-lg">
+                                <div class="flex justify-between items-center">
+                                    <div>
+                                        <p class="font-medium">Sensor Suhu R.101</p>
+                                        <p class="text-sm text-gray-600">ID: TEMP_001</p>
+                                    </div>
+                                    <div class="text-right">
+                                        <p class="font-bold text-lg">24.5°C</p>
+                                        <p class="text-xs text-gray-500">Normal</p>
+                                    </div>
+                                </div>
+                                <div class="mt-2 data-stream">
+                                    {"sensor_id":"TEMP_001","value":24.5,"unit":"°C","timestamp":"2024-11-20T10:30:15Z"}
+                                </div>
+                            </div>
+                            
+                            <div class="sensor-card active p-4 rounded-lg">
+                                <div class="flex justify-between items-center">
+                                    <div>
+                                        <p class="font-medium">Sensor Kepadatan R.102</p>
+                                        <p class="text-sm text-gray-600">ID: DENS_002</p>
+                                    </div>
+                                    <div class="text-right">
+                                        <p class="font-bold text-lg">73%</p>
+                                        <p class="text-xs text-gray-500">Normal</p>
+                                    </div>
+                                </div>
+                                <div class="mt-2 data-stream">
+                                    {"sensor_id":"DENS_002","value":73,"unit":"%","timestamp":"2024-11-20T10:30:12Z"}
+                                </div>
+                            </div>
+                            
+                            <div class="sensor-card warning p-4 rounded-lg">
+                                <div class="flex justify-between items-center">
+                                    <div>
+                                        <p class="font-medium">Sensor Kepadatan R.103</p>
+                                        <p class="text-sm text-gray-600">ID: DENS_003</p>
+                                    </div>
+                                    <div class="text-right">
+                                        <p class="font-bold text-lg">116%</p>
+                                        <p class="text-xs text-yellow-600">Overcapacity</p>
+                                    </div>
+                                </div>
+                                <div class="mt-2 data-stream">
+                                    {"sensor_id":"DENS_003","value":116,"unit":"%","timestamp":"2024-11-20T10:30:10Z","alert":"overcapacity"}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="bg-white rounded-xl p-6 card-shadow">
+                        <h3 class="text-lg font-semibold text-gray-800 mb-4">Status Peralatan</h3>
+                        <div class="grid grid-cols-2 gap-4">
+                            <div class="border rounded-lg p-4">
+                                <div class="flex justify-between items-start mb-2">
+                                    <div>
+                                        <p class="font-medium">AC R.101</p>
+                                        <p class="text-sm text-gray-600">Status: <span class="status-badge status-active">Aktif</span></p>
+                                    </div>
+                                    <i class="fas fa-snowflake text-blue-500"></i>
+                                </div>
+                                <p class="text-sm text-gray-600">Suhu: 22°C</p>
+                                <p class="text-sm text-gray-600">Mode: Auto</p>
+                            </div>
+                            
+                            <div class="border rounded-lg p-4">
+                                <div class="flex justify-between items-start mb-2">
+                                    <div>
+                                        <p class="font-medium">Proyektor R.102</p>
+                                        <p class="text-sm text-gray-600">Status: <span class="status-badge status-active">Aktif</span></p>
+                                    </div>
+                                    <i class="fas fa-video text-purple-500"></i>
+                                </div>
+                                <p class="text-sm text-gray-600">Lampu: 3000 lm</p>
+                                <p class="text-sm text-gray-600">Mode: Presentation</p>
+                            </div>
+                            
+                            <div class="border rounded-lg p-4">
+                                <div class="flex justify-between items-start mb-2">
+                                    <div>
+                                        <p class="font-medium">Lampu R.201</p>
+                                        <p class="text-sm text-gray-600">Status: <span class="status-badge status-inactive">Nonaktif</span></p>
+                                    </div>
+                                    <i class="fas fa-lightbulb text-gray-400"></i>
+                                </div>
+                                <p class="text-sm text-gray-600">Daya: 0 W</p>
+                                <p class="text-sm text-gray-600">Terakhir: 2 jam lalu</p>
+                            </div>
+                            
+                            <div class="border rounded-lg p-4">
+                                <div class="flex justify-between items-start mb-2">
+                                    <div>
+                                        <p class="font-medium">Speaker R.202</p>
+                                        <p class="text-sm text-gray-600">Status: <span class="status-badge status-warning">Peringatan</span></p>
+                                    </div>
+                                    <i class="fas fa-volume-up text-yellow-500"></i>
+                                </div>
+                                <p class="text-sm text-gray-600">Volume: 85%</p>
+                                <p class="text-sm text-yellow-600">Batas volume terlampaui</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Ruangan Page -->
+            <div id="ruangan" class="page hidden">
+                <div class="bg-white rounded-xl p-6 card-shadow mb-6">
+                    <div class="flex justify-between items-center mb-6">
+                        <h3 class="text-xl font-semibold text-gray-800">Monitoring Detail Ruangan</h3>
+                        <div class="flex gap-2">
+                            <button class="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 transition">
+                                <i class="fas fa-sync-alt mr-2"></i>Refresh Data
+                            </button>
+                            <button onclick="showModal('aturJadwal')" class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition">
+                                <i class="fas fa-calendar-alt mr-2"></i>Atur Jadwal
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <!-- Room Grid -->
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                        <div class="border rounded-xl overflow-hidden room-card">
+                            <div class="bg-green-500 p-4">
+                                <div class="flex justify-between items-center">
+                                    <h4 class="text-white font-bold text-lg">Ruang 101</h4>
+                                    <span class="bg-white text-green-800 px-2 py-1 rounded-full text-xs font-medium">Aktif</span>
+                                </div>
+                                <p class="text-green-100 text-sm">Lab Komputer</p>
+                            </div>
+                            <div class="p-4">
+                                <div class="grid grid-cols-2 gap-4 mb-4">
+                                    <div>
+                                        <p class="text-sm text-gray-600">Kapasitas</p>
+                                        <p class="font-semibold">30 orang</p>
+                                    </div>
+                                    <div>
+                                        <p class="text-sm text-gray-600">Terisi</p>
+                                        <p class="font-semibold text-green-600">25 orang</p>
+                                    </div>
+                                    <div>
+                                        <p class="text-sm text-gray-600">Suhu</p>
+                                        <p class="font-semibold">24.5°C</p>
+                                    </div>
+                                    <div>
+                                        <p class="text-sm text-gray-600">Kelembaban</p>
+                                        <p class="font-semibold">65%</p>
+                                    </div>
+                                </div>
+                                <div class="border-t pt-3">
+                                    <p class="text-sm text-gray-600 mb-2">Peralatan Aktif:</p>
+                                    <div class="flex flex-wrap gap-2">
+                                        <span class="bg-blue-100 text-blue-800 px-2 py-1 rounded text-xs">AC</span>
+                                        <span class="bg-purple-100 text-purple-800 px-2 py-1 rounded text-xs">Proyektor</span>
+                                        <span class="bg-yellow-100 text-yellow-800 px-2 py-1 rounded text-xs">Lampu</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="border rounded-xl overflow-hidden room-card">
+                            <div class="bg-green-500 p-4">
+                                <div class="flex justify-between items-center">
+                                    <h4 class="text-white font-bold text-lg">Ruang 102</h4>
+                                    <span class="bg-white text-green-800 px-2 py-1 rounded-full text-xs font-medium">Aktif</span>
+                                </div>
+                                <p class="text-green-100 text-sm">Kelas Reguler</p>
+                            </div>
+                            <div class="p-4">
+                                <div class="grid grid-cols-2 gap-4 mb-4">
+                                    <div>
+                                        <p class="text-sm text-gray-600">Kapasitas</p>
+                                        <p class="font-semibold">30 orang</p>
+                                    </div>
+                                    <div>
+                                        <p class="text-sm text-gray-600">Terisi</p>
+                                        <p class="font-semibold text-green-600">22 orang</p>
+                                    </div>
+                                    <div>
+                                        <p class="text-sm text-gray-600">Suhu</p>
+                                        <p class="font-semibold">23.8°C</p>
+                                    </div>
+                                    <div>
+                                        <p class="text-sm text-gray-600">Kelembaban</p>
+                                        <p class="font-semibold">62%</p>
+                                    </div>
+                                </div>
+                                <div class="border-t pt-3">
+                                    <p class="text-sm text-gray-600 mb-2">Peralatan Aktif:</p>
+                                    <div class="flex flex-wrap gap-2">
+                                        <span class="bg-blue-100 text-blue-800 px-2 py-1 rounded text-xs">AC</span>
+                                        <span class="bg-yellow-100 text-yellow-800 px-2 py-1 rounded text-xs">Lampu</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="border rounded-xl overflow-hidden room-card">
+                            <div class="bg-yellow-500 p-4">
+                                <div class="flex justify-between items-center">
+                                    <h4 class="text-white font-bold text-lg">Ruang 103</h4>
+                                    <span class="bg-white text-yellow-800 px-2 py-1 rounded-full text-xs font-medium">Peringatan</span>
+                                </div>
+                                <p class="text-yellow-100 text-sm">Kelas Reguler</p>
+                            </div>
+                            <div class="p-4">
+                                <div class="grid grid-cols-2 gap-4 mb-4">
+                                    <div>
+                                        <p class="text-sm text-gray-600">Kapasitas</p>
+                                        <p class="font-semibold">30 orang</p>
+                                    </div>
+                                    <div>
+                                        <p class="text-sm text-gray-600">Terisi</p>
+                                        <p class="font-semibold text-yellow-600">35 orang</p>
+                                    </div>
+                                    <div>
+                                        <p class="text-sm text-gray-600">Suhu</p>
+                                        <p class="font-semibold">26.2°C</p>
+                                    </div>
+                                    <div>
+                                        <p class="text-sm text-gray-600">Kelembaban</p>
+                                        <p class="font-semibold">70%</p>
+                                    </div>
+                                </div>
+                                <div class="bg-yellow-50 p-3 rounded-lg mb-3">
+                                    <p class="text-sm text-yellow-800">
+                                        <i class="fas fa-exclamation-triangle mr-2"></i>Kapasitas melebihi batas (116%)
+                                    </p>
+                                </div>
+                                <div class="border-t pt-3">
+                                    <p class="text-sm text-gray-600 mb-2">Peralatan Aktif:</p>
+                                    <div class="flex flex-wrap gap-2">
+                                        <span class="bg-blue-100 text-blue-800 px-2 py-1 rounded text-xs">AC</span>
+                                        <span class="bg-yellow-100 text-yellow-800 px-2 py-1 rounded text-xs">Lampu</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="border rounded-xl overflow-hidden room-card">
+                            <div class="bg-gray-400 p-4">
+                                <div class="flex justify-between items-center">
+                                    <h4 class="text-white font-bold text-lg">Ruang 201</h4>
+                                    <span class="bg-white text-gray-800 px-2 py-1 rounded-full text-xs font-medium">Nonaktif</span>
+                                </div>
+                                <p class="text-gray-100 text-sm">Lab Fisika</p>
+                            </div>
+                            <div class="p-4">
+                                <div class="grid grid-cols-2 gap-4 mb-4">
+                                    <div>
+                                        <p class="text-sm text-gray-600">Kapasitas</p>
+                                        <p class="font-semibold">40 orang</p>
+                                    </div>
+                                    <div>
+                                        <p class="text-sm text-gray-600">Terisi</p>
+                                        <p class="font-semibold">0 orang</p>
+                                    </div>
+                                    <div>
+                                        <p class="text-sm text-gray-600">Suhu</p>
+                                        <p class="font-semibold">25.1°C</p>
+                                    </div>
+                                    <div>
+                                        <p class="text-sm text-gray-600">Kelembaban</p>
+                                        <p class="font-semibold">60%</p>
+                                    </div>
+                                </div>
+                                <div class="border-t pt-3">
+                                    <p class="text-sm text-gray-600 mb-2">Peralatan:</p>
+                                    <div class="flex flex-wrap gap-2">
+                                        <span class="bg-gray-100 text-gray-800 px-2 py-1 rounded text-xs">Semua nonaktif</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="border rounded-xl overflow-hidden room-card">
+                            <div class="bg-green-500 p-4">
+                                <div class="flex justify-between items-center">
+                                    <h4 class="text-white font-bold text-lg">Ruang 202</h4>
+                                    <span class="bg-white text-green-800 px-2 py-1 rounded-full text-xs font-medium">Aktif</span>
+                                </div>
+                                <p class="text-green-100 text-sm">Kelas Reguler</p>
+                            </div>
+                            <div class="p-4">
+                                <div class="grid grid-cols-2 gap-4 mb-4">
+                                    <div>
+                                        <p class="text-sm text-gray-600">Kapasitas</p>
+                                        <p class="font-semibold">40 orang</p>
+                                    </div>
+                                    <div>
+                                        <p class="text-sm text-gray-600">Terisi</p>
+                                        <p class="font-semibold text-green-600">18 orang</p>
+                                    </div>
+                                    <div>
+                                        <p class="text-sm text-gray-600">Suhu</p>
+                                        <p class="font-semibold">23.5°C</p>
+                                    </div>
+                                    <div>
+                                        <p class="text-sm text-gray-600">Kelembaban</p>
+                                        <p class="font-semibold">63%</p>
+                                    </div>
+                                </div>
+                                <div class="border-t pt-3">
+                                    <p class="text-sm text-gray-600 mb-2">Peralatan Aktif:</p>
+                                    <div class="flex flex-wrap gap-2">
+                                        <span class="bg-blue-100 text-blue-800 px-2 py-1 rounded text-xs">AC</span>
+                                        <span class="bg-purple-100 text-purple-800 px-2 py-1 rounded text-xs">Proyektor</span>
+                                        <span class="bg-yellow-100 text-yellow-800 px-2 py-1 rounded text-xs">Speaker</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="border rounded-xl overflow-hidden room-card">
+                            <div class="bg-green-500 p-4">
+                                <div class="flex justify-between items-center">
+                                    <h4 class="text-white font-bold text-lg">Ruang 203</h4>
+                                    <span class="bg-white text-green-800 px-2 py-1 rounded-full text-xs font-medium">Aktif</span>
+                                </div>
+                                <p class="text-green-100 text-sm">Kelas Reguler</p>
+                            </div>
+                            <div class="p-4">
+                                <div class="grid grid-cols-2 gap-4 mb-4">
+                                    <div>
+                                        <p class="text-sm text-gray-600">Kapasitas</p>
+                                        <p class="font-semibold">40 orang</p>
+                                    </div>
+                                    <div>
+                                        <p class="text-sm text-gray-600">Terisi</p>
+                                        <p class="font-semibold text-green-600">30 orang</p>
+                                    </div>
+                                    <div>
+                                        <p class="text-sm text-gray-600">Suhu</p>
+                                        <p class="font-semibold">24.1°C</p>
+                                    </div>
+                                    <div>
+                                        <p class="text-sm text-gray-600">Kelembaban</p>
+                                        <p class="font-semibold">64%</p>
+                                    </div>
+                                </div>
+                                <div class="border-t pt-3">
+                                    <p class="text-sm text-gray-600 mb-2">Peralatan Aktif:</p>
+                                    <div class="flex flex-wrap gap-2">
+                                        <span class="bg-blue-100 text-blue-800 px-2 py-1 rounded text-xs">AC</span>
+                                        <span class="bg-yellow-100 text-yellow-800 px-2 py-1 rounded text-xs">Lampu</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sensor Page -->
+            <div id="sensor" class="page hidden">
+                <div class="bg-white rounded-xl p-6 card-shadow mb-6">
+                    <div class="flex justify-between items-center mb-6">
+                        <h3 class="text-xl font-semibold text-gray-800">Manajemen Data Sensor</h3>
+                        <button onclick="showModal('tambahSensor')" class="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 transition">
+                            <i class="fas fa-plus mr-2"></i>Tambah Sensor
+                        </button>
+                    </div>
+                    
+                    <!-- Sensor Categories -->
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+                        <div class="bg-blue-50 p-6 rounded-xl">
+                            <div class="flex items-center justify-between mb-4">
+                                <h4 class="text-lg font-semibold text-blue-800">Sensor Suhu</h4>
+                                <i class="fas fa-thermometer-half text-blue-600 text-2xl"></i>
+                            </div>
+                            <p class="text-3xl font-bold text-blue-900 mb-2">24.3°C</p>
+                            <p class="text-sm text-blue-700">Rata-rata semua ruang</p>
+                            <div class="mt-4">
+                                <canvas id="tempChart" height="100"></canvas>
+                            </div>
+                        </div>
+                        
+                        <div class="bg-green-50 p-6 rounded-xl">
+                            <div class="flex items-center justify-between mb-4">
+                                <h4 class="text-lg font-semibold text-green-800">Sensor Kepadatan</h4>
+                                <i class="fas fa-users text-green-600 text-2xl"></i>
+                            </div>
+                            <p class="text-3xl font-bold text-green-900 mb-2">68%</p>
+                            <p class="text-sm text-green-700">Rata-rata penggunaan</p>
+                            <div class="mt-4">
+                                <canvas id="densityChart" height="100"></canvas>
+                            </div>
+                        </div>
+                        
+                        <div class="bg-purple-50 p-6 rounded-xl">
+                            <div class="flex items-center justify-between mb-4">
+                                <h4 class="text-lg font-semibold text-purple-800">Sensor Cahaya</h4>
+                                <i class="fas fa-lightbulb text-purple-600 text-2xl"></i>
+                            </div>
+                            <p class="text-3xl font-bold text-purple-900 mb-2">450 lux</p>
+                            <p class="text-sm text-purple-700">Rata-rata intensitas</p>
+                            <div class="mt-4">
+                                <canvas id="lightChart" height="100"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Sensor List -->
+                    <h4 class="text-lg font-semibold text-gray-800 mb-4">Daftar Sensor</h4>
+                    <div class="overflow-x-auto">
+                        <table class="w-full">
+                            <thead class="bg-gray-50">
+                                <tr>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">ID Sensor</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Tipe</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Lokasi</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Nilai</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Update</th>
+                                </tr>
+                            </thead>
+                            <tbody class="bg-white divide-y divide-gray-200">
+                                <tr>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">TEMP_001</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">Suhu</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">Ruang 101</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">24.5°C</td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
+                                            Normal
+                                        </span>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">2 menit lalu</td>
+                                </tr>
+                                <tr>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">DENS_001</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">Kepadatan</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">Ruang 101</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">83%</td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
+                                            Normal
+                                        </span>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">1 menit lalu</td>
+                                </tr>
+                                <tr>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">DENS_002</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">Kepadatan</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">Ruang 102</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">73%</td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
+                                            Normal
+                                        </span>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">1 menit lalu</td>
+                                </tr>
+                                <tr>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">DENS_003</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">Kepadatan</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">Ruang 103</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">116%</td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-yellow-100 text-yellow-800">
+                                            Peringatan
+                                        </span>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Sekarang</td>
+                                </tr>
+                                <tr>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">HUMID_001</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">Kelembaban</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">Ruang 101</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">65%</td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
+                                            Normal
+                                        </span>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">3 menit lalu</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Kehadiran Page -->
+            <div id="kehadiran" class="page hidden">
+                <div class="bg-white rounded-xl p-6 card-shadow mb-6">
+                    <div class="flex justify-between items-center mb-6">
+                        <h3 class="text-xl font-semibold text-gray-800">Monitoring Kehadiran Real-time</h3>
+                        <div class="flex gap-2">
+                            <button class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition">
+                                <i class="fas fa-download mr-2"></i>Export Data
+                            </button>
+                            <button onclick="showModal('aturJadwal')" class="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 transition">
+                                <i class="fas fa-calendar-alt mr-2"></i>Atur Jadwal
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <!-- Attendance Stats -->
+                    <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-8">
+                        <div class="bg-green-50 p-4 rounded-lg">
+                            <div class="flex items-center justify-between">
+                                <div>
+                                    <p class="text-green-800 font-medium">Hadir</p>
+                                    <p class="text-2xl font-bold text-green-900">342</p>
+                                </div>
+                                <i class="fas fa-user-check text-green-600 text-2xl"></i>
+                            </div>
+                        </div>
+                        <div class="bg-yellow-50 p-4 rounded-lg">
+                            <div class="flex items-center justify-between">
+                                <div>
+                                    <p class="text-yellow-800 font-medium">Terlambat</p>
+                                    <p class="text-2xl font-bold text-yellow-900">18</p>
+                                </div>
+                                <i class="fas fa-clock text-yellow-600 text-2xl"></i>
+                            </div>
+                        </div>
+                        <div class="bg-red-50 p-4 rounded-lg">
+                            <div class="flex items-center justify-between">
+                                <div>
+                                    <p class="text-red-800 font-medium">Tidak Hadir</p>
+                                    <p class="text-2xl font-bold text-red-900">12</p>
+                                </div>
+                                <i class="fas fa-user-times text-red-600 text-2xl"></i>
+                            </div>
+                        </div>
+                        <div class="bg-blue-50 p-4 rounded-lg">
+                            <div class="flex items-center justify-between">
+                                <div>
+                                    <p class="text-blue-800 font-medium">Izin</p>
+                                    <p class="text-2xl font-bold text-blue-900">8</p>
+                                </div>
+                                <i class="fas fa-file-medical text-blue-600 text-2xl"></i>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Real-time Attendance -->
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                        <div>
+                            <h4 class="text-lg font-semibold text-gray-800 mb-4">Kehadiran Per Ruangan</h4>
+                            <div class="space-y-4">
+                                <div class="border rounded-lg p-4">
+                                    <div class="flex justify-between items-center mb-2">
+                                        <h5 class="font-medium">Ruang 101</h5>
+                                        <span class="text-sm text-gray-600">Matkul: Pemrograman Web</span>
+                                    </div>
+                                    <div class="grid grid-cols-4 gap-2 text-center text-sm">
+                                        <div>
+                                            <p class="font-semibold text-green-600">25</p>
+                                            <p class="text-xs text-gray-600">Hadir</p>
+                                        </div>
+                                        <div>
+                                            <p class="font-semibold text-yellow-600">2</p>
+                                            <p class="text-xs text-gray-600">Terlambat</p>
+                                        </div>
+                                        <div>
+                                            <p class="font-semibold text-blue-600">1</p>
+                                            <p class="text-xs text-gray-600">Izin</p>
+                                        </div>
+                                        <div>
+                                            <p class="font-semibold text-red-600">2</p>
+                                            <p class="text-xs text-gray-600">Absen</p>
+                                        </div>
+                                    </div>
+                                    <div class="mt-3">
+                                        <div class="w-full bg-gray-200 rounded-full h-2">
+                                            <div class="bg-green-600 h-2 rounded-full" style="width: 83%"></div>
+                                        </div>
+                                        <p class="text-xs text-gray-600 mt-1">83% kehadiran</p>
+                                    </div>
+                                </div>
+                                
+                                <div class="border rounded-lg p-4">
+                                    <div class="flex justify-between items-center mb-2">
+                                        <h5 class="font-medium">Ruang 102</h5>
+                                        <span class="text-sm text-gray-600">Matkul: Basis Data</span>
+                                    </div>
+                                    <div class="grid grid-cols-4 gap-2 text-center text-sm">
+                                        <div>
+                                            <p class="font-semibold text-green-600">22</p>
+                                            <p class="text-xs text-gray-600">Hadir</p>
+                                        </div>
+                                        <div>
+                                            <p class="font-semibold text-yellow-600">3</p>
+                                            <p class="text-xs text-gray-600">Terlambat</p>
+                                        </div>
+                                        <div>
+                                            <p class="font-semibold text-blue-600">0</p>
+                                            <p class="text-xs text-gray-600">Izin</p>
+                                        </div>
+                                        <div>
+                                            <p class="font-semibold text-red-600">5</p>
+                                            <p class="text-xs text-gray-600">Absen</p>
+                                        </div>
+                                    </div>
+                                    <div class="mt-3">
+                                        <div class="w-full bg-gray-200 rounded-full h-2">
+                                            <div class="bg-green-600 h-2 rounded-full" style="width: 73%"></div>
+                                        </div>
+                                        <p class="text-xs text-gray-600 mt-1">73% kehadiran</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div>
+                            <h4 class="text-lg font-semibold text-gray-800 mb-4">Log Kehadiran Terbaru</h4>
+                            <div class="bg-gray-50 rounded-lg p-4 max-h-96 overflow-y-auto">
+                                <div class="space-y-3">
+                                    <div class="flex items-center justify-between p-3 bg-white rounded-lg">
+                                        <div class="flex items-center">
+                                            <div class="w-10 h-10 bg-green-100 rounded-full flex items-center justify-center mr-3">
+                                                <i class="fas fa-user text-green-600"></i>
+                                            </div>
+                                            <div>
+                                                <p class="font-medium">Ahmad Pratama</p>
+                                                <p class="text-xs text-gray-600">NIM: 202001001</p>
+                                            </div>
+                                        </div>
+                                        <div class="text-right">
+                                            <span class="px-2 py-1 bg-green-100 text-green-800 text-xs rounded-full">Hadir</span>
+                                            <p class="text-xs text-gray-500 mt-1">08:02</p>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="flex items-center justify-between p-3 bg-white rounded-lg">
+                                        <div class="flex items-center">
+                                            <div class="w-10 h-10 bg-yellow-100 rounded-full flex items-center justify-center mr-3">
+                                                <i class="fas fa-user text-yellow-600"></i>
+                                            </div>
+                                            <div>
+                                                <p class="font-medium">Siti Nurhaliza</p>
+                                                <p class="text-xs text-gray-600">NIM: 202101002</p>
+                                            </div>
+                                        </div>
+                                        <div class="text-right">
+                                            <span class="px-2 py-1 bg-yellow-100 text-yellow-800 text-xs rounded-full">Terlambat</span>
+                                            <p class="text-xs text-gray-500 mt-1">08:15</p>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="flex items-center justify-between p-3 bg-white rounded-lg">
+                                        <div class="flex items-center">
+                                            <div class="w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center mr-3">
+                                                <i class="fas fa-user text-blue-600"></i>
+                                            </div>
+                                            <div>
+                                                <p class="font-medium">Budi Santoso</p>
+                                                <p class="text-xs text-gray-600">NIM: 202201003</p>
+                                            </div>
+                                        </div>
+                                        <div class="text-right">
+                                            <span class="px-2 py-1 bg-blue-100 text-blue-800 text-xs rounded-full">Izin</span>
+                                            <p class="text-xs text-gray-500 mt-1">07:45</p>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="flex items-center justify-between p-3 bg-white rounded-lg">
+                                        <div class="flex items-center">
+                                            <div class="w-10 h-10 bg-red-100 rounded-full flex items-center justify-center mr-3">
+                                                <i class="fas fa-user text-red-600"></i>
+                                            </div>
+                                            <div>
+                                                <p class="font-medium">Maya Putri</p>
+                                                <p class="text-xs text-gray-600">NIM: 202301004</p>
+                                            </div>
+                                        </div>
+                                        <div class="text-right">
+                                            <span class="px-2 py-1 bg-red-100 text-red-800 text-xs rounded-full">Tidak Hadir</span>
+                                            <p class="text-xs text-gray-500 mt-1">--:--</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Peralatan Page -->
+            <div id="peralatan" class="page hidden">
+                <div class="bg-white rounded-xl p-6 card-shadow mb-6">
+                    <div class="flex justify-between items-center mb-6">
+                        <h3 class="text-xl font-semibold text-gray-800">Monitoring Peralatan</h3>
+                        <button onclick="showModal('tambahPeralatan')" class="bg-purple-600 text-white px-4 py-2 rounded-lg hover:bg-purple-700 transition">
+                            <i class="fas fa-plus mr-2"></i>Tambah Peralatan
+                        </button>
+                    </div>
+                    
+                    <!-- Equipment Stats -->
+                    <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-8">
+                        <div class="bg-blue-50 p-4 rounded-lg">
+                            <div class="flex items-center justify-between">
+                                <div>
+                                    <p class="text-blue-800 font-medium">Total Peralatan</p>
+                                    <p class="text-2xl font-bold text-blue-900">96</p>
+                                </div>
+                                <i class="fas fa-plug text-blue-600 text-2xl"></i>
+                            </div>
+                        </div>
+                        <div class="bg-green-50 p-4 rounded-lg">
+                            <div class="flex items-center justify-between">
+                                <div>
+                                    <p class="text-green-800 font-medium">Aktif</p>
+                                    <p class="text-2xl font-bold text-green-900">72</p>
+                                </div>
+                                <i class="fas fa-power-off text-green-600 text-2xl"></i>
+                            </div>
+                        </div>
+                        <div class="bg-yellow-50 p-4 rounded-lg">
+                            <div class="flex items-center justify-between">
+                                <div>
+                                    <p class="text-yellow-800 font-medium">Standby</p>
+                                    <p class="text-2xl font-bold text-yellow-900">18</p>
+                                </div>
+                                <i class="fas fa-pause text-yellow-600 text-2xl"></i>
+                            </div>
+                        </div>
+                        <div class="bg-red-50 p-4 rounded-lg">
+                            <div class="flex items-center justify-between">
+                                <div>
+                                    <p class="text-red-800 font-medium">Error</p>
+                                    <p class="text-2xl font-bold text-red-900">6</p>
+                                </div>
+                                <i class="fas fa-exclamation-triangle text-red-600 text-2xl"></i>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Equipment List -->
+                    <div class="overflow-x-auto">
+                        <table class="w-full">
+                            <thead class="bg-gray-50">
+                                <tr>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">ID</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Nama</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Tipe</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Lokasi</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Konsumsi</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Aksi</th>
+                                </tr>
+                            </thead>
+                            <tbody class="bg-white divide-y divide-gray-200">
+                                <tr>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">EQP001</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">AC Split 1</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">HVAC</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">Ruang 101</td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
+                                            Aktif
+                                        </span>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">1200 W</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                                        <button class="text-blue-600 hover:text-blue-900 mr-3">Detail</button>
+                                        <button class="text-green-600 hover:text-green-900">Control</button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">EQP002</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">Proyektor EPSON</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">Audio Visual</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">Ruang 102</td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
+                                            Aktif
+                                        </span>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">300 W</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                                        <button class="text-blue-600 hover:text-blue-900 mr-3">Detail</button>
+                                        <button class="text-green-600 hover:text-green-900">Control</button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">EQP003</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">Lampu LED Main</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">Pencahayaan</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">Ruang 103</td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-yellow-100 text-yellow-800">
+                                            Standby
+                                        </span>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">0 W</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                                        <button class="text-blue-600 hover:text-blue-900 mr-3">Detail</button>
+                                        <button class="text-green-600 hover:text-green-900">Control</button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">EQP004</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">Speaker Active</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">Audio</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">Ruang 201</td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-100 text-red-800">
+                                            Error
+                                        </span>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">--</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                                        <button class="text-blue-600 hover:text-blue-900 mr-3">Detail</button>
+                                        <button class="text-red-600 hover:text-red-900">Reset</button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Analitik Page -->
+            <div id="analitik" class="page hidden">
+                <div class="bg-white rounded-xl p-6 card-shadow mb-6">
+                    <h3 class="text-xl font-semibold text-gray-800 mb-6">Analitik Penggunaan Ruang</h3>
+                    
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
+                        <!-- Room Usage Trend -->
+                        <div class="bg-gray-50 p-6 rounded-xl">
+                            <h4 class="text-lg font-semibold text-gray-800 mb-4">Trend Penggunaan Ruang</h4>
+                            <canvas id="roomUsageTrendChart" height="300"></canvas>
+                        </div>
+                        
+                        <!-- Peak Hours -->
+                        <div class="bg-gray-50 p-6 rounded-xl">
+                            <h4 class="text-lg font-semibold text-gray-800 mb-4">Jam Puncak Penggunaan</h4>
+                            <canvas id="peakHoursChart" height="300"></canvas>
+                        </div>
+                        
+                        <!-- Energy Consumption -->
+                        <div class="bg-gray-50 p-6 rounded-xl">
+                            <h4 class="text-lg font-semibold text-gray-800 mb-4">Konsumsi Energi</h4>
+                            <canvas id="energyChart" height="300"></canvas>
+                        </div>
+                        
+                        <!-- Efficiency Score -->
+                        <div class="bg-gray-50 p-6 rounded-xl">
+                            <h4 class="text-lg font-semibold text-gray-800 mb-4">Skor Efisiensi</h4>
+                            <div class="flex items-center justify-center h-64">
+                                <div class="relative">
+                                    <svg class="w-48 h-48">
+                                        <circle cx="96" cy="96" r="88" stroke="#e5e7eb" stroke-width="12" fill="none"></circle>
+                                        <circle cx="96" cy="96" r="88" stroke="#10b981" stroke-width="12" fill="none" 
+                                                stroke-dasharray="552.92" stroke-dashoffset="110.58" 
+                                                transform="rotate(-90 96 96)"></circle>
+                                    </svg>
+                                    <div class="absolute inset-0 flex items-center justify-center">
+                                        <div class="text-center">
+                                            <p class="text-4xl font-bold text-gray-800">82%</p>
+                                            <p class="text-sm text-gray-600">Efisiensi</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Optimization Recommendations -->
+                    <div>
+                        <h4 class="text-lg font-semibold text-gray-800 mb-4">Rekomendasi Optimasi</h4>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div class="bg-blue-50 p-4 rounded-lg border-l-4 border-blue-500">
+                                <h5 class="font-medium text-blue-800 mb-2">Optimasi Jadwal</h5>
+                                <p class="text-sm text-blue-700">Ruang 103 sering melebihi kapasitas. Disarankan untuk mendistribusikan beberapa kelas ke ruangan lain.</p>
+                            </div>
+                            <div class="bg-green-50 p-4 rounded-lg border-l-4 border-green-500">
+                                <h5 class="font-medium text-green-800 mb-2">Penghematan Energi</h5>
+                                <p class="text-sm text-green-700">AC di Ruang 201 sering dinyalakan saat tidak digunakan. Disarankan untuk mengatur timer otomatis.</p>
+                            </div>
+                            <div class="bg-yellow-50 p-4 rounded-lg border-l-4 border-yellow-500">
+                                <h5 class="font-medium text-yellow-800 mb-2">Perawatan Peralatan</h5>
+                                <p class="text-sm text-yellow-700">Speaker di Ruang 202 menunjukkan indikasi error. Segera lakukan perawatan atau penggantian.</p>
+                            </div>
+                            <div class="bg-purple-50 p-4 rounded-lg border-l-4 border-purple-500">
+                                <h5 class="font-medium text-purple-800 mb-2">Penambahan Sensor</h5>
+                                <p class="text-sm text-purple-700">Pertimbangkan untuk menambah sensor kualitas udara di Ruang 101 untuk monitoring yang lebih komprehensif.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Modal -->
+    <div id="modal" class="fixed inset-0 bg-black bg-opacity-50 hidden z-50">
+        <div class="flex items-center justify-center min-h-screen p-4">
+            <div class="bg-white rounded-xl max-w-2xl w-full p-6">
+                <div class="flex justify-between items-center mb-6">
+                    <h3 id="modalTitle" class="text-2xl font-bold text-gray-800">Tambah Data</h3>
+                    <button onclick="closeModal()" class="text-gray-500 hover:text-gray-700">
+                        <i class="fas fa-times text-xl"></i>
+                    </button>
+                </div>
+                
+                <form id="modalForm">
+                    <!-- Dynamic content will be inserted here -->
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Page Navigation
+        function showPage(pageId) {
+            // Hide all pages
+            document.querySelectorAll('.page').forEach(page => {
+                page.classList.add('hidden');
+            });
+            
+            // Show selected page
+            document.getElementById(pageId).classList.remove('hidden');
+            
+            // Update page title
+            const titles = {
+                'dashboard': 'Dashboard Monitoring',
+                'ruangan': 'Monitoring Ruang',
+                'sensor': 'Data Sensor',
+                'kehadiran': 'Kehadiran',
+                'peralatan': 'Peralatan',
+                'analitik': 'Analitik'
+            };
+            document.getElementById('pageTitle').textContent = titles[pageId];
+            
+            // Update active sidebar item
+            document.querySelectorAll('.sidebar-item').forEach(item => {
+                item.classList.remove('active');
+            });
+            event.target.closest('.sidebar-item').classList.add('active');
+            
+            // Initialize charts if needed
+            if (pageId === 'dashboard') {
+                setTimeout(() => {
+                    initializeDashboardCharts();
+                    initializeMiniCharts();
+                }, 100);
+            } else if (pageId === 'sensor') {
+                setTimeout(() => {
+                    initializeSensorCharts();
+                }, 100);
+            } else if (pageId === 'analitik') {
+                setTimeout(() => {
+                    initializeAnalyticsCharts();
+                }, 100);
+            }
+        }
+
+        // Modal Functions
+        function showModal(type) {
+            const modal = document.getElementById('modal');
+            const modalTitle = document.getElementById('modalTitle');
+            const modalForm = document.getElementById('modalForm');
+            
+            // Set modal content based on type
+            switch(type) {
+                case 'tambahSensor':
+                    modalTitle.textContent = 'Tambah Sensor';
+                    modalForm.innerHTML = `
+                        <div class="space-y-4">
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">ID Sensor</label>
+                                <input type="text" class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent" placeholder="TEMP_001">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">Tipe Sensor</label>
+                                <select class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent">
+                                    <option>Suhu</option>
+                                    <option>Kelembaban</option>
+                                    <option>Kepadatan</option>
+                                    <option>Cahaya</option>
+                                    <option>Kualitas Udara</option>
+                                    <option>Kelembaban Tanah</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">Lokasi</label>
+                                <select class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent">
+                                    <option>Ruang 101</option>
+                                    <option>Ruang 102</option>
+                                    <option>Ruang 103</option>
+                                    <option>Ruang 201</option>
+                                    <option>Ruang 202</option>
+                                    <option>Ruang 203</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">Satuan Pengukuran</label>
+                                <input type="text" class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent" placeholder="°C">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">Threshold Minimum</label>
+                                <input type="number" class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent" placeholder="18">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">Threshold Maximum</label>
+                                <input type="number" class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent" placeholder="30">
+                            </div>
+                        </div>
+                    `;
+                    break;
+                    
+                case 'tambahPeralatan':
+                    modalTitle.textContent = 'Tambah Peralatan';
+                    modalForm.innerHTML = `
+                        <div class="space-y-4">
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">ID Peralatan</label>
+                                <input type="text" class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent" placeholder="EQP001">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">Nama Peralatan</label>
+                                <input type="text" class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent" placeholder="AC Split 1">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">Tipe Peralatan</label>
+                                <select class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent">
+                                    <option>HVAC</option>
+                                    <option>Audio Visual</option>
+                                    <option>Pencahayaan</option>
+                                    <option>Audio</option>
+                                    <option>Komputer</option>
+                                    <option>Lainnya</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">Lokasi</label>
+                                <select class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent">
+                                    <option>Ruang 101</option>
+                                    <option>Ruang 102</option>
+                                    <option>Ruang 103</option>
+                                    <option>Ruang 201</option>
+                                    <option>Ruang 202</option>
+                                    <option>Ruang 203</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">Daya (Watt)</label>
+                                <input type="number" class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent" placeholder="1200">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">Status Awal</label>
+                                <select class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent">
+                                    <option>Aktif</option>
+                                    <option>Standby</option>
+                                    <option>Nonaktif</option>
+                                </select>
+                            </div>
+                        </div>
+                    `;
+                    break;
+                    
+                case 'aturJadwal':
+                    modalTitle.textContent = 'Atur Jadwal Otomatis';
+                    modalForm.innerHTML = `
+                        <div class="space-y-4">
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">Pilih Ruangan</label>
+                                <select class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                                    <option>Ruang 101</option>
+                                    <option>Ruang 102</option>
+                                    <option>Ruang 103</option>
+                                    <option>Ruang 201</option>
+                                    <option>Ruang 202</option>
+                                    <option>Ruang 203</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">Pilih Peralatan</label>
+                                <select class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                                    <option>Semua Peralatan</option>
+                                    <option>AC</option>
+                                    <option>Lampu</option>
+                                    <option>Proyektor</option>
+                                    <option>Speaker</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">Jadwal</label>
+                                <div class="grid grid-cols-2 gap-4">
+                                    <div>
+                                        <label class="text-xs text-gray-600 mb-1">Waktu Mulai</label>
+                                        <input type="time" class="w-full px-3 py-2 border rounded-lg">
+                                    </div>
+                                    <div>
+                                        <label class="text-xs text-gray-600 mb-1">Waktu Selesai</label>
+                                        <input type="time" class="w-full px-3 py-2 border rounded-lg">
+                                    </div>
+                                </div>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">Hari</label>
+                                <div class="grid grid-cols-3 gap-2">
+                                    <label class="flex items-center">
+                                        <input type="checkbox" class="rounded text-blue-600" checked>
+                                        <span class="ml-2 text-sm">Senin</span>
+                                    </label>
+                                    <label class="flex items-center">
+                                        <input type="checkbox" class="rounded text-blue-600" checked>
+                                        <span class="ml-2 text-sm">Selasa</span>
+                                    </label>
+                                    <label class="flex items-center">
+                                        <input type="checkbox" class="rounded text-blue-600" checked>
+                                        <span class="ml-2 text-sm">Rabu</span>
+                                    </label>
+                                    <label class="flex items-center">
+                                        <input type="checkbox" class="rounded text-blue-600" checked>
+                                        <span class="ml-2 text-sm">Kamis</span>
+                                    </label>
+                                    <label class="flex items-center">
+                                        <input type="checkbox" class="rounded text-blue-600" checked>
+                                        <span class="ml-2 text-sm">Jumat</span>
+                                    </label>
+                                    <label class="flex items-center">
+                                        <input type="checkbox" class="rounded text-blue-600">
+                                        <span class="ml-2 text-sm">Sabtu</span>
+                                    </label>
+                                </div>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">Aksi</label>
+                                <select class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                                    <option>Nyalakan</option>
+                                    <option>Matikan</option>
+                                    <option>Mode Eco</option>
+                                    <option>Mode Power</option>
+                                </select>
+                            </div>
+                        </div>
+                    `;
+                    break;
+            }
+            
+            // Add submit button
+            modalForm.innerHTML += `
+                <div class="flex gap-4 mt-6">
+                    <button type="submit" class="flex-1 bg-green-600 text-white py-2 rounded-lg font-medium hover:bg-green-700 transition">
+                        Simpan
+                    </button>
+                    <button type="button" onclick="closeModal()" class="flex-1 bg-gray-300 text-gray-700 py-2 rounded-lg font-medium hover:bg-gray-400 transition">
+                        Batal
+                    </button>
+                </div>
+            `;
+            
+            modal.classList.remove('hidden');
+        }
+
+        function closeModal() {
+            document.getElementById('modal').classList.add('hidden');
+        }
+
+        // Form submission
+        document.getElementById('modalForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            // Show success notification
+            showNotification('Data berhasil disimpan!', 'success');
+            closeModal();
+        });
+
+        // Notification function
+        function showNotification(message, type) {
+            const notification = document.createElement('div');
+            notification.className = `fixed top-4 right-4 px-6 py-3 rounded-lg text-white z-50 notification ${
+                type === 'success' ? 'bg-green-500' : 
+                type === 'error' ? 'bg-red-500' : 'bg-blue-500'
+            }`;
+            notification.innerHTML = `
+                <div class="flex items-center">
+                    <i class="fas ${type === 'success' ? 'fa-check-circle' : type === 'error' ? 'fa-exclamation-circle' : 'fa-info-circle'} mr-2"></i>
+                    ${message}
+                </div>
+            `;
+            document.body.appendChild(notification);
+            
+            setTimeout(() => {
+                notification.remove();
+            }, 3000);
+        }
+
+        // Initialize Dashboard Charts
+        function initializeDashboardCharts() {
+            // Room Usage Chart
+            const roomUsageCtx = document.getElementById('roomUsageChart').getContext('2d');
+            new Chart(roomUsageCtx, {
+                type: 'doughnut',
+                data: {
+                    labels: ['Aktif', 'Tidak Aktif'],
+                    datasets: [{
+                        data: [75, 25],
+                        backgroundColor: ['#10b981', '#e5e7eb']
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'bottom'
+                        }
+                    }
+                }
+            });
+        }
+
+        // Initialize Mini Charts
+        function initializeMiniCharts() {
+            // Room Usage Mini Chart
+            const roomUsageMiniCtx = document.getElementById('roomUsageMini').getContext('2d');
+            new Chart(roomUsageMiniCtx, {
+                type: 'line',
+                data: {
+                    labels: ['', '', '', '', '', '', ''],
+                    datasets: [{
+                        data: [65, 70, 68, 72, 75, 73, 75],
+                        borderColor: '#10b981',
+                        borderWidth: 2,
+                        tension: 0.4,
+                        fill: false,
+                        pointRadius: 0
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            display: false
+                        }
+                    },
+                    scales: {
+                        x: {
+                            display: false
+                        },
+                        y: {
+                            display: false
+                        }
+                    }
+                }
+            });
+
+            // Attendance Mini Chart
+            const attendanceMiniCtx = document.getElementById('attendanceMini').getContext('2d');
+            new Chart(attendanceMiniCtx, {
+                type: 'bar',
+                data: {
+                    labels: ['', '', '', '', '', '', ''],
+                    datasets: [{
+                        data: [320, 335, 342, 338, 345, 342, 342],
+                        backgroundColor: '#8b5cf6'
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            display: false
+                        }
+                    },
+                    scales: {
+                        x: {
+                            display: false
+                        },
+                        y: {
+                            display: false
+                        }
+                    }
+                }
+            });
+        }
+
+        // Initialize Sensor Charts
+        function initializeSensorCharts() {
+            // Temperature Chart
+            const tempCtx = document.getElementById('tempChart').getContext('2d');
+            new Chart(tempCtx, {
+                type: 'line',
+                data: {
+                    labels: ['00:00', '04:00', '08:00', '12:00', '16:00', '20:00'],
+                    datasets: [{
+                        label: 'Suhu (°C)',
+                        data: [22.5, 22.1, 23.8, 24.5, 24.2, 23.5],
+                        borderColor: '#3b82f6',
+                        backgroundColor: 'rgba(59, 130, 246, 0.1)',
+                        tension: 0.4,
+                        fill: true
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            display: false
+                        }
+                    }
+                }
+            });
+
+            // Density Chart
+            const densityCtx = document.getElementById('densityChart').getContext('2d');
+            new Chart(densityCtx, {
+                type: 'line',
+                data: {
+                    labels: ['00:00', '04:00', '08:00', '12:00', '16:00', '20:00'],
+                    datasets: [{
+                        label: 'Kepadatan (%)',
+                        data: [0, 0, 45, 85, 70, 20],
+                        borderColor: '#10b981',
+                        backgroundColor: 'rgba(16, 185, 129, 0.1)',
+                        tension: 0.4,
+                        fill: true
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            display: false
+                        }
+                    }
+                }
+            });
+
+            // Light Chart
+            const lightCtx = document.getElementById('lightChart').getContext('2d');
+            new Chart(lightCtx, {
+                type: 'bar',
+                data: {
+                    labels: ['00:00', '04:00', '08:00', '12:00', '16:00', '20:00'],
+                    datasets: [{
+                        label: 'Intensitas Cahaya (lux)',
+                        data: [0, 0, 350, 500, 450, 200],
+                        backgroundColor: '#f59e0b'
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            display: false
+                        }
+                    }
+                }
+            });
+        }
+
+        // Initialize Analytics Charts
+        function initializeAnalyticsCharts() {
+            // Room Usage Trend Chart
+            const roomUsageTrendCtx = document.getElementById('roomUsageTrendChart').getContext('2d');
+            new Chart(roomUsageTrendCtx, {
+                type: 'line',
+                data: {
+                    labels: ['Sen', 'Sel', 'Rab', 'Kam', 'Jum'],
+                    datasets: [{
+                        label: 'Penggunaan Ruang (%)',
+                        data: [72, 78, 85, 82, 75],
+                        borderColor: '#3b82f6',
+                        backgroundColor: 'rgba(59, 130, 246, 0.1)',
+                        tension: 0.4,
+                        fill: true
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            max: 100
+                        }
+                    }
+                }
+            });
+
+            // Peak Hours Chart
+            const peakHoursCtx = document.getElementById('peakHoursChart').getContext('2d');
+            new Chart(peakHoursCtx, {
+                type: 'bar',
+                data: {
+                    labels: ['07:00', '08:00', '09:00', '10:00', '11:00', '12:00', '13:00', '14:00', '15:00', '16:00', '17:00'],
+                    datasets: [{
+                        label: 'Jumlah Penggunaan',
+                        data: [45, 85, 90, 75, 65, 55, 60, 70, 80, 85, 65],
+                        backgroundColor: '#8b5cf6'
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+
+            // Energy Chart
+            const energyCtx = document.getElementById('energyChart').getContext('2d');
+            new Chart(energyCtx, {
+                type: 'line',
+                data: {
+                    labels: ['Sen', 'Sel', 'Rab', 'Kam', 'Jum'],
+                    datasets: [{
+                        label: 'Konsumsi Energi (kWh)',
+                        data: [120, 135, 125, 140, 130],
+                        borderColor: '#f59e0b',
+                        backgroundColor: 'rgba(245, 158, 11, 0.1)',
+                        tension: 0.4,
+                        fill: true
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+        }
+
+        // Update current time
+        function updateTime() {
+            const now = new Date();
+            const timeString = now.toLocaleTimeString('id-ID', { 
+                hour: '2-digit', 
+                minute: '2-digit',
+                second: '2-digit'
+            });
+            document.getElementById('currentTime').textContent = timeString;
+        }
+
+        // Update time every second
+        setInterval(updateTime, 1000);
+
+        function toggleDarkMode() {
+            document.body.classList.toggle('dark-mode');
+        }
+
+        function logout() {
+            if (confirm('Apakah Anda yakin ingin keluar?')) {
+                showNotification('Anda telah keluar dari sistem', 'info');
+                setTimeout(() => {
+                    window.location.href = '#';
+                }, 1500);
+            }
+        }
+
+        // Initialize on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            showPage('dashboard');
+        });
+    </script>
+</body>
+</html>

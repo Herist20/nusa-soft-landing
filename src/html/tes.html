@@ -1,0 +1,1239 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistem Penjadwalan Perkuliahan Otomatis</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+        
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        
+        .gradient-bg {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+        
+        .card-shadow {
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+        }
+        
+        .hover-scale {
+            transition: all 0.3s ease;
+        }
+        
+        .hover-scale:hover {
+            transform: scale(1.02);
+        }
+        
+        .schedule-cell {
+            min-height: 80px;
+            transition: all 0.2s ease;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .schedule-cell:hover {
+            background-color: #f3f4f6;
+            transform: scale(1.02);
+            z-index: 10;
+        }
+        
+        .schedule-cell.active {
+            box-shadow: 0 0 0 2px #8B5CF6;
+        }
+        
+        .schedule-cell .course-details {
+            opacity: 0;
+            transform: translateY(10px);
+            transition: all 0.3s ease;
+        }
+        
+        .schedule-cell:hover .course-details {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .animate-float {
+            animation: float 6s ease-in-out infinite;
+        }
+        
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0px); }
+        }
+        
+        .loading-spinner {
+            border: 3px solid #f3f3f3;
+            border-top: 3px solid #667eea;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        .sidebar-item {
+            transition: all 0.3s ease;
+        }
+        
+        .sidebar-item:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+            border-left: 4px solid #fff;
+        }
+        
+        .sidebar-item.active {
+            background-color: rgba(255, 255, 255, 0.2);
+            border-left: 4px solid #fff;
+        }
+        
+        .notification {
+            animation: slideIn 0.5s ease-out;
+        }
+        
+        @keyframes slideIn {
+            from {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+        
+        .dark-mode {
+            background-color: #1a202c;
+            color: #e2e8f0;
+        }
+        
+        .dark-mode .bg-white {
+            background-color: #2d3748;
+        }
+        
+        .dark-mode .text-gray-800 {
+            color: #e2e8f0;
+        }
+        
+        .dark-mode .text-gray-600 {
+            color: #cbd5e0;
+        }
+        
+        .dark-mode .text-gray-500 {
+            color: #a0aec0;
+        }
+        
+        .dark-mode .text-gray-700 {
+            color: #e2e8f0;
+        }
+        
+        .dark-mode .bg-gray-50 {
+            background-color: #2d3748;
+        }
+        
+        .dark-mode .border-t {
+            border-color: #4a5568;
+        }
+        
+        .dark-mode .bg-purple-50 {
+            background-color: rgba(139, 92, 246, 0.1);
+        }
+        
+        .dark-mode .bg-blue-50 {
+            background-color: rgba(59, 130, 246, 0.1);
+        }
+        
+        .dark-mode .bg-green-50 {
+            background-color: rgba(16, 185, 129, 0.1);
+        }
+        
+        .dark-mode .bg-yellow-50 {
+            background-color: rgba(245, 158, 11, 0.1);
+        }
+        
+        .dark-mode .bg-pink-50 {
+            background-color: rgba(236, 72, 153, 0.1);
+        }
+        
+        .dark-mode .bg-gray-100 {
+            background-color: #4a5568;
+        }
+        
+        .dark-mode .shadow-lg {
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.5), 0 4px 6px -2px rgba(0, 0, 0, 0.3);
+        }
+        
+        .conflict-indicator {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background-color: #ef4444;
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0% {
+                box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.7);
+            }
+            70% {
+                box-shadow: 0 0 0 10px rgba(239, 68, 68, 0);
+            }
+            100% {
+                box-shadow: 0 0 0 0 rgba(239, 68, 68, 0);
+            }
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <!-- Sidebar -->
+    <div class="fixed inset-y-0 left-0 z-50 w-64 gradient-bg text-white">
+        <div class="flex flex-col h-full">
+            <!-- Logo -->
+            <div class="flex items-center justify-center h-16 px-4 border-b border-white/20">
+                <i class="fas fa-calendar-alt text-3xl mr-3"></i>
+                <h1 class="text-xl font-bold">JadwalKu</h1>
+            </div>
+            
+            <!-- Navigation -->
+            <nav class="flex-1 px-4 py-6 overflow-y-auto">
+                <a href="#" onclick="showPage('dashboard')" class="sidebar-item active flex items-center px-4 py-3 mb-2 text-white rounded-lg">
+                    <i class="fas fa-tachometer-alt w-5 mr-3"></i>
+                    Dashboard
+                </a>
+                <a href="#" onclick="showPage('schedule')" class="sidebar-item flex items-center px-4 py-3 mb-2 text-white rounded-lg">
+                    <i class="fas fa-calendar-week w-5 mr-3"></i>
+                    Jadwal Perkuliahan
+                </a>
+                <a href="#" onclick="showPage('courses')" class="sidebar-item flex items-center px-4 py-3 mb-2 text-white rounded-lg">
+                    <i class="fas fa-book w-5 mr-3"></i>
+                    Mata Kuliah
+                </a>
+                <a href="#" onclick="showPage('lecturers')" class="sidebar-item flex items-center px-4 py-3 mb-2 text-white rounded-lg">
+                    <i class="fas fa-chalkboard-teacher w-5 mr-3"></i>
+                    Dosen
+                </a>
+                <a href="#" onclick="showPage('rooms')" class="sidebar-item flex items-center px-4 py-3 mb-2 text-white rounded-lg">
+                    <i class="fas fa-door-open w-5 mr-3"></i>
+                    Ruangan
+                </a>
+                <a href="#" onclick="showPage('analytics')" class="sidebar-item flex items-center px-4 py-3 mb-2 text-white rounded-lg">
+                    <i class="fas fa-chart-bar w-5 mr-3"></i>
+                    Analitik
+                </a>
+                <a href="#" onclick="showPage('settings')" class="sidebar-item flex items-center px-4 py-3 mb-2 text-white rounded-lg">
+                    <i class="fas fa-cog w-5 mr-3"></i>
+                    Pengaturan
+                </a>
+            </nav>
+            
+            <!-- User Profile -->
+            <div class="px-4 py-4 border-t border-white/20">
+                <div class="flex items-center">
+                    <div class="flex-shrink-0">
+                        <img class="h-10 w-10 rounded-full" src="https://picsum.photos/seed/user/40/40.jpg" alt="User">
+                    </div>
+                    <div class="ml-3">
+                        <p class="text-sm font-medium">Admin</p>
+                        <p class="text-xs opacity-80">admin@kampus.ac.id</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="ml-64">
+        <!-- Top Bar -->
+        <header class="bg-white shadow-sm">
+            <div class="px-6 py-4 flex items-center justify-between">
+                <div>
+                    <h2 class="text-2xl font-bold text-gray-800" id="pageTitle">Dashboard</h2>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <button onclick="toggleDarkMode()" class="p-2 text-gray-600 hover:text-gray-900">
+                        <i class="fas fa-moon text-xl"></i>
+                    </button>
+                    <button class="p-2 text-gray-600 hover:text-gray-900">
+                        <i class="fas fa-bell text-xl"></i>
+                        <span class="absolute top-4 right-4 h-2 w-2 bg-red-500 rounded-full"></span>
+                    </button>
+                    <button onclick="logout()" class="bg-purple-600 text-white px-4 py-2 rounded-lg font-medium hover:bg-purple-700 transition">
+                        <i class="fas fa-sign-out-alt mr-2"></i>Keluar
+                    </button>
+                </div>
+            </div>
+        </header>
+
+        <!-- Page Content -->
+        <main class="p-6">
+            <!-- Dashboard Page -->
+            <div id="dashboard" class="page">
+                <!-- Stats Cards -->
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+                    <div class="bg-white rounded-xl p-6 card-shadow hover-scale">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <p class="text-gray-500 text-sm">Total Mata Kuliah</p>
+                                <p class="text-3xl font-bold text-gray-800">24</p>
+                                <p class="text-sm text-green-600 mt-1">
+                                    <i class="fas fa-arrow-up"></i> 2 dari semester lalu
+                                </p>
+                            </div>
+                            <div class="bg-purple-100 p-3 rounded-lg">
+                                <i class="fas fa-book text-purple-600 text-xl"></i>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="bg-white rounded-xl p-6 card-shadow hover-scale">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <p class="text-gray-500 text-sm">Total Dosen</p>
+                                <p class="text-3xl font-bold text-gray-800">15</p>
+                                <p class="text-sm text-green-600 mt-1">
+                                    <i class="fas fa-arrow-up"></i> 1 dari semester lalu
+                                </p>
+                            </div>
+                            <div class="bg-blue-100 p-3 rounded-lg">
+                                <i class="fas fa-chalkboard-teacher text-blue-600 text-xl"></i>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="bg-white rounded-xl p-6 card-shadow hover-scale">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <p class="text-gray-500 text-sm">Total Ruangan</p>
+                                <p class="text-3xl font-bold text-gray-800">12</p>
+                                <p class="text-sm text-gray-600 mt-1">
+                                    <i class="fas fa-minus"></i> Tetap
+                                </p>
+                            </div>
+                            <div class="bg-green-100 p-3 rounded-lg">
+                                <i class="fas fa-door-open text-green-600 text-xl"></i>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="bg-white rounded-xl p-6 card-shadow hover-scale">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <p class="text-gray-500 text-sm">Konflik Terdeteksi</p>
+                                <p class="text-3xl font-bold text-gray-800">0</p>
+                                <p class="text-sm text-green-600 mt-1">
+                                    <i class="fas fa-check-circle"></i> Aman
+                                </p>
+                            </div>
+                            <div class="bg-red-100 p-3 rounded-lg">
+                                <i class="fas fa-exclamation-triangle text-red-600 text-xl"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Action Buttons -->
+                <div class="bg-white rounded-xl p-6 card-shadow mb-8">
+                    <div class="flex flex-wrap gap-4">
+                        <button onclick="generateSchedule()" class="bg-purple-600 text-white px-6 py-3 rounded-lg font-medium hover:bg-purple-700 transition flex items-center">
+                            <i class="fas fa-magic mr-2"></i>Generate Jadwal Otomatis
+                        </button>
+                        <button onclick="showInputForm()" class="bg-blue-600 text-white px-6 py-3 rounded-lg font-medium hover:bg-blue-700 transition flex items-center">
+                            <i class="fas fa-plus mr-2"></i>Tambah Data
+                        </button>
+                        <button onclick="exportSchedule()" class="bg-green-600 text-white px-6 py-3 rounded-lg font-medium hover:bg-green-700 transition flex items-center">
+                            <i class="fas fa-download mr-2"></i>Export Jadwal
+                        </button>
+                        <button onclick="resetSchedule()" class="bg-gray-600 text-white px-6 py-3 rounded-lg font-medium hover:bg-gray-700 transition flex items-center">
+                            <i class="fas fa-redo mr-2"></i>Reset
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Visualization Section -->
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                    <!-- Room Usage Chart -->
+                    <div class="bg-white rounded-xl p-6 card-shadow">
+                        <h3 class="text-xl font-bold text-gray-800 mb-4">Penggunaan Ruangan</h3>
+                        <canvas id="roomUsageChart" width="400" height="300"></canvas>
+                    </div>
+                    
+                    <!-- Teacher Load Chart -->
+                    <div class="bg-white rounded-xl p-6 card-shadow">
+                        <h3 class="text-xl font-bold text-gray-800 mb-4">Beban Mengajar Dosen</h3>
+                        <canvas id="teacherLoadChart" width="400" height="300"></canvas>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Schedule Page -->
+            <div id="schedule" class="page hidden">
+                <div class="bg-white rounded-xl card-shadow overflow-hidden">
+                    <div class="p-6 border-b flex justify-between items-center">
+                        <div>
+                            <h2 class="text-2xl font-bold text-gray-800">Jadwal Perkuliahan</h2>
+                            <p class="text-gray-600 mt-1">Semester Ganjil 2024/2025</p>
+                        </div>
+                        <div class="flex gap-2">
+                            <button class="bg-gray-100 text-gray-700 px-4 py-2 rounded-lg font-medium hover:bg-gray-200 transition">
+                                <i class="fas fa-filter mr-2"></i>Filter
+                            </button>
+                            <button class="bg-purple-600 text-white px-4 py-2 rounded-lg font-medium hover:bg-purple-700 transition">
+                                <i class="fas fa-print mr-2"></i>Cetak
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="overflow-x-auto">
+                        <table class="w-full">
+                            <thead class="bg-gray-50">
+                                <tr>
+                                    <th class="px-6 py-4 text-left text-sm font-medium text-gray-700">Waktu</th>
+                                    <th class="px-6 py-4 text-center text-sm font-medium text-gray-700">Senin</th>
+                                    <th class="px-6 py-4 text-center text-sm font-medium text-gray-700">Selasa</th>
+                                    <th class="px-6 py-4 text-center text-sm font-medium text-gray-700">Rabu</th>
+                                    <th class="px-6 py-4 text-center text-sm font-medium text-gray-700">Kamis</th>
+                                    <th class="px-6 py-4 text-center text-sm font-medium text-gray-700">Jumat</th>
+                                </tr>
+                            </thead>
+                            <tbody id="scheduleBody">
+                                <!-- Schedule rows will be inserted here -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Courses Page -->
+            <div id="courses" class="page hidden">
+                <div class="bg-white rounded-xl card-shadow overflow-hidden">
+                    <div class="p-6 border-b flex justify-between items-center">
+                        <h2 class="text-2xl font-bold text-gray-800">Daftar Mata Kuliah</h2>
+                        <button onclick="showInputForm('course')" class="bg-purple-600 text-white px-4 py-2 rounded-lg font-medium hover:bg-purple-700 transition">
+                            <i class="fas fa-plus mr-2"></i>Tambah Mata Kuliah
+                        </button>
+                    </div>
+                    
+                    <div class="overflow-x-auto">
+                        <table class="w-full">
+                            <thead class="bg-gray-50">
+                                <tr>
+                                    <th class="px-6 py-4 text-left text-sm font-medium text-gray-700">Kode</th>
+                                    <th class="px-6 py-4 text-left text-sm font-medium text-gray-700">Nama</th>
+                                    <th class="px-6 py-4 text-left text-sm font-medium text-gray-700">SKS</th>
+                                    <th class="px-6 py-4 text-left text-sm font-medium text-gray-700">Semester</th>
+                                    <th class="px-6 py-4 text-left text-sm font-medium text-gray-700">Dosen</th>
+                                    <th class="px-6 py-4 text-left text-sm font-medium text-gray-700">Aksi</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr class="border-t hover:bg-gray-50">
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">IF101</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">Pemrograman Web</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">3</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">3</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Dr. Ahmad</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                                        <button class="text-blue-600 hover:text-blue-900 mr-3">Detail</button>
+                                        <button class="text-green-600 hover:text-green-900">Edit</button>
+                                    </td>
+                                </tr>
+                                <tr class="border-t hover:bg-gray-50">
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">IF102</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">Basis Data</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">3</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">3</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Prof. Siti</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                                        <button class="text-blue-600 hover:text-blue-900 mr-3">Detail</button>
+                                        <button class="text-green-600 hover:text-green-900">Edit</button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Lecturers Page -->
+            <div id="lecturers" class="page hidden">
+                <div class="bg-white rounded-xl card-shadow overflow-hidden">
+                    <div class="p-6 border-b flex justify-between items-center">
+                        <h2 class="text-2xl font-bold text-gray-800">Daftar Dosen</h2>
+                        <button onclick="showInputForm('lecturer')" class="bg-purple-600 text-white px-4 py-2 rounded-lg font-medium hover:bg-purple-700 transition">
+                            <i class="fas fa-plus mr-2"></i>Tambah Dosen
+                        </button>
+                    </div>
+                    
+                    <div class="overflow-x-auto">
+                        <table class="w-full">
+                            <thead class="bg-gray-50">
+                                <tr>
+                                    <th class="px-6 py-4 text-left text-sm font-medium text-gray-700">NIP</th>
+                                    <th class="px-6 py-4 text-left text-sm font-medium text-gray-700">Nama</th>
+                                    <th class="px-6 py-4 text-left text-sm font-medium text-gray-700">Email</th>
+                                    <th class="px-6 py-4 text-left text-sm font-medium text-gray-700">No. HP</th>
+                                    <th class="px-6 py-4 text-left text-sm font-medium text-gray-700">Aksi</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr class="border-t hover:bg-gray-50">
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">123456789</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">Dr. Ahmad, M.Kom</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">ahmad@kampus.ac.id</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">08123456789</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                                        <button class="text-blue-600 hover:text-blue-900 mr-3">Detail</button>
+                                        <button class="text-green-600 hover:text-green-900">Edit</button>
+                                    </td>
+                                </tr>
+                                <tr class="border-t hover:bg-gray-50">
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">987654321</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">Prof. Siti, Ph.D</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">siti@kampus.ac.id</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">08987654321</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                                        <button class="text-blue-600 hover:text-blue-900 mr-3">Detail</button>
+                                        <button class="text-green-600 hover:text-green-900">Edit</button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Rooms Page -->
+            <div id="rooms" class="page hidden">
+                <div class="bg-white rounded-xl card-shadow overflow-hidden">
+                    <div class="p-6 border-b flex justify-between items-center">
+                        <h2 class="text-2xl font-bold text-gray-800">Daftar Ruangan</h2>
+                        <button onclick="showInputForm('room')" class="bg-purple-600 text-white px-4 py-2 rounded-lg font-medium hover:bg-purple-700 transition">
+                            <i class="fas fa-plus mr-2"></i>Tambah Ruangan
+                        </button>
+                    </div>
+                    
+                    <div class="overflow-x-auto">
+                        <table class="w-full">
+                            <thead class="bg-gray-50">
+                                <tr>
+                                    <th class="px-6 py-4 text-left text-sm font-medium text-gray-700">Kode</th>
+                                    <th class="px-6 py-4 text-left text-sm font-medium text-gray-700">Nama</th>
+                                    <th class="px-6 py-4 text-left text-sm font-medium text-gray-700">Kapasitas</th>
+                                    <th class="px-6 py-4 text-left text-sm font-medium text-gray-700">Fasilitas</th>
+                                    <th class="px-6 py-4 text-left text-sm font-medium text-gray-700">Aksi</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr class="border-t hover:bg-gray-50">
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">LAB-301</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">Lab. Komputer 301</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">40</td>
+                                    <td class="px-6 py-4 text-sm text-gray-500">Proyektor, Komputer, AC</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                                        <button class="text-blue-600 hover:text-blue-900 mr-3">Detail</button>
+                                        <button class="text-green-600 hover:text-green-900">Edit</button>
+                                    </td>
+                                </tr>
+                                <tr class="border-t hover:bg-gray-50">
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">R-201</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">Ruang Kelas 201</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">60</td>
+                                    <td class="px-6 py-4 text-sm text-gray-500">Proyektor, AC, Papan Tulis</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                                        <button class="text-blue-600 hover:text-blue-900 mr-3">Detail</button>
+                                        <button class="text-green-600 hover:text-green-900">Edit</button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Analytics Page -->
+            <div id="analytics" class="page hidden">
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                    <!-- Room Usage Chart -->
+                    <div class="bg-white rounded-xl p-6 card-shadow">
+                        <h3 class="text-xl font-bold text-gray-800 mb-4">Penggunaan Ruangan</h3>
+                        <canvas id="roomUsageChart2" width="400" height="300"></canvas>
+                    </div>
+                    
+                    <!-- Teacher Load Chart -->
+                    <div class="bg-white rounded-xl p-6 card-shadow">
+                        <h3 class="text-xl font-bold text-gray-800 mb-4">Beban Mengajar Dosen</h3>
+                        <canvas id="teacherLoadChart2" width="400" height="300"></canvas>
+                    </div>
+                    
+                    <!-- Course Distribution Chart -->
+                    <div class="bg-white rounded-xl p-6 card-shadow">
+                        <h3 class="text-xl font-bold text-gray-800 mb-4">Distribusi Mata Kuliah per Hari</h3>
+                        <canvas id="courseDistributionChart" width="400" height="300"></canvas>
+                    </div>
+                    
+                    <!-- Time Slot Usage Chart -->
+                    <div class="bg-white rounded-xl p-6 card-shadow">
+                        <h3 class="text-xl font-bold text-gray-800 mb-4">Penggunaan Slot Waktu</h3>
+                        <canvas id="timeSlotUsageChart" width="400" height="300"></canvas>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Settings Page -->
+            <div id="settings" class="page hidden">
+                <div class="bg-white rounded-xl card-shadow p-6">
+                    <h2 class="text-2xl font-bold text-gray-800 mb-6">Pengaturan Sistem</h2>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                        <div>
+                            <h3 class="text-lg font-semibold text-gray-800 mb-4">Pengaturan Jadwal</h3>
+                            <div class="space-y-4">
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-2">Hari Kerja</label>
+                                    <div class="space-y-2">
+                                        <label class="flex items-center">
+                                            <input type="checkbox" class="rounded text-purple-600" checked>
+                                            <span class="ml-2">Senin</span>
+                                        </label>
+                                        <label class="flex items-center">
+                                            <input type="checkbox" class="rounded text-purple-600" checked>
+                                            <span class="ml-2">Selasa</span>
+                                        </label>
+                                        <label class="flex items-center">
+                                            <input type="checkbox" class="rounded text-purple-600" checked>
+                                            <span class="ml-2">Rabu</span>
+                                        </label>
+                                        <label class="flex items-center">
+                                            <input type="checkbox" class="rounded text-purple-600" checked>
+                                            <span class="ml-2">Kamis</span>
+                                        </label>
+                                        <label class="flex items-center">
+                                            <input type="checkbox" class="rounded text-purple-600" checked>
+                                            <span class="ml-2">Jumat</span>
+                                        </label>
+                                    </div>
+                                </div>
+                                
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-2">Slot Waktu</label>
+                                    <div class="space-y-2">
+                                        <div class="flex items-center">
+                                            <input type="text" value="07:00-08:40" class="w-full px-3 py-2 border rounded-lg">
+                                            <button class="ml-2 text-red-500">
+                                                <i class="fas fa-trash"></i>
+                                            </button>
+                                        </div>
+                                        <div class="flex items-center">
+                                            <input type="text" value="08:50-10:30" class="w-full px-3 py-2 border rounded-lg">
+                                            <button class="ml-2 text-red-500">
+                                                <i class="fas fa-trash"></i>
+                                            </button>
+                                        </div>
+                                        <button class="text-purple-600 text-sm">
+                                            <i class="fas fa-plus mr-1"></i>Tambah Slot Waktu
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div>
+                            <h3 class="text-lg font-semibold text-gray-800 mb-4">Pengaturan Algoritma</h3>
+                            <div class="space-y-4">
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-2">Jumlah Populasi</label>
+                                    <input type="number" value="100" class="w-full px-3 py-2 border rounded-lg">
+                                </div>
+                                
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-2">Jumlah Generasi</label>
+                                    <input type="number" value="50" class="w-full px-3 py-2 border rounded-lg">
+                                </div>
+                                
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-2">Tingkat Mutasi</label>
+                                    <input type="number" value="0.1" step="0.01" class="w-full px-3 py-2 border rounded-lg">
+                                </div>
+                                
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-2">Tingkat Crossover</label>
+                                    <input type="number" value="0.8" step="0.01" class="w-full px-3 py-2 border rounded-lg">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="mt-8 flex justify-end">
+                        <button class="bg-purple-600 text-white px-6 py-2 rounded-lg font-medium hover:bg-purple-700 transition">
+                            Simpan Pengaturan
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Input Modal -->
+    <div id="inputModal" class="fixed inset-0 bg-black bg-opacity-50 hidden z-50">
+        <div class="flex items-center justify-center min-h-screen p-4">
+            <div class="bg-white rounded-xl max-w-2xl w-full p-6">
+                <div class="flex justify-between items-center mb-6">
+                    <h3 id="modalTitle" class="text-2xl font-bold text-gray-800">Tambah Data</h3>
+                    <button onclick="closeModal()" class="text-gray-500 hover:text-gray-700">
+                        <i class="fas fa-times text-xl"></i>
+                    </button>
+                </div>
+                
+                <form id="dataForm">
+                    <!-- Dynamic content will be inserted here -->
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Loading Overlay -->
+    <div id="loadingOverlay" class="fixed inset-0 bg-black bg-opacity-50 hidden z-50 flex items-center justify-center">
+        <div class="bg-white rounded-xl p-8 text-center">
+            <div class="loading-spinner mx-auto mb-4"></div>
+            <p class="text-gray-700">Menggenerate jadwal...</p>
+            <p class="text-sm text-gray-500 mt-2">Mengoptimasi dengan algoritma genetika</p>
+        </div>
+    </div>
+
+    <script>
+        // Sample schedule data
+        const scheduleData = [
+            { time: '07:00-08:40', monday: { course: 'Pemrograman Web', teacher: 'Dr. Ahmad', room: 'Lab 301' }, 
+              tuesday: { course: '', teacher: '', room: '' },
+              wednesday: { course: 'Basis Data', teacher: 'Prof. Siti', room: 'R 201' },
+              thursday: { course: '', teacher: '', room: '' },
+              friday: { course: 'Algoritma', teacher: 'Dr. Budi', room: 'R 101' } },
+            { time: '08:50-10:30', monday: { course: 'Jaringan Komputer', teacher: 'Ir. Dewi', room: 'Lab 302' }, 
+              tuesday: { course: 'Sistem Operasi', teacher: 'Dr. Candra', room: 'R 202' },
+              wednesday: { course: '', teacher: '', room: '' },
+              thursday: { course: 'Pemrograman Web', teacher: 'Dr. Ahmad', room: 'Lab 301' },
+              friday: { course: '', teacher: '', room: '' } },
+            { time: '10:40-12:20', monday: { course: '', teacher: '', room: '' }, 
+              tuesday: { course: 'Kecerdasan Buatan', teacher: 'Prof. Eko', room: 'R 301' },
+              wednesday: { course: 'Jaringan Komputer', teacher: 'Ir. Dewi', room: 'Lab 302' },
+              thursday: { course: '', teacher: '', room: '' },
+              friday: { course: 'Basis Data', teacher: 'Prof. Siti', room: 'R 201' } },
+            { time: '13:00-14:40', monday: { course: 'Algoritma', teacher: 'Dr. Budi', room: 'R 101' }, 
+              tuesday: { course: '', teacher: '', room: '' },
+              wednesday: { course: 'Sistem Operasi', teacher: 'Dr. Candra', room: 'R 202' },
+              thursday: { course: 'Kecerdasan Buatan', teacher: 'Prof. Eko', room: 'R 301' },
+              friday: { course: '', teacher: '', room: '' } },
+            { time: '14:50-16:30', monday: { course: '', teacher: '', room: '' }, 
+              tuesday: { course: 'Pemrograman Mobile', teacher: 'Dr. Fajar', room: 'Lab 303' },
+              wednesday: { course: '', teacher: '', room: '' },
+              thursday: { course: 'Pemrograman Mobile', teacher: 'Dr. Fajar', room: 'Lab 303' },
+              friday: { course: '', teacher: '', room: '' } }
+        ];
+
+        // Initialize schedule table
+        function initializeSchedule() {
+            const tbody = document.getElementById('scheduleBody');
+            tbody.innerHTML = '';
+            
+            scheduleData.forEach(slot => {
+                const row = document.createElement('tr');
+                row.className = 'border-t';
+                
+                let cells = `
+                    <td class="px-6 py-4 font-medium text-gray-700 bg-gray-50">${slot.time}</td>
+                    <td class="px-4 py-4 schedule-cell ${slot.monday.course ? 'bg-purple-50' : ''}" onclick="selectCell(this)">
+                        ${slot.monday.course ? `
+                            <div class="text-sm">
+                                <p class="font-semibold text-purple-800">${slot.monday.course}</p>
+                                <p class="text-gray-600">${slot.monday.teacher}</p>
+                                <p class="text-xs text-gray-500">${slot.monday.room}</p>
+                                <div class="course-details mt-2">
+                                    <button class="text-xs text-blue-600 hover:text-blue-800">Detail</button>
+                                    <button class="text-xs text-green-600 hover:text-green-800 ml-2">Edit</button>
+                                </div>
+                            </div>
+                        ` : ''}
+                    </td>
+                    <td class="px-4 py-4 schedule-cell ${slot.tuesday.course ? 'bg-blue-50' : ''}" onclick="selectCell(this)">
+                        ${slot.tuesday.course ? `
+                            <div class="text-sm">
+                                <p class="font-semibold text-blue-800">${slot.tuesday.course}</p>
+                                <p class="text-gray-600">${slot.tuesday.teacher}</p>
+                                <p class="text-xs text-gray-500">${slot.tuesday.room}</p>
+                                <div class="course-details mt-2">
+                                    <button class="text-xs text-blue-600 hover:text-blue-800">Detail</button>
+                                    <button class="text-xs text-green-600 hover:text-green-800 ml-2">Edit</button>
+                                </div>
+                            </div>
+                        ` : ''}
+                    </td>
+                    <td class="px-4 py-4 schedule-cell ${slot.wednesday.course ? 'bg-green-50' : ''}" onclick="selectCell(this)">
+                        ${slot.wednesday.course ? `
+                            <div class="text-sm">
+                                <p class="font-semibold text-green-800">${slot.wednesday.course}</p>
+                                <p class="text-gray-600">${slot.wednesday.teacher}</p>
+                                <p class="text-xs text-gray-500">${slot.wednesday.room}</p>
+                                <div class="course-details mt-2">
+                                    <button class="text-xs text-blue-600 hover:text-blue-800">Detail</button>
+                                    <button class="text-xs text-green-600 hover:text-green-800 ml-2">Edit</button>
+                                </div>
+                            </div>
+                        ` : ''}
+                    </td>
+                    <td class="px-4 py-4 schedule-cell ${slot.thursday.course ? 'bg-yellow-50' : ''}" onclick="selectCell(this)">
+                        ${slot.thursday.course ? `
+                            <div class="text-sm">
+                                <p class="font-semibold text-yellow-800">${slot.thursday.course}</p>
+                                <p class="text-gray-600">${slot.thursday.teacher}</p>
+                                <p class="text-xs text-gray-500">${slot.thursday.room}</p>
+                                <div class="course-details mt-2">
+                                    <button class="text-xs text-blue-600 hover:text-blue-800">Detail</button>
+                                    <button class="text-xs text-green-600 hover:text-green-800 ml-2">Edit</button>
+                                </div>
+                            </div>
+                        ` : ''}
+                    </td>
+                    <td class="px-4 py-4 schedule-cell ${slot.friday.course ? 'bg-pink-50' : ''}" onclick="selectCell(this)">
+                        ${slot.friday.course ? `
+                            <div class="text-sm">
+                                <p class="font-semibold text-pink-800">${slot.friday.course}</p>
+                                <p class="text-gray-600">${slot.friday.teacher}</p>
+                                <p class="text-xs text-gray-500">${slot.friday.room}</p>
+                                <div class="course-details mt-2">
+                                    <button class="text-xs text-blue-600 hover:text-blue-800">Detail</button>
+                                    <button class="text-xs text-green-600 hover:text-green-800 ml-2">Edit</button>
+                                </div>
+                            </div>
+                        ` : ''}
+                    </td>
+                `;
+                
+                row.innerHTML = cells;
+                tbody.appendChild(row);
+            });
+        }
+
+        // Initialize charts
+        function initializeCharts() {
+            // Room Usage Chart
+            const roomCtx = document.getElementById('roomUsageChart').getContext('2d');
+            new Chart(roomCtx, {
+                type: 'doughnut',
+                data: {
+                    labels: ['Lab 301', 'Lab 302', 'Lab 303', 'R 101', 'R 201', 'R 202', 'R 301'],
+                    datasets: [{
+                        data: [85, 70, 60, 90, 75, 80, 65],
+                        backgroundColor: [
+                            '#8B5CF6',
+                            '#3B82F6',
+                            '#10B981',
+                            '#F59E0B',
+                            '#EF4444',
+                            '#EC4899',
+                            '#6366F1'
+                        ]
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'bottom'
+                        }
+                    }
+                }
+            });
+
+            // Teacher Load Chart
+            const teacherCtx = document.getElementById('teacherLoadChart').getContext('2d');
+            new Chart(teacherCtx, {
+                type: 'bar',
+                data: {
+                    labels: ['Dr. Ahmad', 'Prof. Siti', 'Dr. Budi', 'Ir. Dewi', 'Dr. Candra', 'Prof. Eko', 'Dr. Fajar'],
+                    datasets: [{
+                        label: 'Jam Mengajar',
+                        data: [12, 10, 8, 14, 10, 8, 10],
+                        backgroundColor: '#8B5CF6'
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+        }
+
+        // Function handlers
+        function generateSchedule() {
+            document.getElementById('loadingOverlay').classList.remove('hidden');
+            
+            setTimeout(() => {
+                document.getElementById('loadingOverlay').classList.add('hidden');
+                showNotification('Jadwal berhasil digenerate!', 'success');
+            }, 3000);
+        }
+
+        function showInputForm(type = '') {
+            const modal = document.getElementById('inputModal');
+            const modalTitle = document.getElementById('modalTitle');
+            const modalForm = document.getElementById('dataForm');
+            
+            // Set modal content based on type
+            switch(type) {
+                case 'course':
+                    modalTitle.textContent = 'Tambah Mata Kuliah';
+                    modalForm.innerHTML = `
+                        <div class="mb-4">
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Kode Mata Kuliah</label>
+                            <input type="text" class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent" placeholder="Contoh: IF101">
+                        </div>
+                        
+                        <div class="mb-4">
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Nama Mata Kuliah</label>
+                            <input type="text" class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent" placeholder="Masukkan nama mata kuliah">
+                        </div>
+                        
+                        <div class="grid grid-cols-2 gap-4 mb-4">
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">SKS</label>
+                                <input type="number" class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent" placeholder="3">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">Semester</label>
+                                <input type="number" class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent" placeholder="3">
+                            </div>
+                        </div>
+                        
+                        <div class="mb-4">
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Dosen Pengampu</label>
+                            <select class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent">
+                                <option>Dr. Ahmad</option>
+                                <option>Prof. Siti</option>
+                                <option>Dr. Budi</option>
+                                <option>Ir. Dewi</option>
+                                <option>Dr. Candra</option>
+                                <option>Prof. Eko</option>
+                                <option>Dr. Fajar</option>
+                            </select>
+                        </div>
+                    `;
+                    break;
+                    
+                case 'lecturer':
+                    modalTitle.textContent = 'Tambah Dosen';
+                    modalForm.innerHTML = `
+                        <div class="mb-4">
+                            <label class="block text-sm font-medium text-gray-700 mb-2">NIP</label>
+                            <input type="text" class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent" placeholder="Masukkan NIP">
+                        </div>
+                        
+                        <div class="mb-4">
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Nama Lengkap</label>
+                            <input type="text" class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent" placeholder="Masukkan nama lengkap">
+                        </div>
+                        
+                        <div class="mb-4">
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Email</label>
+                            <input type="email" class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent" placeholder="email@kampus.ac.id">
+                        </div>
+                        
+                        <div class="mb-4">
+                            <label class="block text-sm font-medium text-gray-700 mb-2">No. HP</label>
+                            <input type="text" class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent" placeholder="08xxxxxxxxxx">
+                        </div>
+                    `;
+                    break;
+                    
+                case 'room':
+                    modalTitle.textContent = 'Tambah Ruangan';
+                    modalForm.innerHTML = `
+                        <div class="mb-4">
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Kode Ruangan</label>
+                            <input type="text" class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent" placeholder="Contoh: LAB-301">
+                        </div>
+                        
+                        <div class="mb-4">
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Nama Ruangan</label>
+                            <input type="text" class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent" placeholder="Masukkan nama ruangan">
+                        </div>
+                        
+                        <div class="mb-4">
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Kapasitas</label>
+                            <input type="number" class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent" placeholder="40">
+                        </div>
+                        
+                        <div class="mb-4">
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Fasilitas</label>
+                            <textarea class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent" rows="3" placeholder="Proyektor, Komputer, AC, dll"></textarea>
+                        </div>
+                    `;
+                    break;
+                    
+                default:
+                    modalTitle.textContent = 'Tambah Data';
+                    modalForm.innerHTML = `
+                        <div class="mb-4">
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Tipe Data</label>
+                            <select class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent">
+                                <option>Mata Kuliah</option>
+                                <option>Dosen</option>
+                                <option>Ruangan</option>
+                            </select>
+                        </div>
+                        
+                        <div class="mb-4">
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Nama</label>
+                            <input type="text" class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent" placeholder="Masukkan nama">
+                        </div>
+                        
+                        <div class="mb-4">
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Kode/ID</label>
+                            <input type="text" class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent" placeholder="Masukkan kode">
+                        </div>
+                        
+                        <div class="mb-6">
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Keterangan</label>
+                            <textarea class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent" rows="3" placeholder="Masukkan keterangan"></textarea>
+                        </div>
+                    `;
+            }
+            
+            // Add submit button
+            modalForm.innerHTML += `
+                <div class="flex gap-4">
+                    <button type="submit" class="flex-1 bg-purple-600 text-white py-2 rounded-lg font-medium hover:bg-purple-700 transition">
+                        Simpan
+                    </button>
+                    <button type="button" onclick="closeModal()" class="flex-1 bg-gray-300 text-gray-700 py-2 rounded-lg font-medium hover:bg-gray-400 transition">
+                        Batal
+                    </button>
+                </div>
+            `;
+            
+            modal.classList.remove('hidden');
+        }
+
+        function closeModal() {
+            document.getElementById('inputModal').classList.add('hidden');
+        }
+
+        function exportSchedule() {
+            showNotification('Jadwal berhasil diexport!', 'success');
+        }
+
+        function resetSchedule() {
+            if (confirm('Apakah Anda yakin ingin mereset jadwal?')) {
+                showNotification('Jadwal berhasil direset!', 'info');
+            }
+        }
+
+        function showNotification(message, type) {
+            const notification = document.createElement('div');
+            notification.className = `fixed top-4 right-4 px-6 py-3 rounded-lg text-white z-50 notification ${
+                type === 'success' ? 'bg-green-500' : 
+                type === 'error' ? 'bg-red-500' : 'bg-blue-500'
+            }`;
+            notification.innerHTML = `
+                <div class="flex items-center">
+                    <i class="fas ${type === 'success' ? 'fa-check-circle' : type === 'error' ? 'fa-exclamation-circle' : 'fa-info-circle'} mr-2"></i>
+                    ${message}
+                </div>
+            `;
+            document.body.appendChild(notification);
+            
+            setTimeout(() => {
+                notification.remove();
+            }, 3000);
+        }
+
+        function selectCell(cell) {
+            // Remove active class from all cells
+            document.querySelectorAll('.schedule-cell').forEach(c => {
+                c.classList.remove('active');
+            });
+            
+            // Add active class to selected cell
+            cell.classList.add('active');
+        }
+
+        function showPage(pageId) {
+            // Hide all pages
+            document.querySelectorAll('.page').forEach(page => {
+                page.classList.add('hidden');
+            });
+            
+            // Show selected page
+            document.getElementById(pageId).classList.remove('hidden');
+            
+            // Update page title
+            const titles = {
+                'dashboard': 'Dashboard',
+                'schedule': 'Jadwal Perkuliahan',
+                'courses': 'Mata Kuliah',
+                'lecturers': 'Dosen',
+                'rooms': 'Ruangan',
+                'analytics': 'Analitik',
+                'settings': 'Pengaturan'
+            };
+            document.getElementById('pageTitle').textContent = titles[pageId];
+            
+            // Update active sidebar item
+            document.querySelectorAll('.sidebar-item').forEach(item => {
+                item.classList.remove('active');
+            });
+            event.target.closest('.sidebar-item').classList.add('active');
+            
+            // Initialize charts if analytics page
+            if (pageId === 'analytics') {
+                setTimeout(() => {
+                    initializeAnalyticsCharts();
+                }, 100);
+            }
+        }
+
+        function initializeAnalyticsCharts() {
+            // Room Usage Chart
+            const roomCtx = document.getElementById('roomUsageChart2').getContext('2d');
+            new Chart(roomCtx, {
+                type: 'doughnut',
+                data: {
+                    labels: ['Lab 301', 'Lab 302', 'Lab 303', 'R 101', 'R 201', 'R 202', 'R 301'],
+                    datasets: [{
+                        data: [85, 70, 60, 90, 75, 80, 65],
+                        backgroundColor: [
+                            '#8B5CF6',
+                            '#3B82F6',
+                            '#10B981',
+                            '#F59E0B',
+                            '#EF4444',
+                            '#EC4899',
+                            '#6366F1'
+                        ]
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'bottom'
+                        }
+                    }
+                }
+            });
+
+            // Teacher Load Chart
+            const teacherCtx = document.getElementById('teacherLoadChart2').getContext('2d');
+            new Chart(teacherCtx, {
+                type: 'bar',
+                data: {
+                    labels: ['Dr. Ahmad', 'Prof. Siti', 'Dr. Budi', 'Ir. Dewi', 'Dr. Candra', 'Prof. Eko', 'Dr. Fajar'],
+                    datasets: [{
+                        label: 'Jam Mengajar',
+                        data: [12, 10, 8, 14, 10, 8, 10],
+                        backgroundColor: '#8B5CF6'
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+            
+            // Course Distribution Chart
+            const courseDistCtx = document.getElementById('courseDistributionChart').getContext('2d');
+            new Chart(courseDistCtx, {
+                type: 'pie',
+                data: {
+                    labels: ['Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat'],
+                    datasets: [{
+                        data: [5, 6, 4, 5, 4],
+                        backgroundColor: [
+                            '#8B5CF6',
+                            '#3B82F6',
+                            '#10B981',
+                            '#F59E0B',
+                            '#EC4899'
+                        ]
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'bottom'
+                        }
+                    }
+                }
+            });
+            
+            // Time Slot Usage Chart
+            const timeSlotCtx = document.getElementById('timeSlotUsageChart').getContext('2d');
+            new Chart(timeSlotCtx, {
+                type: 'bar',
+                data: {
+                    labels: ['07:00-08:40', '08:50-10:30', '10:40-12:20', '13:00-14:40', '14:50-16:30'],
+                    datasets: [{
+                        label: 'Jumlah Mata Kuliah',
+                        data: [3, 3, 3, 3, 2],
+                        backgroundColor: '#3B82F6'
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+        }
+
+        function toggleDarkMode() {
+            document.body.classList.toggle('dark-mode');
+        }
+
+        function logout() {
+            if (confirm('Apakah Anda yakin ingin keluar?')) {
+                showNotification('Anda telah keluar dari sistem', 'info');
+                setTimeout(() => {
+                    window.location.href = '#';
+                }, 1500);
+            }
+        }
+
+        // Initialize on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            initializeSchedule();
+            initializeCharts();
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,1075 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QuizTest Pro - Dashboard Administratif</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/tom-select@2.2.2/dist/css/tom-select.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+        
+        * {
+            font-family: 'Inter', sans-serif;
+        }
+        
+        :root {
+            --primary: #1e40af;
+            --primary-dark: #1e3a8a;
+            --secondary: #3b82f6;
+            --accent: #60a5fa;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+            --dark: #1f2937;
+            --gray: #6b7280;
+            --light: #f3f4f6;
+            --white: #ffffff;
+        }
+        
+        body {
+            background-color: #f8fafc;
+            color: var(--dark);
+        }
+        
+        /* Sidebar Styles */
+        .sidebar {
+            background: var(--white);
+            box-shadow: 2px 0 10px rgba(0, 0, 0, 0.05);
+            height: 100vh;
+            position: fixed;
+            left: 0;
+            top: 0;
+            width: 260px;
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+        
+        .sidebar-logo {
+            height: 70px;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            display: flex;
+            align-items: center;
+            padding: 0 24px;
+            color: white;
+        }
+        
+        .sidebar-menu {
+            padding: 20px 0;
+        }
+        
+        .menu-item {
+            display: flex;
+            align-items: center;
+            padding: 12px 24px;
+            color: var(--gray);
+            text-decoration: none;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+        
+        .menu-item:hover {
+            background-color: var(--light);
+            color: var(--primary);
+        }
+        
+        .menu-item.active {
+            background-color: rgba(59, 130, 246, 0.1);
+            color: var(--primary);
+            font-weight: 600;
+        }
+        
+        .menu-item.active::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 4px;
+            background: var(--primary);
+        }
+        
+        .menu-icon {
+            width: 20px;
+            margin-right: 12px;
+            text-align: center;
+        }
+        
+        /* Main Content */
+        .main-content {
+            margin-left: 260px;
+            min-height: 100vh;
+            transition: all 0.3s ease;
+        }
+        
+        /* Top Bar */
+        .topbar {
+            background: var(--white);
+            height: 70px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 30px;
+            position: sticky;
+            top: 0;
+            z-index: 999;
+        }
+        
+        .breadcrumb {
+            display: flex;
+            align-items: center;
+            color: var(--gray);
+            font-size: 14px;
+        }
+        
+        .breadcrumb a {
+            color: var(--gray);
+            text-decoration: none;
+        }
+        
+        .breadcrumb a:hover {
+            color: var(--primary);
+        }
+        
+        .breadcrumb-separator {
+            margin: 0 8px;
+            color: var(--gray);
+        }
+        
+        .topbar-right {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+        
+        .notification-icon {
+            position: relative;
+            cursor: pointer;
+        }
+        
+        .notification-badge {
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            background: var(--danger);
+            color: white;
+            border-radius: 50%;
+            width: 18px;
+            height: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 10px;
+            font-weight: bold;
+        }
+        
+        .user-profile {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            cursor: pointer;
+            padding: 8px 16px;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+        
+        .user-profile:hover {
+            background: var(--light);
+        }
+        
+        .user-avatar {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+        
+        /* Card Styles */
+        .card {
+            background: var(--white);
+            border-radius: 12px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            padding: 24px;
+            transition: all 0.3s ease;
+        }
+        
+        .card:hover {
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+        
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        
+        .card-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--dark);
+        }
+        
+        /* Stat Cards */
+        .stat-card {
+            background: var(--white);
+            border-radius: 12px;
+            padding: 24px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .stat-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+        }
+        
+        .stat-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+        
+        .stat-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            margin-bottom: 16px;
+        }
+        
+        .stat-icon.blue {
+            background: rgba(59, 130, 246, 0.1);
+            color: var(--secondary);
+        }
+        
+        .stat-icon.green {
+            background: rgba(16, 185, 129, 0.1);
+            color: var(--success);
+        }
+        
+        .stat-icon.orange {
+            background: rgba(245, 158, 11, 0.1);
+            color: var(--warning);
+        }
+        
+        .stat-icon.red {
+            background: rgba(239, 68, 68, 0.1);
+            color: var(--danger);
+        }
+        
+        .stat-value {
+            font-size: 32px;
+            font-weight: 700;
+            color: var(--dark);
+            margin-bottom: 4px;
+        }
+        
+        .stat-label {
+            font-size: 14px;
+            color: var(--gray);
+        }
+        
+        .stat-change {
+            font-size: 12px;
+            font-weight: 500;
+            margin-top: 8px;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+        
+        .stat-change.positive {
+            color: var(--success);
+        }
+        
+        .stat-change.negative {
+            color: var(--danger);
+        }
+        
+        /* Table Styles */
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        
+        .data-table th {
+            text-align: left;
+            padding: 12px;
+            font-weight: 600;
+            color: var(--gray);
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            border-bottom: 2px solid var(--light);
+        }
+        
+        .data-table td {
+            padding: 16px 12px;
+            border-bottom: 1px solid var(--light);
+        }
+        
+        .data-table tr:hover {
+            background: var(--light);
+        }
+        
+        .status-badge {
+            display: inline-flex;
+            align-items: center;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 500;
+        }
+        
+        .status-badge.active {
+            background: rgba(16, 185, 129, 0.1);
+            color: var(--success);
+        }
+        
+        .status-badge.pending {
+            background: rgba(245, 158, 11, 0.1);
+            color: var(--warning);
+        }
+        
+        .status-badge.completed {
+            background: rgba(59, 130, 246, 0.1);
+            color: var(--secondary);
+        }
+        
+        .status-badge.cancelled {
+            background: rgba(239, 68, 68, 0.1);
+            color: var(--danger);
+        }
+        
+        /* Button Styles */
+        .btn {
+            padding: 8px 16px;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 500;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            text-decoration: none;
+        }
+        
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            background: var(--primary-dark);
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(30, 64, 175, 0.3);
+        }
+        
+        .btn-secondary {
+            background: var(--white);
+            color: var(--primary);
+            border: 1px solid var(--primary);
+        }
+        
+        .btn-secondary:hover {
+            background: var(--primary);
+            color: white;
+        }
+        
+        .btn-sm {
+            padding: 6px 12px;
+            font-size: 12px;
+        }
+        
+        .btn-icon {
+            padding: 8px;
+            background: transparent;
+            color: var(--gray);
+            border: none;
+            cursor: pointer;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-icon:hover {
+            background: var(--light);
+            color: var(--primary);
+        }
+        
+        /* Form Styles */
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-label {
+            display: block;
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--dark);
+            margin-bottom: 8px;
+        }
+        
+        .form-control {
+            width: 100%;
+            padding: 10px 16px;
+            border: 1px solid #e5e7eb;
+            border-radius: 8px;
+            font-size: 14px;
+            transition: all 0.3s ease;
+        }
+        
+        .form-control:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+        }
+        
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 2000;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .modal.active {
+            display: flex;
+        }
+        
+        .modal-content {
+            background: var(--white);
+            border-radius: 12px;
+            width: 90%;
+            max-width: 600px;
+            max-height: 90vh;
+            overflow-y: auto;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.2);
+        }
+        
+        .modal-header {
+            padding: 24px;
+            border-bottom: 1px solid var(--light);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .modal-title {
+            font-size: 20px;
+            font-weight: 600;
+            color: var(--dark);
+        }
+        
+        .modal-body {
+            padding: 24px;
+        }
+        
+        .modal-footer {
+            padding: 24px;
+            border-top: 1px solid var(--light);
+            display: flex;
+            justify-content: flex-end;
+            gap: 12px;
+        }
+        
+        /* Progress Bar */
+        .progress {
+            height: 8px;
+            background: var(--light);
+            border-radius: 4px;
+            overflow: hidden;
+        }
+        
+        .progress-bar {
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            transition: width 0.3s ease;
+        }
+        
+        /* Chart Container */
+        .chart-container {
+            position: relative;
+            height: 300px;
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .sidebar {
+                transform: translateX(-100%);
+            }
+            
+            .sidebar.active {
+                transform: translateX(0);
+            }
+            
+            .main-content {
+                margin-left: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Sidebar -->
+    <aside class="sidebar">
+        <div class="sidebar-logo">
+            <div class="w-10 h-10 rounded-lg bg-white bg-opacity-20 flex items-center justify-center text-white font-bold text-xl mr-3">Q</div>
+            <span class="text-xl font-bold">QuizTest Pro</span>
+        </div>
+        
+        <nav class="sidebar-menu">
+            <a href="#" class="menu-item active">
+                <i class="fas fa-tachometer-alt menu-icon"></i>
+                <span>Dashboard</span>
+            </a>
+            <a href="#" class="menu-item">
+                <i class="fas fa-clipboard-list menu-icon"></i>
+                <span>Manajemen Ujian</span>
+            </a>
+            <a href="#" class="menu-item">
+                <i class="fas fa-question-circle menu-icon"></i>
+                <span>Bank Soal</span>
+            </a>
+            <a href="#" class="menu-item">
+                <i class="fas fa-users menu-icon"></i>
+                <span>Peserta</span>
+            </a>
+            <a href="#" class="menu-item">
+                <i class="fas fa-desktop menu-icon"></i>
+                <span>Monitoring Ujian</span>
+            </a>
+            <a href="#" class="menu-item">
+                <i class="fas fa-chart-bar menu-icon"></i>
+                <span>Laporan</span>
+            </a>
+            <a href="#" class="menu-item">
+                <i class="fas fa-cog menu-icon"></i>
+                <span>Pengaturan</span>
+            </a>
+        </nav>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Top Bar -->
+        <header class="topbar">
+            <div class="breadcrumb">
+                <a href="#">Dashboard</a>
+                <span class="breadcrumb-separator"><i class="fas fa-chevron-right text-xs"></i></span>
+                <span>Overview</span>
+            </div>
+            
+            <div class="topbar-right">
+                <div class="notification-icon">
+                    <i class="fas fa-bell text-xl text-gray-600"></i>
+                    <span class="notification-badge">3</span>
+                </div>
+                
+                <div class="user-profile">
+                    <img src="https://picsum.photos/seed/admin/36/36.jpg" alt="Admin" class="user-avatar">
+                    <div>
+                        <div class="font-medium text-sm">Admin System</div>
+                        <div class="text-xs text-gray-500">Super Admin</div>
+                    </div>
+                    <i class="fas fa-chevron-down text-xs text-gray-500"></i>
+                </div>
+            </div>
+        </header>
+
+        <!-- Dashboard Content -->
+        <div class="p-6">
+            <!-- Page Title -->
+            <div class="mb-6">
+                <h1 class="text-2xl font-bold text-gray-900">Dashboard Overview</h1>
+                <p class="text-gray-600">Selamat datang kembali di QuizTest Pro</p>
+            </div>
+
+            <!-- Stats Cards -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+                <div class="stat-card">
+                    <div class="stat-icon blue">
+                        <i class="fas fa-clipboard-check"></i>
+                    </div>
+                    <div class="stat-value">156</div>
+                    <div class="stat-label">Total Ujian</div>
+                    <div class="stat-change positive">
+                        <i class="fas fa-arrow-up"></i>
+                        <span>12% dari bulan lalu</span>
+                    </div>
+                </div>
+                
+                <div class="stat-card">
+                    <div class="stat-icon green">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <div class="stat-value">2,847</div>
+                    <div class="stat-label">Total Peserta</div>
+                    <div class="stat-change positive">
+                        <i class="fas fa-arrow-up"></i>
+                        <span>8% dari bulan lalu</span>
+                    </div>
+                </div>
+                
+                <div class="stat-card">
+                    <div class="stat-icon orange">
+                        <i class="fas fa-question-circle"></i>
+                    </div>
+                    <div class="stat-value">3,924</div>
+                    <div class="stat-label">Bank Soal</div>
+                    <div class="stat-change positive">
+                        <i class="fas fa-arrow-up"></i>
+                        <span>15% dari bulan lalu</span>
+                    </div>
+                </div>
+                
+                <div class="stat-card">
+                    <div class="stat-icon red">
+                        <i class="fas fa-exclamation-triangle"></i>
+                    </div>
+                    <div class="stat-value">23</div>
+                    <div class="stat-label">Ujian Aktif</div>
+                    <div class="stat-change negative">
+                        <i class="fas fa-arrow-down"></i>
+                        <span>5% dari bulan lalu</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Charts Section -->
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
+                <!-- Ujian Chart -->
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">Statistik Ujian</h3>
+                        <select class="form-control" style="width: auto;">
+                            <option>7 Hari Terakhir</option>
+                            <option>30 Hari Terakhir</option>
+                            <option>3 Bulan Terakhir</option>
+                        </select>
+                    </div>
+                    <div class="chart-container">
+                        <canvas id="examChart"></canvas>
+                    </div>
+                </div>
+                
+                <!-- Kategori Soal -->
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">Distribusi Kategori Soal</h3>
+                        <button class="btn-icon">
+                            <i class="fas fa-ellipsis-h"></i>
+                        </button>
+                    </div>
+                    <div class="chart-container">
+                        <canvas id="categoryChart"></canvas>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Recent Exams -->
+            <div class="card mb-8">
+                <div class="card-header">
+                    <h3 class="card-title">Ujian Terbaru</h3>
+                    <button class="btn btn-primary" onclick="showModal('createExam')">
+                        <i class="fas fa-plus"></i>
+                        Buat Ujian Baru
+                    </button>
+                </div>
+                
+                <div class="overflow-x-auto">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Nama Ujian</th>
+                                <th>Kategori</th>
+                                <th>Peserta</th>
+                                <th>Status</th>
+                                <th>Tanggal</th>
+                                <th>Aksi</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <div class="font-medium">Ujian Tengah Semester Matematika</div>
+                                    <div class="text-sm text-gray-500">Kode: UTS-MAT-2024-01</div>
+                                </td>
+                                <td>Matematika</td>
+                                <td>120</td>
+                                <td>
+                                    <span class="status-badge active">Aktif</span>
+                                </td>
+                                <td>15 Nov 2024</td>
+                                <td>
+                                    <div class="flex gap-2">
+                                        <button class="btn-icon" title="Edit">
+                                            <i class="fas fa-edit"></i>
+                                        </button>
+                                        <button class="btn-icon" title="Detail">
+                                            <i class="fas fa-eye"></i>
+                                        </button>
+                                        <button class="btn-icon" title="Hapus">
+                                            <i class="fas fa-trash"></i>
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div class="font-medium">Ujian Bahasa Inggris Level 2</div>
+                                    <div class="text-sm text-gray-500">Kode: ENG-L2-2024-01</div>
+                                </td>
+                                <td>Bahasa Inggris</td>
+                                <td>85</td>
+                                <td>
+                                    <span class="status-badge pending">Menunggu</span>
+                                </td>
+                                <td>20 Nov 2024</td>
+                                <td>
+                                    <div class="flex gap-2">
+                                        <button class="btn-icon" title="Edit">
+                                            <i class="fas fa-edit"></i>
+                                        </button>
+                                        <button class="btn-icon" title="Detail">
+                                            <i class="fas fa-eye"></i>
+                                        </button>
+                                        <button class="btn-icon" title="Hapus">
+                                            <i class="fas fa-trash"></i>
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div class="font-medium">Tes Psikologi Masuk</div>
+                                    <div class="text-sm text-gray-500">Kode: PSI-MASUK-2024-01</div>
+                                </td>
+                                <td>Psikologi</td>
+                                <td>200</td>
+                                <td>
+                                    <span class="status-badge completed">Selesai</span>
+                                </td>
+                                <td>10 Nov 2024</td>
+                                <td>
+                                    <div class="flex gap-2">
+                                        <button class="btn-icon" title="Edit">
+                                            <i class="fas fa-edit"></i>
+                                        </button>
+                                        <button class="btn-icon" title="Detail">
+                                            <i class="fas fa-eye"></i>
+                                        </button>
+                                        <button class="btn-icon" title="Hapus">
+                                            <i class="fas fa-trash"></i>
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div class="font-medium">Ujian Sains IPA</div>
+                                    <div class="text-sm text-gray-500">Kode: SCI-IPA-2024-01</div>
+                                </td>
+                                <td>IPA</td>
+                                <td>150</td>
+                                <td>
+                                    <span class="status-badge cancelled">Dibatalkan</span>
+                                </td>
+                                <td>5 Nov 2024</td>
+                                <td>
+                                    <div class="flex gap-2">
+                                        <button class="btn-icon" title="Edit">
+                                            <i class="fas fa-edit"></i>
+                                        </button>
+                                        <button class="btn-icon" title="Detail">
+                                            <i class="fas fa-eye"></i>
+                                        </button>
+                                        <button class="btn-icon" title="Hapus">
+                                            <i class="fas fa-trash"></i>
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Active Exams Monitoring -->
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">Monitoring Ujian Aktif</h3>
+                    <button class="btn btn-secondary btn-sm">
+                        <i class="fas fa-sync-alt"></i>
+                        Refresh
+                    </button>
+                </div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <div class="border rounded-lg p-4">
+                        <div class="flex justify-between items-start mb-3">
+                            <div>
+                                <h4 class="font-semibold">UTS Matematika</h4>
+                                <p class="text-sm text-gray-500">120 Peserta</p>
+                            </div>
+                            <span class="status-badge active">Aktif</span>
+                        </div>
+                        <div class="mb-3">
+                            <div class="flex justify-between text-sm mb-1">
+                                <span>Progress</span>
+                                <span>75%</span>
+                            </div>
+                            <div class="progress">
+                                <div class="progress-bar" style="width: 75%"></div>
+                            </div>
+                        </div>
+                        <div class="grid grid-cols-3 gap-2 text-center text-sm">
+                            <div>
+                                <div class="font-medium text-green-600">90</div>
+                                <div class="text-gray-500">Selesai</div>
+                            </div>
+                            <div>
+                                <div class="font-medium text-yellow-600">25</div>
+                                <div class="text-gray-500">Aktif</div>
+                            </div>
+                            <div>
+                                <div class="font-medium text-red-600">5</div>
+                                <div class="text-gray-500">Terlambat</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="border rounded-lg p-4">
+                        <div class="flex justify-between items-start mb-3">
+                            <div>
+                                <h4 class="font-semibold">Tes Bahasa</h4>
+                                <p class="text-sm text-gray-500">85 Peserta</p>
+                            </div>
+                            <span class="status-badge active">Aktif</span>
+                        </div>
+                        <div class="mb-3">
+                            <div class="flex justify-between text-sm mb-1">
+                                <span>Progress</span>
+                                <span>45%</span>
+                            </div>
+                            <div class="progress">
+                                <div class="progress-bar" style="width: 45%"></div>
+                            </div>
+                        </div>
+                        <div class="grid grid-cols-3 gap-2 text-center text-sm">
+                            <div>
+                                <div class="font-medium text-green-600">38</div>
+                                <div class="text-gray-500">Selesai</div>
+                            </div>
+                            <div>
+                                <div class="font-medium text-yellow-600">40</div>
+                                <div class="text-gray-500">Aktif</div>
+                            </div>
+                            <div>
+                                <div class="font-medium text-red-600">7</div>
+                                <div class="text-gray-500">Terlambat</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="border rounded-lg p-4">
+                        <div class="flex justify-between items-start mb-3">
+                            <div>
+                                <h4 class="font-semibold">Tes Psikologi</h4>
+                                <p class="text-sm text-gray-500">200 Peserta</p>
+                            </div>
+                            <span class="status-badge active">Aktif</span>
+                        </div>
+                        <div class="mb-3">
+                            <div class="flex justify-between text-sm mb-1">
+                                <span>Progress</span>
+                                <span>90%</span>
+                            </div>
+                            <div class="progress">
+                                <div class="progress-bar" style="width: 90%"></div>
+                            </div>
+                        </div>
+                        <div class="grid grid-cols-3 gap-2 text-center text-sm">
+                            <div>
+                                <div class="font-medium text-green-600">180</div>
+                                <div class="text-gray-500">Selesai</div>
+                            </div>
+                            <div>
+                                <div class="font-medium text-yellow-600">15</div>
+                                <div class="text-gray-500">Aktif</div>
+                            </div>
+                            <div>
+                                <div class="font-medium text-red-600">5</div>
+                                <div class="text-gray-500">Terlambat</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Create Exam Modal -->
+    <div id="createExamModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">Buat Ujian Baru</h3>
+                <button class="btn-icon" onclick="closeModal('createExam')">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="form-group">
+                        <label class="form-label">Nama Ujian</label>
+                        <input type="text" class="form-control" placeholder="Masukkan nama ujian">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">Kode Ujian</label>
+                        <input type="text" class="form-control" placeholder="Kode unik ujian">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">Kategori</label>
+                        <select class="form-control">
+                            <option>Pilih kategori</option>
+                            <option>Matematika</option>
+                            <option>Bahasa Inggris</option>
+                            <option>IPA</option>
+                            <option>IPS</option>
+                            <option>Psikologi</option>
+                        </select>
+                    </div>
+                    
+                    <div class="grid grid-cols-2 gap-4">
+                        <div class="form-group">
+                            <label class="form-label">Tanggal Mulai</label>
+                            <input type="datetime-local" class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Durasi (menit)</label>
+                            <input type="number" class="form-control" placeholder="60">
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">Deskripsi</label>
+                        <textarea class="form-control" rows="3" placeholder="Deskripsi ujian"></textarea>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" onclick="closeModal('createExam')">Batal</button>
+                <button class="btn btn-primary">Simpan</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Chart.js Configuration
+        const examCtx = document.getElementById('examChart').getContext('2d');
+        const examChart = new Chart(examCtx, {
+            type: 'line',
+            data: {
+                labels: ['Sen', 'Sel', 'Rab', 'Kam', 'Jum', 'Sab', 'Min'],
+                datasets: [{
+                    label: 'Ujian Selesai',
+                    data: [12, 19, 15, 25, 22, 30, 28],
+                    borderColor: '#3b82f6',
+                    backgroundColor: 'rgba(59, 130, 246, 0.1)',
+                    tension: 0.4
+                }, {
+                    label: 'Peserta Aktif',
+                    data: [8, 15, 12, 20, 18, 25, 22],
+                    borderColor: '#10b981',
+                    backgroundColor: 'rgba(16, 185, 129, 0.1)',
+                    tension: 0.4
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        position: 'bottom',
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+
+        const categoryCtx = document.getElementById('categoryChart').getContext('2d');
+        const categoryChart = new Chart(categoryCtx, {
+            type: 'doughnut',
+            data: {
+                labels: ['Matematika', 'Bahasa Inggris', 'IPA', 'IPS', 'Psikologi', 'Lainnya'],
+                datasets: [{
+                    data: [30, 25, 20, 15, 8, 2],
+                    backgroundColor: [
+                        '#3b82f6',
+                        '#10b981',
+                        '#f59e0b',
+                        '#ef4444',
+                        '#8b5cf6',
+                        '#6b7280'
+                    ]
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        position: 'bottom',
+                    }
+                }
+            }
+        });
+
+        // Modal Functions
+        function showModal(modalId) {
+            document.getElementById(modalId + 'Modal').classList.add('active');
+        }
+
+        function closeModal(modalId) {
+            document.getElementById(modalId + 'Modal').classList.remove('active');
+        }
+
+        // Close modal when clicking outside
+        window.onclick = function(event) {
+            if (event.target.classList.contains('modal')) {
+                event.target.classList.remove('active');
+            }
+        }
+
+        // Mobile menu toggle
+        function toggleSidebar() {
+            document.querySelector('.sidebar').classList.toggle('active');
+        }
+    </script>
+</body>
+</html>
