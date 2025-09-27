@@ -1,5 +1,6 @@
 <template>
-  <section id="hero" class="relative w-full h-screen flex items-center justify-center overflow-hidden">
+  <section id="hero" class="relative w-full h-screen flex items-center justify-center overflow-hidden"
+           :class="{ 'typing-active': !showTitle, 'content-active': showTitle }">
     <!-- Background futuristik -->
     <div class="absolute inset-0 bg-gradient-to-br from-gray-900 via-blue-900 to-indigo-900 z-0"></div>
     
@@ -28,10 +29,10 @@
       </div>
     </div>
 
-    <div class="relative max-w-6xl mx-auto px-4 sm:px-6 md:px-8 lg:px-16 py-6 sm:py-8 md:py-12 z-10">
-      <!-- Animasi Mengetik Kode -->
-      <div v-if="!showTitle" 
-           class="text-center transition-all duration-1000"
+    <div class="relative max-w-6xl mx-auto px-4 sm:px-6 md:px-8 lg:px-16 py-4 sm:py-6 md:py-8 z-10">
+      <!-- Animasi Mengetik Kode dengan Full Height pada Mobile -->
+      <div v-if="!showTitle"
+           class="text-center transition-all duration-1000 typing-animation-mobile"
            :class="{
              'opacity-100 scale-100': !typingComplete,
              'opacity-0 scale-150': typingComplete
@@ -43,17 +44,12 @@
       </div>
 
       <!-- Konten Hero (Muncul Setelah Kode) -->
-      <div v-if="showTitle" 
-           class="text-center transition-all duration-1000"
+      <div v-if="showTitle"
+           class="text-center transition-all duration-1000 mt-12 mb-16 md:mt-0 md:mb-0"
            :class="{
              'opacity-0 translate-y-10': titleTransitioning,
              'opacity-100 translate-y-0': !titleTransitioning
            }">
-        <div class="mb-6 opacity-0 animate-fade-in-up" style="animation-delay: 0.2s">
-          <span class="inline-flex items-center px-4 py-2 rounded-full bg-cyan-900/30 backdrop-blur-sm text-sm font-semibold text-cyan-300 border border-cyan-700/50">
-            ✓ {{ t('hero.subtitle') }}
-          </span>
-        </div>
 
         <!-- Title dengan Tag Harga di Sebelah Kanan yang Diperbesar -->
         <div class="relative mb-6 opacity-0 animate-fade-in-up" style="animation-delay: 0.4s">
@@ -61,65 +57,45 @@
             {{ t('hero.title') }}
           </h1>
           
-          <!-- Tag Harga di Sebelah Kanan Title untuk Desktop/Large Screens -->
-          <div class="price-tag-desktop hidden xl:block absolute top-1/2 -right-12 transform -translate-y-1/2 bg-gradient-to-r from-cyan-900/50 to-blue-900/50 backdrop-blur-xl rounded-3xl p-6 border-2 border-cyan-500/60 shadow-2xl transform rotate-6 hover:rotate-3 transition-all duration-500 hover:scale-105 z-10">
-            <div class="flex flex-col items-center relative">
-              <!-- Glow background untuk text -->
-              <div class="absolute inset-0 bg-gradient-to-r from-cyan-400/20 to-blue-400/20 rounded-2xl blur-lg"></div>
-
-              <div class="text-cyan-200/80 text-sm mb-2 relative z-10">{{ t('hero.price.startingFrom') }}</div>
-              <div class="flex items-baseline relative z-10">
-                <span class="text-2xl font-bold text-white">Rp</span>
-                <span class="text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-cyan-300 to-blue-300 drop-shadow-2xl">{{ basicPrice }}</span>
-                <span class="text-xs text-cyan-200/80 ml-1">{{ t('hero.price.thousand') }}</span>
-              </div>
-              <div class="mt-1 text-cyan-300 text-xs font-medium relative z-10">{{ t('hero.price.oneTimePayment') }}</div>
-
-              <!-- Text overlay effect -->
-              <div class="absolute inset-0 bg-gradient-to-t from-transparent via-white/5 to-transparent rounded-2xl"></div>
-            </div>
-
-            <!-- Efek cahaya pada tag -->
-            <div class="absolute -top-2 -right-2 w-4 h-4 bg-cyan-400 rounded-full opacity-60 animate-ping"></div>
-            <div class="absolute -bottom-2 -left-2 w-3 h-3 bg-blue-400 rounded-full opacity-60 animate-ping" style="animation-delay: 0.5s"></div>
-
-            <!-- Glow effect di sekitar tag -->
-            <div class="absolute inset-0 bg-gradient-to-r from-cyan-500/30 to-blue-500/30 rounded-3xl blur-xl -z-10 animate-pulse-glow"></div>
-          </div>
         </div>
 
-        <p class="text-xl md:text-2xl text-cyan-100/80 font-normal mb-6 opacity-0 animate-fade-in-up leading-relaxed max-w-3xl mx-auto" style="animation-delay: 0.6s">
+        <p class="text-xl md:text-2xl text-cyan-100/80 font-normal mb-8 opacity-0 animate-fade-in-up leading-relaxed max-w-3xl mx-auto" style="animation-delay: 0.6s">
           {{ t('hero.description') }}
         </p>
 
-        <!-- Tag Harga Responsif - Muncul di bawah deskripsi pada ukuran kecil sampai large -->
-        <div class="price-tag-responsive xl:hidden opacity-0 animate-fade-in-up mb-8" style="animation-delay: 0.7s">
-          <div class="inline-flex flex-col items-center bg-gradient-to-r from-cyan-900/50 to-blue-900/50 backdrop-blur-xl rounded-3xl p-6 sm:p-8 border-2 border-cyan-500/60 shadow-2xl relative transform hover:scale-105 transition-all duration-300">
-            <!-- Glow background -->
-            <div class="absolute inset-0 bg-gradient-to-r from-cyan-400/20 to-blue-400/20 rounded-3xl blur-lg"></div>
+        <!-- Minimal Inline Price & Subtitle -->
+        <div class="text-center mb-4 opacity-0 animate-fade-in-up" style="animation-delay: 0.7s">
+          <!-- Compact inline price display -->
+          <div class="inline-flex items-center gap-1 md:gap-4 bg-gradient-to-r from-cyan-500/10 to-blue-500/10 backdrop-blur-sm px-6 py-3 rounded-full border border-cyan-500/20 shadow-lg hover:scale-105 transition-transform duration-300">
+            <!-- Starting from label -->
+            <span class="text-cyan-300/70 text-sm font-medium">{{ t('hero.price.startingFrom') }}</span>
 
-            <div class="text-cyan-200/80 text-sm sm:text-base mb-3 relative z-10">Mulai dari</div>
-            <div class="flex items-baseline relative z-10">
-              <span class="text-3xl sm:text-4xl font-bold text-white">Rp</span>
-              <span class="text-5xl sm:text-6xl md:text-7xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-cyan-300 to-blue-300 drop-shadow-2xl">{{ basicPrice }}</span>
-              <span class="text-base sm:text-lg text-cyan-200/80 ml-2">ribu</span>
+            <!-- Price display -->
+            <div class="flex items-baseline gap-1">
+              <span class="text-lg font-bold text-white">Rp</span>
+              <span class="text-2xl font-black text-transparent bg-clip-text bg-gradient-to-r from-cyan-300 to-blue-300">{{ basicPrice }}</span>
+              <span class="text-sm text-cyan-200/90 font-semibold">{{ t('hero.price.thousand') }}</span>
             </div>
-            <div class="mt-3 text-cyan-300 text-sm sm:text-base font-medium relative z-10">Pembayaran sekali</div>
 
-            <!-- Text overlay effect -->
-            <div class="absolute inset-0 bg-gradient-to-t from-transparent via-white/5 to-transparent rounded-3xl"></div>
+            <!-- Divider dot -->
+            <div class="w-1.5 h-1.5 bg-cyan-400/60 rounded-full"></div>
 
-            <!-- Efek cahaya pada tag -->
-            <div class="absolute -top-3 -right-3 w-5 h-5 bg-cyan-400 rounded-full opacity-60 animate-ping"></div>
-            <div class="absolute -bottom-3 -left-3 w-4 h-4 bg-blue-400 rounded-full opacity-60 animate-ping" style="animation-delay: 0.5s"></div>
-            <div class="absolute top-0 right-0 w-3 h-3 bg-indigo-400 rounded-full opacity-40 animate-ping" style="animation-delay: 1s"></div>
+            <!-- One-time payment info -->
+            <span class="text-sm text-cyan-100/70 font-medium">{{ t('hero.price.oneTimePayment') }}</span>
+          </div>
 
-            <!-- Glow effect -->
-            <div class="absolute inset-0 bg-gradient-to-r from-cyan-500/30 to-blue-500/30 rounded-3xl blur-xl -z-10 animate-pulse-glow"></div>
+          <!-- Subtitle below with responsive checkmark -->
+          <div class="mt-3">
+            <p class="text-base text-cyan-100/60 font-medium flex items-center justify-center gap-2">
+              <svg class="w-4 h-4 text-green-400 flex-shrink-0 hidden md:block" fill="currentColor" viewBox="0 0 20 20">
+                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
+              </svg>
+              {{ t('hero.subtitle') }}
+            </p>
           </div>
         </div>
 
-        <div class="flex flex-col sm:flex-row gap-6 justify-center mb-16 opacity-0 animate-fade-in-up" style="animation-delay: 0.8s">
+        <div class="flex flex-col sm:flex-row gap-6 justify-center mb-8 opacity-0 animate-fade-in-up" style="animation-delay: 0.8s">
           <a
             href="https://wa.me/6281234567890?text=Hi%2C%20I%27d%20like%20a%20free%20consultation%20for%20my%20project"
             target="_blank"
@@ -143,7 +119,7 @@
         </div>
 
         <!-- Statistics Counter - Hidden on mobile -->
-        <div class="hidden md:flex flex-wrap justify-center gap-12 mb-16 opacity-0 animate-fade-in-up" style="animation-delay: 1s">
+        <div class="hidden md:flex flex-wrap justify-center gap-12 mb-8 opacity-0 animate-fade-in-up" style="animation-delay: 1s">
           <div class="flex items-center gap-3 group">
             <div class="w-12 h-12 bg-cyan-900/30 backdrop-blur-sm rounded-lg flex items-center justify-center transform group-hover:scale-110 transition-transform">
               <svg class="w-6 h-6 text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -176,8 +152,8 @@
           </div>
           <div class="flex items-center gap-3 group">
             <div class="w-12 h-12 bg-purple-900/30 backdrop-blur-sm rounded-lg flex items-center justify-center transform group-hover:scale-110 transition-transform">
-              <svg class="w-6 h-6 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 00-5.356-1.857M7 20v-2c0-.656-.126-1.283-.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path>
+              <svg class="w-6 h-6 text-purple-400" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z"></path>
               </svg>
             </div>
             <div>
@@ -205,8 +181,8 @@
     <!-- Elemen bawah futuristik -->
     <div class="absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-t from-gray-900 to-transparent z-10"></div>
     
-    <!-- Indikator scroll -->
-    <div v-if="showTitle" class="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce">
+    <!-- Indikator scroll - hidden on mobile -->
+    <div v-if="showTitle" class="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce hidden md:block">
       <svg class="w-6 h-6 text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
       </svg>
@@ -215,7 +191,7 @@
 </template>
 
 <script setup>
-import { ref, computed, onMounted, onUnmounted } from 'vue'
+import { ref, computed, onMounted } from 'vue'
 import { useI18n } from 'vue-i18n'
 
 const { t } = useI18n()
@@ -280,114 +256,45 @@ const animateCounter = (current, target, duration = 2000, elementRef) => {
   requestAnimationFrame(animate)
 }
 
-// State untuk kontrol lifecycle
-const isMounted = ref(true)
-const timeouts = []
-const intervals = []
-
-// Helper function untuk membuat timeout yang bisa dibersihkan
-const safeTimeout = (callback, delay) => {
-  if (!isMounted.value) return null
-  
-  const timeoutId = setTimeout(() => {
-    if (isMounted.value) {
-      callback()
-    }
-  }, delay)
-  
-  timeouts.push(timeoutId)
-  return timeoutId
-}
-
-// Helper function untuk interval yang bisa dibersihkan
-const safeInterval = (callback, delay) => {
-  if (!isMounted.value) return null
-  
-  const intervalId = setInterval(() => {
-    if (isMounted.value) {
-      callback()
-    } else {
-      clearInterval(intervalId)
-    }
-  }, delay)
-  
-  intervals.push(intervalId)
-  return intervalId
-}
-
-const startTypingAnimation = () => {
-  if (!isMounted.value) return
-  
-  // Gunakan interval daripada recursive setTimeout untuk performa yang lebih baik
-  const typingInterval = safeInterval(() => {
-    if (!isMounted.value) return
-    
-    if (typedIndex.value < typedCode.value.length) {
+const typeCode = () => {
+  if (typedIndex.value < typedCode.value.length) {
+    setTimeout(() => {
       typedIndex.value++
-    } else {
-      // Hentikan interval setelah selesai mengetik
-      intervals.forEach(id => clearInterval(id))
-      intervals.length = 0
+      typeCode()
+    }, 15) // Kecepatan mengetik
+  } else {
+    // Setelah selesai mengetik, tunggu 1 detik lalu transisi ke title
+    setTimeout(() => {
+      typingComplete.value = true
       
-      // Mulai transisi ke title
-      safeTimeout(() => {
-        if (!isMounted.value) return
-        typingComplete.value = true
+      setTimeout(() => {
+        showTitle.value = true
+        titleTransitioning.value = true
         
-        safeTimeout(() => {
-          if (!isMounted.value) return
-          showTitle.value = true
-          titleTransitioning.value = true
+        setTimeout(() => {
+          titleTransitioning.value = false
           
-          safeTimeout(() => {
-            if (!isMounted.value) return
-            titleTransitioning.value = false
-            
-            // Mulai animasi counter setelah konten muncul
-            safeTimeout(() => {
-              if (isMounted.value) {
-                animateCounter(currentProjects, projectsCount, 2000, projectsCounter)
-              }
-            }, 200)
-            
-            safeTimeout(() => {
-              if (isMounted.value) {
-                animateCounter(currentYears, yearsCount, 1500, yearsCounter)
-              }
-            }, 400)
-            
-            safeTimeout(() => {
-              if (isMounted.value) {
-                animateCounter(currentClients, clientsCount, 2500, clientsCounter)
-              }
-            }, 600)
-          }, 100)
-        }, 500)
-      }, 1000)
-    }
-  }, 15) // Kecepatan mengetik 15ms per karakter
+          // Mulai animasi counter setelah konten muncul
+          setTimeout(() => {
+            animateCounter(currentProjects, projectsCount, 2000, projectsCounter)
+          }, 200)
+          
+          setTimeout(() => {
+            animateCounter(currentYears, yearsCount, 1500, yearsCounter)
+          }, 400)
+          
+          setTimeout(() => {
+            animateCounter(currentClients, clientsCount, 2500, clientsCounter)
+          }, 600)
+        }, 100)
+      }, 500)
+    }, 1000)
+  }
 }
 
 onMounted(() => {
   // Mulai animasi mengetik
-  startTypingAnimation()
-})
-
-onUnmounted(() => {
-  // Set flag bahwa komponen sudah di-unmount
-  isMounted.value = false
-  
-  // Bersihkan semua timeout yang masih aktif
-  timeouts.forEach(timeoutId => {
-    clearTimeout(timeoutId)
-  })
-  timeouts.length = 0
-  
-  // Bersihkan semua interval yang masih aktif
-  intervals.forEach(intervalId => {
-    clearInterval(intervalId)
-  })
-  intervals.length = 0
+  typeCode()
 })
 </script>
 
@@ -479,35 +386,114 @@ onUnmounted(() => {
 
 /* Ensure full height hero section but allow content to be visible */
 #hero {
-  min-height: 100vh !important;
-  min-height: 100dvh !important; /* Dynamic viewport height for mobile browsers */
-  height: auto !important;
-  padding-top: 80px !important;
+  height: 100vh !important;
+  height: 100dvh !important; /* Dynamic viewport height for mobile browsers */
+  max-height: 100vh !important;
+  max-height: 100dvh !important;
+  padding-top: 60px !important;
   padding-bottom: 2rem !important;
   display: flex !important;
   align-items: center !important;
   justify-content: center !important;
+  box-sizing: border-box !important;
 }
 
 /* Mobile-first responsive approach */
 @media (max-width: 768px) {
-  #hero {
-    min-height: 100vh !important;
-    height: auto !important;
-    padding-top: 60px !important;
-    padding-bottom: 1rem !important;
+  /* Mobile typing animation - keep it simple */
+  .typing-animation-mobile .font-mono {
+    font-size: 1.25rem !important;
   }
-  
+
+  /* Full height during typing animation */
+  #hero:has(.typing-animation-mobile) {
+    height: 100vh !important;
+    height: 100dvh !important;
+    min-height: 100vh !important;
+    min-height: 100dvh !important;
+    max-height: 100vh !important;
+    max-height: 100dvh !important;
+    align-items: center !important;
+    justify-content: center !important;
+  }
+
+  /* Normal height after typing animation */
+  #hero:not(:has(.typing-animation-mobile)) {
+    height: auto !important;
+    min-height: auto !important;
+    max-height: none !important;
+    align-items: flex-start !important;
+  }
+
+  /* Fallback for browsers that don't support :has() */
+  @supports not selector(:has(*)) {
+    #hero.typing-active {
+      height: 100vh !important;
+      height: 100dvh !important;
+      min-height: 100vh !important;
+      min-height: 100dvh !important;
+      max-height: 100vh !important;
+      max-height: 100dvh !important;
+      align-items: center !important;
+      justify-content: center !important;
+    }
+
+    #hero.content-active {
+      height: auto !important;
+      min-height: auto !important;
+      max-height: none !important;
+      align-items: flex-start !important;
+    }
+  }
+
+  #hero {
+    padding-top: 80px !important;
+    padding-bottom: 2rem !important;
+  }
+
   #hero .relative.max-w-6xl {
     padding: 1rem !important;
   }
+
+  /* Mobile price tag adjustments - more rectangular design */
+  #hero .inline-flex.items-center.gap-1 {
+    flex-direction: column !important;
+    padding: 1.25rem 1.5rem !important;
+    max-width: 300px !important;
+    margin: 0 auto !important;
+    border-radius: 1rem !important;
+    background: linear-gradient(135deg, rgba(6, 182, 212, 0.15), rgba(59, 130, 246, 0.15), rgba(168, 85, 247, 0.1)) !important;
+    border: 1px solid rgba(6, 182, 212, 0.3) !important;
+  }
+
+  /* Adjust price text size on mobile */
+  #hero .inline-flex .text-2xl {
+    font-size: 1.75rem !important;
+  }
+
+  /* Center align all mobile price elements */
+  #hero .inline-flex .flex.items-baseline {
+    justify-content: center !important;
+  }
+
+  #hero h1 {
+    font-size: 2.5rem !important;
+    margin-bottom: 1rem !important;
+  }
+
+  #hero p {
+    font-size: 1rem !important;
+    margin-bottom: 1.5rem !important;
+  }
 }
 
-/* Responsive optimizations for all screen sizes */
-@media (max-height: 900px) {
+/* Responsive optimizations for desktop only */
+@media (max-height: 900px) and (min-width: 769px) {
   #hero {
-    min-height: 100vh !important;
-    height: auto !important;
+    height: 100vh !important;
+    height: 100dvh !important;
+    max-height: 100vh !important;
+    max-height: 100dvh !important;
   }
 
   #hero h1 {
@@ -517,11 +503,11 @@ onUnmounted(() => {
 
   #hero p {
     font-size: 1.25rem !important;
-    margin-bottom: 2rem !important;
+    margin-bottom: 1.5rem !important;
   }
 
   #hero .flex.gap-6 {
-    margin-bottom: 2rem !important;
+    margin-bottom: 1.5rem !important;
   }
 }
 
@@ -601,56 +587,6 @@ onUnmounted(() => {
 
 }
 
-/* Mobile width responsive */
-@media (max-width: 768px) {
-  #hero {
-    min-height: 100vh !important;
-    height: auto !important;
-    padding-top: 60px !important;
-    padding-bottom: 2rem !important;
-  }
-
-  #hero .relative.max-w-6xl {
-    padding: 1rem !important;
-    margin: 0 auto !important;
-  }
-
-  #hero h1 {
-    font-size: 2.5rem !important;
-    line-height: 1.2 !important;
-    margin-bottom: 1rem !important;
-  }
-
-  #hero p {
-    font-size: 1rem !important;
-    max-width: 95% !important;
-    margin-bottom: 1.5rem !important;
-  }
-
-  #hero .flex.gap-6 {
-    flex-direction: column;
-    gap: 1rem !important;
-    margin-bottom: 2rem !important;
-  }
-
-  #hero .flex.gap-12 {
-    gap: 1.5rem !important;
-    justify-content: center;
-    margin-bottom: 2rem !important;
-    flex-wrap: wrap;
-  }
-
-  /* Price tag responsive adjustments */
-  .price-tag-responsive {
-    margin-bottom: 1.5rem !important;
-  }
-
-  .price-tag-responsive .rounded-3xl {
-    padding: 1rem !important;
-    max-width: 280px !important;
-    margin: 0 auto !important;
-  }
-}
 
 @media (max-width: 640px) {
   #hero {
@@ -659,6 +595,28 @@ onUnmounted(() => {
 
   #hero .relative.max-w-6xl {
     padding: 0.75rem !important;
+  }
+
+  /* Smaller rectangular price tag on small screens */
+  #hero .inline-flex.items-center.gap-4 {
+    max-width: 280px !important;
+    padding: 1rem 1.25rem !important;
+    gap: 0.5rem !important;
+    border-radius: 0.875rem !important;
+    background: linear-gradient(135deg, rgba(6, 182, 212, 0.15), rgba(59, 130, 246, 0.15), rgba(168, 85, 247, 0.1)) !important;
+    border: 1px solid rgba(6, 182, 212, 0.25) !important;
+  }
+
+  #hero .inline-flex .text-2xl {
+    font-size: 1.5rem !important;
+  }
+
+  #hero .inline-flex .text-lg {
+    font-size: 1rem !important;
+  }
+
+  #hero .inline-flex .text-sm {
+    font-size: 0.8125rem !important;
   }
 
   #hero h1 {
@@ -698,6 +656,28 @@ onUnmounted(() => {
     padding: 0.5rem !important;
   }
 
+  /* Extra small rectangular price tag */
+  #hero .inline-flex.items-center.gap-4 {
+    max-width: 260px !important;
+    padding: 0.875rem 1rem !important;
+    gap: 0.5rem !important;
+    border-radius: 0.75rem !important;
+    background: linear-gradient(135deg, rgba(6, 182, 212, 0.15), rgba(59, 130, 246, 0.15), rgba(168, 85, 247, 0.1)) !important;
+    border: 1px solid rgba(6, 182, 212, 0.2) !important;
+  }
+
+  #hero .inline-flex .text-2xl {
+    font-size: 1.375rem !important;
+  }
+
+  #hero .inline-flex .text-lg {
+    font-size: 0.875rem !important;
+  }
+
+  #hero .inline-flex .text-sm {
+    font-size: 0.75rem !important;
+  }
+
   #hero h1 {
     font-size: 2rem !important;
     margin-bottom: 0.5rem !important;
@@ -726,109 +706,7 @@ onUnmounted(() => {
 
 }
 
-/* Price tag responsive positioning */
-@media (min-width: 1280px) {
-  .price-tag-desktop {
-    right: -2rem !important;
-  }
-}
 
-@media (min-width: 1400px) {
-  .price-tag-desktop {
-    right: -2.5rem !important;
-  }
-}
-
-@media (min-width: 1536px) {
-  .price-tag-desktop {
-    right: -3rem !important;
-  }
-}
-
-/* Mobile width responsive */
-@media (max-width: 1279px) {
-  /* Ensure price tag appears below description on all sizes below xl */
-  .price-tag-responsive {
-    margin-bottom: 2rem !important;
-  }
-}
-
-@media (max-width: 768px) {
-  /* Price tag sizing for tablet */
-  .price-tag-responsive {
-    margin-bottom: 1.5rem !important;
-  }
-
-  .price-tag-responsive .rounded-3xl {
-    padding: 1rem !important;
-    max-width: 280px !important;
-    margin: 0 auto !important;
-  }
-
-  .price-tag-responsive .text-5xl,
-  .price-tag-responsive .text-6xl,
-  .price-tag-responsive .text-7xl {
-    font-size: 2.5rem !important;
-  }
-
-  .price-tag-responsive .text-3xl,
-  .price-tag-responsive .text-4xl {
-    font-size: 1.5rem !important;
-  }
-}
-
-@media (max-width: 640px) {
-  /* Price tag sizing for mobile */
-  .price-tag-responsive {
-    margin-bottom: 1rem !important;
-  }
-
-  .price-tag-responsive .rounded-3xl {
-    padding: 0.75rem !important;
-    max-width: 250px !important;
-    margin: 0 auto !important;
-  }
-
-  .price-tag-responsive .text-5xl,
-  .price-tag-responsive .text-6xl,
-  .price-tag-responsive .text-7xl {
-    font-size: 2rem !important;
-  }
-
-  .price-tag-responsive .text-3xl,
-  .price-tag-responsive .text-4xl {
-    font-size: 1.25rem !important;
-  }
-}
-
-@media (max-width: 480px) {
-  /* Price tag sizing for small mobile */
-  .price-tag-responsive {
-    margin-bottom: 0.75rem !important;
-  }
-
-  .price-tag-responsive .rounded-3xl {
-    padding: 0.625rem !important;
-    max-width: 220px !important;
-    margin: 0 auto !important;
-  }
-
-  .price-tag-responsive .text-5xl,
-  .price-tag-responsive .text-6xl,
-  .price-tag-responsive .text-7xl {
-    font-size: 1.75rem !important;
-  }
-
-  .price-tag-responsive .text-3xl,
-  .price-tag-responsive .text-4xl {
-    font-size: 1rem !important;
-  }
-
-  .price-tag-responsive .text-sm,
-  .price-tag-responsive .text-base {
-    font-size: 0.75rem !important;
-  }
-}
 
 /* Ultra small screens (320px and below) */
 @media (max-width: 320px) {
@@ -859,24 +737,6 @@ onUnmounted(() => {
     padding: 0.5rem 1rem !important;
     font-size: 0.75rem !important;
   }
-
-
-
-  .price-tag-responsive .rounded-3xl {
-    padding: 0.5rem !important;
-    max-width: 200px !important;
-  }
-
-  .price-tag-responsive .text-5xl,
-  .price-tag-responsive .text-6xl,
-  .price-tag-responsive .text-7xl {
-    font-size: 1.5rem !important;
-  }
-
-  .price-tag-responsive .text-3xl,
-  .price-tag-responsive .text-4xl {
-    font-size: 0.875rem !important;
-  }
 }
 
 /* Landscape orientation on mobile devices */
@@ -903,10 +763,6 @@ onUnmounted(() => {
   #hero .flex.gap-12 {
     margin-bottom: 1rem !important;
     gap: 1rem !important;
-  }
-
-  .price-tag-responsive {
-    margin-bottom: 1rem !important;
   }
 }
 
