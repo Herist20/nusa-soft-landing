@@ -20,8 +20,8 @@
   },
   "hero": {
     "title": "Digital Transformation That Drives Business Growth",
-    "subtitle": "Your trusted technology partner for scalable and innovative solutions",
-    "description": "We deliver enterprise-grade web applications and mobile solutions that scale with your business. From startups to Fortune 500 companies, we're your digital transformation partner.",
+    "subtitle": "Your trusted technology partner for digital solutions and academic consulting",
+    "description": "We deliver enterprise-grade web applications, mobile solutions, and academic thesis consulting that scale with your needs. From startups to Fortune 500 companies, from students to researchers, we're your digital transformation partner.",
     "cta": {
       "primary": "Get Free Consultation",
       "secondary": "View Our Work"
@@ -93,6 +93,66 @@
       "title": "Need Something More Complex?",
       "description": "We offer custom enterprise solutions tailored to your specific business requirements with unlimited features and dedicated support.",
       "cta": "Discuss Custom Project"
+    },
+    "thesis": {
+      "badge": "Academic Services",
+      "title": "Thesis & Research Consulting",
+      "subtitle": "Professional services to guide students through thesis completion, research projects, and academic studies",
+      "note": "Specialized in technology, information systems, and application development fields",
+      "packages": {
+        "system": {
+          "name": "System for Thesis",
+          "price": "850",
+          "period": "complete package",
+          "description": "System/application development for thesis needs",
+          "cta": "Choose System Package",
+          "features": [
+            "System requirement analysis",
+            "Database and architecture design",
+            "Web/mobile application development",
+            "Testing and debugging",
+            "Complete technical documentation",
+            "Source code and installation guide"
+          ]
+        },
+        "writing": {
+          "name": "Thesis Writing",
+          "price": "1,000",
+          "period": "complete package",
+          "description": "Comprehensive thesis writing guidance from start to finish",
+          "cta": "Choose Writing Package",
+          "features": [
+            "Proposal and methodology consultation",
+            "Complete Chapter I-V writing",
+            "Regular review and revision",
+            "Data analysis assistance",
+            "Presentation and defense simulation",
+            "Support until graduation"
+          ]
+        },
+        "bundle": {
+          "name": "Bundle Writing + System",
+          "price": "1,500",
+          "period": "complete package",
+          "description": "Complete package for both system and thesis writing",
+          "cta": "Choose Bundle Package",
+          "popular": true,
+          "features": [
+            "All system package features",
+            "All writing package features",
+            "Comprehensive consultation",
+            "Priority support",
+            "Bonus additional documentation",
+            "Unlimited revision guarantee"
+          ]
+        },
+        "custom_consultation": {
+          "name": "Custom Consultation",
+          "price": "Consultation",
+          "description": "Package tailored to specific needs",
+          "cta": "Consult Pricing"
+        }
+      }
     }
   },
   "contact": {
@@ -116,6 +176,7 @@
           "system": "Enterprise System",
           "uiux": "UI/UX Design",
           "consultation": "Digital Consultation",
+          "thesis": "Thesis/Academic Consulting",
           "other": "Other"
         }
       },

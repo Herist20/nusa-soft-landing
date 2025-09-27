@@ -20,8 +20,8 @@
   },
   "hero": {
     "title": "Transformasi Digital yang Menguntungkan Bisnis Anda",
-    "subtitle": "Partner teknologi terpercaya untuk solusi digital yang meningkatkan omzet",
-    "description": "Kami menyediakan layanan pembuatan website dan aplikasi mobile yang disesuaikan dengan kebutuhan bisnis Indonesia. Dari UMKM hingga korporasi, kami siap menjadi mitra digital Anda.",
+    "subtitle": "Partner teknologi terpercaya untuk solusi digital dan konsultasi akademik",
+    "description": "Kami menyediakan layanan pembuatan website, aplikasi mobile, dan konsultasi tugas akhir yang disesuaikan dengan kebutuhan bisnis dan akademik Indonesia. Dari UMKM hingga korporasi, dari mahasiswa hingga peneliti, kami siap menjadi mitra digital Anda.",
     "cta": {
       "primary": "Konsultasi Gratis",
       "secondary": "Lihat Portfolio"
@@ -93,6 +93,66 @@
       "title": "Butuh Yang Lebih Kompleks?",
       "description": "Kami menawarkan solusi enterprise custom yang disesuaikan dengan kebutuhan bisnis spesifik Anda dengan fitur unlimited dan dukungan khusus.",
       "cta": "Diskusi Proyek Custom"
+    },
+    "thesis": {
+      "badge": "Layanan Akademik",
+      "title": "Konsultasi Tugas Akhir & Penelitian",
+      "subtitle": "Layanan profesional untuk mendampingi mahasiswa menyelesaikan tugas akhir, skripsi, tesis, dan penelitian akademik",
+      "note": "Khusus bidang teknologi, sistem informasi, dan pengembangan aplikasi",
+      "packages": {
+        "system": {
+          "name": "Sistem untuk Skripsi",
+          "price": "850",
+          "period": "paket lengkap",
+          "description": "Pengembangan sistem/aplikasi untuk kebutuhan skripsi",
+          "cta": "Pilih Paket Sistem",
+          "features": [
+            "Analisis kebutuhan sistem",
+            "Desain database dan arsitektur",
+            "Pengembangan aplikasi web/mobile",
+            "Testing dan debugging",
+            "Dokumentasi teknis lengkap",
+            "Source code dan panduan instalasi"
+          ]
+        },
+        "writing": {
+          "name": "Penulisan Skripsi",
+          "price": "1.000",
+          "period": "paket lengkap",
+          "description": "Pendampingan penulisan skripsi dari awal hingga selesai",
+          "cta": "Pilih Paket Penulisan",
+          "features": [
+            "Konsultasi proposal dan metodologi",
+            "Penulisan BAB I-V lengkap",
+            "Review dan revisi berkala",
+            "Bantuan analisis data",
+            "Presentasi dan simulasi sidang",
+            "Dukungan hingga lulus sidang"
+          ]
+        },
+        "bundle": {
+          "name": "Bundle Penulisan + Sistem",
+          "price": "1.500",
+          "period": "paket lengkap",
+          "description": "Paket lengkap sistem dan penulisan skripsi",
+          "cta": "Pilih Paket Bundle",
+          "popular": true,
+          "features": [
+            "Semua fitur paket sistem",
+            "Semua fitur paket penulisan",
+            "Konsultasi menyeluruh",
+            "Prioritas dukungan",
+            "Bonus dokumentasi tambahan",
+            "Garansi revisi unlimited"
+          ]
+        },
+        "custom_consultation": {
+          "name": "Konsultasi Custom",
+          "price": "Konsultasi",
+          "description": "Paket disesuaikan dengan kebutuhan spesifik",
+          "cta": "Konsultasi Harga"
+        }
+      }
     }
   },
   "contact": {
@@ -116,6 +176,7 @@
           "system": "Sistem Informasi",
           "uiux": "UI/UX Design",
           "consultation": "Konsultasi Digital",
+          "thesis": "Konsultasi Tugas Akhir/Skripsi",
           "other": "Lainnya"
         }
       },
