@@ -2,7 +2,7 @@
   <div class="mobile-language-switcher">
     <!-- Compact Mobile Toggle -->
     <button
-      @click="toggleMenu"
+      @click.stop="toggleMenu"
       class="language-toggle-btn"
       :aria-expanded="showMenu"
       aria-label="Select language"
@@ -35,7 +35,7 @@
         <div
           v-if="showMenu"
           class="mobile-menu-overlay"
-          @click="closeMenu"
+          @click.self="closeMenu"
         >
           <div
             class="mobile-menu-container top-menu"
@@ -44,7 +44,7 @@
             <div class="menu-header">
               <h3 class="menu-title">{{ t('language.selectLanguage') || 'Select Language' }}</h3>
               <button
-                @click="closeMenu"
+                @click.stop="closeMenu"
                 class="close-btn"
                 aria-label="Close language menu"
               >
@@ -58,7 +58,7 @@
               <button
                 v-for="lang in availableLocales"
                 :key="lang.code"
-                @click="selectLanguage(lang.code)"
+                @click.stop="selectLanguage(lang.code)"
                 class="language-option"
                 :class="{ 'active': currentLocale === lang.code }"
                 :aria-current="currentLocale === lang.code ? 'true' : 'false'"
@@ -110,10 +110,13 @@ const currentLanguage = computed(() => {
   return current || availableLocales.value[0]
 })
 
-const toggleMenu = () => {
+const toggleMenu = (event) => {
+  event?.stopPropagation?.()
   showMenu.value = !showMenu.value
   if (showMenu.value) {
     document.body.style.overflow = 'hidden'
+  } else {
+    document.body.style.overflow = ''
   }
 }
 
@@ -122,7 +125,9 @@ const closeMenu = () => {
   document.body.style.overflow = ''
 }
 
-const selectLanguage = async (langCode) => {
+const selectLanguage = async (langCode, event) => {
+  event?.stopPropagation?.()
+  
   if (langCode === currentLocale.value) {
     closeMenu()
     return
@@ -145,6 +150,7 @@ const selectLanguage = async (langCode) => {
   } catch (error) {
     console.error('Language change failed:', error)
     isChanging.value = false
+    closeMenu()
   }
 }
 
@@ -191,6 +197,9 @@ onUnmounted(() => {
   min-height: 44px;
   min-width: 44px;
   touch-action: manipulation;
+  outline: none !important;
+  box-shadow: none !important;
+  -webkit-tap-highlight-color: transparent;
 }
 
 .language-toggle-btn:active {
@@ -285,6 +294,9 @@ onUnmounted(() => {
   border: none;
   color: #6b7280;
   transition: all 0.2s;
+  outline: none !important;
+  box-shadow: none !important;
+  -webkit-tap-highlight-color: transparent;
 }
 
 .close-btn:hover {
@@ -310,6 +322,9 @@ onUnmounted(() => {
   transition: all 0.2s;
   min-height: 60px;
   touch-action: manipulation;
+  outline: none !important;
+  box-shadow: none !important;
+  -webkit-tap-highlight-color: transparent;
 }
 
 .language-option:active {
@@ -418,5 +433,29 @@ onUnmounted(() => {
 
 [dir="rtl"] .option-content {
   align-items: flex-end;
+}
+
+/* Remove all focus rings and outlines globally */
+button:focus,
+button:focus-visible {
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+/* Remove webkit focus outline */
+button::-moz-focus-inner {
+  border: 0;
+  outline: none;
+}
+
+/* Prevent text selection and touch highlights */
+* {
+  -webkit-tap-highlight-color: transparent;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
 }
 </style>

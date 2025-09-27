@@ -136,9 +136,9 @@
 
           <!-- Mobile Menu Button -->
           <button
-            @click="toggleMobileMenu"
-            class="p-2 rounded-md transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-cyan-500/50"
-            :class="scrolled ? 'text-gray-300 hover:text-white' : 'text-gray-300 hover:text-white'"
+            @click.stop="toggleMobileMenu"
+            class="p-2 rounded-md transition-colors duration-200 focus:outline-none"
+            :class="scrolled ? 'text-gray-300 hover:text-white hover:bg-gray-800/50' : 'text-gray-300 hover:text-white hover:bg-gray-800/50'"
             aria-label="Toggle mobile menu"
             :aria-expanded="mobileMenuOpen"
           >
@@ -173,6 +173,8 @@
     >
       <div
         v-if="mobileMenuOpen"
+        @click.stop
+        data-mobile-menu
         class="md:hidden bg-gray-900/95 backdrop-blur-lg border-t border-gray-800 shadow-xl"
       >
         <div class="px-4 pt-4 pb-6 space-y-3">
@@ -292,10 +294,18 @@ const scrollToSection = (event, href) => {
   }
 }
 
-const toggleMobileMenu = () => {
+const toggleMobileMenu = (event) => {
+  event?.stopPropagation?.()
   mobileMenuOpen.value = !mobileMenuOpen.value
   if (!mobileMenuOpen.value) {
     activeMobileSubmenu.value = null
+  }
+  
+  // Prevent body scroll when menu is open
+  if (mobileMenuOpen.value) {
+    document.body.style.overflow = 'hidden'
+  } else {
+    document.body.style.overflow = ''
   }
 }
 
@@ -304,9 +314,11 @@ const toggleMobileSubmenu = (itemName) => {
 }
 
 const handleMobileNavClick = (event, href) => {
+  event?.stopPropagation?.()
   scrollToSection(event, href)
   mobileMenuOpen.value = false
   activeMobileSubmenu.value = null
+  document.body.style.overflow = ''
 }
 
 const handleScroll = () => {
@@ -350,8 +362,12 @@ const setupIntersectionObserver = () => {
 // Close mobile menu when clicking outside
 const handleClickOutside = (event) => {
   const nav = event.target.closest('nav')
-  if (!nav && mobileMenuOpen.value) {
+  const mobileMenu = event.target.closest('[data-mobile-menu]')
+  
+  if (!nav && !mobileMenu && mobileMenuOpen.value) {
     mobileMenuOpen.value = false
+    activeMobileSubmenu.value = null
+    document.body.style.overflow = ''
   }
 }
 
@@ -359,6 +375,8 @@ const handleClickOutside = (event) => {
 const handleKeydown = (event) => {
   if (event.key === 'Escape' && mobileMenuOpen.value) {
     mobileMenuOpen.value = false
+    activeMobileSubmenu.value = null
+    document.body.style.overflow = ''
   }
 }
 
@@ -376,6 +394,9 @@ onUnmounted(() => {
   window.removeEventListener('scroll', handleScroll)
   document.removeEventListener('click', handleClickOutside)
   document.removeEventListener('keydown', handleKeydown)
+  
+  // Restore body scroll when component unmounts
+  document.body.style.overflow = ''
 
   if (observer) {
     observer.disconnect()
@@ -393,6 +414,21 @@ onUnmounted(() => {
   z-index: 50;
 }
 
+/* Remove all focus rings and outlines */
+button:focus,
+button:focus-visible,
+a:focus,
+a:focus-visible {
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+/* Remove any webkit focus outline */
+button::-moz-focus-inner {
+  border: 0;
+  outline: none;
+}
+
 /* Improve dropdown appearance */
 [data-testid="about-dropdown-menu"] {
   min-width: 200px;
@@ -404,5 +440,32 @@ onUnmounted(() => {
   .ml-4 {
     margin-left: 1rem;
   }
+}
+
+/* Mobile menu overlay to prevent clicks outside */
+[data-mobile-menu] {
+  position: relative;
+  z-index: 1000;
+}
+
+/* Hamburger button improvements */
+.md\:hidden button {
+  -webkit-tap-highlight-color: transparent;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+/* Prevent accidental text selection on mobile */
+.md\:hidden {
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
 }
 </style>
