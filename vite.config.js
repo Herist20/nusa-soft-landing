@@ -18,7 +18,7 @@ export default defineConfig({
     // PWA Support
     VitePWA({
       registerType: 'autoUpdate',
-      includeAssets: ['favicon.ico', 'apple-touch-icon.png', 'masked-icon.svg'],
+      includeAssets: ['favicon.ico'],
       manifest: {
         name: 'Nusa Software - Web & App Development',
         short_name: 'Nusa Software',
@@ -28,14 +28,9 @@ export default defineConfig({
         display: 'standalone',
         icons: [
           {
-            src: '/pwa-192x192.png',
-            sizes: '192x192',
-            type: 'image/png'
-          },
-          {
-            src: '/pwa-512x512.png',
-            sizes: '512x512',
-            type: 'image/png'
+            src: '/favicon.ico',
+            sizes: '32x32',
+            type: 'image/x-icon'
           }
         ]
       }
@@ -137,8 +132,10 @@ export default defineConfig({
     assetsInlineLimit: 4096,
     // Target modern browsers
     target: 'es2015',
-    // Polyfill
-    polyfillModulePreload: true
+    // Module preload polyfill
+    modulePreload: {
+      polyfill: true
+    }
   },
 
   // CSS optimization

@@ -1,7 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import Home from '../views/Home.vue'
 import { supportedLocales } from '@/locales'
-import { useMultilingualSEO } from '@/utils/seoMultilingual'
+import { multilingualSEO } from '@/utils/seoMultilingual'
 
 const getDefaultLocale = () => {
   const savedLocale = localStorage.getItem('userLocale')
@@ -153,11 +153,10 @@ router.beforeEach((to, from, next) => {
 // SEO optimization after each route
 router.afterEach((to, from) => {
   if (typeof window !== 'undefined') {
-    const { initializeSEO } = useMultilingualSEO()
-
     // Small delay to ensure DOM is ready
     setTimeout(() => {
-      initializeSEO()
+      const currentLocale = to.params.lang || 'id'
+      multilingualSEO.initializeSEO(to, currentLocale)
     }, 100)
   }
 })

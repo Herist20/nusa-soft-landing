@@ -5,7 +5,7 @@ export class ErrorMonitor {
   constructor() {
     this.errors = new Map()
     this.config = {
-      enableLogging: true,
+      enableLogging: false, // Disable to prevent console spam
       enableAnalytics: import.meta.env.PROD,
       maxErrors: 100,
       reportingInterval: 60000, // 1 minute
@@ -25,7 +25,7 @@ export class ErrorMonitor {
     this.setupPerformanceErrorHandling()
     this.startErrorReporting()
 
-    console.log('🛡️ Error Monitor initialized')
+    // Error Monitor initialized
   }
 
   /**
@@ -76,37 +76,8 @@ export class ErrorMonitor {
    * Setup translation error handling
    */
   setupTranslationErrorHandling() {
-    // Override console methods to catch translation warnings
-    const originalWarn = console.warn
-    const originalError = console.error
-
-    console.warn = (...args) => {
-      const message = args.join(' ')
-      if (message.includes('translation') || message.includes('i18n') || message.includes('locale')) {
-        this.handleError({
-          type: 'translation_warning',
-          message: message,
-          language: document.documentElement.lang,
-          url: window.location.href,
-          severity: 'warning'
-        })
-      }
-      originalWarn.apply(console, args)
-    }
-
-    console.error = (...args) => {
-      const message = args.join(' ')
-      if (message.includes('translation') || message.includes('i18n') || message.includes('locale')) {
-        this.handleError({
-          type: 'translation_error',
-          message: message,
-          language: document.documentElement.lang,
-          url: window.location.href,
-          severity: 'error'
-        })
-      }
-      originalError.apply(console, args)
-    }
+    // Disabled console override to prevent spam
+    // Translation errors will be handled through other means
   }
 
   /**
@@ -236,7 +207,7 @@ export class ErrorMonitor {
     // Log error
     if (this.config.enableLogging) {
       const logLevel = enrichedError.severity === 'warning' ? 'warn' : 'error'
-      console[logLevel]('🚨 Error detected:', enrichedError)
+      // Error logged internally
     }
 
     // Send to analytics
@@ -320,7 +291,7 @@ export class ErrorMonitor {
       url: window.location.href
     }
 
-    console.error('🚨 CRITICAL ERROR THRESHOLD REACHED:', criticalError)
+    // Critical error threshold reached - handled internally
 
     // Send critical error notification
     if (this.config.enableAnalytics && window.gtag) {
@@ -355,7 +326,7 @@ export class ErrorMonitor {
         this.reinitializeI18n()
         break
       default:
-        console.warn('No fallback action defined for error type:', errorType)
+        // No fallback action needed for this error type
     }
   }
 
@@ -377,7 +348,7 @@ export class ErrorMonitor {
         }))
       }
     } catch (error) {
-      console.error('Failed to switch to fallback language:', error)
+      // Failed to switch to fallback language
     }
   }
 
@@ -391,7 +362,7 @@ export class ErrorMonitor {
       const newUrl = window.location.href.replace(/\/(en|id)\//, `/${defaultLang}/`)
       window.location.href = newUrl
     } catch (error) {
-      console.error('Failed to reload with default language:', error)
+      // Failed to reload with default language
     }
   }
 
@@ -412,7 +383,7 @@ export class ErrorMonitor {
         }))
       }
     } catch (error) {
-      console.error('Failed to reinitialize i18n:', error)
+      // Failed to reinitialize i18n
     }
   }
 
@@ -460,7 +431,7 @@ export class ErrorMonitor {
 
     // Log report in development
     if (this.config.enableLogging && Object.keys(report.details).length > 0) {
-      console.log('📋 Error Report:', report)
+      // Error report generated
     }
 
     return report

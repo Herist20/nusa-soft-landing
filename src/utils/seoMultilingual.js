@@ -56,20 +56,22 @@ export class MultilingualSEO {
    * Update HTML head with SEO meta tags
    */
   updateHtmlHead(routeData, language) {
-    const { t } = useI18n()
+    // Use global i18n instance instead of useI18n composable
+    const i18n = window.i18n
+    const t = i18n?.global?.t || (() => '')
 
     // Update HTML lang attribute
     document.documentElement.lang = language
 
     // Update title
-    document.title = t('meta.title')
+    document.title = t('meta.title') || 'Nusa Software'
 
     // Update meta description
-    this.updateMetaTag('name', 'description', t('meta.description'))
+    this.updateMetaTag('name', 'description', t('meta.description') || 'Professional web development')
 
     // Update Open Graph tags
-    this.updateMetaTag('property', 'og:title', t('meta.ogTitle') || t('meta.title'))
-    this.updateMetaTag('property', 'og:description', t('meta.ogDescription') || t('meta.description'))
+    this.updateMetaTag('property', 'og:title', t('meta.ogTitle') || t('meta.title') || 'Nusa Software')
+    this.updateMetaTag('property', 'og:description', t('meta.ogDescription') || t('meta.description') || 'Professional web development')
     this.updateMetaTag('property', 'og:locale', language === 'id' ? 'id_ID' : 'en_US')
     this.updateMetaTag('property', 'og:url', window.location.href)
 
@@ -133,7 +135,9 @@ export class MultilingualSEO {
    * Generate structured data for organization
    */
   generateOrganizationSchema(language) {
-    const { t } = useI18n()
+    // Use global i18n instance instead of useI18n composable
+    const i18n = window.i18n
+    const t = i18n?.global?.t || (() => '')
 
     const baseSchema = {
       "@context": "https://schema.org",
@@ -215,18 +219,28 @@ export class MultilingualSEO {
    * Inject structured data into page
    */
   injectStructuredData(language) {
-    // Remove existing structured data
-    const existingScript = document.querySelector('script[type="application/ld+json"]')
-    if (existingScript) {
-      existingScript.remove()
-    }
+    try {
+      // Remove existing structured data
+      const existingScript = document.querySelector('script[type="application/ld+json"]')
+      if (existingScript) {
+        existingScript.remove()
+      }
 
-    // Create new structured data
-    const schema = this.generateOrganizationSchema(language)
-    const script = document.createElement('script')
-    script.type = 'application/ld+json'
-    script.textContent = JSON.stringify(schema, null, 2)
-    document.head.appendChild(script)
+      // Create new structured data
+      const schema = this.generateOrganizationSchema(language)
+      const script = document.createElement('script')
+      script.type = 'application/ld+json'
+
+      // Safely stringify the schema
+      try {
+        script.textContent = JSON.stringify(schema, null, 2)
+        document.head.appendChild(script)
+      } catch (jsonError) {
+        console.warn('Failed to serialize structured data:', jsonError)
+      }
+    } catch (error) {
+      console.warn('Failed to inject structured data:', error)
+    }
   }
 
   /**
@@ -300,13 +314,7 @@ export class MultilingualSEO {
       })
     }
 
-    // Custom analytics
-    console.log('Language switch tracked:', {
-      from: fromLang,
-      to: toLang,
-      url: currentUrl,
-      timestamp: new Date().toISOString()
-    })
+    // Language switch tracked
   }
 
   /**

@@ -29,8 +29,8 @@
       <!-- Pricing Cards -->
       <div class="grid grid-cols-1 md:grid-cols-3 gap-8 lg:gap-10">
         <!-- Basic Package -->
-        <div class="group bg-gray-800/50 backdrop-blur-md rounded-xl shadow-lg hover:shadow-cyan-500/10 transition-all duration-300 overflow-hidden border border-gray-700 hover:border-cyan-500/50 transform hover:-translate-y-2 relative">
-          <div class="p-8">
+        <div class="group bg-gray-800/50 backdrop-blur-md rounded-xl shadow-lg hover:shadow-cyan-500/10 transition-all duration-300 overflow-hidden border border-gray-700 hover:border-cyan-500/50 transform hover:-translate-y-2 relative flex flex-col">
+          <div class="p-8 flex flex-col flex-grow">
             <h3 class="text-2xl font-bold text-white mb-2">{{ t('pricing.basic.name') }}</h3>
             <p class="text-cyan-100/70 mb-6 text-sm">{{ t('pricing.basic.description') }}</p>
 
@@ -44,7 +44,7 @@
             </div>
 
             <!-- Features -->
-            <ul class="space-y-3 mb-8">
+            <ul class="space-y-3 mb-8 flex-grow">
               <li v-for="(feature, index) in basicFeatures" :key="index" class="flex items-start text-sm">
                 <svg class="w-5 h-5 text-cyan-400 mr-3 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
@@ -58,7 +58,7 @@
               href="https://wa.me/6281234567890?text=Hi%2C%20saya%20tertarik%20dengan%20paket%20Basic%20Rp%20850.000"
               target="_blank"
               rel="noopener noreferrer"
-              class="w-full bg-gray-700/50 hover:bg-cyan-900/50 text-cyan-300 px-6 py-3 rounded-lg font-semibold transition-all duration-300 border border-cyan-800/50 hover:border-cyan-600/50 text-center block"
+              class="w-full bg-gray-700/50 hover:bg-cyan-900/50 text-cyan-300 px-6 py-3 rounded-lg font-semibold transition-all duration-300 border border-cyan-800/50 hover:border-cyan-600/50 text-center block mt-auto"
             >
               {{ t('pricing.basic.cta') }}
             </a>
@@ -66,15 +66,15 @@
         </div>
 
         <!-- Professional Package (Recommended) -->
-        <div class="group bg-gradient-to-br from-cyan-900/30 to-blue-900/30 backdrop-blur-md rounded-xl shadow-lg hover:shadow-cyan-500/20 transition-all duration-300 overflow-hidden border-2 border-cyan-500/60 transform hover:-translate-y-2 relative scale-105">
+        <div class="group bg-gradient-to-br from-cyan-900/30 to-blue-900/30 backdrop-blur-md rounded-xl shadow-lg hover:shadow-cyan-500/20 transition-all duration-300 overflow-hidden border-2 border-cyan-500/60 transform hover:-translate-y-2 relative scale-105 flex flex-col">
           <!-- Recommended Badge -->
-          <div class="absolute top-4 right-4">
+          <div class="absolute top-4 right-4 z-10">
             <div class="bg-gradient-to-r from-cyan-500 to-blue-500 text-white px-3 py-1 rounded-full text-xs font-bold shadow-lg">
               {{ t('pricing.recommended') }}
             </div>
           </div>
 
-          <div class="p-8">
+          <div class="p-8 flex flex-col flex-grow">
             <h3 class="text-2xl font-bold text-white mb-2">{{ t('pricing.professional.name') }}</h3>
             <p class="text-cyan-100/70 mb-6 text-sm">{{ t('pricing.professional.description') }}</p>
 
@@ -88,7 +88,7 @@
             </div>
 
             <!-- Features -->
-            <ul class="space-y-3 mb-8">
+            <ul class="space-y-3 mb-8 flex-grow">
               <li v-for="(feature, index) in professionalFeatures" :key="index" class="flex items-start text-sm">
                 <svg class="w-5 h-5 text-cyan-400 mr-3 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
@@ -102,7 +102,7 @@
               href="https://wa.me/6281234567890?text=Hi%2C%20saya%20tertarik%20dengan%20paket%20Professional%20Rp%201.000.000"
               target="_blank"
               rel="noopener noreferrer"
-              class="w-full bg-gradient-to-r from-cyan-500 to-blue-500 hover:from-cyan-600 hover:to-blue-600 text-white px-6 py-3 rounded-lg font-semibold transition-all duration-300 shadow-lg hover:shadow-cyan-500/30 text-center block"
+              class="w-full bg-gradient-to-r from-cyan-500 to-blue-500 hover:from-cyan-600 hover:to-blue-600 text-white px-6 py-3 rounded-lg font-semibold transition-all duration-300 shadow-lg hover:shadow-cyan-500/30 text-center block mt-auto"
             >
               {{ t('pricing.professional.cta') }}
             </a>
@@ -110,8 +110,8 @@
         </div>
 
         <!-- Enterprise Package -->
-        <div class="group bg-gray-800/50 backdrop-blur-md rounded-xl shadow-lg hover:shadow-cyan-500/10 transition-all duration-300 overflow-hidden border border-gray-700 hover:border-cyan-500/50 transform hover:-translate-y-2 relative">
-          <div class="p-8">
+        <div class="group bg-gray-800/50 backdrop-blur-md rounded-xl shadow-lg hover:shadow-cyan-500/10 transition-all duration-300 overflow-hidden border border-gray-700 hover:border-cyan-500/50 transform hover:-translate-y-2 relative flex flex-col">
+          <div class="p-8 flex flex-col flex-grow">
             <h3 class="text-2xl font-bold text-white mb-2">{{ t('pricing.enterprise.name') }}</h3>
             <p class="text-cyan-100/70 mb-6 text-sm">{{ t('pricing.enterprise.description') }}</p>
 
@@ -125,7 +125,7 @@
             </div>
 
             <!-- Features -->
-            <ul class="space-y-3 mb-8">
+            <ul class="space-y-3 mb-8 flex-grow">
               <li v-for="(feature, index) in enterpriseFeatures" :key="index" class="flex items-start text-sm">
                 <svg class="w-5 h-5 text-cyan-400 mr-3 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
@@ -139,7 +139,7 @@
               href="https://wa.me/6281234567890?text=Hi%2C%20saya%20tertarik%20dengan%20paket%20Enterprise%20Rp%201.500.000"
               target="_blank"
               rel="noopener noreferrer"
-              class="w-full bg-gray-700/50 hover:bg-cyan-900/50 text-cyan-300 px-6 py-3 rounded-lg font-semibold transition-all duration-300 border border-cyan-800/50 hover:border-cyan-600/50 text-center block"
+              class="w-full bg-gray-700/50 hover:bg-cyan-900/50 text-cyan-300 px-6 py-3 rounded-lg font-semibold transition-all duration-300 border border-cyan-800/50 hover:border-cyan-600/50 text-center block mt-auto"
             >
               {{ t('pricing.enterprise.cta') }}
             </a>

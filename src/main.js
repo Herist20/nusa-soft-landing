@@ -57,7 +57,16 @@ app.mixin({
 
       // Performance monitoring in production
       if (import.meta.env.PROD) {
-        reportWebVitals(console.log)
+        reportWebVitals((metric) => {
+          // Send to analytics instead of console
+          if (window.gtag) {
+            window.gtag('event', 'web_vitals', {
+              name: metric.name,
+              value: metric.value,
+              rating: metric.rating
+            })
+          }
+        })
       }
     }
   }

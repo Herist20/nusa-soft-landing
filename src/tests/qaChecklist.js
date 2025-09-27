@@ -25,7 +25,7 @@ export class QualityAssuranceManager {
     this.setupPostLaunchChecklist()
     this.setupMaintenanceChecklist()
     this.setupAutomatedTests()
-    console.log('✅ QA Manager initialized')
+    // QA Manager initialized
   }
 
   /**
@@ -211,7 +211,7 @@ export class QualityAssuranceManager {
    * Run pre-launch validation
    */
   async runPreLaunchValidation(page) {
-    console.log('🚀 Starting pre-launch validation...')
+    // Starting pre-launch validation
 
     const results = {
       timestamp: new Date().toISOString(),
@@ -239,7 +239,7 @@ export class QualityAssuranceManager {
     results.ready_for_launch = results.critical_failed === 0
     this.results.set('prelaunch', results)
 
-    console.log('📋 Pre-launch validation complete:', results)
+    // Pre-launch validation complete
     return results
   }
 
@@ -247,7 +247,7 @@ export class QualityAssuranceManager {
    * Run post-launch validation
    */
   async runPostLaunchValidation() {
-    console.log('📈 Starting post-launch validation...')
+    // Starting post-launch validation
 
     const results = {
       timestamp: new Date().toISOString(),
@@ -269,7 +269,7 @@ export class QualityAssuranceManager {
     }
 
     this.results.set('postlaunch', results)
-    console.log('📋 Post-launch validation complete:', results)
+    // Post-launch validation complete
     return results
   }
 
@@ -277,7 +277,7 @@ export class QualityAssuranceManager {
    * Run maintenance checks
    */
   async runMaintenanceChecks(frequency = 'weekly') {
-    console.log(`🔧 Running ${frequency} maintenance checks...`)
+    // Running maintenance checks
 
     const relevantChecks = this.checklist.maintenance.filter(
       check => check.frequency === frequency
@@ -304,7 +304,7 @@ export class QualityAssuranceManager {
     }
 
     this.results.set(`maintenance-${frequency}`, results)
-    console.log(`📋 ${frequency} maintenance checks complete:`, results)
+    // Maintenance checks complete
     return results
   }
 
@@ -586,7 +586,7 @@ export class QualityAssuranceManager {
       this.runMaintenanceChecks('monthly')
     }, 30 * 24 * 60 * 60 * 1000) // Monthly
 
-    console.log('📅 Automated QA schedule initialized')
+    // Automated QA schedule initialized
   }
 }
 
@@ -648,7 +648,7 @@ export class FeedbackWidget {
       analytics.trackEngagementByLanguage('feedback_submitted', feedback.language, rating)
     }
 
-    console.log('📝 Feedback submitted:', feedback)
+    // Feedback submitted
   }
 }
 

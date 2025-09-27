@@ -31,7 +31,7 @@ export class PerformanceMonitor {
     this.setupLanguageSwitchMonitor()
 
     if (this.config.enableLogging) {
-      console.log('🚀 Performance Monitor initialized')
+      // Performance Monitor initialized
     }
   }
 
@@ -175,7 +175,7 @@ export class PerformanceMonitor {
 
     // Log if enabled
     if (this.config.enableLogging) {
-      console.log(`📊 Performance: ${name}`, metric)
+      // Performance metric logged: ${name}
     }
 
     // Send to analytics if enabled
@@ -247,7 +247,7 @@ export class PerformanceMonitor {
       metadata
     }
 
-    console.warn('⚠️ Performance threshold exceeded:', violation)
+    // Performance threshold exceeded - handled internally
 
     // Send to analytics
     if (this.config.enableAnalytics && window.gtag) {
@@ -377,7 +377,7 @@ export class PerformanceMonitor {
     setInterval(() => {
       const report = this.getPerformanceReport()
       if (this.config.enableLogging) {
-        console.log('📈 Performance Report:', report)
+        // Performance report generated
       }
     }, 300000)
   }

@@ -10,7 +10,7 @@ export class AnalyticsManager {
       },
       facebook: {
         pixelId: import.meta.env.VITE_FB_PIXEL_ID || '123456789',
-        enabled: import.meta.env.PROD
+        enabled: import.meta.env.PROD && import.meta.env.VITE_FB_PIXEL_ID
       }
     }
   }
@@ -19,7 +19,10 @@ export class AnalyticsManager {
    * Initialize all analytics services
    */
   async initialize(language = 'id') {
-    if (this.initialized) return
+    if (this.initialized) {
+      console.warn('Analytics already initialized')
+      return
+    }
     this.currentLanguage = language
 
     try {
@@ -32,7 +35,7 @@ export class AnalyticsManager {
 
       this.setLanguageContext(language)
       this.initialized = true
-      console.log('✅ Analytics initialized successfully')
+      // Analytics initialized successfully
     } catch (error) {
       console.error('❌ Analytics initialization failed:', error)
     }
@@ -64,7 +67,7 @@ export class AnalyticsManager {
           }
         })
 
-        console.log('✅ Google Analytics 4 initialized')
+        // Google Analytics 4 initialized
         resolve()
       }
     })
@@ -75,6 +78,13 @@ export class AnalyticsManager {
    */
   async initializeFacebookPixel() {
     return new Promise((resolve) => {
+      // Check if Facebook Pixel is already initialized
+      if (window.fbq) {
+        console.warn('Facebook Pixel already initialized')
+        resolve()
+        return
+      }
+
       const script = document.createElement('script')
       script.innerHTML = `
         !function(f,b,e,v,n,t,s)
@@ -90,7 +100,7 @@ export class AnalyticsManager {
         fbq('track', 'PageView');
       `
       document.head.appendChild(script)
-      console.log('✅ Facebook Pixel initialized')
+      // Facebook Pixel initialized
       resolve()
     })
   }
@@ -127,7 +137,7 @@ export class AnalyticsManager {
       })
     }
 
-    console.log('📊 Language switch tracked:', { fromLang, toLang, url })
+    // Language switch tracked
   }
 
   /**
@@ -143,7 +153,7 @@ export class AnalyticsManager {
       })
     }
 
-    console.log('📊 Language preference detected:', { detectedLang, browserLang, savedLang })
+    // Language preference detected
   }
 
   /**
@@ -166,7 +176,7 @@ export class AnalyticsManager {
       })
     }
 
-    console.log('📊 CTA click tracked:', { ctaName, language, section })
+    // CTA click tracked
   }
 
   /**
@@ -189,7 +199,7 @@ export class AnalyticsManager {
       })
     }
 
-    console.log('📊 Form submission tracked:', { formType, language, success })
+    // Form submission tracked
   }
 
   /**
@@ -211,7 +221,7 @@ export class AnalyticsManager {
       })
     }
 
-    console.log('📊 WhatsApp click tracked:', { language, source })
+    // WhatsApp click tracked
   }
 
   /**
@@ -227,7 +237,7 @@ export class AnalyticsManager {
       })
     }
 
-    console.log('📊 Engagement tracked:', { eventType, language, value })
+    // Engagement tracked
   }
 
   /**
@@ -243,7 +253,7 @@ export class AnalyticsManager {
       })
     }
 
-    console.log('📊 Scroll depth tracked:', { depth, language, page })
+    // Scroll depth tracked
   }
 
   /**
@@ -261,7 +271,7 @@ export class AnalyticsManager {
       })
     }
 
-    console.log('📊 Bounce rate tracked:', { timeOnPage, language, isBounce })
+    // Bounce rate tracked
   }
 
   /**
@@ -277,7 +287,7 @@ export class AnalyticsManager {
       })
     }
 
-    console.error('📊 Translation error tracked:', { key, language, fallbackUsed })
+    // Translation error tracked
   }
 
   /**
@@ -301,7 +311,7 @@ export class AnalyticsManager {
       })
     }
 
-    console.log('📊 Conversion tracked:', { conversionType, language, value })
+    // Conversion tracked
   }
 
   /**
@@ -333,7 +343,7 @@ export class AnalyticsManager {
       }
     })
 
-    console.log('✅ Automated tracking setup complete')
+    // Automated tracking setup complete
   }
 }
 

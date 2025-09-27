@@ -174,7 +174,7 @@ Crawl-delay: 1`
       const robotsTxt = this.generateRobotsTxt()
       await fs.writeFile(path.join(publicDir, 'robots.txt'), robotsTxt)
 
-      console.log('✅ Sitemaps generated successfully!')
+      // Sitemaps generated successfully
 
     } catch (error) {
       console.error('❌ Error generating sitemaps:', error)

@@ -148,7 +148,7 @@
       "error": "Maaf, terjadi kesalahan. Silakan coba lagi atau hubungi WhatsApp kami.",
       "placeholder": {
         "name": "Contoh: Budi Santoso",
-        "email": "Contoh: budi@perusahaan.com",
+        "email": "Contoh: budi{'@'}perusahaan.com",
         "phone": "Contoh: 081234567890",
         "company": "Contoh: PT Maju Bersama atau Toko Budi",
         "message": "Jelaskan kebutuhan proyek Anda, fitur yang diinginkan, atau pertanyaan lainnya..."
@@ -171,7 +171,7 @@
       "phone": "WhatsApp",
       "phoneDetail": "+62 812-3456-7890",
       "email": "Email",
-      "emailDetail": "hello@nusasoft.id",
+      "emailDetail": "hello{'@'}nusasoft.id",
       "hours": "Jam Kerja",
       "hoursDetail": "Senin - Jumat: 09:00 - 17:00 WIB",
       "response": "Respon dalam 1x24 jam"

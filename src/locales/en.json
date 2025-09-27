@@ -148,7 +148,7 @@
       "error": "Sorry, an error occurred. Please try again or contact us directly.",
       "placeholder": {
         "name": "e.g., John Smith",
-        "email": "e.g., john@company.com",
+        "email": "e.g., john{'@'}company.com",
         "phone": "e.g., +1-234-567-8900",
         "company": "e.g., ABC Corporation or John's Store",
         "message": "Describe your project requirements, desired features, or any questions you have..."
@@ -158,7 +158,7 @@
     "validation": {
       "nameRequired": "Please enter your full name",
       "emailRequired": "Email is required for communication",
-      "emailInvalid": "Please enter a valid email format (e.g., name@domain.com)",
+      "emailInvalid": "Please enter a valid email format (e.g., name{'@'}domain.com)",
       "phoneRequired": "Phone number is required",
       "phoneInvalid": "Please enter a valid phone number",
       "messageRequired": "Please tell us about your project",
@@ -171,7 +171,7 @@
       "phone": "Phone",
       "phoneDetail": "+62 812-3456-7890",
       "email": "Email",
-      "emailDetail": "hello@nusasoft.com",
+      "emailDetail": "hello{'@'}nusasoft.com",
       "hours": "Business Hours",
       "hoursDetail": "Monday - Friday: 09:00 - 17:00 GMT+7",
       "response": "Response within 24 hours"
