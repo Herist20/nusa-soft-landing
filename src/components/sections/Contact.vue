@@ -74,8 +74,8 @@
                     <div class="text-sm text-green-200/70">
                       <strong>Next Steps:</strong>
                       <ul class="list-disc list-inside mt-1 space-y-1">
-                        <li>We'll review your project details within 2-4 hours</li>
-                        <li>Our team will prepare a preliminary proposal</li>
+                        <li>We'll review your inquiry details within 2-4 hours</li>
+                        <li>Our team will prepare a preliminary consultation plan</li>
                         <li>You'll receive a detailed response within 24 hours</li>
                         <li>We'll schedule a consultation call at your convenience</li>
                       </ul>
@@ -100,7 +100,7 @@
                       id="fullName"
                       v-model="form.fullName"
                       required
-                      class="w-full px-4 py-3 bg-gray-800/50 backdrop-blur-sm border border-cyan-500/30 rounded-lg focus:border-cyan-400 focus:ring-1 focus:ring-cyan-400 transition-all duration-200 placeholder-cyan-500/50 text-cyan-100"
+                      class="w-full px-4 py-3 bg-gray-800/50 backdrop-blur-sm border border-cyan-500/30 rounded-lg focus:border-cyan-400 focus:outline-none transition-all duration-200 placeholder-cyan-500/50 text-cyan-100"
                       :class="{ 'border-red-500': errors.fullName }"
                       :placeholder="t('contact.form.placeholder.name')"
                     />
@@ -116,7 +116,7 @@
                       id="email"
                       v-model="form.email"
                       required
-                      class="w-full px-4 py-3 bg-gray-800/50 backdrop-blur-sm border border-cyan-500/30 rounded-lg focus:border-cyan-400 focus:ring-1 focus:ring-cyan-400 transition-all duration-200 placeholder-cyan-500/50 text-cyan-100"
+                      class="w-full px-4 py-3 bg-gray-800/50 backdrop-blur-sm border border-cyan-500/30 rounded-lg focus:border-cyan-400 focus:outline-none transition-all duration-200 placeholder-cyan-500/50 text-cyan-100"
                       :class="{ 'border-red-500': errors.email }"
                       :placeholder="t('contact.form.placeholder.email')"
                     />
@@ -133,7 +133,7 @@
                       type="tel"
                       id="phone"
                       v-model="form.phone"
-                      class="w-full px-4 py-3 bg-gray-800/50 backdrop-blur-sm border border-cyan-500/30 rounded-lg focus:border-cyan-400 focus:ring-1 focus:ring-cyan-400 transition-all duration-200 placeholder-cyan-500/50 text-cyan-100"
+                      class="w-full px-4 py-3 bg-gray-800/50 backdrop-blur-sm border border-cyan-500/30 rounded-lg focus:border-cyan-400 focus:outline-none transition-all duration-200 placeholder-cyan-500/50 text-cyan-100"
                       :placeholder="t('contact.form.placeholder.phone')"
                     />
                   </div>
@@ -146,7 +146,7 @@
                       type="text"
                       id="company"
                       v-model="form.company"
-                      class="w-full px-4 py-3 bg-gray-800/50 backdrop-blur-sm border border-cyan-500/30 rounded-lg focus:border-cyan-400 focus:ring-1 focus:ring-cyan-400 transition-all duration-200 placeholder-cyan-500/50 text-cyan-100"
+                      class="w-full px-4 py-3 bg-gray-800/50 backdrop-blur-sm border border-cyan-500/30 rounded-lg focus:border-cyan-400 focus:outline-none transition-all duration-200 placeholder-cyan-500/50 text-cyan-100"
                       :placeholder="t('contact.form.placeholder.company')"
                     />
                   </div>
@@ -162,7 +162,7 @@
                       id="projectType"
                       v-model="form.projectType"
                       required
-                      class="w-full px-4 py-3 bg-gray-800/50 backdrop-blur-sm border border-cyan-500/30 rounded-lg focus:border-cyan-400 focus:ring-1 focus:ring-cyan-400 transition-all duration-200 placeholder-cyan-500/50 text-cyan-100"
+                      class="w-full px-4 pr-10 py-3 bg-gray-800/50 backdrop-blur-sm border border-cyan-500/30 rounded-lg focus:border-cyan-400 focus:outline-none transition-all duration-200 placeholder-cyan-500/50 text-cyan-100 appearance-none"
                       :class="{ 'border-red-500': errors.projectType }"
                     >
                       <option value="">{{ t('contact.form.projectType.placeholder') || 'Select project type' }}</option>
@@ -172,6 +172,7 @@
                       <option value="system">{{ t('contact.form.projectType.options.system') }}</option>
                       <option value="uiux">{{ t('contact.form.projectType.options.uiux') }}</option>
                       <option value="consultation">{{ t('contact.form.projectType.options.consultation') }}</option>
+                      <option value="thesis">{{ t('contact.form.projectType.options.thesis') }}</option>
                       <option value="other">{{ t('contact.form.projectType.options.other') }}</option>
                     </select>
                     <p v-if="errors.projectType" class="mt-1 text-sm text-red-400">{{ errors.projectType }}</p>
@@ -185,7 +186,7 @@
                       id="budget"
                       v-model="form.budget"
                       required
-                      class="w-full px-4 py-3 bg-gray-800/50 backdrop-blur-sm border border-cyan-500/30 rounded-lg focus:border-cyan-400 focus:ring-1 focus:ring-cyan-400 transition-all duration-200 placeholder-cyan-500/50 text-cyan-100"
+                      class="w-full px-4 pr-10 py-3 bg-gray-800/50 backdrop-blur-sm border border-cyan-500/30 rounded-lg focus:border-cyan-400 focus:outline-none transition-all duration-200 placeholder-cyan-500/50 text-cyan-100 appearance-none"
                       :class="{ 'border-red-500': errors.budget }"
                     >
                       <option value="">{{ t('contact.form.budget.placeholder') || 'Select budget range' }}</option>
@@ -208,7 +209,7 @@
                     <select
                       id="contactMethod"
                       v-model="form.contactMethod"
-                      class="w-full px-4 py-3 bg-gray-800/50 backdrop-blur-sm border border-cyan-500/30 rounded-lg focus:border-cyan-400 focus:ring-1 focus:ring-cyan-400 transition-all duration-200 placeholder-cyan-500/50 text-cyan-100"
+                      class="w-full px-4 pr-10 py-3 bg-gray-800/50 backdrop-blur-sm border border-cyan-500/30 rounded-lg focus:border-cyan-400 focus:outline-none transition-all duration-200 placeholder-cyan-500/50 text-cyan-100 appearance-none"
                     >
                       <option value="email">Email</option>
                       <option value="whatsapp">WhatsApp</option>
@@ -223,8 +224,9 @@
                     <select
                       id="timeline"
                       v-model="form.timeline"
-                      class="w-full px-4 py-3 bg-gray-800/50 backdrop-blur-sm border border-cyan-500/30 rounded-lg focus:border-cyan-400 focus:ring-1 focus:ring-cyan-400 transition-all duration-200 placeholder-cyan-500/50 text-cyan-100"
+                      class="w-full px-4 pr-10 py-3 bg-gray-800/50 backdrop-blur-sm border border-cyan-500/30 rounded-lg focus:border-cyan-400 focus:outline-none transition-all duration-200 placeholder-cyan-500/50 text-cyan-100 appearance-none"
                     >
+                      <option value="">{{ t('contact.form.timeline.placeholder') || 'Select start time' }}</option>
                       <option value="asap">{{ t('contact.form.timeline.options.asap') }}</option>
                       <option value="1month">{{ t('contact.form.timeline.options.1month') }}</option>
                       <option value="3months">{{ t('contact.form.timeline.options.3months') }}</option>
@@ -244,7 +246,7 @@
                     v-model="form.description"
                     required
                     rows="5"
-                    class="w-full px-4 py-3 bg-gray-800/50 backdrop-blur-sm border border-cyan-500/30 rounded-xl focus:ring-2 focus:ring-cyan-400 focus:border-transparent transition-all duration-200 resize-none text-cyan-100"
+                    class="w-full px-4 py-3 bg-gray-800/50 backdrop-blur-sm border border-cyan-500/30 rounded-xl focus:border-cyan-400 focus:outline-none transition-all duration-200 resize-none text-cyan-100"
                     :class="{ 'border-red-500': errors.description }"
                     :placeholder="t('contact.form.placeholder.message')"
                   ></textarea>
@@ -442,7 +444,7 @@ const form = ref({
   projectType: '',
   budget: '',
   contactMethod: 'email',
-  timeline: '1-3-months',
+  timeline: '',
   description: ''
 })
 
@@ -453,14 +455,17 @@ const successMessage = ref('')
 const errorMessage = ref('')
 const errors = ref({})
 
+
+
+
 // Computed properties
 const whatsappUrl = computed(() => {
-  const message = `Hi! I'm interested in ${form.value.projectType || 'your development services'}. Here are my project details:
+  const message = `Hi! I'm interested in ${form.value.projectType || 'your services'}. Here are my details:
 
-📋 Project: ${form.value.projectType || 'Not specified'}
+📋 Service: ${form.value.projectType || 'Not specified'}
 💰 Budget: ${form.value.budget || 'Not specified'}
 ⏰ Timeline: ${form.value.timeline || 'Not specified'}
-📝 Description: ${form.value.description || 'I\'d like to discuss my project requirements'}
+📝 Description: ${form.value.description || 'I\'d like to discuss my requirements'}
 
 Can we schedule a consultation?`
 
@@ -566,7 +571,7 @@ const handleSubmit = async () => {
       }
     )
 
-    successMessage.value = `Thank you ${sanitizedForm.fullName}! Your project inquiry has been received.`
+    successMessage.value = `Thank you ${sanitizedForm.fullName}! Your inquiry has been received.`
     showSuccess.value = true
 
     // Reset form
@@ -579,7 +584,7 @@ const handleSubmit = async () => {
       projectType: '',
       budget: '',
       contactMethod: 'email',
-      timeline: '1-3-months',
+      timeline: '',
       description: ''
     }
 
@@ -648,8 +653,104 @@ const handleSubmit = async () => {
   box-shadow: 0 10px 25px -5px rgba(16, 185, 129, 0.3), 0 10px 10px -5px rgba(16, 185, 129, 0.1);
 }
 
-/* Efek hover untuk input */
-input:focus, select:focus, textarea:focus {
-  box-shadow: 0 0 0 3px rgba(6, 182, 212, 0.2);
+/* Remove all focus outlines and shadows */
+input:focus,
+select:focus,
+textarea:focus {
+  outline: none !important;
+  outline-width: 0 !important;
+  box-shadow: none !important;
+  -webkit-box-shadow: none !important;
+}
+
+/* Remove focus visible outline */
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible {
+  outline: none !important;
+  outline-width: 0 !important;
+  box-shadow: none !important;
+  -webkit-box-shadow: none !important;
+}
+
+/* Custom dropdown arrow */
+select.appearance-none {
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236ee7b7' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e");
+  background-position: right 0.75rem center;
+  background-repeat: no-repeat;
+  background-size: 1.5em 1.5em;
+}
+
+/* Force select dropdown styling */
+select.appearance-none:focus {
+  outline: none !important;
+  outline-width: 0 !important;
+  box-shadow: none !important;
+  -webkit-box-shadow: none !important;
+}
+
+/* Override system dropdown styling */
+select {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+}
+
+/* Enhanced dropdown styling - force override browser defaults */
+select option {
+  background: #1f2937 !important;
+  background-color: #1f2937 !important;
+  color: #a7f3d0 !important;
+  padding: 12px 16px !important;
+  border: none !important;
+  font-weight: 500 !important;
+  font-family: inherit !important;
+}
+
+select option:hover {
+  background: #065f46 !important;
+  background-color: #065f46 !important;
+  color: #6ee7b7 !important;
+}
+
+select option:checked,
+select option:selected {
+  background: #0891b2 !important;
+  background-color: #0891b2 !important;
+  color: #ffffff !important;
+  font-weight: 600 !important;
+}
+
+select option:focus {
+  background: #0891b2 !important;
+  background-color: #0891b2 !important;
+  color: #ffffff !important;
+  outline: 2px solid #06b6d4 !important;
+  outline-offset: -2px !important;
+}
+
+/* Additional styling for WebKit browsers */
+select::-webkit-select-list {
+  background: #1f2937 !important;
+  border: 1px solid #374151 !important;
+  border-radius: 8px !important;
+}
+
+select option:hover::-webkit-option {
+  background: #065f46 !important;
+  color: #6ee7b7 !important;
+}
+
+/* Alternative for Firefox */
+@-moz-document url-prefix() {
+  select option {
+    background: #1f2937 !important;
+    color: #a7f3d0 !important;
+  }
+
+  select option:hover {
+    background: #065f46 !important;
+    color: #6ee7b7 !important;
+  }
 }
 </style>

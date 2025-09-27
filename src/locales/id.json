@@ -157,7 +157,7 @@
   },
   "contact": {
     "title": "Mari Diskusikan Proyek Anda",
-    "subtitle": "Konsultasi gratis untuk menentukan solusi digital terbaik bagi bisnis Anda",
+    "subtitle": "Konsultasi gratis untuk menentukan solusi digital terbaik bagi bisnis Anda dan konsultasi akademik untuk tugas akhir",
     "form": {
       "title": "Form Konsultasi Gratis",
       "required": "Semua field yang bertanda * wajib diisi",
@@ -195,6 +195,7 @@
       },
       "timeline": {
         "label": "Kapan Ingin Dimulai?",
+        "placeholder": "Pilih waktu mulai",
         "options": {
           "asap": "Sesegera mungkin",
           "1month": "1 bulan ke depan",
@@ -212,7 +213,7 @@
         "email": "Contoh: budi{'@'}perusahaan.com",
         "phone": "Contoh: 081234567890",
         "company": "Contoh: PT Maju Bersama atau Toko Budi",
-        "message": "Jelaskan kebutuhan proyek Anda, fitur yang diinginkan, atau pertanyaan lainnya..."
+        "message": "Jelaskan kebutuhan proyek digital Anda, konsultasi skripsi/tugas akhir, fitur yang diinginkan, atau pertanyaan lainnya..."
       },
       "contactMethod": "Metode Kontak Pilihan"
     },

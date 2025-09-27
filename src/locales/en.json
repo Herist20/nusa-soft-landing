@@ -157,7 +157,7 @@
   },
   "contact": {
     "title": "Let's Discuss Your Project",
-    "subtitle": "Get a free consultation to determine the best digital solution for your business",
+    "subtitle": "Get a free consultation to determine the best digital solution for your business and academic guidance for thesis projects",
     "form": {
       "title": "Free Consultation Form",
       "required": "All fields marked with * are required",
@@ -195,6 +195,7 @@
       },
       "timeline": {
         "label": "When would you like to start?",
+        "placeholder": "Select start time",
         "options": {
           "asap": "As soon as possible",
           "1month": "Within 1 month",
@@ -212,7 +213,7 @@
         "email": "e.g., john{'@'}company.com",
         "phone": "e.g., +1-234-567-8900",
         "company": "e.g., ABC Corporation or John's Store",
-        "message": "Describe your project requirements, desired features, or any questions you have..."
+        "message": "Describe your digital project requirements, thesis/academic consulting needs, desired features, or any questions you have..."
       },
       "contactMethod": "Preferred Contact Method"
     },
