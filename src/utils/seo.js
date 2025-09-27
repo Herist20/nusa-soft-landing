@@ -233,13 +233,31 @@ export function injectStructuredData(type, data) {
 
 // Preload critical resources
 export function preloadResources() {
-  const resources = [
-    { href: '/fonts/inter-var.woff2', type: 'font/woff2', as: 'font', crossorigin: 'anonymous' },
-    { href: '/css/critical.css', as: 'style' },
-    { href: '/js/main.js', as: 'script' }
-  ]
+  const resources = []
+  
+  // Only preload resources that actually exist
+  // In Vite, JS files are served dynamically and don't need preloading
+  
+  // Check if fonts exist before preloading
+  if (document.querySelector('link[href*="inter-var.woff2"]') || 
+      document.querySelector('style').textContent.includes('inter-var.woff2')) {
+    resources.push({ href: '/fonts/inter-var.woff2', type: 'font/woff2', as: 'font', crossorigin: 'anonymous' })
+  }
+  
+  // Only preload if in production and files exist
+  if (import.meta.env.PROD) {
+    // Check for critical CSS in production build
+    const criticalCSS = document.querySelector('link[href*="critical.css"]')
+    if (criticalCSS) {
+      resources.push({ href: criticalCSS.href, as: 'style' })
+    }
+  }
 
   resources.forEach(resource => {
+    // Check if already preloaded
+    const existing = document.querySelector(`link[rel="preload"][href="${resource.href}"]`)
+    if (existing) return
+
     const link = document.createElement('link')
     link.rel = 'preload'
     link.href = resource.href
