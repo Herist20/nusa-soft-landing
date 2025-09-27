@@ -321,7 +321,7 @@
                 <div class="flex items-center justify-center">
                   <span class="text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-cyan-300 to-blue-300">{{ t('pricing.thesis.packages.custom_consultation.price') }}</span>
                 </div>
-                <p class="text-gray-200/70 text-sm mt-1">untuk mengetahui harga</p>
+                <p class="text-gray-200/70 text-sm mt-1">{{ t('pricing.thesis.packages.custom_consultation.price_desc') }}</p>
               </div>
 
               <!-- Features placeholder -->
@@ -330,7 +330,7 @@
                   <svg class="w-12 h-12 text-cyan-400 mx-auto mb-3 opacity-50" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                   </svg>
-                  <p class="text-cyan-300/60 text-xs">Konsultasikan kebutuhan spesifik Anda</p>
+                  <p class="text-cyan-300/60 text-xs">{{ t('pricing.thesis.packages.custom_consultation.consultation_desc') }}</p>
                 </div>
               </div>
 

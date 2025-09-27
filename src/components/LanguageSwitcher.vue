@@ -152,27 +152,27 @@ onBeforeUnmount(() => {
   align-items: center;
   gap: 0.5rem;
   padding: 0.5rem 1rem;
-  background: white;
-  border: 1px solid #e5e7eb;
+  background: rgba(15, 23, 42, 0.8) !important;
+  border: 1px solid rgba(34, 197, 238, 0.2);
   border-radius: 0.5rem;
   font-size: 0.875rem;
   font-weight: 500;
-  color: #374151;
+  color: #e2e8f0 !important;
   cursor: pointer;
   transition: all 0.2s;
   min-width: 120px;
+  backdrop-filter: blur(8px);
 }
 
 .language-button:hover {
-  background: #f9fafb;
-  border-color: #d1d5db;
+  background: rgba(34, 197, 238, 0.1) !important;
+  border-color: rgba(34, 197, 238, 0.4);
 }
 
 .language-button:focus {
   outline: none;
-  ring: 2px;
-  ring-color: #3b82f6;
-  ring-offset: 2px;
+  border-color: rgba(34, 197, 238, 0.6);
+  box-shadow: 0 0 0 2px rgba(34, 197, 238, 0.2);
 }
 
 .flag {
@@ -187,7 +187,7 @@ onBeforeUnmount(() => {
 
 .chevron {
   transition: transform 0.2s;
-  color: #9ca3af;
+  color: #94a3b8;
 }
 
 .chevron.rotate-180 {
@@ -198,16 +198,17 @@ onBeforeUnmount(() => {
   position: absolute;
   top: calc(100% + 0.5rem);
   right: 0;
-  background: white;
-  border: 1px solid #e5e7eb;
+  background: rgba(15, 23, 42, 0.95) !important;
+  border: 1px solid rgba(34, 197, 238, 0.2);
   border-radius: 0.5rem;
-  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.4), 0 10px 10px -5px rgba(0, 0, 0, 0.2);
   list-style: none;
   margin: 0;
   padding: 0.5rem 0;
   min-width: 200px;
   max-height: 300px;
   overflow-y: auto;
+  backdrop-filter: blur(12px);
 }
 
 .language-option {
@@ -220,24 +221,24 @@ onBeforeUnmount(() => {
   border: none;
   font-size: 0.875rem;
   font-weight: 500;
-  color: #374151;
+  color: #e2e8f0;
   cursor: pointer;
   transition: background-color 0.2s;
   text-align: left;
 }
 
 .language-option:hover {
-  background-color: #f3f4f6;
+  background-color: rgba(34, 197, 238, 0.1);
 }
 
 .language-option.active {
-  background-color: #eff6ff;
-  color: #2563eb;
+  background-color: rgba(34, 197, 238, 0.2);
+  color: #22d3ee;
 }
 
 .check-icon {
   margin-left: auto;
-  color: #2563eb;
+  color: #22d3ee;
 }
 
 .backdrop {
@@ -261,21 +262,51 @@ onBeforeUnmount(() => {
   .language-button {
     min-width: auto;
     padding: 0.5rem 0.75rem;
+    font-size: 0.8rem;
+    min-height: 44px;
   }
 
   .language-name {
     display: none;
   }
 
+  .flag {
+    font-size: 1.1rem;
+  }
+
   .language-dropdown {
-    right: auto;
-    left: 50%;
-    transform: translateX(-50%);
+    right: 0;
+    left: auto;
+    transform: none;
+    min-width: 180px;
+    max-width: 90vw;
   }
 
   .dropdown-enter-from,
   .dropdown-leave-to {
-    transform: translateX(-50%) translateY(-10px);
+    transform: translateY(-10px);
+  }
+}
+
+@media (max-width: 480px) {
+  .language-button {
+    padding: 0.4rem 0.6rem;
+    border-radius: 0.4rem;
+  }
+
+  .chevron {
+    width: 16px;
+    height: 16px;
+  }
+
+  .language-dropdown {
+    min-width: 160px;
+    padding: 0.25rem 0;
+  }
+
+  .language-option {
+    padding: 0.6rem 0.8rem;
+    font-size: 0.8rem;
   }
 }
 

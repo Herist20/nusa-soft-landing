@@ -150,7 +150,9 @@
           "name": "Custom Consultation",
           "price": "Consultation",
           "description": "Package tailored to specific needs",
-          "cta": "Consult Pricing"
+          "cta": "Consult Pricing",
+          "price_desc": "to know the price",
+          "consultation_desc": "Consult your specific needs"
         }
       }
     }

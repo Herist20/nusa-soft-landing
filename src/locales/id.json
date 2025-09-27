@@ -150,7 +150,9 @@
           "name": "Konsultasi Custom",
           "price": "Konsultasi",
           "description": "Paket disesuaikan dengan kebutuhan spesifik",
-          "cta": "Konsultasi Harga"
+          "cta": "Konsultasi Harga",
+          "price_desc": "untuk mengetahui harga",
+          "consultation_desc": "Konsultasikan kebutuhan spesifik Anda"
         }
       }
     }

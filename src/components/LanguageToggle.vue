@@ -48,11 +48,13 @@ const toggleLanguage = async () => {
 .toggle-track {
   position: relative;
   display: flex;
-  background: #f3f4f6;
+  background: rgba(15, 23, 42, 0.8);
+  border: 1px solid rgba(34, 197, 238, 0.2);
   border-radius: 12px;
   padding: 3px;
   width: 80px;
   height: 36px;
+  backdrop-filter: blur(8px);
 }
 
 .toggle-option {
@@ -67,7 +69,7 @@ const toggleLanguage = async () => {
 }
 
 .toggle-option.active {
-  color: white;
+  color: #e2e8f0;
 }
 
 .toggle-slider {
@@ -76,10 +78,10 @@ const toggleLanguage = async () => {
   left: 3px;
   width: calc(50% - 3px);
   height: calc(100% - 6px);
-  background: #3b82f6;
+  background: linear-gradient(135deg, #22d3ee, #0891b2);
   border-radius: 9px;
   transition: transform 0.3s ease;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 8px rgba(34, 211, 238, 0.3), 0 2px 4px rgba(0, 0, 0, 0.2);
 }
 
 .flag {

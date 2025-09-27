@@ -187,12 +187,12 @@ onUnmounted(() => {
   align-items: center;
   gap: 0.375rem;
   padding: 0.5rem 0.75rem;
-  background: white;
-  border: 1px solid #e5e7eb;
+  background: rgba(15, 23, 42, 0.8);
+  border: 1px solid rgba(34, 197, 238, 0.2);
   border-radius: 0.75rem;
   font-size: 0.875rem;
   font-weight: 500;
-  color: #374151;
+  color: #e2e8f0;
   transition: all 0.2s;
   min-height: 44px;
   min-width: 44px;
@@ -200,10 +200,13 @@ onUnmounted(() => {
   outline: none !important;
   box-shadow: none !important;
   -webkit-tap-highlight-color: transparent;
+  backdrop-filter: blur(8px);
 }
 
 .language-toggle-btn:active {
   transform: scale(0.98);
+  background: rgba(34, 197, 238, 0.1);
+  border-color: rgba(34, 197, 238, 0.4);
 }
 
 .flag-icon {
@@ -238,13 +241,15 @@ onUnmounted(() => {
 .mobile-menu-container {
   position: relative;
   width: 100%;
-  background: white;
+  background: rgba(15, 23, 42, 0.98);
   border-bottom-left-radius: 1.5rem;
   border-bottom-right-radius: 1.5rem;
   padding-top: env(safe-area-inset-top);
   max-height: 70vh;
   overflow-y: auto;
   animation: slideDown 0.3s ease-out;
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(34, 197, 238, 0.1);
 }
 
 /* Top menu variant */
@@ -269,17 +274,18 @@ onUnmounted(() => {
   justify-content: space-between;
   align-items: center;
   padding: 1.25rem 1.5rem;
-  border-bottom: 1px solid #f3f4f6;
+  border-bottom: 1px solid rgba(34, 197, 238, 0.1);
   position: sticky;
   top: 0;
-  background: white;
+  background: rgba(15, 23, 42, 0.98);
   z-index: 10;
+  backdrop-filter: blur(12px);
 }
 
 .menu-title {
   font-size: 1.125rem;
   font-weight: 600;
-  color: #111827;
+  color: #e2e8f0;
   margin: 0;
 }
 
@@ -292,7 +298,7 @@ onUnmounted(() => {
   border-radius: 0.5rem;
   background: transparent;
   border: none;
-  color: #6b7280;
+  color: #94a3b8;
   transition: all 0.2s;
   outline: none !important;
   box-shadow: none !important;
@@ -300,8 +306,8 @@ onUnmounted(() => {
 }
 
 .close-btn:hover {
-  background: #f3f4f6;
-  color: #374151;
+  background: rgba(34, 197, 238, 0.1);
+  color: #e2e8f0;
 }
 
 /* Language Options */
@@ -332,8 +338,8 @@ onUnmounted(() => {
 }
 
 .language-option.active {
-  background: #eff6ff;
-  border: 1px solid #3b82f6;
+  background: rgba(34, 197, 238, 0.2);
+  border: 1px solid rgba(34, 197, 238, 0.4);
 }
 
 .option-flag {
@@ -352,21 +358,21 @@ onUnmounted(() => {
 .option-name {
   font-size: 1rem;
   font-weight: 500;
-  color: #111827;
+  color: #e2e8f0;
 }
 
 .option-native {
   font-size: 0.875rem;
-  color: #6b7280;
+  color: #94a3b8;
 }
 
 .language-option.active .option-name {
-  color: #2563eb;
+  color: #22d3ee;
 }
 
 .check-icon {
   flex-shrink: 0;
-  color: #2563eb;
+  color: #22d3ee;
 }
 
 /* Loading Overlay */
@@ -419,6 +425,76 @@ onUnmounted(() => {
   .language-option {
     min-height: 48px;
     padding: 0.75rem 1rem;
+  }
+
+  .menu-header {
+    padding: 1rem 1.5rem;
+  }
+}
+
+/* Ultra small screens */
+@media (max-width: 375px) {
+  .language-toggle-btn {
+    padding: 0.4rem 0.6rem;
+    min-height: 40px;
+    min-width: 40px;
+    font-size: 0.8rem;
+  }
+
+  .flag-icon {
+    font-size: 1.1rem;
+  }
+
+  .lang-code {
+    font-size: 0.75rem;
+  }
+
+  .chevron-icon {
+    width: 14px;
+    height: 14px;
+  }
+
+  .menu-header {
+    padding: 1rem 1.25rem;
+  }
+
+  .menu-title {
+    font-size: 1rem;
+  }
+
+  .language-option {
+    padding: 0.875rem 1rem;
+    min-height: 56px;
+  }
+
+  .option-flag {
+    font-size: 1.5rem;
+  }
+
+  .option-name {
+    font-size: 0.9rem;
+  }
+
+  .option-native {
+    font-size: 0.8rem;
+  }
+}
+
+/* Better touch targets for accessibility */
+@media (hover: none) and (pointer: coarse) {
+  .language-toggle-btn {
+    min-height: 48px;
+    min-width: 48px;
+  }
+
+  .language-option {
+    min-height: 64px;
+    padding: 1rem;
+  }
+
+  .close-btn {
+    width: 2.5rem;
+    height: 2.5rem;
   }
 }
 
