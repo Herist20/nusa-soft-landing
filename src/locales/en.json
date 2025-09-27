@@ -255,7 +255,7 @@
     "viewProject": "View Project",
     "liveDemo": "Live Demo",
     "categories": {
-      "all": "All Categories",
+      "all": "All",
       "website": "Web Applications",
       "mobile": "Mobile Apps",
       "ecommerce": "E-Commerce",
@@ -267,22 +267,196 @@
       "description": "We don't have any projects in this category yet. Check back soon or view all our work.",
       "viewAll": "View All Projects"
     },
-    "projects": {
-      "globalTrade": {
-        "title": "Global Trade Platform",
-        "category": "Enterprise System",
-        "description": "Comprehensive B2B trading platform with multi-currency support and advanced analytics",
-        "results": "450% increase in transaction volume",
-        "technologies": ["React", "Node.js", "MongoDB", "AWS"]
+    "modal": {
+      "overview": "Project Overview",
+      "features": "Key Features",
+      "details": "Project Details",
+      "duration": "Duration",
+      "teamSize": "Team Size",
+      "client": "Client",
+      "technologies": "Technologies Used",
+      "links": "Project Links"
+    },
+    "projects": [
+      {
+        "id": 1,
+        "title": "Village Information System",
+        "category": "Web",
+        "description": "Integrated platform for managing village administration data and digital community services.",
+        "fullDescription": "The Village Information System is a comprehensive solution designed to help village governments manage administrative, financial, and community service data. This system facilitates transparency and public participation through easy access to information.",
+        "image": "/src/assets/images/desa.png",
+        "technologies": ["PHP", "Laravel", "MySQL", "Bootstrap", "JavaScript"],
+        "liveDemo": "https://demo-sistemdesa.example.com",
+        "github": "https://github.com/example/sistem-informasi-desa",
+        "duration": "3 months",
+        "teamSize": "4 developers",
+        "client": "Village Government",
+        "features": [
+          "Population data management",
+          "Village administration management",
+          "Village financial information system",
+          "Online document services",
+          "Public information portal",
+          "Village statistics and reports"
+        ]
       },
-      "smartRetail": {
-        "title": "Smart Retail Management",
-        "category": "E-Commerce",
-        "description": "Omnichannel retail solution with inventory optimization and predictive analytics",
-        "results": "65% operational efficiency improvement",
-        "technologies": ["Vue.js", "Laravel", "PostgreSQL", "Docker"]
+      {
+        "id": 2,
+        "title": "Department Information System",
+        "category": "Web",
+        "description": "Academic data and student management system for university departments.",
+        "fullDescription": "This system is specifically designed to help university departments manage academic, student, and research data. With an intuitive interface, this system makes it easy for lecturers and administrative staff to carry out daily tasks.",
+        "image": "/src/assets/images/kampus.png",
+        "technologies": ["Vue.js", "Node.js", "MongoDB", "Express", "Chart.js"],
+        "liveDemo": "https://demo-sijur.example.com",
+        "github": "https://github.com/example/sistem-informasi-jurusan",
+        "duration": "4 months",
+        "teamSize": "5 developers",
+        "client": "State University",
+        "features": [
+          "Student data management",
+          "Curriculum and course management",
+          "Academic assessment system",
+          "Alumni tracking",
+          "Faculty research management",
+          "Academic analytics dashboard"
+        ]
+      },
+      {
+        "id": 3,
+        "title": "Car Rental System",
+        "category": "Web",
+        "description": "Car rental booking and management platform with tracking and online payment features.",
+        "fullDescription": "The Car Rental System is an end-to-end solution for rental businesses that integrates fleet management, online booking, digital payments, and GPS tracking. This system is designed to improve operational efficiency and customer experience.",
+        "image": "/src/assets/images/rental.png",
+        "technologies": ["React", "Django", "PostgreSQL", "Google Maps API", "Stripe"],
+        "liveDemo": "https://demo-rentalmobil.example.com",
+        "github": "https://github.com/example/sistem-rental-mobil",
+        "duration": "5 months",
+        "teamSize": "6 developers",
+        "client": "PT. Transportasi Nusantara",
+        "features": [
+          "Car catalog and search",
+          "Real-time online booking",
+          "Fleet management",
+          "GPS car tracking",
+          "Digital payments",
+          "Business analytics reports"
+        ]
+      },
+      {
+        "id": 4,
+        "title": "EduTrack - Student Attendance App",
+        "category": "Mobile",
+        "description": "Mobile application for real-time student attendance monitoring with QR Code and geofencing technology.",
+        "fullDescription": "EduTrack is an innovative solution for student attendance monitoring that integrates QR Code technology, geofencing, and real-time tracking. This application reduces manual attendance administration and improves attendance data accuracy with real-time monitoring access for parents and schools.",
+        "image": "/src/assets/images/absen.png",
+        "technologies": ["Flutter", "Node.js", "Firebase", "Google Maps API", "WebSocket"],
+        "liveDemo": "https://demo-edutrack.example.com",
+        "github": "https://github.com/example/edutrack-attendance",
+        "duration": "4 months",
+        "teamSize": "5 developers",
+        "client": "Smart Education Foundation",
+        "features": [
+          "QR Code check-in for attendance",
+          "Real-time location tracking with geofencing",
+          "Integration with class schedules",
+          "Parent dashboard for monitoring",
+          "Automatic notification system",
+          "Comprehensive attendance analytics",
+          "Academic information system integration",
+          "Real-time push notifications"
+        ]
+      },
+      {
+        "id": 5,
+        "title": "Automatic Course Scheduling System",
+        "category": "Web",
+        "description": "Intelligent solution for generating automatic course schedules with optimization algorithms.",
+        "fullDescription": "This system uses genetic algorithms to automatically generate optimal course schedules, considering constraints such as room availability, lecturers, and time slots. The system reduces schedule conflicts and improves resource utilization efficiency.",
+        "image": "/src/assets/images/jadwal.png",
+        "technologies": ["Python", "Django", "PostgreSQL", "D3.js", "Algorithm"],
+        "liveDemo": "https://demo-jadwal.example.com",
+        "github": "https://github.com/example/sistem-penjadwalan",
+        "duration": "6 months",
+        "teamSize": "5 developers",
+        "client": "Faculty of Information Technology",
+        "features": [
+          "Automatic scheduling algorithms",
+          "Lecturer and room data management",
+          "AI-based schedule optimization",
+          "Schedule conflict detection",
+          "Interactive schedule visualization",
+          "Schedule change management"
+        ]
+      },
+      {
+        "id": 6,
+        "title": "Classroom Monitoring System",
+        "category": "Web",
+        "description": "IoT platform for real-time monitoring and management of classroom usage.",
+        "fullDescription": "This system integrates IoT sensors for real-time monitoring of classroom usage, including presence detection, equipment usage, and environmental conditions. The collected data is analyzed for room usage optimization and energy savings.",
+        "image": "/src/assets/images/kelas.png",
+        "technologies": ["Vue.js", "Node.js", "MongoDB", "MQTT", "Arduino"],
+        "liveDemo": "https://demo-monitoring.example.com",
+        "github": "https://github.com/example/sistem-monitoring-ruang",
+        "duration": "4 months",
+        "teamSize": "4 developers",
+        "client": "Technology University",
+        "features": [
+          "Real-time presence monitoring",
+          "Equipment usage tracking",
+          "Environmental condition monitoring",
+          "Automatic notifications",
+          "Usage analytics dashboard",
+          "Scheduling system integration"
+        ]
+      },
+      {
+        "id": 7,
+        "title": "Inventory Management System",
+        "category": "Web",
+        "description": "Complete inventory management solution with barcode scanning and real-time stock reporting.",
+        "fullDescription": "The Inventory Management System is a comprehensive platform for managing assets and inventory. With barcode scanning features, item movement tracking, and automatic stock notifications, this system helps organizations optimize their inventory management.",
+        "image": "/src/assets/images/inventaris.png",
+        "technologies": ["Laravel", "MySQL", "Vue.js", "Barcode API", "Chart.js"],
+        "liveDemo": "https://demo-inventaris.example.com",
+        "github": "https://github.com/example/sistem-inventaris",
+        "duration": "3 months",
+        "teamSize": "4 developers",
+        "client": "PT. Logistik Indonesia",
+        "features": [
+          "Item data management",
+          "Barcode scanning system",
+          "Item movement tracking",
+          "Automatic stock notifications",
+          "Real-time inventory reports",
+          "Multi-location warehouse management"
+        ]
+      },
+      {
+        "id": 8,
+        "title": "Quiz Test Question System",
+        "category": "Web",
+        "description": "Platform for creating and managing online exams with various question types and result analytics.",
+        "fullDescription": "This system provides an end-to-end solution for creating, managing, and conducting online exams. With various question types, anti-cheating systems, and comprehensive result analytics, this system is suitable for educational and training institutions.",
+        "image": "/src/assets/images/quiz.png",
+        "technologies": ["React", "Node.js", "MongoDB", "Socket.io", "WebRTC"],
+        "liveDemo": "https://demo-quiz.example.com",
+        "github": "https://github.com/example/sistem-quiz-test",
+        "duration": "4 months",
+        "teamSize": "5 developers",
+        "client": "Professional Education Institute",
+        "features": [
+          "Various question type creation",
+          "Integrated question bank",
+          "Anti-cheating system",
+          "Exam timer and supervision",
+          "Exam result analytics",
+          "Automatic certificates"
+        ]
       }
-    }
+    ]
   },
   "about": {
     "title": "About Nusa Software"

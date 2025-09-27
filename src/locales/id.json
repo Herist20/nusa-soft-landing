@@ -255,7 +255,7 @@
     "viewProject": "Lihat Proyek",
     "liveDemo": "Demo Langsung",
     "categories": {
-      "all": "Semua Kategori",
+      "all": "Semua",
       "website": "Website",
       "mobile": "Mobile App",
       "ecommerce": "E-Commerce",
@@ -267,22 +267,196 @@
       "description": "Kami belum memiliki proyek dalam kategori ini. Coba cek lagi nanti atau lihat semua karya kami.",
       "viewAll": "Lihat Semua Proyek"
     },
-    "projects": {
-      "globalTrade": {
-        "title": "Platform Trading Global",
-        "category": "Enterprise System",
-        "description": "Platform B2B trading komprehensif dengan dukungan multi-mata uang dan analytics canggih",
-        "results": "Peningkatan volume transaksi 450%",
-        "technologies": ["React", "Node.js", "MongoDB", "AWS"]
+    "modal": {
+      "overview": "Gambaran Proyek",
+      "features": "Fitur Utama",
+      "details": "Detail Proyek",
+      "duration": "Durasi",
+      "teamSize": "Ukuran Tim",
+      "client": "Klien",
+      "technologies": "Teknologi yang Digunakan",
+      "links": "Link Proyek"
+    },
+    "projects": [
+      {
+        "id": 1,
+        "title": "Sistem Informasi Desa",
+        "category": "Web",
+        "description": "Platform terintegrasi untuk mengelola data administrasi dan pelayanan masyarakat desa secara digital.",
+        "fullDescription": "Sistem Informasi Desa adalah solusi komprehensif yang dirancang untuk membantu pemerintah desa dalam mengelola data administrasi, keuangan, dan pelayanan masyarakat. Sistem ini memfasilitasi transparansi dan partisipasi publik melalui akses informasi yang mudah.",
+        "image": "/src/assets/images/desa.png",
+        "technologies": ["PHP", "Laravel", "MySQL", "Bootstrap", "JavaScript"],
+        "liveDemo": "https://demo-sistemdesa.example.com",
+        "github": "https://github.com/example/sistem-informasi-desa",
+        "duration": "3 bulan",
+        "teamSize": "4 pengembang",
+        "client": "Pemerintah Desa",
+        "features": [
+          "Manajemen data penduduk",
+          "Pengelolaan administrasi desa",
+          "Sistem informasi keuangan desa",
+          "Pelayanan surat online",
+          "Portal informasi publik",
+          "Statistik dan laporan desa"
+        ]
       },
-      "smartRetail": {
-        "title": "Smart Retail Management",
-        "category": "E-Commerce",
-        "description": "Solusi retail omnichannel dengan optimisasi inventory dan predictive analytics",
-        "results": "Peningkatan efisiensi operasional 65%",
-        "technologies": ["Vue.js", "Laravel", "PostgreSQL", "Docker"]
+      {
+        "id": 2,
+        "title": "Sistem Informasi Jurusan Kampus",
+        "category": "Web",
+        "description": "Sistem manajemen data akademik dan kemahasiswaan untuk jurusan di perguruan tinggi.",
+        "fullDescription": "Sistem ini dirancang khusus untuk membantu jurusan di perguruan tinggi mengelola data akademik, kemahasiswaan, dan penelitian. Dengan antarmuka yang intuitif, sistem ini memudahkan dosen dan staf administrasi dalam melaksanakan tugas sehari-hari.",
+        "image": "/src/assets/images/kampus.png",
+        "technologies": ["Vue.js", "Node.js", "MongoDB", "Express", "Chart.js"],
+        "liveDemo": "https://demo-sijur.example.com",
+        "github": "https://github.com/example/sistem-informasi-jurusan",
+        "duration": "4 bulan",
+        "teamSize": "5 pengembang",
+        "client": "Universitas Negeri",
+        "features": [
+          "Manajemen data mahasiswa",
+          "Pengelolaan kurikulum dan mata kuliah",
+          "Sistem penilaian akademik",
+          "Tracking alumni",
+          "Manajemen penelitian dosen",
+          "Dashboard analitik akademik"
+        ]
+      },
+      {
+        "id": 3,
+        "title": "Sistem Rental Mobil",
+        "category": "Web",
+        "description": "Platform pemesanan dan manajemen rental mobil dengan fitur tracking dan pembayaran online.",
+        "fullDescription": "Sistem Rental Mobil adalah solusi end-to-end untuk bisnis rental yang mengintegrasikan manajemen armada, pemesanan online, pembayaran digital, dan GPS tracking. Sistem ini dirancang untuk meningkatkan efisiensi operasional dan pengalaman pelanggan.",
+        "image": "/src/assets/images/rental.png",
+        "technologies": ["React", "Django", "PostgreSQL", "Google Maps API", "Stripe"],
+        "liveDemo": "https://demo-rentalmobil.example.com",
+        "github": "https://github.com/example/sistem-rental-mobil",
+        "duration": "5 bulan",
+        "teamSize": "6 pengembang",
+        "client": "PT. Transportasi Nusantara",
+        "features": [
+          "Katalog dan pencarian mobil",
+          "Pemesanan online real-time",
+          "Manajemen armada",
+          "GPS tracking mobil",
+          "Pembayaran digital",
+          "Laporan analitik bisnis"
+        ]
+      },
+      {
+        "id": 4,
+        "title": "EduTrack - Aplikasi Monitoring Kehadiran Siswa",
+        "category": "Mobile",
+        "description": "Aplikasi mobile untuk monitoring kehadiran siswa secara real-time dengan teknologi QR Code dan geofencing.",
+        "fullDescription": "EduTrack adalah solusi inovatif untuk monitoring kehadiran siswa yang mengintegrasikan teknologi QR Code, geofencing, dan real-time tracking. Aplikasi ini mengurangi administrasi presensi manual dan meningkatkan akurasi data kehadiran dengan memberikan akses monitoring real-time kepada orang tua dan sekolah.",
+        "image": "/src/assets/images/absen.png",
+        "technologies": ["Flutter", "Node.js", "Firebase", "Google Maps API", "WebSocket"],
+        "liveDemo": "https://demo-edutrack.example.com",
+        "github": "https://github.com/example/edutrack-attendance",
+        "duration": "4 bulan",
+        "teamSize": "5 pengembang",
+        "client": "Yayasan Pendidikan Cerdas",
+        "features": [
+          "QR Code check-in untuk presensi",
+          "Real-time location tracking dengan geofencing",
+          "Integrasi dengan jadwal pelajaran",
+          "Parent dashboard untuk monitoring",
+          "Sistem notifikasi otomatis",
+          "Analytics kehadiran komprehensif",
+          "Integrasi sistem informasi akademik",
+          "Push notification real-time"
+        ]
+      },
+      {
+        "id": 5,
+        "title": "Sistem Penjadwalan Perkuliahan Otomatis",
+        "category": "Web",
+        "description": "Solusi cerdas untuk menghasilkan jadwal perkuliahan otomatis dengan algoritma optimasi.",
+        "fullDescription": "Sistem ini menggunakan algoritma genetika untuk menghasilkan jadwal perkuliahan optimal secara otomatis, mempertimbangkan kendala seperti ketersediaan ruang, dosen, dan waktu. Sistem ini mengurangi konflik jadwal dan meningkatkan efisiensi penggunaan sumber daya.",
+        "image": "/src/assets/images/jadwal.png",
+        "technologies": ["Python", "Django", "PostgreSQL", "D3.js", "Algorithm"],
+        "liveDemo": "https://demo-jadwal.example.com",
+        "github": "https://github.com/example/sistem-penjadwalan",
+        "duration": "6 bulan",
+        "teamSize": "5 pengembang",
+        "client": "Fakultas Teknologi Informasi",
+        "features": [
+          "Algoritma penjadwalan otomatis",
+          "Manajemen data dosen dan ruangan",
+          "Optimasi jadwal berbasis AI",
+          "Deteksi konflik jadwal",
+          "Visualisasi jadwal interaktif",
+          "Manajemen perubahan jadwal"
+        ]
+      },
+      {
+        "id": 6,
+        "title": "Sistem Monitoring Ruang Kelas",
+        "category": "Web",
+        "description": "Platform IoT untuk monitoring dan pengelolaan penggunaan ruang kelas secara real-time.",
+        "fullDescription": "Sistem ini mengintegrasikan sensor IoT untuk monitoring penggunaan ruang kelas secara real-time, termasuk deteksi kehadiran, penggunaan peralatan, dan kondisi lingkungan. Data yang dikumpulkan dianalisis untuk optimasi penggunaan ruang dan penghematan energi.",
+        "image": "/src/assets/images/kelas.png",
+        "technologies": ["Vue.js", "Node.js", "MongoDB", "MQTT", "Arduino"],
+        "liveDemo": "https://demo-monitoring.example.com",
+        "github": "https://github.com/example/sistem-monitoring-ruang",
+        "duration": "4 bulan",
+        "teamSize": "4 pengembang",
+        "client": "Universitas Teknologi",
+        "features": [
+          "Monitoring kehadiran real-time",
+          "Tracking penggunaan peralatan",
+          "Monitoring kondisi lingkungan",
+          "Notifikasi otomatis",
+          "Dashboard analitik penggunaan",
+          "Integrasi sistem penjadwalan"
+        ]
+      },
+      {
+        "id": 7,
+        "title": "Sistem Inventaris",
+        "category": "Web",
+        "description": "Solusi manajemen inventaris lengkap dengan barcode scanning dan laporan stok real-time.",
+        "fullDescription": "Sistem Inventaris adalah platform komprehensif untuk mengelola aset dan persediaan barang. Dengan fitur barcode scanning, tracking pergerakan barang, dan notifikasi stok otomatis, sistem ini membantu organisasi mengoptimalkan manajemen inventaris mereka.",
+        "image": "/src/assets/images/inventaris.png",
+        "technologies": ["Laravel", "MySQL", "Vue.js", "Barcode API", "Chart.js"],
+        "liveDemo": "https://demo-inventaris.example.com",
+        "github": "https://github.com/example/sistem-inventaris",
+        "duration": "3 bulan",
+        "teamSize": "4 pengembang",
+        "client": "PT. Logistik Indonesia",
+        "features": [
+          "Manajemen data barang",
+          "Barcode scanning system",
+          "Tracking pergerakan barang",
+          "Notifikasi stok otomatis",
+          "Laporan inventaris real-time",
+          "Manajemen gudang multi-lokasi"
+        ]
+      },
+      {
+        "id": 8,
+        "title": "Sistem Quiz Test Pertanyaan",
+        "category": "Web",
+        "description": "Platform pembuatan dan pengelolaan ujian online dengan berbagai jenis pertanyaan dan analitik hasil.",
+        "fullDescription": "Sistem ini menyediakan solusi end-to-end untuk pembuatan, pengelolaan, dan pelaksanaan ujian online. Dengan berbagai jenis pertanyaan, sistem anti-kecurangan, dan analitik hasil yang mendalam, sistem ini cocok untuk institusi pendidikan dan pelatihan.",
+        "image": "/src/assets/images/quiz.png",
+        "technologies": ["React", "Node.js", "MongoDB", "Socket.io", "WebRTC"],
+        "liveDemo": "https://demo-quiz.example.com",
+        "github": "https://github.com/example/sistem-quiz-test",
+        "duration": "4 bulan",
+        "teamSize": "5 pengembang",
+        "client": "Lembaga Pendidikan Profesional",
+        "features": [
+          "Pembuatan soal berbagai tipe",
+          "Bank soal terintegrasi",
+          "Sistem anti-kecurangan",
+          "Timer dan pengawasan ujian",
+          "Analitik hasil ujian",
+          "Sertifikat otomatis"
+        ]
       }
-    }
+    ]
   },
   "about": {
     "title": "Tentang Nusa Software"

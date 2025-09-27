@@ -2,17 +2,17 @@
   <section id="portfolio" class="py-16 lg:py-24 relative overflow-hidden">
     <!-- Background futuristik -->
     <div class="absolute inset-0 bg-gradient-to-br from-gray-900 via-blue-900 to-indigo-900 z-0"></div>
-    
+
     <!-- Grid pattern futuristik -->
     <div class="absolute inset-0 bg-grid-pattern opacity-10 z-0"></div>
-    
+
     <!-- Elemen geometris -->
     <div class="absolute top-1/4 left-10 w-32 h-32 border-2 border-cyan-400 rounded-full opacity-20 animate-pulse-slow"></div>
     <div class="absolute bottom-1/4 right-10 w-40 h-40 border-2 border-indigo-400 rotate-45 opacity-20 animate-pulse-slow"></div>
-    
+
     <!-- Glow effect -->
     <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-cyan-500 rounded-full filter blur-3xl opacity-10"></div>
-    
+
     <div class="max-w-7xl mx-auto px-4 relative z-10">
       <div class="text-center mb-16">
         <div class="inline-flex items-center px-4 py-2 bg-cyan-900/30 backdrop-blur-sm border border-cyan-700/50 rounded-full mb-4">
@@ -191,10 +191,10 @@
           <div class="p-6 lg:p-8">
             <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
               <div class="lg:col-span-2">
-                <h4 class="font-bold text-xl mb-4 text-cyan-300">Project Overview</h4>
+                <h4 class="font-bold text-xl mb-4 text-cyan-300">{{ t('portfolio.modal.overview') || 'Project Overview' }}</h4>
                 <p class="text-cyan-100/80 mb-6 leading-relaxed">{{ selectedProject.fullDescription }}</p>
 
-                <h4 class="font-bold text-xl mb-4 text-cyan-300">Key Features</h4>
+                <h4 class="font-bold text-xl mb-4 text-cyan-300">{{ t('portfolio.modal.features') || 'Key Features' }}</h4>
                 <ul class="space-y-2 mb-6">
                   <li v-for="feature in selectedProject.features" :key="feature" class="flex items-start space-x-3">
                     <div class="w-5 h-5 rounded-full bg-cyan-900/30 flex items-center justify-center mt-0.5 flex-shrink-0">
@@ -208,23 +208,23 @@
               </div>
 
               <div>
-                <h4 class="font-bold text-xl mb-4 text-cyan-300">Project Details</h4>
+                <h4 class="font-bold text-xl mb-4 text-cyan-300">{{ t('portfolio.modal.details') || 'Project Details' }}</h4>
                 <div class="space-y-4 mb-6">
                   <div>
-                    <span class="text-cyan-100/50 text-sm">Duration</span>
+                    <span class="text-cyan-100/50 text-sm">{{ t('portfolio.modal.duration') || 'Duration' }}</span>
                     <p class="font-semibold text-white">{{ selectedProject.duration }}</p>
                   </div>
                   <div>
-                    <span class="text-cyan-100/50 text-sm">Team Size</span>
+                    <span class="text-cyan-100/50 text-sm">{{ t('portfolio.modal.teamSize') || 'Team Size' }}</span>
                     <p class="font-semibold text-white">{{ selectedProject.teamSize }}</p>
                   </div>
                   <div>
-                    <span class="text-cyan-100/50 text-sm">Client</span>
+                    <span class="text-cyan-100/50 text-sm">{{ t('portfolio.modal.client') || 'Client' }}</span>
                     <p class="font-semibold text-white">{{ selectedProject.client }}</p>
                   </div>
                 </div>
 
-                <h4 class="font-bold text-lg mb-3 text-cyan-300">Technologies</h4>
+                <h4 class="font-bold text-lg mb-3 text-cyan-300">{{ t('portfolio.modal.technologies') || 'Technologies' }}</h4>
                 <div class="flex flex-wrap gap-2 mb-6">
                   <span
                     v-for="tech in selectedProject.technologies"
@@ -246,6 +246,7 @@
 <script setup>
 import { ref, computed } from 'vue'
 import { useI18n } from 'vue-i18n'
+import i18n from '@/locales'
 
 const { t } = useI18n()
 
@@ -256,195 +257,20 @@ const selectedProject = ref(null)
 const categories = ['All', 'Web', 'Mobile']
 
 const getCategoryName = (category) => {
-  return category === 'All' ? 'Semua' : category
+  return category === 'All' ? t('portfolio.categories.all') : category
 }
 
-const allProjects = [
-  {
-    id: 1,
-    title: 'Sistem Informasi Desa',
-    category: 'Web',
-    description: 'Platform terintegrasi untuk mengelola data administrasi dan pelayanan masyarakat desa secara digital.',
-    fullDescription: 'Sistem Informasi Desa adalah solusi komprehensif yang dirancang untuk membantu pemerintah desa dalam mengelola data administrasi, keuangan, dan pelayanan masyarakat. Sistem ini memfasilitasi transparansi dan partisipasi publik melalui akses informasi yang mudah.',
-    image: '/src/assets/images/desa.png',
-    technologies: ['PHP', 'Laravel', 'MySQL', 'Bootstrap', 'JavaScript'],
-    liveDemo: 'https://demo-sistemdesa.example.com',
-    github: 'https://github.com/example/sistem-informasi-desa',
-    duration: '3 bulan',
-    teamSize: '4 pengembang',
-    client: 'Pemerintah Desa',
-    features: [
-      'Manajemen data penduduk',
-      'Pengelolaan administrasi desa',
-      'Sistem informasi keuangan desa',
-      'Pelayanan surat online',
-      'Portal informasi publik',
-      'Statistik dan laporan desa'
-    ]
-  },
-  {
-    id: 2,
-    title: 'Sistem Informasi Jurusan Kampus',
-    category: 'Web',
-    description: 'Sistem manajemen data akademik dan kemahasiswaan untuk jurusan di perguruan tinggi.',
-    fullDescription: 'Sistem ini dirancang khusus untuk membantu jurusan di perguruan tinggi mengelola data akademik, kemahasiswaan, dan penelitian. Dengan antarmuka yang intuitif, sistem ini memudahkan dosen dan staf administrasi dalam melaksanakan tugas sehari-hari.',
-    image: '/src/assets/images/kampus.png',
-    technologies: ['Vue.js', 'Node.js', 'MongoDB', 'Express', 'Chart.js'],
-    liveDemo: 'https://demo-sijur.example.com',
-    github: 'https://github.com/example/sistem-informasi-jurusan',
-    duration: '4 bulan',
-    teamSize: '5 pengembang',
-    client: 'Universitas Negeri',
-    features: [
-      'Manajemen data mahasiswa',
-      'Pengelolaan kurikulum dan mata kuliah',
-      'Sistem penilaian akademik',
-      'Tracking alumni',
-      'Manajemen penelitian dosen',
-      'Dashboard analitik akademik'
-    ]
-  },
-  {
-    id: 3,
-    title: 'Sistem Rental Mobil',
-    category: 'Web',
-    description: 'Platform pemesanan dan manajemen rental mobil dengan fitur tracking dan pembayaran online.',
-    fullDescription: 'Sistem Rental Mobil adalah solusi end-to-end untuk bisnis rental yang mengintegrasikan manajemen armada, pemesanan online, pembayaran digital, dan GPS tracking. Sistem ini dirancang untuk meningkatkan efisiensi operasional dan pengalaman pelanggan.',
-    image: '/src/assets/images/rental.png',
-    technologies: ['React', 'Django', 'PostgreSQL', 'Google Maps API', 'Stripe'],
-    liveDemo: 'https://demo-rentalmobil.example.com',
-    github: 'https://github.com/example/sistem-rental-mobil',
-    duration: '5 bulan',
-    teamSize: '6 pengembang',
-    client: 'PT. Transportasi Nusantara',
-    features: [
-      'Katalog dan pencarian mobil',
-      'Pemesanan online real-time',
-      'Manajemen armada',
-      'GPS tracking mobil',
-      'Pembayaran digital',
-      'Laporan analitik bisnis'
-    ]
-  },
-   {
-    id: 4,
-    title: 'EduTrack - Aplikasi Monitoring Kehadiran Siswa',
-    category: 'Mobile',
-    description: 'Aplikasi mobile untuk monitoring kehadiran siswa secara real-time dengan teknologi QR Code dan geofencing.',
-    fullDescription: 'EduTrack adalah solusi inovatif untuk monitoring kehadiran siswa yang mengintegrasikan teknologi QR Code, geofencing, dan real-time tracking. Aplikasi ini mengurangi administrasi presensi manual dan meningkatkan akurasi data kehadiran dengan memberikan akses monitoring real-time kepada orang tua dan sekolah.',
-    image: '/src/assets/images/absen.png',
-    technologies: ['Flutter', 'Node.js', 'Firebase', 'Google Maps API', 'WebSocket'],
-    liveDemo: 'https://demo-edutrack.example.com',
-    github: 'https://github.com/example/edutrack-attendance',
-    duration: '4 bulan',
-    teamSize: '5 pengembang',
-    client: 'Yayasan Pendidikan Cerdas',
-    features: [
-      'QR Code check-in untuk presensi',
-      'Real-time location tracking dengan geofencing', 
-      'Integrasi dengan jadwal pelajaran',
-      'Parent dashboard untuk monitoring',
-      'Sistem notifikasi otomatis',
-      'Analytics kehadiran komprehensif',
-      'Integrasi sistem informasi akademik',
-      'Push notification real-time'
-    ]
-  },
-  {
-    id: 5,
-    title: 'Sistem Penjadwalan Perkuliahan Otomatis',
-    category: 'Web',
-    description: 'Solusi cerdas untuk menghasilkan jadwal perkuliahan otomatis dengan algoritma optimasi.',
-    fullDescription: 'Sistem ini menggunakan algoritma genetika untuk menghasilkan jadwal perkuliahan optimal secara otomatis, mempertimbangkan kendala seperti ketersediaan ruang, dosen, dan waktu. Sistem ini mengurangi konflik jadwal dan meningkatkan efisiensi penggunaan sumber daya.',
-    image: '/src/assets/images/jadwal.png',
-    technologies: ['Python', 'Django', 'PostgreSQL', 'D3.js', 'Algorithm'],
-    liveDemo: 'https://demo-jadwal.example.com',
-    github: 'https://github.com/example/sistem-penjadwalan',
-    duration: '6 bulan',
-    teamSize: '5 pengembang',
-    client: 'Fakultas Teknologi Informasi',
-    features: [
-      'Algoritma penjadwalan otomatis',
-      'Manajemen data dosen dan ruangan',
-      'Optimasi jadwal berbasis AI',
-      'Deteksi konflik jadwal',
-      'Visualisasi jadwal interaktif',
-      'Manajemen perubahan jadwal'
-    ]
-  },
-  {
-    id: 6,
-    title: 'Sistem Monitoring Ruang Kelas',
-    category: 'Web',
-    description: 'Platform IoT untuk monitoring dan pengelolaan penggunaan ruang kelas secara real-time.',
-    fullDescription: 'Sistem ini mengintegrasikan sensor IoT untuk monitoring penggunaan ruang kelas secara real-time, termasuk deteksi kehadiran, penggunaan peralatan, dan kondisi lingkungan. Data yang dikumpulkan dianalisis untuk optimasi penggunaan ruang dan penghematan energi.',
-    image: '/src/assets/images/kelas.png',
-    technologies: ['Vue.js', 'Node.js', 'MongoDB', 'MQTT', 'Arduino'],
-    liveDemo: 'https://demo-monitoring.example.com',
-    github: 'https://github.com/example/sistem-monitoring-ruang',
-    duration: '4 bulan',
-    teamSize: '4 pengembang',
-    client: 'Universitas Teknologi',
-    features: [
-      'Monitoring kehadiran real-time',
-      'Tracking penggunaan peralatan',
-      'Monitoring kondisi lingkungan',
-      'Notifikasi otomatis',
-      'Dashboard analitik penggunaan',
-      'Integrasi sistem penjadwalan'
-    ]
-  },
-  {
-    id: 7,
-    title: 'Sistem Inventaris',
-    category: 'Web',
-    description: 'Solusi manajemen inventaris lengkap dengan barcode scanning dan laporan stok real-time.',
-    fullDescription: 'Sistem Inventaris adalah platform komprehensif untuk mengelola aset dan persediaan barang. Dengan fitur barcode scanning, tracking pergerakan barang, dan notifikasi stok otomatis, sistem ini membantu organisasi mengoptimalkan manajemen inventaris mereka.',
-    image: '/src/assets/images/inventaris.png',
-    technologies: ['Laravel', 'MySQL', 'Vue.js', 'Barcode API', 'Chart.js'],
-    liveDemo: 'https://demo-inventaris.example.com',
-    github: 'https://github.com/example/sistem-inventaris',
-    duration: '3 bulan',
-    teamSize: '4 pengembang',
-    client: 'PT. Logistik Indonesia',
-    features: [
-      'Manajemen data barang',
-      'Barcode scanning system',
-      'Tracking pergerakan barang',
-      'Notifikasi stok otomatis',
-      'Laporan inventaris real-time',
-      'Manajemen gudang multi-lokasi'
-    ]
-  },
-  {
-    id: 8,
-    title: 'Sistem Quiz Test Pertanyaan',
-    category: 'Web',
-    description: 'Platform pembuatan dan pengelolaan ujian online dengan berbagai jenis pertanyaan dan analitik hasil.',
-    fullDescription: 'Sistem ini menyediakan solusi end-to-end untuk pembuatan, pengelolaan, dan pelaksanaan ujian online. Dengan berbagai jenis pertanyaan, sistem anti-kecurangan, dan analitik hasil yang mendalam, sistem ini cocok untuk institusi pendidikan dan pelatihan.',
-    image: '/src/assets/images/quiz.png',
-    technologies: ['React', 'Node.js', 'MongoDB', 'Socket.io', 'WebRTC'],
-    liveDemo: 'https://demo-quiz.example.com',
-    github: 'https://github.com/example/sistem-quiz-test',
-    duration: '4 bulan',
-    teamSize: '5 pengembang',
-    client: 'Lembaga Pendidikan Profesional',
-    features: [
-      'Pembuatan soal berbagai tipe',
-      'Bank soal terintegrasi',
-      'Sistem anti-kecurangan',
-      'Timer dan pengawasan ujian',
-      'Analitik hasil ujian',
-      'Sertifikat otomatis'
-    ]
-  }
-]
+const allProjects = computed(() => {
+  const currentLocale = i18n.global.locale.value
+  const messages = i18n.global.messages.value
+  return messages[currentLocale]?.portfolio?.projects || []
+})
 
 const filteredProjects = computed(() => {
   if (activeCategory.value === 'All') {
-    return allProjects
+    return allProjects.value
   }
-  return allProjects.filter(project => project.category === activeCategory.value)
+  return allProjects.value.filter(project => project.category === activeCategory.value)
 })
 
 const displayedProjects = computed(() => {
@@ -478,7 +304,7 @@ const closeCaseStudy = () => {
 <style scoped>
 /* Grid pattern untuk background futuristik */
 .bg-grid-pattern {
-  background-image: 
+  background-image:
     linear-gradient(rgba(100, 200, 255, 0.1) 1px, transparent 1px),
     linear-gradient(90deg, rgba(100, 200, 255, 0.1) 1px, transparent 1px);
   background-size: 40px 40px;
@@ -486,13 +312,13 @@ const closeCaseStudy = () => {
 
 /* Animasi fade in untuk kartu proyek */
 @keyframes fadeInStagger {
-  from { 
-    opacity: 0; 
-    transform: translateY(20px); 
+  from {
+    opacity: 0;
+    transform: translateY(20px);
   }
-  to { 
-    opacity: 1; 
-    transform: translateY(0); 
+  to {
+    opacity: 1;
+    transform: translateY(0);
   }
 }
 
@@ -504,18 +330,5 @@ const closeCaseStudy = () => {
 
 .animate-pulse-slow {
   animation: pulse-slow 4s cubic-bezier(0.4, 0, 0.6, 1) infinite;
-}
-
-/* Efek glow untuk shadow */
-.shadow-cyan-500\/10 {
-  box-shadow: 0 10px 25px -5px rgba(6, 182, 212, 0.1), 0 10px 10px -5px rgba(6, 182, 212, 0.04);
-}
-
-.shadow-cyan-500\/30 {
-  box-shadow: 0 20px 25px -5px rgba(6, 182, 212, 0.3), 0 10px 10px -5px rgba(6, 182, 212, 0.1);
-}
-
-.shadow-cyan-500\/20 {
-  box-shadow: 0 10px 15px -3px rgba(6, 182, 212, 0.2), 0 4px 6px -2px rgba(6, 182, 212, 0.05);
 }
 </style>
