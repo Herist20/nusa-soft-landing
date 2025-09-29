@@ -40,6 +40,7 @@
           <ul class="space-y-2">
             <li><a href="#hero" class="text-gray-400 hover:text-white transition-colors">{{ t('navigation.home') }}</a></li>
             <li><a href="#portfolio" class="text-gray-400 hover:text-white transition-colors">{{ t('navigation.portfolio') }}</a></li>
+            <li><a href="#pricing" class="text-gray-400 hover:text-white transition-colors">{{ t('navigation.pricing') }}</a></li>
             <li><a href="#contact" class="text-gray-400 hover:text-white transition-colors">{{ t('navigation.contact') }}</a></li>
           </ul>
         </div>
