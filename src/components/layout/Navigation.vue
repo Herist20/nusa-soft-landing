@@ -15,16 +15,15 @@
           <a
             href="#hero"
             @click="scrollToSection($event, '#hero')"
-            class="font-sans font-extrabold text-2xl transition-all duration-200 flex items-center gap-2 no-underline"
-            :class="scrolled
-              ? 'text-white'
-              : 'text-white'
-            "
+            class="transition-all duration-200 flex items-center no-underline"
             aria-label="Nusa Software - Go to top"
             style="text-decoration: none;"
           >
-            <span class="text-cyan-400 text-3xl">•</span>
-            <span>Nusa<span class="text-cyan-400">Soft</span></span>
+            <img
+              src="../../assets/images/nusa-software-logo.webp"
+              alt="Nusa Software Logo"
+              class="h-48 w-auto"
+            />
           </a>
         </div>
 
