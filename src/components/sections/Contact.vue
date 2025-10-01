@@ -75,6 +75,7 @@
                       type="text"
                       id="fullName"
                       v-model="form.fullName"
+                      required
                       class="w-full px-4 py-3 bg-gray-800/50 backdrop-blur-sm border border-cyan-500/30 rounded-lg focus:border-cyan-400 focus:outline-none transition-all duration-200 placeholder-cyan-500/50 text-cyan-100"
                       :placeholder="t('contact.form.placeholder.name')"
                     />
@@ -88,6 +89,7 @@
                       type="tel"
                       id="phone"
                       v-model="form.phone"
+                      required
                       class="w-full px-4 py-3 bg-gray-800/50 backdrop-blur-sm border border-cyan-500/30 rounded-lg focus:border-cyan-400 focus:outline-none transition-all duration-200 placeholder-cyan-500/50 text-cyan-100"
                       :placeholder="t('contact.form.placeholder.phone')"
                     />
@@ -116,6 +118,7 @@
                     <select
                       id="projectType"
                       v-model="form.projectType"
+                      required
                       class="w-full px-4 pr-10 py-3 bg-gray-800/50 backdrop-blur-sm border border-cyan-500/30 rounded-lg focus:border-cyan-400 focus:outline-none transition-all duration-200 placeholder-cyan-500/50 text-cyan-100 appearance-none"
                     >
                       <option value="">{{ t('contact.form.projectType.placeholder') || 'Select project type' }}</option>
@@ -177,6 +180,7 @@
                     id="description"
                     v-model="form.description"
                     rows="5"
+                    required
                     class="w-full px-4 py-3 bg-gray-800/50 backdrop-blur-sm border border-cyan-500/30 rounded-xl focus:border-cyan-400 focus:outline-none transition-all duration-200 resize-none text-cyan-100"
                     :placeholder="t('contact.form.placeholder.message')"
                   ></textarea>
@@ -341,17 +345,31 @@ const form = ref({
 
 // WhatsApp URL generation
 const whatsappUrl = computed(() => {
-  const message = `Hi! I'm interested in ${form.value.projectType || 'your services'}. Here are my details:
+  const projectTypeLabel = form.value.projectType
+    ? t(`contact.form.projectType.options.${form.value.projectType}`)
+    : t('whatsapp.contactForm.notSpecified')
 
-👤 Name: ${form.value.fullName || 'Not provided'}
-📞 Phone: ${form.value.phone || 'Not provided'}
-🏢 Company: ${form.value.company || 'Not provided'}
-📋 Service: ${form.value.projectType || 'Not specified'}
-💰 Budget: ${form.value.budget || 'Not specified'}
-⏰ Timeline: ${form.value.timeline || 'Not specified'}
-📝 Description: ${form.value.description || 'I\'d like to discuss my requirements'}
+  const budgetLabel = form.value.budget
+    ? t(`contact.form.budget.options.${form.value.budget}`)
+    : t('whatsapp.contactForm.notSpecified')
 
-Can we schedule a consultation?`
+  const timelineLabel = form.value.timeline
+    ? t(`contact.form.timeline.options.${form.value.timeline}`)
+    : t('whatsapp.contactForm.notSpecified')
+
+  const greeting = t('whatsapp.contactForm.greeting', { projectType: projectTypeLabel })
+
+  const message = `${greeting}
+
+${t('whatsapp.contactForm.name')}: ${form.value.fullName || t('whatsapp.contactForm.notProvided')}
+${t('whatsapp.contactForm.phone')}: ${form.value.phone || t('whatsapp.contactForm.notProvided')}
+${t('whatsapp.contactForm.company')}: ${form.value.company || t('whatsapp.contactForm.notProvided')}
+${t('whatsapp.contactForm.service')}: ${projectTypeLabel}
+${t('whatsapp.contactForm.budget')}: ${budgetLabel}
+${t('whatsapp.contactForm.timeline')}: ${timelineLabel}
+${t('whatsapp.contactForm.description')}: ${form.value.description || t('whatsapp.contactForm.discuss')}
+
+${t('whatsapp.contactForm.closing')}`
 
   return `https://wa.me/6287860628412?text=${encodeURIComponent(message)}`
 })

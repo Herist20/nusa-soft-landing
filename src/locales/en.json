@@ -627,6 +627,20 @@
       "thesisWriting": "Hi, I'm interested in the thesis writing package",
       "thesisBundle": "Hi, I'm interested in the bundle writing + thesis system package",
       "thesisCustom": "Hi, I want to consult about a custom package for my thesis"
+    },
+    "contactForm": {
+      "greeting": "Hi! I'm interested in {projectType}. Here are my details:",
+      "name": "Name",
+      "phone": "Phone",
+      "company": "Company",
+      "service": "Service",
+      "budget": "Budget",
+      "timeline": "Timeline",
+      "description": "Description",
+      "closing": "Can we schedule a consultation?",
+      "notProvided": "Not provided",
+      "notSpecified": "Not specified",
+      "discuss": "I'd like to discuss my requirements"
     }
   }
 }

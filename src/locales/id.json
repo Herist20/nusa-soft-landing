@@ -627,6 +627,20 @@
       "thesisWriting": "Halo, saya tertarik dengan paket penulisan skripsi",
       "thesisBundle": "Halo, saya tertarik dengan paket bundle penulisan + sistem skripsi",
       "thesisCustom": "Halo, saya ingin konsultasi mengenai paket custom untuk skripsi saya"
+    },
+    "contactForm": {
+      "greeting": "Halo! Saya tertarik dengan {projectType}. Berikut detail saya:",
+      "name": "Nama",
+      "phone": "Telepon",
+      "company": "Perusahaan",
+      "service": "Layanan",
+      "budget": "Budget",
+      "timeline": "Timeline",
+      "description": "Deskripsi",
+      "closing": "Bisakah kita jadwalkan konsultasi?",
+      "notProvided": "Tidak disebutkan",
+      "notSpecified": "Tidak ditentukan",
+      "discuss": "Saya ingin mendiskusikan kebutuhan saya"
     }
   }
 }
