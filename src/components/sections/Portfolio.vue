@@ -148,16 +148,16 @@
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
               </svg>
             </button>
-            <div class="absolute bottom-6 left-6 text-white">
-              <span class="px-3 py-1 bg-gradient-to-r from-cyan-500 to-blue-500 rounded-full text-sm font-semibold mb-2 inline-block">
+            <div class="absolute bottom-6 left-6">
+              <span class="px-3 py-1 bg-gradient-to-r from-cyan-500 to-blue-500 rounded-full text-sm font-semibold inline-block text-white">
                 {{ selectedProject.category }}
               </span>
-              <h3 class="text-3xl font-bold">{{ selectedProject.title }}</h3>
             </div>
           </div>
 
           <!-- Modal Content -->
           <div class="p-6 lg:p-8">
+            <h3 class="text-2xl font-bold text-cyan-300 mb-6">{{ selectedProject.title }}</h3>
             <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
               <div class="lg:col-span-2">
                 <h4 class="font-bold text-xl mb-4 text-cyan-300">{{ t('portfolio.modal.overview') || 'Project Overview' }}</h4>
