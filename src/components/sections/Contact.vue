@@ -63,7 +63,7 @@
               </div>
 
               <!-- Form -->
-              <div class="space-y-6">
+              <form @submit.prevent="handleSubmit" class="space-y-6">
 
                 <!-- Personal Information -->
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -188,10 +188,8 @@
 
                 <!-- WhatsApp Button -->
                 <div class="flex justify-center">
-                  <a
-                    :href="whatsappUrl"
-                    target="_blank"
-                    rel="noopener noreferrer"
+                  <button
+                    type="submit"
                     class="w-full sm:w-auto flex items-center justify-center px-8 py-4 bg-gradient-to-r from-green-500 to-emerald-500 hover:from-green-600 hover:to-emerald-600 text-white font-semibold rounded-lg shadow-lg hover:shadow-green-500/30 transition-all duration-200 relative overflow-hidden group"
                   >
                     <svg class="w-6 h-6 mr-3" fill="currentColor" viewBox="0 0 24 24">
@@ -200,9 +198,9 @@
                     {{ t('contact.cta.whatsapp') }}
                     <!-- Efek cahaya pada tombol WhatsApp -->
                     <div class="absolute top-0 left-0 w-full h-full bg-gradient-to-r from-transparent via-white/20 to-transparent transform -translate-x-full group-hover:translate-x-full transition-transform duration-1000"></div>
-                  </a>
+                  </button>
                 </div>
-              </div>
+              </form>
             </div>
           </div>
         </div>
@@ -373,6 +371,13 @@ ${t('whatsapp.contactForm.closing')}`
 
   return `https://wa.me/6287860628412?text=${encodeURIComponent(message)}`
 })
+
+// Handle form submit
+const handleSubmit = () => {
+  // Browser will validate required fields automatically
+  // If validation passes, open WhatsApp
+  window.open(whatsappUrl.value, '_blank')
+}
 </script>
 
 <style scoped>
