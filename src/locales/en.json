@@ -584,5 +584,31 @@
     "viewAll": "View All",
     "readMore": "Read More",
     "showLess": "Show Less"
+  },
+  "whatsapp": {
+    "tooltip": "Chat with us on WhatsApp!",
+    "quickMessage": {
+      "title": "Quick Message",
+      "general": {
+        "title": "General Inquiry",
+        "description": "Ask about our services"
+      },
+      "webDev": {
+        "title": "Web Development",
+        "description": "Discuss web project"
+      },
+      "mobileApp": {
+        "title": "Mobile App",
+        "description": "Build mobile application"
+      },
+      "quote": {
+        "title": "Get Quote",
+        "description": "Request project estimate"
+      },
+      "consultation": {
+        "title": "Free Consultation",
+        "description": "Schedule a call"
+      }
+    }
   }
 }

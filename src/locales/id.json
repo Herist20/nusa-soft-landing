@@ -584,5 +584,31 @@
     "viewAll": "Lihat Semua",
     "readMore": "Baca Selengkapnya",
     "showLess": "Tampilkan Lebih Sedikit"
+  },
+  "whatsapp": {
+    "tooltip": "Chat dengan kami di WhatsApp!",
+    "quickMessage": {
+      "title": "Pesan Cepat",
+      "general": {
+        "title": "Pertanyaan Umum",
+        "description": "Tanyakan tentang layanan kami"
+      },
+      "webDev": {
+        "title": "Pengembangan Web",
+        "description": "Diskusi proyek web"
+      },
+      "mobileApp": {
+        "title": "Aplikasi Mobile",
+        "description": "Bangun aplikasi mobile"
+      },
+      "quote": {
+        "title": "Minta Penawaran",
+        "description": "Estimasi harga proyek"
+      },
+      "consultation": {
+        "title": "Konsultasi Gratis",
+        "description": "Jadwalkan panggilan"
+      }
+    }
   }
 }

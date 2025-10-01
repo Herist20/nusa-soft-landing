@@ -8,7 +8,7 @@
         class="absolute bottom-full right-0 mb-3 px-4 py-2 bg-gray-900 text-white text-sm rounded-lg shadow-lg whitespace-nowrap transform transition-all duration-300"
         :class="showTooltip ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-2'"
       >
-        Chat with us on WhatsApp!
+        {{ t('whatsapp.tooltip') }}
         <div class="absolute top-full right-4 w-0 h-0 border-l-4 border-r-4 border-t-4 border-transparent border-t-gray-900"></div>
       </div>
 
@@ -44,7 +44,7 @@
       >
         <div class="p-4">
           <div class="flex items-center justify-between mb-4">
-            <h3 class="font-semibold text-gray-900">Quick Message</h3>
+            <h3 class="font-semibold text-gray-900">{{ t('whatsapp.quickMessage.title') }}</h3>
             <button
               @click="showQuickOptions = false"
               class="text-gray-400 hover:text-gray-600 transition-colors"
@@ -93,6 +93,9 @@
 
 <script setup>
 import { ref, computed, onMounted, onUnmounted } from 'vue'
+import { useI18n } from 'vue-i18n'
+
+const { t } = useI18n()
 
 const props = defineProps({
   defaultMessage: {
@@ -124,36 +127,36 @@ const quickMessageOptions = computed(() => [
   {
     id: 'general',
     icon: '💬',
-    title: 'General Inquiry',
-    description: 'Ask about our services',
+    title: t('whatsapp.quickMessage.general.title'),
+    description: t('whatsapp.quickMessage.general.description'),
     url: `https://wa.me/${props.phoneNumber}?text=${encodeURIComponent("Hi! I'd like to know more about your development services. Can you provide more information?")}`
   },
   {
     id: 'web-dev',
     icon: '🌐',
-    title: 'Web Development',
-    description: 'Discuss web project',
+    title: t('whatsapp.quickMessage.webDev.title'),
+    description: t('whatsapp.quickMessage.webDev.description'),
     url: `https://wa.me/${props.phoneNumber}?text=${encodeURIComponent("Hi! I'm interested in web development services. I'd like to discuss my project requirements.")}`
   },
   {
     id: 'mobile-app',
     icon: '📱',
-    title: 'Mobile App',
-    description: 'Build mobile application',
+    title: t('whatsapp.quickMessage.mobileApp.title'),
+    description: t('whatsapp.quickMessage.mobileApp.description'),
     url: `https://wa.me/${props.phoneNumber}?text=${encodeURIComponent("Hi! I need a mobile app developed. Can we schedule a consultation to discuss my requirements?")}`
   },
   {
     id: 'quote',
     icon: '💰',
-    title: 'Get Quote',
-    description: 'Request project estimate',
+    title: t('whatsapp.quickMessage.quote.title'),
+    description: t('whatsapp.quickMessage.quote.description'),
     url: `https://wa.me/${props.phoneNumber}?text=${encodeURIComponent("Hi! I'd like to get a quote for my project. Can you help me with pricing information?")}`
   },
   {
     id: 'consultation',
     icon: '🤝',
-    title: 'Free Consultation',
-    description: 'Schedule a call',
+    title: t('whatsapp.quickMessage.consultation.title'),
+    description: t('whatsapp.quickMessage.consultation.description'),
     url: `https://wa.me/${props.phoneNumber}?text=${encodeURIComponent("Hi! I'd like to schedule a free consultation to discuss my project. When would be a good time?")}`
   }
 ])
