@@ -6,7 +6,7 @@
       <Hero @open-contact="scrollToContact" />
       <Portfolio @open-project="openProjectModal" />
       <Pricing />
-      <Testimonials />
+      <!-- <Testimonials /> -->
       <Contact />
     </main>
     
@@ -50,7 +50,7 @@ import Footer from '../components/layout/Footer.vue'
 import Hero from '../components/sections/Hero.vue'
 import Portfolio from '../components/sections/Portfolio.vue'
 import Pricing from '../components/sections/Pricing.vue'
-import Testimonials from '../components/sections/Testimonials.vue'
+// import Testimonials from '../components/sections/Testimonials.vue'
 import Contact from '../components/sections/Contact.vue'
 import Modal from '../components/ui/Modal.vue'
 import Button from '../components/ui/Button.vue'
