@@ -97,7 +97,7 @@
 
         <div class="flex flex-col sm:flex-row gap-6 justify-center mb-8 opacity-0 animate-fade-in-up" style="animation-delay: 0.8s">
           <a
-            href="https://wa.me/6281234567890?text=Hi%2C%20I%27d%20like%20a%20free%20consultation%20for%20my%20project"
+            :href="`https://wa.me/6281234567890?text=${encodeURIComponent(t('whatsapp.messages.getConsultation'))}`"
             target="_blank"
             rel="noopener noreferrer"
             class="bg-gradient-to-r from-cyan-500 to-blue-500 hover:from-cyan-600 hover:to-blue-600 text-white px-8 py-4 rounded-lg font-semibold transition-all duration-300 shadow-lg hover:shadow-cyan-500/30 transform hover:-translate-y-1 hover:scale-105 inline-flex items-center justify-center gap-3 relative overflow-hidden group"

@@ -591,24 +591,42 @@
       "title": "Quick Message",
       "general": {
         "title": "General Inquiry",
-        "description": "Ask about our services"
+        "description": "Ask about our services",
+        "message": "Hi! I'd like to know more about your development services. Can you provide more information?"
       },
       "webDev": {
         "title": "Web Development",
-        "description": "Discuss web project"
+        "description": "Discuss web project",
+        "message": "Hi! I'm interested in web development services. I'd like to discuss my project requirements."
       },
       "mobileApp": {
         "title": "Mobile App",
-        "description": "Build mobile application"
+        "description": "Build mobile application",
+        "message": "Hi! I need a mobile app developed. Can we schedule a consultation to discuss my requirements?"
       },
       "quote": {
         "title": "Get Quote",
-        "description": "Request project estimate"
+        "description": "Request project estimate",
+        "message": "Hi! I'd like to get a quote for my project. Can you help me with pricing information?"
       },
       "consultation": {
         "title": "Free Consultation",
-        "description": "Schedule a call"
+        "description": "Schedule a call",
+        "message": "Hi! I'd like to schedule a free consultation to discuss my project. When would be a good time?"
       }
+    },
+    "messages": {
+      "default": "Hi! I'm interested in your web/app development services. Can we discuss my project?",
+      "startProject": "Hi, I'd like to start a project with you",
+      "getConsultation": "Hi! I'd like to get a free consultation about my project",
+      "pricingBasic": "Hi, I'm interested in the Basic package",
+      "pricingProfessional": "Hi, I'm interested in the Professional package",
+      "pricingEnterprise": "Hi, I'm interested in the Enterprise package",
+      "pricingCustom": "Hi, I need a custom package that is more complex",
+      "thesisSystem": "Hi, I'm interested in the thesis system package",
+      "thesisWriting": "Hi, I'm interested in the thesis writing package",
+      "thesisBundle": "Hi, I'm interested in the bundle writing + thesis system package",
+      "thesisCustom": "Hi, I want to consult about a custom package for my thesis"
     }
   }
 }

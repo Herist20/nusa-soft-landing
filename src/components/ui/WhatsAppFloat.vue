@@ -98,10 +98,6 @@ import { useI18n } from 'vue-i18n'
 const { t } = useI18n()
 
 const props = defineProps({
-  defaultMessage: {
-    type: String,
-    default: "Hi! I'm interested in your web/app development services. Can we discuss my project?"
-  },
   phoneNumber: {
     type: String,
     default: '6281234567890'
@@ -119,7 +115,7 @@ const showNotification = ref(false)
 
 // Computed properties
 const whatsappUrl = computed(() => {
-  const message = encodeURIComponent(props.defaultMessage)
+  const message = encodeURIComponent(t('whatsapp.messages.default'))
   return `https://wa.me/${props.phoneNumber}?text=${message}`
 })
 
@@ -129,35 +125,35 @@ const quickMessageOptions = computed(() => [
     icon: '💬',
     title: t('whatsapp.quickMessage.general.title'),
     description: t('whatsapp.quickMessage.general.description'),
-    url: `https://wa.me/${props.phoneNumber}?text=${encodeURIComponent("Hi! I'd like to know more about your development services. Can you provide more information?")}`
+    url: `https://wa.me/${props.phoneNumber}?text=${encodeURIComponent(t('whatsapp.quickMessage.general.message'))}`
   },
   {
     id: 'web-dev',
     icon: '🌐',
     title: t('whatsapp.quickMessage.webDev.title'),
     description: t('whatsapp.quickMessage.webDev.description'),
-    url: `https://wa.me/${props.phoneNumber}?text=${encodeURIComponent("Hi! I'm interested in web development services. I'd like to discuss my project requirements.")}`
+    url: `https://wa.me/${props.phoneNumber}?text=${encodeURIComponent(t('whatsapp.quickMessage.webDev.message'))}`
   },
   {
     id: 'mobile-app',
     icon: '📱',
     title: t('whatsapp.quickMessage.mobileApp.title'),
     description: t('whatsapp.quickMessage.mobileApp.description'),
-    url: `https://wa.me/${props.phoneNumber}?text=${encodeURIComponent("Hi! I need a mobile app developed. Can we schedule a consultation to discuss my requirements?")}`
+    url: `https://wa.me/${props.phoneNumber}?text=${encodeURIComponent(t('whatsapp.quickMessage.mobileApp.message'))}`
   },
   {
     id: 'quote',
     icon: '💰',
     title: t('whatsapp.quickMessage.quote.title'),
     description: t('whatsapp.quickMessage.quote.description'),
-    url: `https://wa.me/${props.phoneNumber}?text=${encodeURIComponent("Hi! I'd like to get a quote for my project. Can you help me with pricing information?")}`
+    url: `https://wa.me/${props.phoneNumber}?text=${encodeURIComponent(t('whatsapp.quickMessage.quote.message'))}`
   },
   {
     id: 'consultation',
     icon: '🤝',
     title: t('whatsapp.quickMessage.consultation.title'),
     description: t('whatsapp.quickMessage.consultation.description'),
-    url: `https://wa.me/${props.phoneNumber}?text=${encodeURIComponent("Hi! I'd like to schedule a free consultation to discuss my project. When would be a good time?")}`
+    url: `https://wa.me/${props.phoneNumber}?text=${encodeURIComponent(t('whatsapp.quickMessage.consultation.message'))}`
   }
 ])
 

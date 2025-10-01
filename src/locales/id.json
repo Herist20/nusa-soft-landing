@@ -591,24 +591,42 @@
       "title": "Pesan Cepat",
       "general": {
         "title": "Pertanyaan Umum",
-        "description": "Tanyakan tentang layanan kami"
+        "description": "Tanyakan tentang layanan kami",
+        "message": "Halo! Saya ingin tahu lebih banyak tentang layanan pengembangan Anda. Bisakah Anda memberikan informasi lebih lanjut?"
       },
       "webDev": {
         "title": "Pengembangan Web",
-        "description": "Diskusi proyek web"
+        "description": "Diskusi proyek web",
+        "message": "Halo! Saya tertarik dengan layanan pengembangan web. Saya ingin mendiskusikan kebutuhan proyek saya."
       },
       "mobileApp": {
         "title": "Aplikasi Mobile",
-        "description": "Bangun aplikasi mobile"
+        "description": "Bangun aplikasi mobile",
+        "message": "Halo! Saya membutuhkan aplikasi mobile. Bisakah kita jadwalkan konsultasi untuk membahas kebutuhan saya?"
       },
       "quote": {
         "title": "Minta Penawaran",
-        "description": "Estimasi harga proyek"
+        "description": "Estimasi harga proyek",
+        "message": "Halo! Saya ingin mendapatkan penawaran harga untuk proyek saya. Bisakah Anda membantu dengan informasi harga?"
       },
       "consultation": {
         "title": "Konsultasi Gratis",
-        "description": "Jadwalkan panggilan"
+        "description": "Jadwalkan panggilan",
+        "message": "Halo! Saya ingin menjadwalkan konsultasi gratis untuk membahas proyek saya. Kapan waktu yang tepat?"
       }
+    },
+    "messages": {
+      "default": "Halo! Saya tertarik dengan layanan pengembangan web/aplikasi Anda. Bisakah kita diskusikan proyek saya?",
+      "startProject": "Halo, saya ingin memulai proyek dengan Anda",
+      "getConsultation": "Halo! Saya ingin mendapatkan konsultasi gratis tentang proyek saya",
+      "pricingBasic": "Halo, saya tertarik dengan paket Basic",
+      "pricingProfessional": "Halo, saya tertarik dengan paket Professional",
+      "pricingEnterprise": "Halo, saya tertarik dengan paket Enterprise",
+      "pricingCustom": "Halo, saya membutuhkan paket custom yang lebih kompleks",
+      "thesisSystem": "Halo, saya tertarik dengan paket sistem skripsi",
+      "thesisWriting": "Halo, saya tertarik dengan paket penulisan skripsi",
+      "thesisBundle": "Halo, saya tertarik dengan paket bundle penulisan + sistem skripsi",
+      "thesisCustom": "Halo, saya ingin konsultasi mengenai paket custom untuk skripsi saya"
     }
   }
 }

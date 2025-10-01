@@ -55,7 +55,7 @@
 
             <!-- CTA Button -->
             <a
-              href="https://wa.me/6281234567890?text=Hi%2C%20saya%20tertarik%20dengan%20paket%20Basic%20Rp%20850.000"
+              :href="`https://wa.me/6281234567890?text=${encodeURIComponent(t('whatsapp.messages.pricingBasic'))}`"
               target="_blank"
               rel="noopener noreferrer"
               class="w-full bg-gray-700/50 hover:bg-cyan-900/50 text-cyan-300 px-6 py-3 rounded-lg font-semibold transition-all duration-300 border border-cyan-800/50 hover:border-cyan-600/50 text-center block mt-auto"
@@ -99,7 +99,7 @@
 
             <!-- CTA Button -->
             <a
-              href="https://wa.me/6281234567890?text=Hi%2C%20saya%20tertarik%20dengan%20paket%20Professional%20Rp%201.000.000"
+              :href="`https://wa.me/6281234567890?text=${encodeURIComponent(t('whatsapp.messages.pricingProfessional'))}`"
               target="_blank"
               rel="noopener noreferrer"
               class="w-full bg-gradient-to-r from-cyan-500 to-blue-500 hover:from-cyan-600 hover:to-blue-600 text-white px-6 py-3 rounded-lg font-semibold transition-all duration-300 shadow-lg hover:shadow-cyan-500/30 text-center block mt-auto"
@@ -136,7 +136,7 @@
 
             <!-- CTA Button -->
             <a
-              href="https://wa.me/6281234567890?text=Hi%2C%20saya%20tertarik%20dengan%20paket%20Enterprise%20Rp%201.500.000"
+              :href="`https://wa.me/6281234567890?text=${encodeURIComponent(t('whatsapp.messages.pricingEnterprise'))}`"
               target="_blank"
               rel="noopener noreferrer"
               class="w-full bg-gray-700/50 hover:bg-cyan-900/50 text-cyan-300 px-6 py-3 rounded-lg font-semibold transition-all duration-300 border border-cyan-800/50 hover:border-cyan-600/50 text-center block mt-auto"
@@ -155,7 +155,7 @@
             {{ t('pricing.custom.description') }}
           </p>
           <a
-            href="https://wa.me/6281234567890?text=Hi%2C%20saya%20membutuhkan%20paket%20custom%20yang%20lebih%20kompleks"
+            :href="`https://wa.me/6281234567890?text=${encodeURIComponent(t('whatsapp.messages.pricingCustom'))}`"
             target="_blank"
             rel="noopener noreferrer"
             class="inline-flex items-center bg-gradient-to-r from-indigo-500 to-purple-600 hover:from-indigo-600 hover:to-purple-700 text-white px-8 py-3 rounded-lg font-semibold transition-all duration-300 shadow-lg hover:shadow-indigo-500/30 gap-2"
@@ -219,7 +219,7 @@
 
               <!-- CTA Button -->
               <a
-                href="https://wa.me/6281234567890?text=Hi%2C%20saya%20tertarik%20dengan%20paket%20sistem%20skripsi%20Rp%20850.000"
+                :href="`https://wa.me/6281234567890?text=${encodeURIComponent(t('whatsapp.messages.thesisSystem'))}`"
                 target="_blank"
                 rel="noopener noreferrer"
                 class="w-full bg-gray-700/50 hover:bg-cyan-900/50 text-cyan-300 px-4 py-2.5 rounded-lg font-semibold transition-all duration-300 border border-cyan-800/50 hover:border-cyan-600/50 text-center block mt-auto text-sm"
@@ -256,7 +256,7 @@
 
               <!-- CTA Button -->
               <a
-                href="https://wa.me/6281234567890?text=Hi%2C%20saya%20tertarik%20dengan%20paket%20penulisan%20skripsi%20Rp%201.000.000"
+                :href="`https://wa.me/6281234567890?text=${encodeURIComponent(t('whatsapp.messages.thesisWriting'))}`"
                 target="_blank"
                 rel="noopener noreferrer"
                 class="w-full bg-gray-700/50 hover:bg-cyan-900/50 text-cyan-300 px-4 py-2.5 rounded-lg font-semibold transition-all duration-300 border border-cyan-800/50 hover:border-cyan-600/50 text-center block mt-auto text-sm"
@@ -300,7 +300,7 @@
 
               <!-- CTA Button -->
               <a
-                href="https://wa.me/6281234567890?text=Hi%2C%20saya%20tertarik%20dengan%20paket%20bundle%20penulisan%2Bsistem%20skripsi%20Rp%201.500.000"
+                :href="`https://wa.me/6281234567890?text=${encodeURIComponent(t('whatsapp.messages.thesisBundle'))}`"
                 target="_blank"
                 rel="noopener noreferrer"
                 class="w-full bg-gradient-to-r from-cyan-500 to-blue-500 hover:from-cyan-600 hover:to-blue-600 text-white px-4 py-2.5 rounded-lg font-semibold transition-all duration-300 shadow-lg hover:shadow-cyan-500/30 text-center block mt-auto text-sm"
@@ -336,7 +336,7 @@
 
               <!-- CTA Button -->
               <a
-                href="https://wa.me/6281234567890?text=Hi%2C%20saya%20ingin%20konsultasi%20mengenai%20paket%20custom%20untuk%20skripsi%20saya"
+                :href="`https://wa.me/6281234567890?text=${encodeURIComponent(t('whatsapp.messages.thesisCustom'))}`"
                 target="_blank"
                 rel="noopener noreferrer"
                 class="w-full bg-gray-700/50 hover:bg-cyan-900/50 text-cyan-300 px-4 py-2.5 rounded-lg font-semibold transition-all duration-300 border border-cyan-800/50 hover:border-cyan-600/50 text-center block mt-auto text-sm"
