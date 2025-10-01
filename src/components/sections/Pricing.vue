@@ -55,7 +55,7 @@
 
             <!-- CTA Button -->
             <a
-              :href="`https://wa.me/6281234567890?text=${encodeURIComponent(t('whatsapp.messages.pricingBasic'))}`"
+              :href="`https://wa.me/6287860628412?text=${encodeURIComponent(t('whatsapp.messages.pricingBasic'))}`"
               target="_blank"
               rel="noopener noreferrer"
               class="w-full bg-gray-700/50 hover:bg-cyan-900/50 text-cyan-300 px-6 py-3 rounded-lg font-semibold transition-all duration-300 border border-cyan-800/50 hover:border-cyan-600/50 text-center block mt-auto"
@@ -99,7 +99,7 @@
 
             <!-- CTA Button -->
             <a
-              :href="`https://wa.me/6281234567890?text=${encodeURIComponent(t('whatsapp.messages.pricingProfessional'))}`"
+              :href="`https://wa.me/6287860628412?text=${encodeURIComponent(t('whatsapp.messages.pricingProfessional'))}`"
               target="_blank"
               rel="noopener noreferrer"
               class="w-full bg-gradient-to-r from-cyan-500 to-blue-500 hover:from-cyan-600 hover:to-blue-600 text-white px-6 py-3 rounded-lg font-semibold transition-all duration-300 shadow-lg hover:shadow-cyan-500/30 text-center block mt-auto"
@@ -136,7 +136,7 @@
 
             <!-- CTA Button -->
             <a
-              :href="`https://wa.me/6281234567890?text=${encodeURIComponent(t('whatsapp.messages.pricingEnterprise'))}`"
+              :href="`https://wa.me/6287860628412?text=${encodeURIComponent(t('whatsapp.messages.pricingEnterprise'))}`"
               target="_blank"
               rel="noopener noreferrer"
               class="w-full bg-gray-700/50 hover:bg-cyan-900/50 text-cyan-300 px-6 py-3 rounded-lg font-semibold transition-all duration-300 border border-cyan-800/50 hover:border-cyan-600/50 text-center block mt-auto"
@@ -155,7 +155,7 @@
             {{ t('pricing.custom.description') }}
           </p>
           <a
-            :href="`https://wa.me/6281234567890?text=${encodeURIComponent(t('whatsapp.messages.pricingCustom'))}`"
+            :href="`https://wa.me/6287860628412?text=${encodeURIComponent(t('whatsapp.messages.pricingCustom'))}`"
             target="_blank"
             rel="noopener noreferrer"
             class="inline-flex items-center bg-gradient-to-r from-indigo-500 to-purple-600 hover:from-indigo-600 hover:to-purple-700 text-white px-8 py-3 rounded-lg font-semibold transition-all duration-300 shadow-lg hover:shadow-indigo-500/30 gap-2"
@@ -219,7 +219,7 @@
 
               <!-- CTA Button -->
               <a
-                :href="`https://wa.me/6281234567890?text=${encodeURIComponent(t('whatsapp.messages.thesisSystem'))}`"
+                :href="`https://wa.me/6287860628412?text=${encodeURIComponent(t('whatsapp.messages.thesisSystem'))}`"
                 target="_blank"
                 rel="noopener noreferrer"
                 class="w-full bg-gray-700/50 hover:bg-cyan-900/50 text-cyan-300 px-4 py-2.5 rounded-lg font-semibold transition-all duration-300 border border-cyan-800/50 hover:border-cyan-600/50 text-center block mt-auto text-sm"
@@ -256,7 +256,7 @@
 
               <!-- CTA Button -->
               <a
-                :href="`https://wa.me/6281234567890?text=${encodeURIComponent(t('whatsapp.messages.thesisWriting'))}`"
+                :href="`https://wa.me/6287860628412?text=${encodeURIComponent(t('whatsapp.messages.thesisWriting'))}`"
                 target="_blank"
                 rel="noopener noreferrer"
                 class="w-full bg-gray-700/50 hover:bg-cyan-900/50 text-cyan-300 px-4 py-2.5 rounded-lg font-semibold transition-all duration-300 border border-cyan-800/50 hover:border-cyan-600/50 text-center block mt-auto text-sm"
@@ -300,7 +300,7 @@
 
               <!-- CTA Button -->
               <a
-                :href="`https://wa.me/6281234567890?text=${encodeURIComponent(t('whatsapp.messages.thesisBundle'))}`"
+                :href="`https://wa.me/6287860628412?text=${encodeURIComponent(t('whatsapp.messages.thesisBundle'))}`"
                 target="_blank"
                 rel="noopener noreferrer"
                 class="w-full bg-gradient-to-r from-cyan-500 to-blue-500 hover:from-cyan-600 hover:to-blue-600 text-white px-4 py-2.5 rounded-lg font-semibold transition-all duration-300 shadow-lg hover:shadow-cyan-500/30 text-center block mt-auto text-sm"
@@ -336,7 +336,7 @@
 
               <!-- CTA Button -->
               <a
-                :href="`https://wa.me/6281234567890?text=${encodeURIComponent(t('whatsapp.messages.thesisCustom'))}`"
+                :href="`https://wa.me/6287860628412?text=${encodeURIComponent(t('whatsapp.messages.thesisCustom'))}`"
                 target="_blank"
                 rel="noopener noreferrer"
                 class="w-full bg-gray-700/50 hover:bg-cyan-900/50 text-cyan-300 px-4 py-2.5 rounded-lg font-semibold transition-all duration-300 border border-cyan-800/50 hover:border-cyan-600/50 text-center block mt-auto text-sm"

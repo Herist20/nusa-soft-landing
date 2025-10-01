@@ -246,7 +246,7 @@
                 </svg>
                 <div>
                   <p class="font-semibold text-cyan-200">{{ t('contact.info.phone') }}</p>
-                  <a href="https://wa.me/6281234567890" class="text-cyan-300 text-sm hover:underline">{{ t('contact.info.phoneDetail') }}</a>
+                  <a href="https://wa.me/6287860628412" class="text-cyan-300 text-sm hover:underline">{{ t('contact.info.phoneDetail') }}</a>
                 </div>
               </div>
             </div>
@@ -353,7 +353,7 @@ const whatsappUrl = computed(() => {
 
 Can we schedule a consultation?`
 
-  return `https://wa.me/6281234567890?text=${encodeURIComponent(message)}`
+  return `https://wa.me/6287860628412?text=${encodeURIComponent(message)}`
 })
 </script>
 

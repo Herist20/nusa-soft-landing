@@ -100,7 +100,7 @@ const { t } = useI18n()
 const props = defineProps({
   phoneNumber: {
     type: String,
-    default: '6281234567890'
+    default: '6287860628412'
   },
   showNotificationBadge: {
     type: Boolean,

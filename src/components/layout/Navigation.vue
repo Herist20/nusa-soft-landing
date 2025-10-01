@@ -117,7 +117,7 @@
             <LanguageToggle />
 
             <a
-              :href="`https://wa.me/6281234567890?text=${encodeURIComponent(t('whatsapp.messages.startProject'))}`"
+              :href="`https://wa.me/6287860628412?text=${encodeURIComponent(t('whatsapp.messages.startProject'))}`"
               target="_blank"
               rel="noopener noreferrer"
               class="bg-gradient-to-r from-cyan-500 to-blue-500 hover:from-cyan-600 hover:to-blue-600 text-white px-6 py-2 rounded-lg font-semibold transition-all duration-300 hover:shadow-lg hover:shadow-cyan-500/20 hover:-translate-y-0.5"
@@ -241,7 +241,7 @@
           </div>
           <div class="pt-2 border-t border-gray-800">
             <a
-              :href="`https://wa.me/6281234567890?text=${encodeURIComponent(t('whatsapp.messages.startProject'))}`"
+              :href="`https://wa.me/6287860628412?text=${encodeURIComponent(t('whatsapp.messages.startProject'))}`"
               target="_blank"
               rel="noopener noreferrer"
               @click="mobileMenuOpen = false"
