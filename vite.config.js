@@ -104,7 +104,6 @@ export default defineConfig({
         // Code splitting
         manualChunks: {
           'vendor': ['vue', 'vue-router'],
-          'emailjs': ['@emailjs/browser'],
           'animations': ['./src/style.css']
         },
         // Asset file naming
@@ -167,7 +166,7 @@ export default defineConfig({
 
   // Performance optimizations
   optimizeDeps: {
-    include: ['vue', 'vue-router', '@emailjs/browser'],
+  include: ['vue', 'vue-router'],
     exclude: []
   },
 
